@@ -6,19 +6,19 @@
 
 #### Google OAuth & YouTube Integration
 
-- [ ] 🔥 Create Google Cloud Console project
-- [ ] 🔥 Enable YouTube Data API v3
-- [ ] ⚡ Enable Google+ API for profile data
-- [ ] 🔥 Create OAuth 2.0 credentials
-- [ ] 🔥 Configure authorized redirect URIs
-- [ ] ⚡ Set up OAuth consent screen
-- [ ] 🔥 Add YouTube scopes to OAuth
-- [ ] 🔥 Install NextAuth.js and Prisma adapter
-- [ ] 🔥 Configure Google provider in NextAuth
+- [x] 🔥 Create Google Cloud Console project
+- [x] 🔥 Enable YouTube Data API v3
+- [x] ⚡ Enable Google+ API for profile data
+- [x] 🔥 Create OAuth 2.0 credentials
+- [x] 🔥 Configure authorized redirect URIs
+- [x] ⚡ Set up OAuth consent screen
+- [x] 🔥 Add YouTube scopes to OAuth
+- [x] 🔥 Install NextAuth.js and Prisma adapter
+- [x] 🔥 Configure Google provider in NextAuth
 - [ ] ⚡ Add token refresh logic
-- [ ] 🔥 Set up environment variables for Google OAuth
-- [ ] ⚡ Update env.js with Google OAuth validation
-- [ ] ⚡ Test OAuth flow end-to-end
+- [x] 🔥 Set up environment variables for Google OAuth
+- [x] ⚡ Update env.js with Google OAuth validation
+- [x] ⚡ Test OAuth flow end-to-end
 
 #### User Model & Subscription System
 
