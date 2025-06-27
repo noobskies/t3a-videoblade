@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 
 import { auth } from "@/server/auth";
+import { api } from "@/trpc/server";
 
 export default async function Dashboard() {
   const session = await auth();
