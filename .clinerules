@@ -1,0 +1,174 @@
+# VideoBlade - Cline Rules
+
+## 📋 Documentation-Driven Development
+
+### Always Start with Documentation
+
+- Read through `/docs` directory first to understand current project state
+- Check `docs/TODO.md` for current priorities and completed items
+- Review `docs/README.md` "Verified Working Features" section
+- Understand the project phase and focus areas before coding
+
+### Keep Documentation Current
+
+- Mark completed items as `[x]` in `docs/TODO.md` immediately after implementation
+- Update `docs/README.md` "Verified Working Features" when adding new functionality
+- Update `docs/API.md` when creating new tRPC procedures or API endpoints
+- Documentation should always reflect actual working state, not aspirational state
+
+## 🍰 Bite-Sized Task Approach
+
+### Task Granularity
+
+- Break large features into small, independently valuable tasks
+- Each task should be completable in a focused work session
+- Prefer "Create video upload tRPC router" over "Build video management system"
+- Focus on one small task at a time until completion
+
+### Priority System
+
+- Use `🔥 Critical` for must-have Phase 1 MVP features
+- Use `⚡ High` for important Phase 1 MVP features
+- Use `📋 Medium` for nice-to-have Phase 1 features
+- Use `🔮 Future` for Phase 2/3/4 features
+
+## 🔧 Code Quality Standards
+
+### TypeScript & Validation
+
+- Use TypeScript everywhere with proper type annotations
+- Implement Zod schemas for all data validation (API requests, forms, video uploads)
+- Use `TRPCError` with proper error codes instead of generic `Error`
+- Validate video file types, sizes, and metadata thoroughly before processing
+
+### Error Handling
+
+- Implement comprehensive error handling in all tRPC procedures
+- Use proper HTTP status codes in API endpoints (401, 400, 409, 500)
+- Log errors appropriately (console.error for debugging, processing logs for audit)
+- Provide user-friendly error messages for creators
+
+### Database & Audit
+
+- Create processing log entries for all significant video and scheduling actions
+- Use proper Prisma relations and include statements
+- Implement soft deletes where appropriate (set status: 'deleted')
+- Generate cryptographically secure API keys and OAuth tokens
+
+## 🏗️ Implementation Order
+
+### Backend First Approach
+
+1. **tRPC Routers**: Complete backend API before UI
+2. **Platform API Integration**: YouTube, TikTok, etc. endpoints
+3. **Video Processing Pipeline**: Upload, metadata extraction, thumbnails
+4. **UI Components**: Build creator interfaces last
+
+### Specific Patterns
+
+- Create complete CRUD operations in tRPC routers
+- Add analytics and usage tracking alongside basic CRUD
+- Implement OAuth flows and token management before platform integrations
+- Use server-side data fetching in dashboard components
+
+## 📊 Progress Tracking
+
+### Honest Status Reporting
+
+- Use `✅` for actually working and tested features
+- Use `🔄` for features currently being implemented
+- Use `⏳` for planned but not started features
+- Never mark something as complete until it's actually working
+
+### Regular Documentation Updates
+
+- Update README.md after each major feature completion
+- Keep TODO.md current with actual progress
+- Document any discovered requirements or API limitations
+- Maintain accurate project status for development visibility
+
+## 🎯 Phase 1 Focus Areas
+
+### Creator Workflow Priority
+
+- Build systems for seamless video upload and management
+- Focus on creator-friendly interfaces and experiences
+- Ensure reliable video processing and platform publishing
+- Create comprehensive usage tracking and subscription management
+
+### Core Infrastructure
+
+- Establish solid video storage and processing pipeline
+- Implement secure OAuth and platform API integrations
+- Build robust error handling and retry logic for uploads
+- Create type-safe APIs with proper video validation
+
+## 🎬 Video Platform Specifics
+
+### Video Processing Standards
+
+- Validate video formats, sizes, and durations per platform requirements
+- Implement proper thumbnail generation and metadata extraction
+- Handle video processing status updates and progress tracking
+- Ensure secure video storage and access controls
+
+### Platform Integration Patterns
+
+- Implement OAuth flows for each platform (YouTube, TikTok, etc.)
+- Handle platform-specific API rate limits and quotas
+- Create platform-agnostic scheduling and publishing interfaces
+- Build retry logic for failed uploads and API calls
+
+### Creator Experience Focus
+
+- Prioritize intuitive video management interfaces
+- Build responsive upload progress and status indicators
+- Create clear scheduling and calendar management tools
+- Implement subscription tier validation and usage limits
+
+## 🚀 Quality Assurance
+
+### Before Marking Tasks Complete
+
+- Test video upload and processing actually works
+- Verify platform integrations with real API calls
+- Update relevant documentation
+- Ensure error handling covers edge cases
+- Verify TypeScript compilation without errors
+
+### Code Organization
+
+- Keep video processing logic in focused service files
+- Use clear, descriptive function and variable names
+- Add comments for platform API integrations and complex video operations
+- Follow established project patterns and T3 stack conventions
+
+### Creator-Centric Testing
+
+- Test with real video files of various formats and sizes
+- Verify scheduling works across different time zones
+- Test subscription tier limits and usage tracking
+- Ensure mobile-responsive creator interfaces
+
+## 📱 Platform Integration Guidelines
+
+### OAuth & API Management
+
+- Store encrypted tokens securely in database
+- Implement automatic token refresh before expiration
+- Handle API rate limits gracefully with queuing
+- Log API usage for debugging and analytics
+
+### Video Upload & Processing
+
+- Support chunked uploads for large video files
+- Implement resumable uploads for network interruptions
+- Generate multiple thumbnail sizes for different use cases
+- Extract and store comprehensive video metadata
+
+### Multi-Platform Publishing
+
+- Abstract platform differences behind unified interfaces
+- Handle platform-specific formatting and requirements
+- Implement scheduling with proper timezone handling
+- Track publishing status and handle failures gracefully
