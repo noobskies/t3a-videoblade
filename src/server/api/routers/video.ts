@@ -121,6 +121,77 @@ export const videoRouter = createTRPCRouter({
   }),
 
   /**
+   * Get single video details
+   */
+  get: protectedProcedure
+    .input(z.object({ id: z.string().cuid() }))
+    .query(async ({ ctx, input }) => {
+      const video = await ctx.db.video.findUnique({
+        where: { id: input.id },
+        include: {
+          publishJobs: {
+            include: {
+              platformConnection: true,
+            },
+          },
+        },
+      });
+
+      if (!video || video.createdById !== ctx.session.user.id) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Video not found",
+        });
+      }
+
+      return {
+        ...video,
+        fileSize: video.fileSize.toString(),
+      };
+    }),
+
+  /**
+   * Update video metadata
+   */
+  update: protectedProcedure
+    .input(
+      z.object({
+        id: z.string().cuid(),
+        title: z.string().min(1).max(100).optional(),
+        description: z.string().max(5000).optional(),
+        tags: z.string().max(500).optional(),
+        privacy: z.enum(["PUBLIC", "UNLISTED", "PRIVATE"]).optional(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { id, ...updateData } = input;
+
+      // Verify ownership
+      const video = await ctx.db.video.findUnique({
+        where: { id },
+        select: { createdById: true },
+      });
+
+      if (!video || video.createdById !== ctx.session.user.id) {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: "You don't own this video",
+        });
+      }
+
+      // Update video
+      const updated = await ctx.db.video.update({
+        where: { id },
+        data: updateData,
+      });
+
+      return {
+        ...updated,
+        fileSize: updated.fileSize.toString(),
+      };
+    }),
+
+  /**
    * Delete video
    */
   delete: protectedProcedure

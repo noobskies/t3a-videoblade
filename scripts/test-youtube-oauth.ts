@@ -70,7 +70,9 @@ async function testYouTubeOAuth() {
 
         if (data.items && data.items.length > 0) {
           console.log("✅ YouTube API access working!");
+          // @ts-ignore
           console.log(`   Channel: ${data.items[0].snippet.title}`);
+          // @ts-ignore
           console.log(`   Channel ID: ${data.items[0].id}`);
         } else {
           console.log("⚠️  No YouTube channel found for this account");
