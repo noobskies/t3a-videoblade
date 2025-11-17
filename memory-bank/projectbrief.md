@@ -4,8 +4,10 @@
 
 **Name**: t3a-videoblade  
 **Type**: Full-stack web application  
-**Framework**: T3 Stack (Next.js + tRPC + Prisma + NextAuth)  
-**Status**: Foundation established, awaiting feature implementation
+**Framework**: T3 Stack (Next.js + tRPC + Prisma + Better Auth)  
+**Status**: Foundation complete, detailed roadmap ready - Begin Phase 1 implementation
+
+**Implementation Roadmap**: See `memory-bank/roadmap/` for complete step-by-step guide
 
 ## Core Purpose
 
@@ -71,13 +73,17 @@
 
 ### Platform API Integration
 
-**Initial Support (MVP)**:
+**Phase 1 (MVP)**:
 
 - YouTube Data API v3
+
+**Phase 2 (Multi-Platform)**:
+
+- Rumble API
+
+**Phase 3+ (Future Platforms - TBD)**:
+
 - Vimeo API v3.4
-
-**Future Platforms**:
-
 - TikTok Content Posting API
 - Dailymotion API
 - Facebook Video API
@@ -87,11 +93,15 @@
 
 ### Infrastructure Requirements
 
-- **Storage**: S3-compatible object storage for video files
-- **Queue**: Job queue system (BullMQ, Redis-based)
-- **Database**: PostgreSQL for production (SQLite for development)
-- **Caching**: Redis for queue and session management
-- **File Processing**: Background workers for video upload handling
+**Confirmed Tech Stack**:
+
+- **Storage**: AWS S3 for video files
+- **Queue**: Inngest (serverless background jobs - no Redis needed)
+- **Database**: Vercel Postgres for production (SQLite for development)
+- **Deployment**: Vercel
+- **File Processing**: Inngest functions for background upload handling
+
+**See `memory-bank/roadmap/overview.md` for complete architecture details**
 
 ## Success Criteria
 
@@ -102,31 +112,36 @@
 - ✅ Database schema defined
 - ✅ Development environment ready
 
-### MVP (Phase 1)
+### Implementation Phase 1 (YouTube MVP)
 
+See `memory-bank/roadmap/phase1/` for complete 11-file roadmap (28-42 hours)
+
+- [ ] User can upload video to VideoBlade (stored in S3)
 - [ ] User can connect YouTube account via OAuth
-- [ ] User can upload video to VideoBlade
-- [ ] Video is stored in cloud storage
-- [ ] User can publish video to connected YouTube account
-- [ ] Basic dashboard shows publish status
+- [ ] User can publish video to YouTube with custom metadata
+- [ ] Video library displays all videos with thumbnails
+- [ ] User can edit video metadata
+- [ ] User can retry failed publishes
+- [ ] Platform connection management working
 
-### Feature Complete (Phase 2)
+### Implementation Phase 2 (Multi-Platform - Rumble)
 
-- [ ] Multiple platform support (YouTube + Vimeo + 2 others)
-- [ ] Batch publishing to multiple platforms
-- [ ] Scheduling system working
-- [ ] Platform-specific metadata configuration
-- [ ] Publish history and status tracking
-- [ ] Retry logic for failed publishes
+See `memory-bank/roadmap/phase2/` for complete 5-file roadmap (15-19 hours)
 
-### Production Ready (Phase 3)
+- [ ] Rumble OAuth & API integration
+- [ ] Multi-platform publishing UI (YouTube + Rumble simultaneously)
+- [ ] Platform-specific metadata handling
+- [ ] Per-platform scheduled publishing
+- [ ] Enhanced delete functionality
+- [ ] Publish history per platform
 
-- [ ] Performance optimized
-- [ ] Error handling comprehensive
-- [ ] Monitoring and logging
-- [ ] Rate limit handling per platform
-- [ ] User quota management
-- [ ] Analytics dashboard
+### Future Expansion (Phase 3+) - TBD
+
+Nice-to-have features to be planned after Phase 1 & 2 complete:
+
+- Additional platforms (Vimeo, TikTok, etc.)
+- Batch upload, analytics, team features, API access
+- Performance optimization and production hardening
 
 ## Constraints
 
@@ -188,6 +203,16 @@
 - Refactor freely when better patterns emerge
 - See `memory-bank/systemPatterns.md` for detailed principles
 
-## Notes
+## Implementation Notes
 
-This project was bootstrapped with `create-t3-app` (v7.40.0). VideoBlade's multi-platform publishing vision is now defined and documented. Implementation focuses on API-first integration with major video platforms, queue-based distribution, and unified management interface.
+This project was bootstrapped with `create-t3-app` (v7.40.0). VideoBlade's multi-platform publishing vision is fully defined and documented.
+
+**Complete Implementation Roadmap**: `memory-bank/roadmap/`
+
+- **Phase 1**: 11 detailed files for YouTube MVP (28-42 hours)
+- **Phase 2**: 5 detailed files for Rumble integration (15-19 hours)
+- **Phase 3**: TBD - Nice-to-have features for future
+
+**Tech Stack**: AWS S3 + Inngest + Vercel Postgres + Vercel + YouTube & Rumble APIs
+
+**Start Implementation**: 👉 `memory-bank/roadmap/phase1/00-prerequisites.md`

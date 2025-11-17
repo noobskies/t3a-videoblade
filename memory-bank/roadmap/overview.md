@@ -129,11 +129,13 @@ Timeline: COMPLETE              Est: 3-4 weeks            Est: 2-3 weeks        
 
 ---
 
-### ⏳ Phase 3: Expansion & Advanced Features
+### ⏳ Phase 3: Expansion & Advanced Features (TBD)
 
-**Status**: Not Started  
-**Estimated Duration**: Ongoing  
+**Status**: Not Planned Yet - Nice-to-Have Features  
+**Estimated Duration**: TBD  
 **Target**: Additional platforms, advanced features, production hardening
+
+**Note**: Phase 3 scope will be determined after Phase 1 & 2 are complete based on user feedback and priorities.
 
 **Platform Expansion Options**:
 
@@ -169,7 +171,7 @@ Timeline: COMPLETE              Est: 3-4 weeks            Est: 2-3 weeks        
 - [ ] Security audit
 - [ ] Compliance (GDPR, platform ToS)
 
-**See**: [`phase3-expansion.md`](./phase3-expansion.md) for detailed breakdown
+**Planning Approach**: Phase 3 will be planned after gaining experience from Phase 1 & 2 implementation. This allows for data-driven decisions about which features provide most value to users.
 
 ---
 
