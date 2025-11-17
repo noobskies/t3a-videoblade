@@ -15,6 +15,26 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
+// VideoBlade Enums
+enum Platform {
+    YOUTUBE
+    RUMBLE
+}
+
+enum PublishStatus {
+    PENDING
+    PROCESSING
+    COMPLETED
+    FAILED
+    CANCELLED
+}
+
+enum VideoPrivacy {
+    PUBLIC
+    UNLISTED
+    PRIVATE
+}
+
 model Post {
     id        Int      @id @default(autoincrement())
     name      String
@@ -72,6 +92,11 @@ model User {
     accounts      Account[]
     sessions      Session[]
     posts         Post[]
+
+    // VideoBlade relations
+    videos             Video[]
+    platformConnections PlatformConnection[]
+    publishJobs        PublishJob[]
 }
 
 model Verification {
@@ -83,4 +108,111 @@ model Verification {
     updatedAt  DateTime @updatedAt
 
     @@unique([identifier, value])
+}
+
+// VideoBlade Models
+model Video {
+    id        String   @id @default(cuid())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    // S3 Storage
+    s3Key       String
+    s3Bucket    String
+    fileName    String
+    fileSize    BigInt
+    mimeType    String
+    duration    Int?
+
+    // Metadata
+    title        String
+    description  String?
+    tags         String?
+    thumbnailUrl String?
+    privacy      VideoPrivacy @default(UNLISTED)
+
+    // Relationships
+    createdBy   User   @relation(fields: [createdById], references: [id], onDelete: Cascade)
+    createdById String
+
+    publishJobs PublishJob[]
+
+    @@index([createdById])
+    @@index([createdAt])
+}
+
+model PlatformConnection {
+    id        String   @id @default(cuid())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    // Platform info
+    platform         Platform
+    platformUserId   String
+    platformUsername String?
+
+    // OAuth tokens
+    accessToken  String
+    refreshToken String?
+    tokenExpiry  DateTime?
+
+    // Platform-specific data (JSON)
+    metadata Json?
+
+    // Status
+    isActive Boolean @default(true)
+
+    // Relationships
+    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId String
+
+    publishJobs PublishJob[]
+
+    // One connection per platform per user
+    @@unique([userId, platform])
+    @@index([userId])
+    @@index([platform])
+}
+
+model PublishJob {
+    id        String   @id @default(cuid())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    // Job details
+    platform Platform
+    status   PublishStatus @default(PENDING)
+
+    // Platform-specific metadata (overrides from Video)
+    title       String?
+    description String?
+    tags        String?
+    privacy     VideoPrivacy?
+
+    // Scheduling
+    scheduledFor DateTime?
+    startedAt    DateTime?
+    completedAt  DateTime?
+
+    // Result
+    platformVideoId  String?
+    platformVideoUrl String?
+    errorMessage     String?
+    retryCount       Int     @default(0)
+
+    // Relationships
+    video   Video  @relation(fields: [videoId], references: [id], onDelete: Cascade)
+    videoId String
+
+    platformConnection   PlatformConnection @relation(fields: [platformConnectionId], references: [id], onDelete: Cascade)
+    platformConnectionId String
+
+    createdBy   User   @relation(fields: [createdById], references: [id], onDelete: Cascade)
+    createdById String
+
+    @@index([videoId])
+    @@index([platformConnectionId])
+    @@index([createdById])
+    @@index([status])
+    @@index([scheduledFor])
 }

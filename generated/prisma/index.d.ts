@@ -38,6 +38,66 @@ export type User = $Result.DefaultSelection<Prisma.$UserPayload>
  * 
  */
 export type Verification = $Result.DefaultSelection<Prisma.$VerificationPayload>
+/**
+ * Model Video
+ * 
+ */
+export type Video = $Result.DefaultSelection<Prisma.$VideoPayload>
+/**
+ * Model PlatformConnection
+ * 
+ */
+export type PlatformConnection = $Result.DefaultSelection<Prisma.$PlatformConnectionPayload>
+/**
+ * Model PublishJob
+ * 
+ */
+export type PublishJob = $Result.DefaultSelection<Prisma.$PublishJobPayload>
+
+/**
+ * Enums
+ */
+export namespace $Enums {
+  export const Platform: {
+  YOUTUBE: 'YOUTUBE',
+  RUMBLE: 'RUMBLE'
+};
+
+export type Platform = (typeof Platform)[keyof typeof Platform]
+
+
+export const PublishStatus: {
+  PENDING: 'PENDING',
+  PROCESSING: 'PROCESSING',
+  COMPLETED: 'COMPLETED',
+  FAILED: 'FAILED',
+  CANCELLED: 'CANCELLED'
+};
+
+export type PublishStatus = (typeof PublishStatus)[keyof typeof PublishStatus]
+
+
+export const VideoPrivacy: {
+  PUBLIC: 'PUBLIC',
+  UNLISTED: 'UNLISTED',
+  PRIVATE: 'PRIVATE'
+};
+
+export type VideoPrivacy = (typeof VideoPrivacy)[keyof typeof VideoPrivacy]
+
+}
+
+export type Platform = $Enums.Platform
+
+export const Platform: typeof $Enums.Platform
+
+export type PublishStatus = $Enums.PublishStatus
+
+export const PublishStatus: typeof $Enums.PublishStatus
+
+export type VideoPrivacy = $Enums.VideoPrivacy
+
+export const VideoPrivacy: typeof $Enums.VideoPrivacy
 
 /**
  * ##  Prisma Client ʲˢ
@@ -206,6 +266,36 @@ export class PrismaClient<
     * ```
     */
   get verification(): Prisma.VerificationDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.video`: Exposes CRUD operations for the **Video** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Videos
+    * const videos = await prisma.video.findMany()
+    * ```
+    */
+  get video(): Prisma.VideoDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.platformConnection`: Exposes CRUD operations for the **PlatformConnection** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more PlatformConnections
+    * const platformConnections = await prisma.platformConnection.findMany()
+    * ```
+    */
+  get platformConnection(): Prisma.PlatformConnectionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.publishJob`: Exposes CRUD operations for the **PublishJob** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more PublishJobs
+    * const publishJobs = await prisma.publishJob.findMany()
+    * ```
+    */
+  get publishJob(): Prisma.PublishJobDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -651,7 +741,10 @@ export namespace Prisma {
     Account: 'Account',
     Session: 'Session',
     User: 'User',
-    Verification: 'Verification'
+    Verification: 'Verification',
+    Video: 'Video',
+    PlatformConnection: 'PlatformConnection',
+    PublishJob: 'PublishJob'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -670,7 +763,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "post" | "account" | "session" | "user" | "verification"
+      modelProps: "post" | "account" | "session" | "user" | "verification" | "video" | "platformConnection" | "publishJob"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1044,6 +1137,228 @@ export namespace Prisma {
           }
         }
       }
+      Video: {
+        payload: Prisma.$VideoPayload<ExtArgs>
+        fields: Prisma.VideoFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.VideoFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VideoPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.VideoFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VideoPayload>
+          }
+          findFirst: {
+            args: Prisma.VideoFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VideoPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.VideoFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VideoPayload>
+          }
+          findMany: {
+            args: Prisma.VideoFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VideoPayload>[]
+          }
+          create: {
+            args: Prisma.VideoCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VideoPayload>
+          }
+          createMany: {
+            args: Prisma.VideoCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.VideoCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VideoPayload>[]
+          }
+          delete: {
+            args: Prisma.VideoDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VideoPayload>
+          }
+          update: {
+            args: Prisma.VideoUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VideoPayload>
+          }
+          deleteMany: {
+            args: Prisma.VideoDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.VideoUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.VideoUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VideoPayload>[]
+          }
+          upsert: {
+            args: Prisma.VideoUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VideoPayload>
+          }
+          aggregate: {
+            args: Prisma.VideoAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateVideo>
+          }
+          groupBy: {
+            args: Prisma.VideoGroupByArgs<ExtArgs>
+            result: $Utils.Optional<VideoGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.VideoCountArgs<ExtArgs>
+            result: $Utils.Optional<VideoCountAggregateOutputType> | number
+          }
+        }
+      }
+      PlatformConnection: {
+        payload: Prisma.$PlatformConnectionPayload<ExtArgs>
+        fields: Prisma.PlatformConnectionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PlatformConnectionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlatformConnectionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PlatformConnectionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlatformConnectionPayload>
+          }
+          findFirst: {
+            args: Prisma.PlatformConnectionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlatformConnectionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PlatformConnectionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlatformConnectionPayload>
+          }
+          findMany: {
+            args: Prisma.PlatformConnectionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlatformConnectionPayload>[]
+          }
+          create: {
+            args: Prisma.PlatformConnectionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlatformConnectionPayload>
+          }
+          createMany: {
+            args: Prisma.PlatformConnectionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.PlatformConnectionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlatformConnectionPayload>[]
+          }
+          delete: {
+            args: Prisma.PlatformConnectionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlatformConnectionPayload>
+          }
+          update: {
+            args: Prisma.PlatformConnectionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlatformConnectionPayload>
+          }
+          deleteMany: {
+            args: Prisma.PlatformConnectionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PlatformConnectionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.PlatformConnectionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlatformConnectionPayload>[]
+          }
+          upsert: {
+            args: Prisma.PlatformConnectionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PlatformConnectionPayload>
+          }
+          aggregate: {
+            args: Prisma.PlatformConnectionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePlatformConnection>
+          }
+          groupBy: {
+            args: Prisma.PlatformConnectionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PlatformConnectionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PlatformConnectionCountArgs<ExtArgs>
+            result: $Utils.Optional<PlatformConnectionCountAggregateOutputType> | number
+          }
+        }
+      }
+      PublishJob: {
+        payload: Prisma.$PublishJobPayload<ExtArgs>
+        fields: Prisma.PublishJobFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PublishJobFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PublishJobPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PublishJobFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PublishJobPayload>
+          }
+          findFirst: {
+            args: Prisma.PublishJobFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PublishJobPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PublishJobFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PublishJobPayload>
+          }
+          findMany: {
+            args: Prisma.PublishJobFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PublishJobPayload>[]
+          }
+          create: {
+            args: Prisma.PublishJobCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PublishJobPayload>
+          }
+          createMany: {
+            args: Prisma.PublishJobCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.PublishJobCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PublishJobPayload>[]
+          }
+          delete: {
+            args: Prisma.PublishJobDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PublishJobPayload>
+          }
+          update: {
+            args: Prisma.PublishJobUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PublishJobPayload>
+          }
+          deleteMany: {
+            args: Prisma.PublishJobDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PublishJobUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.PublishJobUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PublishJobPayload>[]
+          }
+          upsert: {
+            args: Prisma.PublishJobUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PublishJobPayload>
+          }
+          aggregate: {
+            args: Prisma.PublishJobAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePublishJob>
+          }
+          groupBy: {
+            args: Prisma.PublishJobGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PublishJobGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PublishJobCountArgs<ExtArgs>
+            result: $Utils.Optional<PublishJobCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1145,6 +1460,9 @@ export namespace Prisma {
     session?: SessionOmit
     user?: UserOmit
     verification?: VerificationOmit
+    video?: VideoOmit
+    platformConnection?: PlatformConnectionOmit
+    publishJob?: PublishJobOmit
   }
 
   /* Types for Logging */
@@ -1228,12 +1546,18 @@ export namespace Prisma {
     accounts: number
     sessions: number
     posts: number
+    videos: number
+    platformConnections: number
+    publishJobs: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     accounts?: boolean | UserCountOutputTypeCountAccountsArgs
     sessions?: boolean | UserCountOutputTypeCountSessionsArgs
     posts?: boolean | UserCountOutputTypeCountPostsArgs
+    videos?: boolean | UserCountOutputTypeCountVideosArgs
+    platformConnections?: boolean | UserCountOutputTypeCountPlatformConnectionsArgs
+    publishJobs?: boolean | UserCountOutputTypeCountPublishJobsArgs
   }
 
   // Custom InputTypes
@@ -1266,6 +1590,89 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountPostsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: PostWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountVideosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VideoWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountPlatformConnectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PlatformConnectionWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountPublishJobsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PublishJobWhereInput
+  }
+
+
+  /**
+   * Count Type VideoCountOutputType
+   */
+
+  export type VideoCountOutputType = {
+    publishJobs: number
+  }
+
+  export type VideoCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    publishJobs?: boolean | VideoCountOutputTypeCountPublishJobsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * VideoCountOutputType without action
+   */
+  export type VideoCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VideoCountOutputType
+     */
+    select?: VideoCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * VideoCountOutputType without action
+   */
+  export type VideoCountOutputTypeCountPublishJobsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PublishJobWhereInput
+  }
+
+
+  /**
+   * Count Type PlatformConnectionCountOutputType
+   */
+
+  export type PlatformConnectionCountOutputType = {
+    publishJobs: number
+  }
+
+  export type PlatformConnectionCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    publishJobs?: boolean | PlatformConnectionCountOutputTypeCountPublishJobsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * PlatformConnectionCountOutputType without action
+   */
+  export type PlatformConnectionCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlatformConnectionCountOutputType
+     */
+    select?: PlatformConnectionCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * PlatformConnectionCountOutputType without action
+   */
+  export type PlatformConnectionCountOutputTypeCountPublishJobsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PublishJobWhereInput
   }
 
 
@@ -4801,6 +5208,9 @@ export namespace Prisma {
     accounts?: boolean | User$accountsArgs<ExtArgs>
     sessions?: boolean | User$sessionsArgs<ExtArgs>
     posts?: boolean | User$postsArgs<ExtArgs>
+    videos?: boolean | User$videosArgs<ExtArgs>
+    platformConnections?: boolean | User$platformConnectionsArgs<ExtArgs>
+    publishJobs?: boolean | User$publishJobsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -4839,6 +5249,9 @@ export namespace Prisma {
     accounts?: boolean | User$accountsArgs<ExtArgs>
     sessions?: boolean | User$sessionsArgs<ExtArgs>
     posts?: boolean | User$postsArgs<ExtArgs>
+    videos?: boolean | User$videosArgs<ExtArgs>
+    platformConnections?: boolean | User$platformConnectionsArgs<ExtArgs>
+    publishJobs?: boolean | User$publishJobsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -4850,6 +5263,9 @@ export namespace Prisma {
       accounts: Prisma.$AccountPayload<ExtArgs>[]
       sessions: Prisma.$SessionPayload<ExtArgs>[]
       posts: Prisma.$PostPayload<ExtArgs>[]
+      videos: Prisma.$VideoPayload<ExtArgs>[]
+      platformConnections: Prisma.$PlatformConnectionPayload<ExtArgs>[]
+      publishJobs: Prisma.$PublishJobPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -5256,6 +5672,9 @@ export namespace Prisma {
     accounts<T extends User$accountsArgs<ExtArgs> = {}>(args?: Subset<T, User$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     sessions<T extends User$sessionsArgs<ExtArgs> = {}>(args?: Subset<T, User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     posts<T extends User$postsArgs<ExtArgs> = {}>(args?: Subset<T, User$postsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    videos<T extends User$videosArgs<ExtArgs> = {}>(args?: Subset<T, User$videosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VideoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    platformConnections<T extends User$platformConnectionsArgs<ExtArgs> = {}>(args?: Subset<T, User$platformConnectionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlatformConnectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    publishJobs<T extends User$publishJobsArgs<ExtArgs> = {}>(args?: Subset<T, User$publishJobsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PublishJobPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5747,6 +6166,78 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: PostScalarFieldEnum | PostScalarFieldEnum[]
+  }
+
+  /**
+   * User.videos
+   */
+  export type User$videosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Video
+     */
+    select?: VideoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Video
+     */
+    omit?: VideoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VideoInclude<ExtArgs> | null
+    where?: VideoWhereInput
+    orderBy?: VideoOrderByWithRelationInput | VideoOrderByWithRelationInput[]
+    cursor?: VideoWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: VideoScalarFieldEnum | VideoScalarFieldEnum[]
+  }
+
+  /**
+   * User.platformConnections
+   */
+  export type User$platformConnectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlatformConnection
+     */
+    select?: PlatformConnectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlatformConnection
+     */
+    omit?: PlatformConnectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlatformConnectionInclude<ExtArgs> | null
+    where?: PlatformConnectionWhereInput
+    orderBy?: PlatformConnectionOrderByWithRelationInput | PlatformConnectionOrderByWithRelationInput[]
+    cursor?: PlatformConnectionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PlatformConnectionScalarFieldEnum | PlatformConnectionScalarFieldEnum[]
+  }
+
+  /**
+   * User.publishJobs
+   */
+  export type User$publishJobsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PublishJob
+     */
+    select?: PublishJobSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PublishJob
+     */
+    omit?: PublishJobOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PublishJobInclude<ExtArgs> | null
+    where?: PublishJobWhereInput
+    orderBy?: PublishJobOrderByWithRelationInput | PublishJobOrderByWithRelationInput[]
+    cursor?: PublishJobWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PublishJobScalarFieldEnum | PublishJobScalarFieldEnum[]
   }
 
   /**
@@ -6775,6 +7266,3721 @@ export namespace Prisma {
 
 
   /**
+   * Model Video
+   */
+
+  export type AggregateVideo = {
+    _count: VideoCountAggregateOutputType | null
+    _avg: VideoAvgAggregateOutputType | null
+    _sum: VideoSumAggregateOutputType | null
+    _min: VideoMinAggregateOutputType | null
+    _max: VideoMaxAggregateOutputType | null
+  }
+
+  export type VideoAvgAggregateOutputType = {
+    fileSize: number | null
+    duration: number | null
+  }
+
+  export type VideoSumAggregateOutputType = {
+    fileSize: bigint | null
+    duration: number | null
+  }
+
+  export type VideoMinAggregateOutputType = {
+    id: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    s3Key: string | null
+    s3Bucket: string | null
+    fileName: string | null
+    fileSize: bigint | null
+    mimeType: string | null
+    duration: number | null
+    title: string | null
+    description: string | null
+    tags: string | null
+    thumbnailUrl: string | null
+    privacy: $Enums.VideoPrivacy | null
+    createdById: string | null
+  }
+
+  export type VideoMaxAggregateOutputType = {
+    id: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    s3Key: string | null
+    s3Bucket: string | null
+    fileName: string | null
+    fileSize: bigint | null
+    mimeType: string | null
+    duration: number | null
+    title: string | null
+    description: string | null
+    tags: string | null
+    thumbnailUrl: string | null
+    privacy: $Enums.VideoPrivacy | null
+    createdById: string | null
+  }
+
+  export type VideoCountAggregateOutputType = {
+    id: number
+    createdAt: number
+    updatedAt: number
+    s3Key: number
+    s3Bucket: number
+    fileName: number
+    fileSize: number
+    mimeType: number
+    duration: number
+    title: number
+    description: number
+    tags: number
+    thumbnailUrl: number
+    privacy: number
+    createdById: number
+    _all: number
+  }
+
+
+  export type VideoAvgAggregateInputType = {
+    fileSize?: true
+    duration?: true
+  }
+
+  export type VideoSumAggregateInputType = {
+    fileSize?: true
+    duration?: true
+  }
+
+  export type VideoMinAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    s3Key?: true
+    s3Bucket?: true
+    fileName?: true
+    fileSize?: true
+    mimeType?: true
+    duration?: true
+    title?: true
+    description?: true
+    tags?: true
+    thumbnailUrl?: true
+    privacy?: true
+    createdById?: true
+  }
+
+  export type VideoMaxAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    s3Key?: true
+    s3Bucket?: true
+    fileName?: true
+    fileSize?: true
+    mimeType?: true
+    duration?: true
+    title?: true
+    description?: true
+    tags?: true
+    thumbnailUrl?: true
+    privacy?: true
+    createdById?: true
+  }
+
+  export type VideoCountAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    s3Key?: true
+    s3Bucket?: true
+    fileName?: true
+    fileSize?: true
+    mimeType?: true
+    duration?: true
+    title?: true
+    description?: true
+    tags?: true
+    thumbnailUrl?: true
+    privacy?: true
+    createdById?: true
+    _all?: true
+  }
+
+  export type VideoAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Video to aggregate.
+     */
+    where?: VideoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Videos to fetch.
+     */
+    orderBy?: VideoOrderByWithRelationInput | VideoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: VideoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Videos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Videos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Videos
+    **/
+    _count?: true | VideoCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: VideoAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: VideoSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: VideoMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: VideoMaxAggregateInputType
+  }
+
+  export type GetVideoAggregateType<T extends VideoAggregateArgs> = {
+        [P in keyof T & keyof AggregateVideo]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateVideo[P]>
+      : GetScalarType<T[P], AggregateVideo[P]>
+  }
+
+
+
+
+  export type VideoGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VideoWhereInput
+    orderBy?: VideoOrderByWithAggregationInput | VideoOrderByWithAggregationInput[]
+    by: VideoScalarFieldEnum[] | VideoScalarFieldEnum
+    having?: VideoScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: VideoCountAggregateInputType | true
+    _avg?: VideoAvgAggregateInputType
+    _sum?: VideoSumAggregateInputType
+    _min?: VideoMinAggregateInputType
+    _max?: VideoMaxAggregateInputType
+  }
+
+  export type VideoGroupByOutputType = {
+    id: string
+    createdAt: Date
+    updatedAt: Date
+    s3Key: string
+    s3Bucket: string
+    fileName: string
+    fileSize: bigint
+    mimeType: string
+    duration: number | null
+    title: string
+    description: string | null
+    tags: string | null
+    thumbnailUrl: string | null
+    privacy: $Enums.VideoPrivacy
+    createdById: string
+    _count: VideoCountAggregateOutputType | null
+    _avg: VideoAvgAggregateOutputType | null
+    _sum: VideoSumAggregateOutputType | null
+    _min: VideoMinAggregateOutputType | null
+    _max: VideoMaxAggregateOutputType | null
+  }
+
+  type GetVideoGroupByPayload<T extends VideoGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<VideoGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof VideoGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], VideoGroupByOutputType[P]>
+            : GetScalarType<T[P], VideoGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type VideoSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    s3Key?: boolean
+    s3Bucket?: boolean
+    fileName?: boolean
+    fileSize?: boolean
+    mimeType?: boolean
+    duration?: boolean
+    title?: boolean
+    description?: boolean
+    tags?: boolean
+    thumbnailUrl?: boolean
+    privacy?: boolean
+    createdById?: boolean
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+    publishJobs?: boolean | Video$publishJobsArgs<ExtArgs>
+    _count?: boolean | VideoCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["video"]>
+
+  export type VideoSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    s3Key?: boolean
+    s3Bucket?: boolean
+    fileName?: boolean
+    fileSize?: boolean
+    mimeType?: boolean
+    duration?: boolean
+    title?: boolean
+    description?: boolean
+    tags?: boolean
+    thumbnailUrl?: boolean
+    privacy?: boolean
+    createdById?: boolean
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["video"]>
+
+  export type VideoSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    s3Key?: boolean
+    s3Bucket?: boolean
+    fileName?: boolean
+    fileSize?: boolean
+    mimeType?: boolean
+    duration?: boolean
+    title?: boolean
+    description?: boolean
+    tags?: boolean
+    thumbnailUrl?: boolean
+    privacy?: boolean
+    createdById?: boolean
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["video"]>
+
+  export type VideoSelectScalar = {
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    s3Key?: boolean
+    s3Bucket?: boolean
+    fileName?: boolean
+    fileSize?: boolean
+    mimeType?: boolean
+    duration?: boolean
+    title?: boolean
+    description?: boolean
+    tags?: boolean
+    thumbnailUrl?: boolean
+    privacy?: boolean
+    createdById?: boolean
+  }
+
+  export type VideoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "s3Key" | "s3Bucket" | "fileName" | "fileSize" | "mimeType" | "duration" | "title" | "description" | "tags" | "thumbnailUrl" | "privacy" | "createdById", ExtArgs["result"]["video"]>
+  export type VideoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+    publishJobs?: boolean | Video$publishJobsArgs<ExtArgs>
+    _count?: boolean | VideoCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type VideoIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type VideoIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $VideoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Video"
+    objects: {
+      createdBy: Prisma.$UserPayload<ExtArgs>
+      publishJobs: Prisma.$PublishJobPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      createdAt: Date
+      updatedAt: Date
+      s3Key: string
+      s3Bucket: string
+      fileName: string
+      fileSize: bigint
+      mimeType: string
+      duration: number | null
+      title: string
+      description: string | null
+      tags: string | null
+      thumbnailUrl: string | null
+      privacy: $Enums.VideoPrivacy
+      createdById: string
+    }, ExtArgs["result"]["video"]>
+    composites: {}
+  }
+
+  type VideoGetPayload<S extends boolean | null | undefined | VideoDefaultArgs> = $Result.GetResult<Prisma.$VideoPayload, S>
+
+  type VideoCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<VideoFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: VideoCountAggregateInputType | true
+    }
+
+  export interface VideoDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Video'], meta: { name: 'Video' } }
+    /**
+     * Find zero or one Video that matches the filter.
+     * @param {VideoFindUniqueArgs} args - Arguments to find a Video
+     * @example
+     * // Get one Video
+     * const video = await prisma.video.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends VideoFindUniqueArgs>(args: SelectSubset<T, VideoFindUniqueArgs<ExtArgs>>): Prisma__VideoClient<$Result.GetResult<Prisma.$VideoPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Video that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {VideoFindUniqueOrThrowArgs} args - Arguments to find a Video
+     * @example
+     * // Get one Video
+     * const video = await prisma.video.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends VideoFindUniqueOrThrowArgs>(args: SelectSubset<T, VideoFindUniqueOrThrowArgs<ExtArgs>>): Prisma__VideoClient<$Result.GetResult<Prisma.$VideoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Video that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VideoFindFirstArgs} args - Arguments to find a Video
+     * @example
+     * // Get one Video
+     * const video = await prisma.video.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends VideoFindFirstArgs>(args?: SelectSubset<T, VideoFindFirstArgs<ExtArgs>>): Prisma__VideoClient<$Result.GetResult<Prisma.$VideoPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Video that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VideoFindFirstOrThrowArgs} args - Arguments to find a Video
+     * @example
+     * // Get one Video
+     * const video = await prisma.video.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends VideoFindFirstOrThrowArgs>(args?: SelectSubset<T, VideoFindFirstOrThrowArgs<ExtArgs>>): Prisma__VideoClient<$Result.GetResult<Prisma.$VideoPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Videos that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VideoFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Videos
+     * const videos = await prisma.video.findMany()
+     * 
+     * // Get first 10 Videos
+     * const videos = await prisma.video.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const videoWithIdOnly = await prisma.video.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends VideoFindManyArgs>(args?: SelectSubset<T, VideoFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VideoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Video.
+     * @param {VideoCreateArgs} args - Arguments to create a Video.
+     * @example
+     * // Create one Video
+     * const Video = await prisma.video.create({
+     *   data: {
+     *     // ... data to create a Video
+     *   }
+     * })
+     * 
+     */
+    create<T extends VideoCreateArgs>(args: SelectSubset<T, VideoCreateArgs<ExtArgs>>): Prisma__VideoClient<$Result.GetResult<Prisma.$VideoPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Videos.
+     * @param {VideoCreateManyArgs} args - Arguments to create many Videos.
+     * @example
+     * // Create many Videos
+     * const video = await prisma.video.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends VideoCreateManyArgs>(args?: SelectSubset<T, VideoCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Videos and returns the data saved in the database.
+     * @param {VideoCreateManyAndReturnArgs} args - Arguments to create many Videos.
+     * @example
+     * // Create many Videos
+     * const video = await prisma.video.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Videos and only return the `id`
+     * const videoWithIdOnly = await prisma.video.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends VideoCreateManyAndReturnArgs>(args?: SelectSubset<T, VideoCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VideoPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Video.
+     * @param {VideoDeleteArgs} args - Arguments to delete one Video.
+     * @example
+     * // Delete one Video
+     * const Video = await prisma.video.delete({
+     *   where: {
+     *     // ... filter to delete one Video
+     *   }
+     * })
+     * 
+     */
+    delete<T extends VideoDeleteArgs>(args: SelectSubset<T, VideoDeleteArgs<ExtArgs>>): Prisma__VideoClient<$Result.GetResult<Prisma.$VideoPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Video.
+     * @param {VideoUpdateArgs} args - Arguments to update one Video.
+     * @example
+     * // Update one Video
+     * const video = await prisma.video.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends VideoUpdateArgs>(args: SelectSubset<T, VideoUpdateArgs<ExtArgs>>): Prisma__VideoClient<$Result.GetResult<Prisma.$VideoPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Videos.
+     * @param {VideoDeleteManyArgs} args - Arguments to filter Videos to delete.
+     * @example
+     * // Delete a few Videos
+     * const { count } = await prisma.video.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends VideoDeleteManyArgs>(args?: SelectSubset<T, VideoDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Videos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VideoUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Videos
+     * const video = await prisma.video.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends VideoUpdateManyArgs>(args: SelectSubset<T, VideoUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Videos and returns the data updated in the database.
+     * @param {VideoUpdateManyAndReturnArgs} args - Arguments to update many Videos.
+     * @example
+     * // Update many Videos
+     * const video = await prisma.video.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Videos and only return the `id`
+     * const videoWithIdOnly = await prisma.video.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends VideoUpdateManyAndReturnArgs>(args: SelectSubset<T, VideoUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VideoPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Video.
+     * @param {VideoUpsertArgs} args - Arguments to update or create a Video.
+     * @example
+     * // Update or create a Video
+     * const video = await prisma.video.upsert({
+     *   create: {
+     *     // ... data to create a Video
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Video we want to update
+     *   }
+     * })
+     */
+    upsert<T extends VideoUpsertArgs>(args: SelectSubset<T, VideoUpsertArgs<ExtArgs>>): Prisma__VideoClient<$Result.GetResult<Prisma.$VideoPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Videos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VideoCountArgs} args - Arguments to filter Videos to count.
+     * @example
+     * // Count the number of Videos
+     * const count = await prisma.video.count({
+     *   where: {
+     *     // ... the filter for the Videos we want to count
+     *   }
+     * })
+    **/
+    count<T extends VideoCountArgs>(
+      args?: Subset<T, VideoCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], VideoCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Video.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VideoAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends VideoAggregateArgs>(args: Subset<T, VideoAggregateArgs>): Prisma.PrismaPromise<GetVideoAggregateType<T>>
+
+    /**
+     * Group by Video.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VideoGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends VideoGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: VideoGroupByArgs['orderBy'] }
+        : { orderBy?: VideoGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, VideoGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetVideoGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Video model
+   */
+  readonly fields: VideoFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Video.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__VideoClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    createdBy<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    publishJobs<T extends Video$publishJobsArgs<ExtArgs> = {}>(args?: Subset<T, Video$publishJobsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PublishJobPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Video model
+   */
+  interface VideoFieldRefs {
+    readonly id: FieldRef<"Video", 'String'>
+    readonly createdAt: FieldRef<"Video", 'DateTime'>
+    readonly updatedAt: FieldRef<"Video", 'DateTime'>
+    readonly s3Key: FieldRef<"Video", 'String'>
+    readonly s3Bucket: FieldRef<"Video", 'String'>
+    readonly fileName: FieldRef<"Video", 'String'>
+    readonly fileSize: FieldRef<"Video", 'BigInt'>
+    readonly mimeType: FieldRef<"Video", 'String'>
+    readonly duration: FieldRef<"Video", 'Int'>
+    readonly title: FieldRef<"Video", 'String'>
+    readonly description: FieldRef<"Video", 'String'>
+    readonly tags: FieldRef<"Video", 'String'>
+    readonly thumbnailUrl: FieldRef<"Video", 'String'>
+    readonly privacy: FieldRef<"Video", 'VideoPrivacy'>
+    readonly createdById: FieldRef<"Video", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Video findUnique
+   */
+  export type VideoFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Video
+     */
+    select?: VideoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Video
+     */
+    omit?: VideoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VideoInclude<ExtArgs> | null
+    /**
+     * Filter, which Video to fetch.
+     */
+    where: VideoWhereUniqueInput
+  }
+
+  /**
+   * Video findUniqueOrThrow
+   */
+  export type VideoFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Video
+     */
+    select?: VideoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Video
+     */
+    omit?: VideoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VideoInclude<ExtArgs> | null
+    /**
+     * Filter, which Video to fetch.
+     */
+    where: VideoWhereUniqueInput
+  }
+
+  /**
+   * Video findFirst
+   */
+  export type VideoFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Video
+     */
+    select?: VideoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Video
+     */
+    omit?: VideoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VideoInclude<ExtArgs> | null
+    /**
+     * Filter, which Video to fetch.
+     */
+    where?: VideoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Videos to fetch.
+     */
+    orderBy?: VideoOrderByWithRelationInput | VideoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Videos.
+     */
+    cursor?: VideoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Videos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Videos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Videos.
+     */
+    distinct?: VideoScalarFieldEnum | VideoScalarFieldEnum[]
+  }
+
+  /**
+   * Video findFirstOrThrow
+   */
+  export type VideoFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Video
+     */
+    select?: VideoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Video
+     */
+    omit?: VideoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VideoInclude<ExtArgs> | null
+    /**
+     * Filter, which Video to fetch.
+     */
+    where?: VideoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Videos to fetch.
+     */
+    orderBy?: VideoOrderByWithRelationInput | VideoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Videos.
+     */
+    cursor?: VideoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Videos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Videos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Videos.
+     */
+    distinct?: VideoScalarFieldEnum | VideoScalarFieldEnum[]
+  }
+
+  /**
+   * Video findMany
+   */
+  export type VideoFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Video
+     */
+    select?: VideoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Video
+     */
+    omit?: VideoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VideoInclude<ExtArgs> | null
+    /**
+     * Filter, which Videos to fetch.
+     */
+    where?: VideoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Videos to fetch.
+     */
+    orderBy?: VideoOrderByWithRelationInput | VideoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Videos.
+     */
+    cursor?: VideoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Videos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Videos.
+     */
+    skip?: number
+    distinct?: VideoScalarFieldEnum | VideoScalarFieldEnum[]
+  }
+
+  /**
+   * Video create
+   */
+  export type VideoCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Video
+     */
+    select?: VideoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Video
+     */
+    omit?: VideoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VideoInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Video.
+     */
+    data: XOR<VideoCreateInput, VideoUncheckedCreateInput>
+  }
+
+  /**
+   * Video createMany
+   */
+  export type VideoCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Videos.
+     */
+    data: VideoCreateManyInput | VideoCreateManyInput[]
+  }
+
+  /**
+   * Video createManyAndReturn
+   */
+  export type VideoCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Video
+     */
+    select?: VideoSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Video
+     */
+    omit?: VideoOmit<ExtArgs> | null
+    /**
+     * The data used to create many Videos.
+     */
+    data: VideoCreateManyInput | VideoCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VideoIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Video update
+   */
+  export type VideoUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Video
+     */
+    select?: VideoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Video
+     */
+    omit?: VideoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VideoInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Video.
+     */
+    data: XOR<VideoUpdateInput, VideoUncheckedUpdateInput>
+    /**
+     * Choose, which Video to update.
+     */
+    where: VideoWhereUniqueInput
+  }
+
+  /**
+   * Video updateMany
+   */
+  export type VideoUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Videos.
+     */
+    data: XOR<VideoUpdateManyMutationInput, VideoUncheckedUpdateManyInput>
+    /**
+     * Filter which Videos to update
+     */
+    where?: VideoWhereInput
+    /**
+     * Limit how many Videos to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Video updateManyAndReturn
+   */
+  export type VideoUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Video
+     */
+    select?: VideoSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Video
+     */
+    omit?: VideoOmit<ExtArgs> | null
+    /**
+     * The data used to update Videos.
+     */
+    data: XOR<VideoUpdateManyMutationInput, VideoUncheckedUpdateManyInput>
+    /**
+     * Filter which Videos to update
+     */
+    where?: VideoWhereInput
+    /**
+     * Limit how many Videos to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VideoIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Video upsert
+   */
+  export type VideoUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Video
+     */
+    select?: VideoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Video
+     */
+    omit?: VideoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VideoInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Video to update in case it exists.
+     */
+    where: VideoWhereUniqueInput
+    /**
+     * In case the Video found by the `where` argument doesn't exist, create a new Video with this data.
+     */
+    create: XOR<VideoCreateInput, VideoUncheckedCreateInput>
+    /**
+     * In case the Video was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<VideoUpdateInput, VideoUncheckedUpdateInput>
+  }
+
+  /**
+   * Video delete
+   */
+  export type VideoDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Video
+     */
+    select?: VideoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Video
+     */
+    omit?: VideoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VideoInclude<ExtArgs> | null
+    /**
+     * Filter which Video to delete.
+     */
+    where: VideoWhereUniqueInput
+  }
+
+  /**
+   * Video deleteMany
+   */
+  export type VideoDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Videos to delete
+     */
+    where?: VideoWhereInput
+    /**
+     * Limit how many Videos to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Video.publishJobs
+   */
+  export type Video$publishJobsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PublishJob
+     */
+    select?: PublishJobSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PublishJob
+     */
+    omit?: PublishJobOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PublishJobInclude<ExtArgs> | null
+    where?: PublishJobWhereInput
+    orderBy?: PublishJobOrderByWithRelationInput | PublishJobOrderByWithRelationInput[]
+    cursor?: PublishJobWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PublishJobScalarFieldEnum | PublishJobScalarFieldEnum[]
+  }
+
+  /**
+   * Video without action
+   */
+  export type VideoDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Video
+     */
+    select?: VideoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Video
+     */
+    omit?: VideoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VideoInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model PlatformConnection
+   */
+
+  export type AggregatePlatformConnection = {
+    _count: PlatformConnectionCountAggregateOutputType | null
+    _min: PlatformConnectionMinAggregateOutputType | null
+    _max: PlatformConnectionMaxAggregateOutputType | null
+  }
+
+  export type PlatformConnectionMinAggregateOutputType = {
+    id: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    platform: $Enums.Platform | null
+    platformUserId: string | null
+    platformUsername: string | null
+    accessToken: string | null
+    refreshToken: string | null
+    tokenExpiry: Date | null
+    isActive: boolean | null
+    userId: string | null
+  }
+
+  export type PlatformConnectionMaxAggregateOutputType = {
+    id: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    platform: $Enums.Platform | null
+    platformUserId: string | null
+    platformUsername: string | null
+    accessToken: string | null
+    refreshToken: string | null
+    tokenExpiry: Date | null
+    isActive: boolean | null
+    userId: string | null
+  }
+
+  export type PlatformConnectionCountAggregateOutputType = {
+    id: number
+    createdAt: number
+    updatedAt: number
+    platform: number
+    platformUserId: number
+    platformUsername: number
+    accessToken: number
+    refreshToken: number
+    tokenExpiry: number
+    metadata: number
+    isActive: number
+    userId: number
+    _all: number
+  }
+
+
+  export type PlatformConnectionMinAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    platform?: true
+    platformUserId?: true
+    platformUsername?: true
+    accessToken?: true
+    refreshToken?: true
+    tokenExpiry?: true
+    isActive?: true
+    userId?: true
+  }
+
+  export type PlatformConnectionMaxAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    platform?: true
+    platformUserId?: true
+    platformUsername?: true
+    accessToken?: true
+    refreshToken?: true
+    tokenExpiry?: true
+    isActive?: true
+    userId?: true
+  }
+
+  export type PlatformConnectionCountAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    platform?: true
+    platformUserId?: true
+    platformUsername?: true
+    accessToken?: true
+    refreshToken?: true
+    tokenExpiry?: true
+    metadata?: true
+    isActive?: true
+    userId?: true
+    _all?: true
+  }
+
+  export type PlatformConnectionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PlatformConnection to aggregate.
+     */
+    where?: PlatformConnectionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PlatformConnections to fetch.
+     */
+    orderBy?: PlatformConnectionOrderByWithRelationInput | PlatformConnectionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PlatformConnectionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PlatformConnections from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PlatformConnections.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned PlatformConnections
+    **/
+    _count?: true | PlatformConnectionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PlatformConnectionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PlatformConnectionMaxAggregateInputType
+  }
+
+  export type GetPlatformConnectionAggregateType<T extends PlatformConnectionAggregateArgs> = {
+        [P in keyof T & keyof AggregatePlatformConnection]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePlatformConnection[P]>
+      : GetScalarType<T[P], AggregatePlatformConnection[P]>
+  }
+
+
+
+
+  export type PlatformConnectionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PlatformConnectionWhereInput
+    orderBy?: PlatformConnectionOrderByWithAggregationInput | PlatformConnectionOrderByWithAggregationInput[]
+    by: PlatformConnectionScalarFieldEnum[] | PlatformConnectionScalarFieldEnum
+    having?: PlatformConnectionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PlatformConnectionCountAggregateInputType | true
+    _min?: PlatformConnectionMinAggregateInputType
+    _max?: PlatformConnectionMaxAggregateInputType
+  }
+
+  export type PlatformConnectionGroupByOutputType = {
+    id: string
+    createdAt: Date
+    updatedAt: Date
+    platform: $Enums.Platform
+    platformUserId: string
+    platformUsername: string | null
+    accessToken: string
+    refreshToken: string | null
+    tokenExpiry: Date | null
+    metadata: JsonValue | null
+    isActive: boolean
+    userId: string
+    _count: PlatformConnectionCountAggregateOutputType | null
+    _min: PlatformConnectionMinAggregateOutputType | null
+    _max: PlatformConnectionMaxAggregateOutputType | null
+  }
+
+  type GetPlatformConnectionGroupByPayload<T extends PlatformConnectionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PlatformConnectionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PlatformConnectionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PlatformConnectionGroupByOutputType[P]>
+            : GetScalarType<T[P], PlatformConnectionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PlatformConnectionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    platform?: boolean
+    platformUserId?: boolean
+    platformUsername?: boolean
+    accessToken?: boolean
+    refreshToken?: boolean
+    tokenExpiry?: boolean
+    metadata?: boolean
+    isActive?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    publishJobs?: boolean | PlatformConnection$publishJobsArgs<ExtArgs>
+    _count?: boolean | PlatformConnectionCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["platformConnection"]>
+
+  export type PlatformConnectionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    platform?: boolean
+    platformUserId?: boolean
+    platformUsername?: boolean
+    accessToken?: boolean
+    refreshToken?: boolean
+    tokenExpiry?: boolean
+    metadata?: boolean
+    isActive?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["platformConnection"]>
+
+  export type PlatformConnectionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    platform?: boolean
+    platformUserId?: boolean
+    platformUsername?: boolean
+    accessToken?: boolean
+    refreshToken?: boolean
+    tokenExpiry?: boolean
+    metadata?: boolean
+    isActive?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["platformConnection"]>
+
+  export type PlatformConnectionSelectScalar = {
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    platform?: boolean
+    platformUserId?: boolean
+    platformUsername?: boolean
+    accessToken?: boolean
+    refreshToken?: boolean
+    tokenExpiry?: boolean
+    metadata?: boolean
+    isActive?: boolean
+    userId?: boolean
+  }
+
+  export type PlatformConnectionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "platform" | "platformUserId" | "platformUsername" | "accessToken" | "refreshToken" | "tokenExpiry" | "metadata" | "isActive" | "userId", ExtArgs["result"]["platformConnection"]>
+  export type PlatformConnectionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    publishJobs?: boolean | PlatformConnection$publishJobsArgs<ExtArgs>
+    _count?: boolean | PlatformConnectionCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type PlatformConnectionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type PlatformConnectionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $PlatformConnectionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "PlatformConnection"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      publishJobs: Prisma.$PublishJobPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      createdAt: Date
+      updatedAt: Date
+      platform: $Enums.Platform
+      platformUserId: string
+      platformUsername: string | null
+      accessToken: string
+      refreshToken: string | null
+      tokenExpiry: Date | null
+      metadata: Prisma.JsonValue | null
+      isActive: boolean
+      userId: string
+    }, ExtArgs["result"]["platformConnection"]>
+    composites: {}
+  }
+
+  type PlatformConnectionGetPayload<S extends boolean | null | undefined | PlatformConnectionDefaultArgs> = $Result.GetResult<Prisma.$PlatformConnectionPayload, S>
+
+  type PlatformConnectionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<PlatformConnectionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: PlatformConnectionCountAggregateInputType | true
+    }
+
+  export interface PlatformConnectionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['PlatformConnection'], meta: { name: 'PlatformConnection' } }
+    /**
+     * Find zero or one PlatformConnection that matches the filter.
+     * @param {PlatformConnectionFindUniqueArgs} args - Arguments to find a PlatformConnection
+     * @example
+     * // Get one PlatformConnection
+     * const platformConnection = await prisma.platformConnection.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PlatformConnectionFindUniqueArgs>(args: SelectSubset<T, PlatformConnectionFindUniqueArgs<ExtArgs>>): Prisma__PlatformConnectionClient<$Result.GetResult<Prisma.$PlatformConnectionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one PlatformConnection that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {PlatformConnectionFindUniqueOrThrowArgs} args - Arguments to find a PlatformConnection
+     * @example
+     * // Get one PlatformConnection
+     * const platformConnection = await prisma.platformConnection.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PlatformConnectionFindUniqueOrThrowArgs>(args: SelectSubset<T, PlatformConnectionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PlatformConnectionClient<$Result.GetResult<Prisma.$PlatformConnectionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PlatformConnection that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PlatformConnectionFindFirstArgs} args - Arguments to find a PlatformConnection
+     * @example
+     * // Get one PlatformConnection
+     * const platformConnection = await prisma.platformConnection.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PlatformConnectionFindFirstArgs>(args?: SelectSubset<T, PlatformConnectionFindFirstArgs<ExtArgs>>): Prisma__PlatformConnectionClient<$Result.GetResult<Prisma.$PlatformConnectionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PlatformConnection that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PlatformConnectionFindFirstOrThrowArgs} args - Arguments to find a PlatformConnection
+     * @example
+     * // Get one PlatformConnection
+     * const platformConnection = await prisma.platformConnection.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PlatformConnectionFindFirstOrThrowArgs>(args?: SelectSubset<T, PlatformConnectionFindFirstOrThrowArgs<ExtArgs>>): Prisma__PlatformConnectionClient<$Result.GetResult<Prisma.$PlatformConnectionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more PlatformConnections that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PlatformConnectionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all PlatformConnections
+     * const platformConnections = await prisma.platformConnection.findMany()
+     * 
+     * // Get first 10 PlatformConnections
+     * const platformConnections = await prisma.platformConnection.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const platformConnectionWithIdOnly = await prisma.platformConnection.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PlatformConnectionFindManyArgs>(args?: SelectSubset<T, PlatformConnectionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlatformConnectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a PlatformConnection.
+     * @param {PlatformConnectionCreateArgs} args - Arguments to create a PlatformConnection.
+     * @example
+     * // Create one PlatformConnection
+     * const PlatformConnection = await prisma.platformConnection.create({
+     *   data: {
+     *     // ... data to create a PlatformConnection
+     *   }
+     * })
+     * 
+     */
+    create<T extends PlatformConnectionCreateArgs>(args: SelectSubset<T, PlatformConnectionCreateArgs<ExtArgs>>): Prisma__PlatformConnectionClient<$Result.GetResult<Prisma.$PlatformConnectionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many PlatformConnections.
+     * @param {PlatformConnectionCreateManyArgs} args - Arguments to create many PlatformConnections.
+     * @example
+     * // Create many PlatformConnections
+     * const platformConnection = await prisma.platformConnection.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PlatformConnectionCreateManyArgs>(args?: SelectSubset<T, PlatformConnectionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many PlatformConnections and returns the data saved in the database.
+     * @param {PlatformConnectionCreateManyAndReturnArgs} args - Arguments to create many PlatformConnections.
+     * @example
+     * // Create many PlatformConnections
+     * const platformConnection = await prisma.platformConnection.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many PlatformConnections and only return the `id`
+     * const platformConnectionWithIdOnly = await prisma.platformConnection.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends PlatformConnectionCreateManyAndReturnArgs>(args?: SelectSubset<T, PlatformConnectionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlatformConnectionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a PlatformConnection.
+     * @param {PlatformConnectionDeleteArgs} args - Arguments to delete one PlatformConnection.
+     * @example
+     * // Delete one PlatformConnection
+     * const PlatformConnection = await prisma.platformConnection.delete({
+     *   where: {
+     *     // ... filter to delete one PlatformConnection
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PlatformConnectionDeleteArgs>(args: SelectSubset<T, PlatformConnectionDeleteArgs<ExtArgs>>): Prisma__PlatformConnectionClient<$Result.GetResult<Prisma.$PlatformConnectionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one PlatformConnection.
+     * @param {PlatformConnectionUpdateArgs} args - Arguments to update one PlatformConnection.
+     * @example
+     * // Update one PlatformConnection
+     * const platformConnection = await prisma.platformConnection.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PlatformConnectionUpdateArgs>(args: SelectSubset<T, PlatformConnectionUpdateArgs<ExtArgs>>): Prisma__PlatformConnectionClient<$Result.GetResult<Prisma.$PlatformConnectionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more PlatformConnections.
+     * @param {PlatformConnectionDeleteManyArgs} args - Arguments to filter PlatformConnections to delete.
+     * @example
+     * // Delete a few PlatformConnections
+     * const { count } = await prisma.platformConnection.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PlatformConnectionDeleteManyArgs>(args?: SelectSubset<T, PlatformConnectionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PlatformConnections.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PlatformConnectionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many PlatformConnections
+     * const platformConnection = await prisma.platformConnection.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PlatformConnectionUpdateManyArgs>(args: SelectSubset<T, PlatformConnectionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PlatformConnections and returns the data updated in the database.
+     * @param {PlatformConnectionUpdateManyAndReturnArgs} args - Arguments to update many PlatformConnections.
+     * @example
+     * // Update many PlatformConnections
+     * const platformConnection = await prisma.platformConnection.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more PlatformConnections and only return the `id`
+     * const platformConnectionWithIdOnly = await prisma.platformConnection.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends PlatformConnectionUpdateManyAndReturnArgs>(args: SelectSubset<T, PlatformConnectionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlatformConnectionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one PlatformConnection.
+     * @param {PlatformConnectionUpsertArgs} args - Arguments to update or create a PlatformConnection.
+     * @example
+     * // Update or create a PlatformConnection
+     * const platformConnection = await prisma.platformConnection.upsert({
+     *   create: {
+     *     // ... data to create a PlatformConnection
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the PlatformConnection we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PlatformConnectionUpsertArgs>(args: SelectSubset<T, PlatformConnectionUpsertArgs<ExtArgs>>): Prisma__PlatformConnectionClient<$Result.GetResult<Prisma.$PlatformConnectionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of PlatformConnections.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PlatformConnectionCountArgs} args - Arguments to filter PlatformConnections to count.
+     * @example
+     * // Count the number of PlatformConnections
+     * const count = await prisma.platformConnection.count({
+     *   where: {
+     *     // ... the filter for the PlatformConnections we want to count
+     *   }
+     * })
+    **/
+    count<T extends PlatformConnectionCountArgs>(
+      args?: Subset<T, PlatformConnectionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PlatformConnectionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a PlatformConnection.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PlatformConnectionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PlatformConnectionAggregateArgs>(args: Subset<T, PlatformConnectionAggregateArgs>): Prisma.PrismaPromise<GetPlatformConnectionAggregateType<T>>
+
+    /**
+     * Group by PlatformConnection.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PlatformConnectionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PlatformConnectionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PlatformConnectionGroupByArgs['orderBy'] }
+        : { orderBy?: PlatformConnectionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PlatformConnectionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPlatformConnectionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the PlatformConnection model
+   */
+  readonly fields: PlatformConnectionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for PlatformConnection.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PlatformConnectionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    publishJobs<T extends PlatformConnection$publishJobsArgs<ExtArgs> = {}>(args?: Subset<T, PlatformConnection$publishJobsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PublishJobPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the PlatformConnection model
+   */
+  interface PlatformConnectionFieldRefs {
+    readonly id: FieldRef<"PlatformConnection", 'String'>
+    readonly createdAt: FieldRef<"PlatformConnection", 'DateTime'>
+    readonly updatedAt: FieldRef<"PlatformConnection", 'DateTime'>
+    readonly platform: FieldRef<"PlatformConnection", 'Platform'>
+    readonly platformUserId: FieldRef<"PlatformConnection", 'String'>
+    readonly platformUsername: FieldRef<"PlatformConnection", 'String'>
+    readonly accessToken: FieldRef<"PlatformConnection", 'String'>
+    readonly refreshToken: FieldRef<"PlatformConnection", 'String'>
+    readonly tokenExpiry: FieldRef<"PlatformConnection", 'DateTime'>
+    readonly metadata: FieldRef<"PlatformConnection", 'Json'>
+    readonly isActive: FieldRef<"PlatformConnection", 'Boolean'>
+    readonly userId: FieldRef<"PlatformConnection", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * PlatformConnection findUnique
+   */
+  export type PlatformConnectionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlatformConnection
+     */
+    select?: PlatformConnectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlatformConnection
+     */
+    omit?: PlatformConnectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlatformConnectionInclude<ExtArgs> | null
+    /**
+     * Filter, which PlatformConnection to fetch.
+     */
+    where: PlatformConnectionWhereUniqueInput
+  }
+
+  /**
+   * PlatformConnection findUniqueOrThrow
+   */
+  export type PlatformConnectionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlatformConnection
+     */
+    select?: PlatformConnectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlatformConnection
+     */
+    omit?: PlatformConnectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlatformConnectionInclude<ExtArgs> | null
+    /**
+     * Filter, which PlatformConnection to fetch.
+     */
+    where: PlatformConnectionWhereUniqueInput
+  }
+
+  /**
+   * PlatformConnection findFirst
+   */
+  export type PlatformConnectionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlatformConnection
+     */
+    select?: PlatformConnectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlatformConnection
+     */
+    omit?: PlatformConnectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlatformConnectionInclude<ExtArgs> | null
+    /**
+     * Filter, which PlatformConnection to fetch.
+     */
+    where?: PlatformConnectionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PlatformConnections to fetch.
+     */
+    orderBy?: PlatformConnectionOrderByWithRelationInput | PlatformConnectionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PlatformConnections.
+     */
+    cursor?: PlatformConnectionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PlatformConnections from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PlatformConnections.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PlatformConnections.
+     */
+    distinct?: PlatformConnectionScalarFieldEnum | PlatformConnectionScalarFieldEnum[]
+  }
+
+  /**
+   * PlatformConnection findFirstOrThrow
+   */
+  export type PlatformConnectionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlatformConnection
+     */
+    select?: PlatformConnectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlatformConnection
+     */
+    omit?: PlatformConnectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlatformConnectionInclude<ExtArgs> | null
+    /**
+     * Filter, which PlatformConnection to fetch.
+     */
+    where?: PlatformConnectionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PlatformConnections to fetch.
+     */
+    orderBy?: PlatformConnectionOrderByWithRelationInput | PlatformConnectionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PlatformConnections.
+     */
+    cursor?: PlatformConnectionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PlatformConnections from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PlatformConnections.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PlatformConnections.
+     */
+    distinct?: PlatformConnectionScalarFieldEnum | PlatformConnectionScalarFieldEnum[]
+  }
+
+  /**
+   * PlatformConnection findMany
+   */
+  export type PlatformConnectionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlatformConnection
+     */
+    select?: PlatformConnectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlatformConnection
+     */
+    omit?: PlatformConnectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlatformConnectionInclude<ExtArgs> | null
+    /**
+     * Filter, which PlatformConnections to fetch.
+     */
+    where?: PlatformConnectionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PlatformConnections to fetch.
+     */
+    orderBy?: PlatformConnectionOrderByWithRelationInput | PlatformConnectionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing PlatformConnections.
+     */
+    cursor?: PlatformConnectionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PlatformConnections from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PlatformConnections.
+     */
+    skip?: number
+    distinct?: PlatformConnectionScalarFieldEnum | PlatformConnectionScalarFieldEnum[]
+  }
+
+  /**
+   * PlatformConnection create
+   */
+  export type PlatformConnectionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlatformConnection
+     */
+    select?: PlatformConnectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlatformConnection
+     */
+    omit?: PlatformConnectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlatformConnectionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a PlatformConnection.
+     */
+    data: XOR<PlatformConnectionCreateInput, PlatformConnectionUncheckedCreateInput>
+  }
+
+  /**
+   * PlatformConnection createMany
+   */
+  export type PlatformConnectionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many PlatformConnections.
+     */
+    data: PlatformConnectionCreateManyInput | PlatformConnectionCreateManyInput[]
+  }
+
+  /**
+   * PlatformConnection createManyAndReturn
+   */
+  export type PlatformConnectionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlatformConnection
+     */
+    select?: PlatformConnectionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlatformConnection
+     */
+    omit?: PlatformConnectionOmit<ExtArgs> | null
+    /**
+     * The data used to create many PlatformConnections.
+     */
+    data: PlatformConnectionCreateManyInput | PlatformConnectionCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlatformConnectionIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * PlatformConnection update
+   */
+  export type PlatformConnectionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlatformConnection
+     */
+    select?: PlatformConnectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlatformConnection
+     */
+    omit?: PlatformConnectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlatformConnectionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a PlatformConnection.
+     */
+    data: XOR<PlatformConnectionUpdateInput, PlatformConnectionUncheckedUpdateInput>
+    /**
+     * Choose, which PlatformConnection to update.
+     */
+    where: PlatformConnectionWhereUniqueInput
+  }
+
+  /**
+   * PlatformConnection updateMany
+   */
+  export type PlatformConnectionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update PlatformConnections.
+     */
+    data: XOR<PlatformConnectionUpdateManyMutationInput, PlatformConnectionUncheckedUpdateManyInput>
+    /**
+     * Filter which PlatformConnections to update
+     */
+    where?: PlatformConnectionWhereInput
+    /**
+     * Limit how many PlatformConnections to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * PlatformConnection updateManyAndReturn
+   */
+  export type PlatformConnectionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlatformConnection
+     */
+    select?: PlatformConnectionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlatformConnection
+     */
+    omit?: PlatformConnectionOmit<ExtArgs> | null
+    /**
+     * The data used to update PlatformConnections.
+     */
+    data: XOR<PlatformConnectionUpdateManyMutationInput, PlatformConnectionUncheckedUpdateManyInput>
+    /**
+     * Filter which PlatformConnections to update
+     */
+    where?: PlatformConnectionWhereInput
+    /**
+     * Limit how many PlatformConnections to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlatformConnectionIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * PlatformConnection upsert
+   */
+  export type PlatformConnectionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlatformConnection
+     */
+    select?: PlatformConnectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlatformConnection
+     */
+    omit?: PlatformConnectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlatformConnectionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the PlatformConnection to update in case it exists.
+     */
+    where: PlatformConnectionWhereUniqueInput
+    /**
+     * In case the PlatformConnection found by the `where` argument doesn't exist, create a new PlatformConnection with this data.
+     */
+    create: XOR<PlatformConnectionCreateInput, PlatformConnectionUncheckedCreateInput>
+    /**
+     * In case the PlatformConnection was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PlatformConnectionUpdateInput, PlatformConnectionUncheckedUpdateInput>
+  }
+
+  /**
+   * PlatformConnection delete
+   */
+  export type PlatformConnectionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlatformConnection
+     */
+    select?: PlatformConnectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlatformConnection
+     */
+    omit?: PlatformConnectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlatformConnectionInclude<ExtArgs> | null
+    /**
+     * Filter which PlatformConnection to delete.
+     */
+    where: PlatformConnectionWhereUniqueInput
+  }
+
+  /**
+   * PlatformConnection deleteMany
+   */
+  export type PlatformConnectionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PlatformConnections to delete
+     */
+    where?: PlatformConnectionWhereInput
+    /**
+     * Limit how many PlatformConnections to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * PlatformConnection.publishJobs
+   */
+  export type PlatformConnection$publishJobsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PublishJob
+     */
+    select?: PublishJobSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PublishJob
+     */
+    omit?: PublishJobOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PublishJobInclude<ExtArgs> | null
+    where?: PublishJobWhereInput
+    orderBy?: PublishJobOrderByWithRelationInput | PublishJobOrderByWithRelationInput[]
+    cursor?: PublishJobWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PublishJobScalarFieldEnum | PublishJobScalarFieldEnum[]
+  }
+
+  /**
+   * PlatformConnection without action
+   */
+  export type PlatformConnectionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PlatformConnection
+     */
+    select?: PlatformConnectionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PlatformConnection
+     */
+    omit?: PlatformConnectionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlatformConnectionInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model PublishJob
+   */
+
+  export type AggregatePublishJob = {
+    _count: PublishJobCountAggregateOutputType | null
+    _avg: PublishJobAvgAggregateOutputType | null
+    _sum: PublishJobSumAggregateOutputType | null
+    _min: PublishJobMinAggregateOutputType | null
+    _max: PublishJobMaxAggregateOutputType | null
+  }
+
+  export type PublishJobAvgAggregateOutputType = {
+    retryCount: number | null
+  }
+
+  export type PublishJobSumAggregateOutputType = {
+    retryCount: number | null
+  }
+
+  export type PublishJobMinAggregateOutputType = {
+    id: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    platform: $Enums.Platform | null
+    status: $Enums.PublishStatus | null
+    title: string | null
+    description: string | null
+    tags: string | null
+    privacy: $Enums.VideoPrivacy | null
+    scheduledFor: Date | null
+    startedAt: Date | null
+    completedAt: Date | null
+    platformVideoId: string | null
+    platformVideoUrl: string | null
+    errorMessage: string | null
+    retryCount: number | null
+    videoId: string | null
+    platformConnectionId: string | null
+    createdById: string | null
+  }
+
+  export type PublishJobMaxAggregateOutputType = {
+    id: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    platform: $Enums.Platform | null
+    status: $Enums.PublishStatus | null
+    title: string | null
+    description: string | null
+    tags: string | null
+    privacy: $Enums.VideoPrivacy | null
+    scheduledFor: Date | null
+    startedAt: Date | null
+    completedAt: Date | null
+    platformVideoId: string | null
+    platformVideoUrl: string | null
+    errorMessage: string | null
+    retryCount: number | null
+    videoId: string | null
+    platformConnectionId: string | null
+    createdById: string | null
+  }
+
+  export type PublishJobCountAggregateOutputType = {
+    id: number
+    createdAt: number
+    updatedAt: number
+    platform: number
+    status: number
+    title: number
+    description: number
+    tags: number
+    privacy: number
+    scheduledFor: number
+    startedAt: number
+    completedAt: number
+    platformVideoId: number
+    platformVideoUrl: number
+    errorMessage: number
+    retryCount: number
+    videoId: number
+    platformConnectionId: number
+    createdById: number
+    _all: number
+  }
+
+
+  export type PublishJobAvgAggregateInputType = {
+    retryCount?: true
+  }
+
+  export type PublishJobSumAggregateInputType = {
+    retryCount?: true
+  }
+
+  export type PublishJobMinAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    platform?: true
+    status?: true
+    title?: true
+    description?: true
+    tags?: true
+    privacy?: true
+    scheduledFor?: true
+    startedAt?: true
+    completedAt?: true
+    platformVideoId?: true
+    platformVideoUrl?: true
+    errorMessage?: true
+    retryCount?: true
+    videoId?: true
+    platformConnectionId?: true
+    createdById?: true
+  }
+
+  export type PublishJobMaxAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    platform?: true
+    status?: true
+    title?: true
+    description?: true
+    tags?: true
+    privacy?: true
+    scheduledFor?: true
+    startedAt?: true
+    completedAt?: true
+    platformVideoId?: true
+    platformVideoUrl?: true
+    errorMessage?: true
+    retryCount?: true
+    videoId?: true
+    platformConnectionId?: true
+    createdById?: true
+  }
+
+  export type PublishJobCountAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    platform?: true
+    status?: true
+    title?: true
+    description?: true
+    tags?: true
+    privacy?: true
+    scheduledFor?: true
+    startedAt?: true
+    completedAt?: true
+    platformVideoId?: true
+    platformVideoUrl?: true
+    errorMessage?: true
+    retryCount?: true
+    videoId?: true
+    platformConnectionId?: true
+    createdById?: true
+    _all?: true
+  }
+
+  export type PublishJobAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PublishJob to aggregate.
+     */
+    where?: PublishJobWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PublishJobs to fetch.
+     */
+    orderBy?: PublishJobOrderByWithRelationInput | PublishJobOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PublishJobWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PublishJobs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PublishJobs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned PublishJobs
+    **/
+    _count?: true | PublishJobCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: PublishJobAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: PublishJobSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PublishJobMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PublishJobMaxAggregateInputType
+  }
+
+  export type GetPublishJobAggregateType<T extends PublishJobAggregateArgs> = {
+        [P in keyof T & keyof AggregatePublishJob]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePublishJob[P]>
+      : GetScalarType<T[P], AggregatePublishJob[P]>
+  }
+
+
+
+
+  export type PublishJobGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PublishJobWhereInput
+    orderBy?: PublishJobOrderByWithAggregationInput | PublishJobOrderByWithAggregationInput[]
+    by: PublishJobScalarFieldEnum[] | PublishJobScalarFieldEnum
+    having?: PublishJobScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PublishJobCountAggregateInputType | true
+    _avg?: PublishJobAvgAggregateInputType
+    _sum?: PublishJobSumAggregateInputType
+    _min?: PublishJobMinAggregateInputType
+    _max?: PublishJobMaxAggregateInputType
+  }
+
+  export type PublishJobGroupByOutputType = {
+    id: string
+    createdAt: Date
+    updatedAt: Date
+    platform: $Enums.Platform
+    status: $Enums.PublishStatus
+    title: string | null
+    description: string | null
+    tags: string | null
+    privacy: $Enums.VideoPrivacy | null
+    scheduledFor: Date | null
+    startedAt: Date | null
+    completedAt: Date | null
+    platformVideoId: string | null
+    platformVideoUrl: string | null
+    errorMessage: string | null
+    retryCount: number
+    videoId: string
+    platformConnectionId: string
+    createdById: string
+    _count: PublishJobCountAggregateOutputType | null
+    _avg: PublishJobAvgAggregateOutputType | null
+    _sum: PublishJobSumAggregateOutputType | null
+    _min: PublishJobMinAggregateOutputType | null
+    _max: PublishJobMaxAggregateOutputType | null
+  }
+
+  type GetPublishJobGroupByPayload<T extends PublishJobGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PublishJobGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PublishJobGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PublishJobGroupByOutputType[P]>
+            : GetScalarType<T[P], PublishJobGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PublishJobSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    platform?: boolean
+    status?: boolean
+    title?: boolean
+    description?: boolean
+    tags?: boolean
+    privacy?: boolean
+    scheduledFor?: boolean
+    startedAt?: boolean
+    completedAt?: boolean
+    platformVideoId?: boolean
+    platformVideoUrl?: boolean
+    errorMessage?: boolean
+    retryCount?: boolean
+    videoId?: boolean
+    platformConnectionId?: boolean
+    createdById?: boolean
+    video?: boolean | VideoDefaultArgs<ExtArgs>
+    platformConnection?: boolean | PlatformConnectionDefaultArgs<ExtArgs>
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["publishJob"]>
+
+  export type PublishJobSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    platform?: boolean
+    status?: boolean
+    title?: boolean
+    description?: boolean
+    tags?: boolean
+    privacy?: boolean
+    scheduledFor?: boolean
+    startedAt?: boolean
+    completedAt?: boolean
+    platformVideoId?: boolean
+    platformVideoUrl?: boolean
+    errorMessage?: boolean
+    retryCount?: boolean
+    videoId?: boolean
+    platformConnectionId?: boolean
+    createdById?: boolean
+    video?: boolean | VideoDefaultArgs<ExtArgs>
+    platformConnection?: boolean | PlatformConnectionDefaultArgs<ExtArgs>
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["publishJob"]>
+
+  export type PublishJobSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    platform?: boolean
+    status?: boolean
+    title?: boolean
+    description?: boolean
+    tags?: boolean
+    privacy?: boolean
+    scheduledFor?: boolean
+    startedAt?: boolean
+    completedAt?: boolean
+    platformVideoId?: boolean
+    platformVideoUrl?: boolean
+    errorMessage?: boolean
+    retryCount?: boolean
+    videoId?: boolean
+    platformConnectionId?: boolean
+    createdById?: boolean
+    video?: boolean | VideoDefaultArgs<ExtArgs>
+    platformConnection?: boolean | PlatformConnectionDefaultArgs<ExtArgs>
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["publishJob"]>
+
+  export type PublishJobSelectScalar = {
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    platform?: boolean
+    status?: boolean
+    title?: boolean
+    description?: boolean
+    tags?: boolean
+    privacy?: boolean
+    scheduledFor?: boolean
+    startedAt?: boolean
+    completedAt?: boolean
+    platformVideoId?: boolean
+    platformVideoUrl?: boolean
+    errorMessage?: boolean
+    retryCount?: boolean
+    videoId?: boolean
+    platformConnectionId?: boolean
+    createdById?: boolean
+  }
+
+  export type PublishJobOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "platform" | "status" | "title" | "description" | "tags" | "privacy" | "scheduledFor" | "startedAt" | "completedAt" | "platformVideoId" | "platformVideoUrl" | "errorMessage" | "retryCount" | "videoId" | "platformConnectionId" | "createdById", ExtArgs["result"]["publishJob"]>
+  export type PublishJobInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    video?: boolean | VideoDefaultArgs<ExtArgs>
+    platformConnection?: boolean | PlatformConnectionDefaultArgs<ExtArgs>
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type PublishJobIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    video?: boolean | VideoDefaultArgs<ExtArgs>
+    platformConnection?: boolean | PlatformConnectionDefaultArgs<ExtArgs>
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type PublishJobIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    video?: boolean | VideoDefaultArgs<ExtArgs>
+    platformConnection?: boolean | PlatformConnectionDefaultArgs<ExtArgs>
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $PublishJobPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "PublishJob"
+    objects: {
+      video: Prisma.$VideoPayload<ExtArgs>
+      platformConnection: Prisma.$PlatformConnectionPayload<ExtArgs>
+      createdBy: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      createdAt: Date
+      updatedAt: Date
+      platform: $Enums.Platform
+      status: $Enums.PublishStatus
+      title: string | null
+      description: string | null
+      tags: string | null
+      privacy: $Enums.VideoPrivacy | null
+      scheduledFor: Date | null
+      startedAt: Date | null
+      completedAt: Date | null
+      platformVideoId: string | null
+      platformVideoUrl: string | null
+      errorMessage: string | null
+      retryCount: number
+      videoId: string
+      platformConnectionId: string
+      createdById: string
+    }, ExtArgs["result"]["publishJob"]>
+    composites: {}
+  }
+
+  type PublishJobGetPayload<S extends boolean | null | undefined | PublishJobDefaultArgs> = $Result.GetResult<Prisma.$PublishJobPayload, S>
+
+  type PublishJobCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<PublishJobFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: PublishJobCountAggregateInputType | true
+    }
+
+  export interface PublishJobDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['PublishJob'], meta: { name: 'PublishJob' } }
+    /**
+     * Find zero or one PublishJob that matches the filter.
+     * @param {PublishJobFindUniqueArgs} args - Arguments to find a PublishJob
+     * @example
+     * // Get one PublishJob
+     * const publishJob = await prisma.publishJob.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PublishJobFindUniqueArgs>(args: SelectSubset<T, PublishJobFindUniqueArgs<ExtArgs>>): Prisma__PublishJobClient<$Result.GetResult<Prisma.$PublishJobPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one PublishJob that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {PublishJobFindUniqueOrThrowArgs} args - Arguments to find a PublishJob
+     * @example
+     * // Get one PublishJob
+     * const publishJob = await prisma.publishJob.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PublishJobFindUniqueOrThrowArgs>(args: SelectSubset<T, PublishJobFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PublishJobClient<$Result.GetResult<Prisma.$PublishJobPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PublishJob that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PublishJobFindFirstArgs} args - Arguments to find a PublishJob
+     * @example
+     * // Get one PublishJob
+     * const publishJob = await prisma.publishJob.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PublishJobFindFirstArgs>(args?: SelectSubset<T, PublishJobFindFirstArgs<ExtArgs>>): Prisma__PublishJobClient<$Result.GetResult<Prisma.$PublishJobPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PublishJob that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PublishJobFindFirstOrThrowArgs} args - Arguments to find a PublishJob
+     * @example
+     * // Get one PublishJob
+     * const publishJob = await prisma.publishJob.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PublishJobFindFirstOrThrowArgs>(args?: SelectSubset<T, PublishJobFindFirstOrThrowArgs<ExtArgs>>): Prisma__PublishJobClient<$Result.GetResult<Prisma.$PublishJobPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more PublishJobs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PublishJobFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all PublishJobs
+     * const publishJobs = await prisma.publishJob.findMany()
+     * 
+     * // Get first 10 PublishJobs
+     * const publishJobs = await prisma.publishJob.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const publishJobWithIdOnly = await prisma.publishJob.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PublishJobFindManyArgs>(args?: SelectSubset<T, PublishJobFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PublishJobPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a PublishJob.
+     * @param {PublishJobCreateArgs} args - Arguments to create a PublishJob.
+     * @example
+     * // Create one PublishJob
+     * const PublishJob = await prisma.publishJob.create({
+     *   data: {
+     *     // ... data to create a PublishJob
+     *   }
+     * })
+     * 
+     */
+    create<T extends PublishJobCreateArgs>(args: SelectSubset<T, PublishJobCreateArgs<ExtArgs>>): Prisma__PublishJobClient<$Result.GetResult<Prisma.$PublishJobPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many PublishJobs.
+     * @param {PublishJobCreateManyArgs} args - Arguments to create many PublishJobs.
+     * @example
+     * // Create many PublishJobs
+     * const publishJob = await prisma.publishJob.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PublishJobCreateManyArgs>(args?: SelectSubset<T, PublishJobCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many PublishJobs and returns the data saved in the database.
+     * @param {PublishJobCreateManyAndReturnArgs} args - Arguments to create many PublishJobs.
+     * @example
+     * // Create many PublishJobs
+     * const publishJob = await prisma.publishJob.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many PublishJobs and only return the `id`
+     * const publishJobWithIdOnly = await prisma.publishJob.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends PublishJobCreateManyAndReturnArgs>(args?: SelectSubset<T, PublishJobCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PublishJobPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a PublishJob.
+     * @param {PublishJobDeleteArgs} args - Arguments to delete one PublishJob.
+     * @example
+     * // Delete one PublishJob
+     * const PublishJob = await prisma.publishJob.delete({
+     *   where: {
+     *     // ... filter to delete one PublishJob
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PublishJobDeleteArgs>(args: SelectSubset<T, PublishJobDeleteArgs<ExtArgs>>): Prisma__PublishJobClient<$Result.GetResult<Prisma.$PublishJobPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one PublishJob.
+     * @param {PublishJobUpdateArgs} args - Arguments to update one PublishJob.
+     * @example
+     * // Update one PublishJob
+     * const publishJob = await prisma.publishJob.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PublishJobUpdateArgs>(args: SelectSubset<T, PublishJobUpdateArgs<ExtArgs>>): Prisma__PublishJobClient<$Result.GetResult<Prisma.$PublishJobPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more PublishJobs.
+     * @param {PublishJobDeleteManyArgs} args - Arguments to filter PublishJobs to delete.
+     * @example
+     * // Delete a few PublishJobs
+     * const { count } = await prisma.publishJob.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PublishJobDeleteManyArgs>(args?: SelectSubset<T, PublishJobDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PublishJobs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PublishJobUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many PublishJobs
+     * const publishJob = await prisma.publishJob.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PublishJobUpdateManyArgs>(args: SelectSubset<T, PublishJobUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PublishJobs and returns the data updated in the database.
+     * @param {PublishJobUpdateManyAndReturnArgs} args - Arguments to update many PublishJobs.
+     * @example
+     * // Update many PublishJobs
+     * const publishJob = await prisma.publishJob.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more PublishJobs and only return the `id`
+     * const publishJobWithIdOnly = await prisma.publishJob.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends PublishJobUpdateManyAndReturnArgs>(args: SelectSubset<T, PublishJobUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PublishJobPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one PublishJob.
+     * @param {PublishJobUpsertArgs} args - Arguments to update or create a PublishJob.
+     * @example
+     * // Update or create a PublishJob
+     * const publishJob = await prisma.publishJob.upsert({
+     *   create: {
+     *     // ... data to create a PublishJob
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the PublishJob we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PublishJobUpsertArgs>(args: SelectSubset<T, PublishJobUpsertArgs<ExtArgs>>): Prisma__PublishJobClient<$Result.GetResult<Prisma.$PublishJobPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of PublishJobs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PublishJobCountArgs} args - Arguments to filter PublishJobs to count.
+     * @example
+     * // Count the number of PublishJobs
+     * const count = await prisma.publishJob.count({
+     *   where: {
+     *     // ... the filter for the PublishJobs we want to count
+     *   }
+     * })
+    **/
+    count<T extends PublishJobCountArgs>(
+      args?: Subset<T, PublishJobCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PublishJobCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a PublishJob.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PublishJobAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PublishJobAggregateArgs>(args: Subset<T, PublishJobAggregateArgs>): Prisma.PrismaPromise<GetPublishJobAggregateType<T>>
+
+    /**
+     * Group by PublishJob.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PublishJobGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PublishJobGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PublishJobGroupByArgs['orderBy'] }
+        : { orderBy?: PublishJobGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PublishJobGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPublishJobGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the PublishJob model
+   */
+  readonly fields: PublishJobFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for PublishJob.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PublishJobClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    video<T extends VideoDefaultArgs<ExtArgs> = {}>(args?: Subset<T, VideoDefaultArgs<ExtArgs>>): Prisma__VideoClient<$Result.GetResult<Prisma.$VideoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    platformConnection<T extends PlatformConnectionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PlatformConnectionDefaultArgs<ExtArgs>>): Prisma__PlatformConnectionClient<$Result.GetResult<Prisma.$PlatformConnectionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    createdBy<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the PublishJob model
+   */
+  interface PublishJobFieldRefs {
+    readonly id: FieldRef<"PublishJob", 'String'>
+    readonly createdAt: FieldRef<"PublishJob", 'DateTime'>
+    readonly updatedAt: FieldRef<"PublishJob", 'DateTime'>
+    readonly platform: FieldRef<"PublishJob", 'Platform'>
+    readonly status: FieldRef<"PublishJob", 'PublishStatus'>
+    readonly title: FieldRef<"PublishJob", 'String'>
+    readonly description: FieldRef<"PublishJob", 'String'>
+    readonly tags: FieldRef<"PublishJob", 'String'>
+    readonly privacy: FieldRef<"PublishJob", 'VideoPrivacy'>
+    readonly scheduledFor: FieldRef<"PublishJob", 'DateTime'>
+    readonly startedAt: FieldRef<"PublishJob", 'DateTime'>
+    readonly completedAt: FieldRef<"PublishJob", 'DateTime'>
+    readonly platformVideoId: FieldRef<"PublishJob", 'String'>
+    readonly platformVideoUrl: FieldRef<"PublishJob", 'String'>
+    readonly errorMessage: FieldRef<"PublishJob", 'String'>
+    readonly retryCount: FieldRef<"PublishJob", 'Int'>
+    readonly videoId: FieldRef<"PublishJob", 'String'>
+    readonly platformConnectionId: FieldRef<"PublishJob", 'String'>
+    readonly createdById: FieldRef<"PublishJob", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * PublishJob findUnique
+   */
+  export type PublishJobFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PublishJob
+     */
+    select?: PublishJobSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PublishJob
+     */
+    omit?: PublishJobOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PublishJobInclude<ExtArgs> | null
+    /**
+     * Filter, which PublishJob to fetch.
+     */
+    where: PublishJobWhereUniqueInput
+  }
+
+  /**
+   * PublishJob findUniqueOrThrow
+   */
+  export type PublishJobFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PublishJob
+     */
+    select?: PublishJobSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PublishJob
+     */
+    omit?: PublishJobOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PublishJobInclude<ExtArgs> | null
+    /**
+     * Filter, which PublishJob to fetch.
+     */
+    where: PublishJobWhereUniqueInput
+  }
+
+  /**
+   * PublishJob findFirst
+   */
+  export type PublishJobFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PublishJob
+     */
+    select?: PublishJobSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PublishJob
+     */
+    omit?: PublishJobOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PublishJobInclude<ExtArgs> | null
+    /**
+     * Filter, which PublishJob to fetch.
+     */
+    where?: PublishJobWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PublishJobs to fetch.
+     */
+    orderBy?: PublishJobOrderByWithRelationInput | PublishJobOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PublishJobs.
+     */
+    cursor?: PublishJobWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PublishJobs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PublishJobs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PublishJobs.
+     */
+    distinct?: PublishJobScalarFieldEnum | PublishJobScalarFieldEnum[]
+  }
+
+  /**
+   * PublishJob findFirstOrThrow
+   */
+  export type PublishJobFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PublishJob
+     */
+    select?: PublishJobSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PublishJob
+     */
+    omit?: PublishJobOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PublishJobInclude<ExtArgs> | null
+    /**
+     * Filter, which PublishJob to fetch.
+     */
+    where?: PublishJobWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PublishJobs to fetch.
+     */
+    orderBy?: PublishJobOrderByWithRelationInput | PublishJobOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PublishJobs.
+     */
+    cursor?: PublishJobWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PublishJobs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PublishJobs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PublishJobs.
+     */
+    distinct?: PublishJobScalarFieldEnum | PublishJobScalarFieldEnum[]
+  }
+
+  /**
+   * PublishJob findMany
+   */
+  export type PublishJobFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PublishJob
+     */
+    select?: PublishJobSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PublishJob
+     */
+    omit?: PublishJobOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PublishJobInclude<ExtArgs> | null
+    /**
+     * Filter, which PublishJobs to fetch.
+     */
+    where?: PublishJobWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PublishJobs to fetch.
+     */
+    orderBy?: PublishJobOrderByWithRelationInput | PublishJobOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing PublishJobs.
+     */
+    cursor?: PublishJobWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PublishJobs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PublishJobs.
+     */
+    skip?: number
+    distinct?: PublishJobScalarFieldEnum | PublishJobScalarFieldEnum[]
+  }
+
+  /**
+   * PublishJob create
+   */
+  export type PublishJobCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PublishJob
+     */
+    select?: PublishJobSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PublishJob
+     */
+    omit?: PublishJobOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PublishJobInclude<ExtArgs> | null
+    /**
+     * The data needed to create a PublishJob.
+     */
+    data: XOR<PublishJobCreateInput, PublishJobUncheckedCreateInput>
+  }
+
+  /**
+   * PublishJob createMany
+   */
+  export type PublishJobCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many PublishJobs.
+     */
+    data: PublishJobCreateManyInput | PublishJobCreateManyInput[]
+  }
+
+  /**
+   * PublishJob createManyAndReturn
+   */
+  export type PublishJobCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PublishJob
+     */
+    select?: PublishJobSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PublishJob
+     */
+    omit?: PublishJobOmit<ExtArgs> | null
+    /**
+     * The data used to create many PublishJobs.
+     */
+    data: PublishJobCreateManyInput | PublishJobCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PublishJobIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * PublishJob update
+   */
+  export type PublishJobUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PublishJob
+     */
+    select?: PublishJobSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PublishJob
+     */
+    omit?: PublishJobOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PublishJobInclude<ExtArgs> | null
+    /**
+     * The data needed to update a PublishJob.
+     */
+    data: XOR<PublishJobUpdateInput, PublishJobUncheckedUpdateInput>
+    /**
+     * Choose, which PublishJob to update.
+     */
+    where: PublishJobWhereUniqueInput
+  }
+
+  /**
+   * PublishJob updateMany
+   */
+  export type PublishJobUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update PublishJobs.
+     */
+    data: XOR<PublishJobUpdateManyMutationInput, PublishJobUncheckedUpdateManyInput>
+    /**
+     * Filter which PublishJobs to update
+     */
+    where?: PublishJobWhereInput
+    /**
+     * Limit how many PublishJobs to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * PublishJob updateManyAndReturn
+   */
+  export type PublishJobUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PublishJob
+     */
+    select?: PublishJobSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PublishJob
+     */
+    omit?: PublishJobOmit<ExtArgs> | null
+    /**
+     * The data used to update PublishJobs.
+     */
+    data: XOR<PublishJobUpdateManyMutationInput, PublishJobUncheckedUpdateManyInput>
+    /**
+     * Filter which PublishJobs to update
+     */
+    where?: PublishJobWhereInput
+    /**
+     * Limit how many PublishJobs to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PublishJobIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * PublishJob upsert
+   */
+  export type PublishJobUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PublishJob
+     */
+    select?: PublishJobSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PublishJob
+     */
+    omit?: PublishJobOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PublishJobInclude<ExtArgs> | null
+    /**
+     * The filter to search for the PublishJob to update in case it exists.
+     */
+    where: PublishJobWhereUniqueInput
+    /**
+     * In case the PublishJob found by the `where` argument doesn't exist, create a new PublishJob with this data.
+     */
+    create: XOR<PublishJobCreateInput, PublishJobUncheckedCreateInput>
+    /**
+     * In case the PublishJob was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PublishJobUpdateInput, PublishJobUncheckedUpdateInput>
+  }
+
+  /**
+   * PublishJob delete
+   */
+  export type PublishJobDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PublishJob
+     */
+    select?: PublishJobSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PublishJob
+     */
+    omit?: PublishJobOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PublishJobInclude<ExtArgs> | null
+    /**
+     * Filter which PublishJob to delete.
+     */
+    where: PublishJobWhereUniqueInput
+  }
+
+  /**
+   * PublishJob deleteMany
+   */
+  export type PublishJobDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PublishJobs to delete
+     */
+    where?: PublishJobWhereInput
+    /**
+     * Limit how many PublishJobs to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * PublishJob without action
+   */
+  export type PublishJobDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PublishJob
+     */
+    select?: PublishJobSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PublishJob
+     */
+    omit?: PublishJobOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PublishJobInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -6854,6 +11060,70 @@ export namespace Prisma {
   export type VerificationScalarFieldEnum = (typeof VerificationScalarFieldEnum)[keyof typeof VerificationScalarFieldEnum]
 
 
+  export const VideoScalarFieldEnum: {
+    id: 'id',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    s3Key: 's3Key',
+    s3Bucket: 's3Bucket',
+    fileName: 'fileName',
+    fileSize: 'fileSize',
+    mimeType: 'mimeType',
+    duration: 'duration',
+    title: 'title',
+    description: 'description',
+    tags: 'tags',
+    thumbnailUrl: 'thumbnailUrl',
+    privacy: 'privacy',
+    createdById: 'createdById'
+  };
+
+  export type VideoScalarFieldEnum = (typeof VideoScalarFieldEnum)[keyof typeof VideoScalarFieldEnum]
+
+
+  export const PlatformConnectionScalarFieldEnum: {
+    id: 'id',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    platform: 'platform',
+    platformUserId: 'platformUserId',
+    platformUsername: 'platformUsername',
+    accessToken: 'accessToken',
+    refreshToken: 'refreshToken',
+    tokenExpiry: 'tokenExpiry',
+    metadata: 'metadata',
+    isActive: 'isActive',
+    userId: 'userId'
+  };
+
+  export type PlatformConnectionScalarFieldEnum = (typeof PlatformConnectionScalarFieldEnum)[keyof typeof PlatformConnectionScalarFieldEnum]
+
+
+  export const PublishJobScalarFieldEnum: {
+    id: 'id',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    platform: 'platform',
+    status: 'status',
+    title: 'title',
+    description: 'description',
+    tags: 'tags',
+    privacy: 'privacy',
+    scheduledFor: 'scheduledFor',
+    startedAt: 'startedAt',
+    completedAt: 'completedAt',
+    platformVideoId: 'platformVideoId',
+    platformVideoUrl: 'platformVideoUrl',
+    errorMessage: 'errorMessage',
+    retryCount: 'retryCount',
+    videoId: 'videoId',
+    platformConnectionId: 'platformConnectionId',
+    createdById: 'createdById'
+  };
+
+  export type PublishJobScalarFieldEnum = (typeof PublishJobScalarFieldEnum)[keyof typeof PublishJobScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -6862,12 +11132,37 @@ export namespace Prisma {
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+  export const NullableJsonNullValueInput: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull
+  };
+
+  export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
   export const NullsOrder: {
     first: 'first',
     last: 'last'
   };
 
   export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+  export const JsonNullValueFilter: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull,
+    AnyNull: typeof AnyNull
+  };
+
+  export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
+
+
+  export const QueryMode: {
+    default: 'default',
+    insensitive: 'insensitive'
+  };
+
+  export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
 
 
   /**
@@ -6900,6 +11195,48 @@ export namespace Prisma {
    * Reference to a field of type 'Boolean'
    */
   export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
+   * Reference to a field of type 'BigInt'
+   */
+  export type BigIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BigInt'>
+    
+
+
+  /**
+   * Reference to a field of type 'VideoPrivacy'
+   */
+  export type EnumVideoPrivacyFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'VideoPrivacy'>
+    
+
+
+  /**
+   * Reference to a field of type 'Platform'
+   */
+  export type EnumPlatformFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Platform'>
+    
+
+
+  /**
+   * Reference to a field of type 'Json'
+   */
+  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+  /**
+   * Reference to a field of type 'QueryMode'
+   */
+  export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+  /**
+   * Reference to a field of type 'PublishStatus'
+   */
+  export type EnumPublishStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PublishStatus'>
     
 
 
@@ -7150,6 +11487,9 @@ export namespace Prisma {
     accounts?: AccountListRelationFilter
     sessions?: SessionListRelationFilter
     posts?: PostListRelationFilter
+    videos?: VideoListRelationFilter
+    platformConnections?: PlatformConnectionListRelationFilter
+    publishJobs?: PublishJobListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -7163,6 +11503,9 @@ export namespace Prisma {
     accounts?: AccountOrderByRelationAggregateInput
     sessions?: SessionOrderByRelationAggregateInput
     posts?: PostOrderByRelationAggregateInput
+    videos?: VideoOrderByRelationAggregateInput
+    platformConnections?: PlatformConnectionOrderByRelationAggregateInput
+    publishJobs?: PublishJobOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -7179,6 +11522,9 @@ export namespace Prisma {
     accounts?: AccountListRelationFilter
     sessions?: SessionListRelationFilter
     posts?: PostListRelationFilter
+    videos?: VideoListRelationFilter
+    platformConnections?: PlatformConnectionListRelationFilter
+    publishJobs?: PublishJobListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -7263,6 +11609,343 @@ export namespace Prisma {
     expiresAt?: DateTimeWithAggregatesFilter<"Verification"> | Date | string
     createdAt?: DateTimeWithAggregatesFilter<"Verification"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Verification"> | Date | string
+  }
+
+  export type VideoWhereInput = {
+    AND?: VideoWhereInput | VideoWhereInput[]
+    OR?: VideoWhereInput[]
+    NOT?: VideoWhereInput | VideoWhereInput[]
+    id?: StringFilter<"Video"> | string
+    createdAt?: DateTimeFilter<"Video"> | Date | string
+    updatedAt?: DateTimeFilter<"Video"> | Date | string
+    s3Key?: StringFilter<"Video"> | string
+    s3Bucket?: StringFilter<"Video"> | string
+    fileName?: StringFilter<"Video"> | string
+    fileSize?: BigIntFilter<"Video"> | bigint | number
+    mimeType?: StringFilter<"Video"> | string
+    duration?: IntNullableFilter<"Video"> | number | null
+    title?: StringFilter<"Video"> | string
+    description?: StringNullableFilter<"Video"> | string | null
+    tags?: StringNullableFilter<"Video"> | string | null
+    thumbnailUrl?: StringNullableFilter<"Video"> | string | null
+    privacy?: EnumVideoPrivacyFilter<"Video"> | $Enums.VideoPrivacy
+    createdById?: StringFilter<"Video"> | string
+    createdBy?: XOR<UserScalarRelationFilter, UserWhereInput>
+    publishJobs?: PublishJobListRelationFilter
+  }
+
+  export type VideoOrderByWithRelationInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    s3Key?: SortOrder
+    s3Bucket?: SortOrder
+    fileName?: SortOrder
+    fileSize?: SortOrder
+    mimeType?: SortOrder
+    duration?: SortOrderInput | SortOrder
+    title?: SortOrder
+    description?: SortOrderInput | SortOrder
+    tags?: SortOrderInput | SortOrder
+    thumbnailUrl?: SortOrderInput | SortOrder
+    privacy?: SortOrder
+    createdById?: SortOrder
+    createdBy?: UserOrderByWithRelationInput
+    publishJobs?: PublishJobOrderByRelationAggregateInput
+  }
+
+  export type VideoWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: VideoWhereInput | VideoWhereInput[]
+    OR?: VideoWhereInput[]
+    NOT?: VideoWhereInput | VideoWhereInput[]
+    createdAt?: DateTimeFilter<"Video"> | Date | string
+    updatedAt?: DateTimeFilter<"Video"> | Date | string
+    s3Key?: StringFilter<"Video"> | string
+    s3Bucket?: StringFilter<"Video"> | string
+    fileName?: StringFilter<"Video"> | string
+    fileSize?: BigIntFilter<"Video"> | bigint | number
+    mimeType?: StringFilter<"Video"> | string
+    duration?: IntNullableFilter<"Video"> | number | null
+    title?: StringFilter<"Video"> | string
+    description?: StringNullableFilter<"Video"> | string | null
+    tags?: StringNullableFilter<"Video"> | string | null
+    thumbnailUrl?: StringNullableFilter<"Video"> | string | null
+    privacy?: EnumVideoPrivacyFilter<"Video"> | $Enums.VideoPrivacy
+    createdById?: StringFilter<"Video"> | string
+    createdBy?: XOR<UserScalarRelationFilter, UserWhereInput>
+    publishJobs?: PublishJobListRelationFilter
+  }, "id">
+
+  export type VideoOrderByWithAggregationInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    s3Key?: SortOrder
+    s3Bucket?: SortOrder
+    fileName?: SortOrder
+    fileSize?: SortOrder
+    mimeType?: SortOrder
+    duration?: SortOrderInput | SortOrder
+    title?: SortOrder
+    description?: SortOrderInput | SortOrder
+    tags?: SortOrderInput | SortOrder
+    thumbnailUrl?: SortOrderInput | SortOrder
+    privacy?: SortOrder
+    createdById?: SortOrder
+    _count?: VideoCountOrderByAggregateInput
+    _avg?: VideoAvgOrderByAggregateInput
+    _max?: VideoMaxOrderByAggregateInput
+    _min?: VideoMinOrderByAggregateInput
+    _sum?: VideoSumOrderByAggregateInput
+  }
+
+  export type VideoScalarWhereWithAggregatesInput = {
+    AND?: VideoScalarWhereWithAggregatesInput | VideoScalarWhereWithAggregatesInput[]
+    OR?: VideoScalarWhereWithAggregatesInput[]
+    NOT?: VideoScalarWhereWithAggregatesInput | VideoScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Video"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Video"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Video"> | Date | string
+    s3Key?: StringWithAggregatesFilter<"Video"> | string
+    s3Bucket?: StringWithAggregatesFilter<"Video"> | string
+    fileName?: StringWithAggregatesFilter<"Video"> | string
+    fileSize?: BigIntWithAggregatesFilter<"Video"> | bigint | number
+    mimeType?: StringWithAggregatesFilter<"Video"> | string
+    duration?: IntNullableWithAggregatesFilter<"Video"> | number | null
+    title?: StringWithAggregatesFilter<"Video"> | string
+    description?: StringNullableWithAggregatesFilter<"Video"> | string | null
+    tags?: StringNullableWithAggregatesFilter<"Video"> | string | null
+    thumbnailUrl?: StringNullableWithAggregatesFilter<"Video"> | string | null
+    privacy?: EnumVideoPrivacyWithAggregatesFilter<"Video"> | $Enums.VideoPrivacy
+    createdById?: StringWithAggregatesFilter<"Video"> | string
+  }
+
+  export type PlatformConnectionWhereInput = {
+    AND?: PlatformConnectionWhereInput | PlatformConnectionWhereInput[]
+    OR?: PlatformConnectionWhereInput[]
+    NOT?: PlatformConnectionWhereInput | PlatformConnectionWhereInput[]
+    id?: StringFilter<"PlatformConnection"> | string
+    createdAt?: DateTimeFilter<"PlatformConnection"> | Date | string
+    updatedAt?: DateTimeFilter<"PlatformConnection"> | Date | string
+    platform?: EnumPlatformFilter<"PlatformConnection"> | $Enums.Platform
+    platformUserId?: StringFilter<"PlatformConnection"> | string
+    platformUsername?: StringNullableFilter<"PlatformConnection"> | string | null
+    accessToken?: StringFilter<"PlatformConnection"> | string
+    refreshToken?: StringNullableFilter<"PlatformConnection"> | string | null
+    tokenExpiry?: DateTimeNullableFilter<"PlatformConnection"> | Date | string | null
+    metadata?: JsonNullableFilter<"PlatformConnection">
+    isActive?: BoolFilter<"PlatformConnection"> | boolean
+    userId?: StringFilter<"PlatformConnection"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    publishJobs?: PublishJobListRelationFilter
+  }
+
+  export type PlatformConnectionOrderByWithRelationInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    platform?: SortOrder
+    platformUserId?: SortOrder
+    platformUsername?: SortOrderInput | SortOrder
+    accessToken?: SortOrder
+    refreshToken?: SortOrderInput | SortOrder
+    tokenExpiry?: SortOrderInput | SortOrder
+    metadata?: SortOrderInput | SortOrder
+    isActive?: SortOrder
+    userId?: SortOrder
+    user?: UserOrderByWithRelationInput
+    publishJobs?: PublishJobOrderByRelationAggregateInput
+  }
+
+  export type PlatformConnectionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    userId_platform?: PlatformConnectionUserIdPlatformCompoundUniqueInput
+    AND?: PlatformConnectionWhereInput | PlatformConnectionWhereInput[]
+    OR?: PlatformConnectionWhereInput[]
+    NOT?: PlatformConnectionWhereInput | PlatformConnectionWhereInput[]
+    createdAt?: DateTimeFilter<"PlatformConnection"> | Date | string
+    updatedAt?: DateTimeFilter<"PlatformConnection"> | Date | string
+    platform?: EnumPlatformFilter<"PlatformConnection"> | $Enums.Platform
+    platformUserId?: StringFilter<"PlatformConnection"> | string
+    platformUsername?: StringNullableFilter<"PlatformConnection"> | string | null
+    accessToken?: StringFilter<"PlatformConnection"> | string
+    refreshToken?: StringNullableFilter<"PlatformConnection"> | string | null
+    tokenExpiry?: DateTimeNullableFilter<"PlatformConnection"> | Date | string | null
+    metadata?: JsonNullableFilter<"PlatformConnection">
+    isActive?: BoolFilter<"PlatformConnection"> | boolean
+    userId?: StringFilter<"PlatformConnection"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    publishJobs?: PublishJobListRelationFilter
+  }, "id" | "userId_platform">
+
+  export type PlatformConnectionOrderByWithAggregationInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    platform?: SortOrder
+    platformUserId?: SortOrder
+    platformUsername?: SortOrderInput | SortOrder
+    accessToken?: SortOrder
+    refreshToken?: SortOrderInput | SortOrder
+    tokenExpiry?: SortOrderInput | SortOrder
+    metadata?: SortOrderInput | SortOrder
+    isActive?: SortOrder
+    userId?: SortOrder
+    _count?: PlatformConnectionCountOrderByAggregateInput
+    _max?: PlatformConnectionMaxOrderByAggregateInput
+    _min?: PlatformConnectionMinOrderByAggregateInput
+  }
+
+  export type PlatformConnectionScalarWhereWithAggregatesInput = {
+    AND?: PlatformConnectionScalarWhereWithAggregatesInput | PlatformConnectionScalarWhereWithAggregatesInput[]
+    OR?: PlatformConnectionScalarWhereWithAggregatesInput[]
+    NOT?: PlatformConnectionScalarWhereWithAggregatesInput | PlatformConnectionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"PlatformConnection"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"PlatformConnection"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"PlatformConnection"> | Date | string
+    platform?: EnumPlatformWithAggregatesFilter<"PlatformConnection"> | $Enums.Platform
+    platformUserId?: StringWithAggregatesFilter<"PlatformConnection"> | string
+    platformUsername?: StringNullableWithAggregatesFilter<"PlatformConnection"> | string | null
+    accessToken?: StringWithAggregatesFilter<"PlatformConnection"> | string
+    refreshToken?: StringNullableWithAggregatesFilter<"PlatformConnection"> | string | null
+    tokenExpiry?: DateTimeNullableWithAggregatesFilter<"PlatformConnection"> | Date | string | null
+    metadata?: JsonNullableWithAggregatesFilter<"PlatformConnection">
+    isActive?: BoolWithAggregatesFilter<"PlatformConnection"> | boolean
+    userId?: StringWithAggregatesFilter<"PlatformConnection"> | string
+  }
+
+  export type PublishJobWhereInput = {
+    AND?: PublishJobWhereInput | PublishJobWhereInput[]
+    OR?: PublishJobWhereInput[]
+    NOT?: PublishJobWhereInput | PublishJobWhereInput[]
+    id?: StringFilter<"PublishJob"> | string
+    createdAt?: DateTimeFilter<"PublishJob"> | Date | string
+    updatedAt?: DateTimeFilter<"PublishJob"> | Date | string
+    platform?: EnumPlatformFilter<"PublishJob"> | $Enums.Platform
+    status?: EnumPublishStatusFilter<"PublishJob"> | $Enums.PublishStatus
+    title?: StringNullableFilter<"PublishJob"> | string | null
+    description?: StringNullableFilter<"PublishJob"> | string | null
+    tags?: StringNullableFilter<"PublishJob"> | string | null
+    privacy?: EnumVideoPrivacyNullableFilter<"PublishJob"> | $Enums.VideoPrivacy | null
+    scheduledFor?: DateTimeNullableFilter<"PublishJob"> | Date | string | null
+    startedAt?: DateTimeNullableFilter<"PublishJob"> | Date | string | null
+    completedAt?: DateTimeNullableFilter<"PublishJob"> | Date | string | null
+    platformVideoId?: StringNullableFilter<"PublishJob"> | string | null
+    platformVideoUrl?: StringNullableFilter<"PublishJob"> | string | null
+    errorMessage?: StringNullableFilter<"PublishJob"> | string | null
+    retryCount?: IntFilter<"PublishJob"> | number
+    videoId?: StringFilter<"PublishJob"> | string
+    platformConnectionId?: StringFilter<"PublishJob"> | string
+    createdById?: StringFilter<"PublishJob"> | string
+    video?: XOR<VideoScalarRelationFilter, VideoWhereInput>
+    platformConnection?: XOR<PlatformConnectionScalarRelationFilter, PlatformConnectionWhereInput>
+    createdBy?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type PublishJobOrderByWithRelationInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    platform?: SortOrder
+    status?: SortOrder
+    title?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
+    tags?: SortOrderInput | SortOrder
+    privacy?: SortOrderInput | SortOrder
+    scheduledFor?: SortOrderInput | SortOrder
+    startedAt?: SortOrderInput | SortOrder
+    completedAt?: SortOrderInput | SortOrder
+    platformVideoId?: SortOrderInput | SortOrder
+    platformVideoUrl?: SortOrderInput | SortOrder
+    errorMessage?: SortOrderInput | SortOrder
+    retryCount?: SortOrder
+    videoId?: SortOrder
+    platformConnectionId?: SortOrder
+    createdById?: SortOrder
+    video?: VideoOrderByWithRelationInput
+    platformConnection?: PlatformConnectionOrderByWithRelationInput
+    createdBy?: UserOrderByWithRelationInput
+  }
+
+  export type PublishJobWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: PublishJobWhereInput | PublishJobWhereInput[]
+    OR?: PublishJobWhereInput[]
+    NOT?: PublishJobWhereInput | PublishJobWhereInput[]
+    createdAt?: DateTimeFilter<"PublishJob"> | Date | string
+    updatedAt?: DateTimeFilter<"PublishJob"> | Date | string
+    platform?: EnumPlatformFilter<"PublishJob"> | $Enums.Platform
+    status?: EnumPublishStatusFilter<"PublishJob"> | $Enums.PublishStatus
+    title?: StringNullableFilter<"PublishJob"> | string | null
+    description?: StringNullableFilter<"PublishJob"> | string | null
+    tags?: StringNullableFilter<"PublishJob"> | string | null
+    privacy?: EnumVideoPrivacyNullableFilter<"PublishJob"> | $Enums.VideoPrivacy | null
+    scheduledFor?: DateTimeNullableFilter<"PublishJob"> | Date | string | null
+    startedAt?: DateTimeNullableFilter<"PublishJob"> | Date | string | null
+    completedAt?: DateTimeNullableFilter<"PublishJob"> | Date | string | null
+    platformVideoId?: StringNullableFilter<"PublishJob"> | string | null
+    platformVideoUrl?: StringNullableFilter<"PublishJob"> | string | null
+    errorMessage?: StringNullableFilter<"PublishJob"> | string | null
+    retryCount?: IntFilter<"PublishJob"> | number
+    videoId?: StringFilter<"PublishJob"> | string
+    platformConnectionId?: StringFilter<"PublishJob"> | string
+    createdById?: StringFilter<"PublishJob"> | string
+    video?: XOR<VideoScalarRelationFilter, VideoWhereInput>
+    platformConnection?: XOR<PlatformConnectionScalarRelationFilter, PlatformConnectionWhereInput>
+    createdBy?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type PublishJobOrderByWithAggregationInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    platform?: SortOrder
+    status?: SortOrder
+    title?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
+    tags?: SortOrderInput | SortOrder
+    privacy?: SortOrderInput | SortOrder
+    scheduledFor?: SortOrderInput | SortOrder
+    startedAt?: SortOrderInput | SortOrder
+    completedAt?: SortOrderInput | SortOrder
+    platformVideoId?: SortOrderInput | SortOrder
+    platformVideoUrl?: SortOrderInput | SortOrder
+    errorMessage?: SortOrderInput | SortOrder
+    retryCount?: SortOrder
+    videoId?: SortOrder
+    platformConnectionId?: SortOrder
+    createdById?: SortOrder
+    _count?: PublishJobCountOrderByAggregateInput
+    _avg?: PublishJobAvgOrderByAggregateInput
+    _max?: PublishJobMaxOrderByAggregateInput
+    _min?: PublishJobMinOrderByAggregateInput
+    _sum?: PublishJobSumOrderByAggregateInput
+  }
+
+  export type PublishJobScalarWhereWithAggregatesInput = {
+    AND?: PublishJobScalarWhereWithAggregatesInput | PublishJobScalarWhereWithAggregatesInput[]
+    OR?: PublishJobScalarWhereWithAggregatesInput[]
+    NOT?: PublishJobScalarWhereWithAggregatesInput | PublishJobScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"PublishJob"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"PublishJob"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"PublishJob"> | Date | string
+    platform?: EnumPlatformWithAggregatesFilter<"PublishJob"> | $Enums.Platform
+    status?: EnumPublishStatusWithAggregatesFilter<"PublishJob"> | $Enums.PublishStatus
+    title?: StringNullableWithAggregatesFilter<"PublishJob"> | string | null
+    description?: StringNullableWithAggregatesFilter<"PublishJob"> | string | null
+    tags?: StringNullableWithAggregatesFilter<"PublishJob"> | string | null
+    privacy?: EnumVideoPrivacyNullableWithAggregatesFilter<"PublishJob"> | $Enums.VideoPrivacy | null
+    scheduledFor?: DateTimeNullableWithAggregatesFilter<"PublishJob"> | Date | string | null
+    startedAt?: DateTimeNullableWithAggregatesFilter<"PublishJob"> | Date | string | null
+    completedAt?: DateTimeNullableWithAggregatesFilter<"PublishJob"> | Date | string | null
+    platformVideoId?: StringNullableWithAggregatesFilter<"PublishJob"> | string | null
+    platformVideoUrl?: StringNullableWithAggregatesFilter<"PublishJob"> | string | null
+    errorMessage?: StringNullableWithAggregatesFilter<"PublishJob"> | string | null
+    retryCount?: IntWithAggregatesFilter<"PublishJob"> | number
+    videoId?: StringWithAggregatesFilter<"PublishJob"> | string
+    platformConnectionId?: StringWithAggregatesFilter<"PublishJob"> | string
+    createdById?: StringWithAggregatesFilter<"PublishJob"> | string
   }
 
   export type PostCreateInput = {
@@ -7515,6 +12198,9 @@ export namespace Prisma {
     accounts?: AccountCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     posts?: PostCreateNestedManyWithoutCreatedByInput
+    videos?: VideoCreateNestedManyWithoutCreatedByInput
+    platformConnections?: PlatformConnectionCreateNestedManyWithoutUserInput
+    publishJobs?: PublishJobCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -7528,6 +12214,9 @@ export namespace Prisma {
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     posts?: PostUncheckedCreateNestedManyWithoutCreatedByInput
+    videos?: VideoUncheckedCreateNestedManyWithoutCreatedByInput
+    platformConnections?: PlatformConnectionUncheckedCreateNestedManyWithoutUserInput
+    publishJobs?: PublishJobUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUpdateInput = {
@@ -7541,6 +12230,9 @@ export namespace Prisma {
     accounts?: AccountUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     posts?: PostUpdateManyWithoutCreatedByNestedInput
+    videos?: VideoUpdateManyWithoutCreatedByNestedInput
+    platformConnections?: PlatformConnectionUpdateManyWithoutUserNestedInput
+    publishJobs?: PublishJobUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -7554,6 +12246,9 @@ export namespace Prisma {
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     posts?: PostUncheckedUpdateManyWithoutCreatedByNestedInput
+    videos?: VideoUncheckedUpdateManyWithoutCreatedByNestedInput
+    platformConnections?: PlatformConnectionUncheckedUpdateManyWithoutUserNestedInput
+    publishJobs?: PublishJobUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -7647,6 +12342,394 @@ export namespace Prisma {
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VideoCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    s3Key: string
+    s3Bucket: string
+    fileName: string
+    fileSize: bigint | number
+    mimeType: string
+    duration?: number | null
+    title: string
+    description?: string | null
+    tags?: string | null
+    thumbnailUrl?: string | null
+    privacy?: $Enums.VideoPrivacy
+    createdBy: UserCreateNestedOneWithoutVideosInput
+    publishJobs?: PublishJobCreateNestedManyWithoutVideoInput
+  }
+
+  export type VideoUncheckedCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    s3Key: string
+    s3Bucket: string
+    fileName: string
+    fileSize: bigint | number
+    mimeType: string
+    duration?: number | null
+    title: string
+    description?: string | null
+    tags?: string | null
+    thumbnailUrl?: string | null
+    privacy?: $Enums.VideoPrivacy
+    createdById: string
+    publishJobs?: PublishJobUncheckedCreateNestedManyWithoutVideoInput
+  }
+
+  export type VideoUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    s3Key?: StringFieldUpdateOperationsInput | string
+    s3Bucket?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    fileSize?: BigIntFieldUpdateOperationsInput | bigint | number
+    mimeType?: StringFieldUpdateOperationsInput | string
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: NullableStringFieldUpdateOperationsInput | string | null
+    thumbnailUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    privacy?: EnumVideoPrivacyFieldUpdateOperationsInput | $Enums.VideoPrivacy
+    createdBy?: UserUpdateOneRequiredWithoutVideosNestedInput
+    publishJobs?: PublishJobUpdateManyWithoutVideoNestedInput
+  }
+
+  export type VideoUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    s3Key?: StringFieldUpdateOperationsInput | string
+    s3Bucket?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    fileSize?: BigIntFieldUpdateOperationsInput | bigint | number
+    mimeType?: StringFieldUpdateOperationsInput | string
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: NullableStringFieldUpdateOperationsInput | string | null
+    thumbnailUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    privacy?: EnumVideoPrivacyFieldUpdateOperationsInput | $Enums.VideoPrivacy
+    createdById?: StringFieldUpdateOperationsInput | string
+    publishJobs?: PublishJobUncheckedUpdateManyWithoutVideoNestedInput
+  }
+
+  export type VideoCreateManyInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    s3Key: string
+    s3Bucket: string
+    fileName: string
+    fileSize: bigint | number
+    mimeType: string
+    duration?: number | null
+    title: string
+    description?: string | null
+    tags?: string | null
+    thumbnailUrl?: string | null
+    privacy?: $Enums.VideoPrivacy
+    createdById: string
+  }
+
+  export type VideoUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    s3Key?: StringFieldUpdateOperationsInput | string
+    s3Bucket?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    fileSize?: BigIntFieldUpdateOperationsInput | bigint | number
+    mimeType?: StringFieldUpdateOperationsInput | string
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: NullableStringFieldUpdateOperationsInput | string | null
+    thumbnailUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    privacy?: EnumVideoPrivacyFieldUpdateOperationsInput | $Enums.VideoPrivacy
+  }
+
+  export type VideoUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    s3Key?: StringFieldUpdateOperationsInput | string
+    s3Bucket?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    fileSize?: BigIntFieldUpdateOperationsInput | bigint | number
+    mimeType?: StringFieldUpdateOperationsInput | string
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: NullableStringFieldUpdateOperationsInput | string | null
+    thumbnailUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    privacy?: EnumVideoPrivacyFieldUpdateOperationsInput | $Enums.VideoPrivacy
+    createdById?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type PlatformConnectionCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    platform: $Enums.Platform
+    platformUserId: string
+    platformUsername?: string | null
+    accessToken: string
+    refreshToken?: string | null
+    tokenExpiry?: Date | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    isActive?: boolean
+    user: UserCreateNestedOneWithoutPlatformConnectionsInput
+    publishJobs?: PublishJobCreateNestedManyWithoutPlatformConnectionInput
+  }
+
+  export type PlatformConnectionUncheckedCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    platform: $Enums.Platform
+    platformUserId: string
+    platformUsername?: string | null
+    accessToken: string
+    refreshToken?: string | null
+    tokenExpiry?: Date | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    isActive?: boolean
+    userId: string
+    publishJobs?: PublishJobUncheckedCreateNestedManyWithoutPlatformConnectionInput
+  }
+
+  export type PlatformConnectionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    platform?: EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
+    platformUserId?: StringFieldUpdateOperationsInput | string
+    platformUsername?: NullableStringFieldUpdateOperationsInput | string | null
+    accessToken?: StringFieldUpdateOperationsInput | string
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    user?: UserUpdateOneRequiredWithoutPlatformConnectionsNestedInput
+    publishJobs?: PublishJobUpdateManyWithoutPlatformConnectionNestedInput
+  }
+
+  export type PlatformConnectionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    platform?: EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
+    platformUserId?: StringFieldUpdateOperationsInput | string
+    platformUsername?: NullableStringFieldUpdateOperationsInput | string | null
+    accessToken?: StringFieldUpdateOperationsInput | string
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    userId?: StringFieldUpdateOperationsInput | string
+    publishJobs?: PublishJobUncheckedUpdateManyWithoutPlatformConnectionNestedInput
+  }
+
+  export type PlatformConnectionCreateManyInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    platform: $Enums.Platform
+    platformUserId: string
+    platformUsername?: string | null
+    accessToken: string
+    refreshToken?: string | null
+    tokenExpiry?: Date | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    isActive?: boolean
+    userId: string
+  }
+
+  export type PlatformConnectionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    platform?: EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
+    platformUserId?: StringFieldUpdateOperationsInput | string
+    platformUsername?: NullableStringFieldUpdateOperationsInput | string | null
+    accessToken?: StringFieldUpdateOperationsInput | string
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type PlatformConnectionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    platform?: EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
+    platformUserId?: StringFieldUpdateOperationsInput | string
+    platformUsername?: NullableStringFieldUpdateOperationsInput | string | null
+    accessToken?: StringFieldUpdateOperationsInput | string
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type PublishJobCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    platform: $Enums.Platform
+    status?: $Enums.PublishStatus
+    title?: string | null
+    description?: string | null
+    tags?: string | null
+    privacy?: $Enums.VideoPrivacy | null
+    scheduledFor?: Date | string | null
+    startedAt?: Date | string | null
+    completedAt?: Date | string | null
+    platformVideoId?: string | null
+    platformVideoUrl?: string | null
+    errorMessage?: string | null
+    retryCount?: number
+    video: VideoCreateNestedOneWithoutPublishJobsInput
+    platformConnection: PlatformConnectionCreateNestedOneWithoutPublishJobsInput
+    createdBy: UserCreateNestedOneWithoutPublishJobsInput
+  }
+
+  export type PublishJobUncheckedCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    platform: $Enums.Platform
+    status?: $Enums.PublishStatus
+    title?: string | null
+    description?: string | null
+    tags?: string | null
+    privacy?: $Enums.VideoPrivacy | null
+    scheduledFor?: Date | string | null
+    startedAt?: Date | string | null
+    completedAt?: Date | string | null
+    platformVideoId?: string | null
+    platformVideoUrl?: string | null
+    errorMessage?: string | null
+    retryCount?: number
+    videoId: string
+    platformConnectionId: string
+    createdById: string
+  }
+
+  export type PublishJobUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    platform?: EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
+    status?: EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: NullableStringFieldUpdateOperationsInput | string | null
+    privacy?: NullableEnumVideoPrivacyFieldUpdateOperationsInput | $Enums.VideoPrivacy | null
+    scheduledFor?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    platformVideoId?: NullableStringFieldUpdateOperationsInput | string | null
+    platformVideoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    retryCount?: IntFieldUpdateOperationsInput | number
+    video?: VideoUpdateOneRequiredWithoutPublishJobsNestedInput
+    platformConnection?: PlatformConnectionUpdateOneRequiredWithoutPublishJobsNestedInput
+    createdBy?: UserUpdateOneRequiredWithoutPublishJobsNestedInput
+  }
+
+  export type PublishJobUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    platform?: EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
+    status?: EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: NullableStringFieldUpdateOperationsInput | string | null
+    privacy?: NullableEnumVideoPrivacyFieldUpdateOperationsInput | $Enums.VideoPrivacy | null
+    scheduledFor?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    platformVideoId?: NullableStringFieldUpdateOperationsInput | string | null
+    platformVideoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    retryCount?: IntFieldUpdateOperationsInput | number
+    videoId?: StringFieldUpdateOperationsInput | string
+    platformConnectionId?: StringFieldUpdateOperationsInput | string
+    createdById?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type PublishJobCreateManyInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    platform: $Enums.Platform
+    status?: $Enums.PublishStatus
+    title?: string | null
+    description?: string | null
+    tags?: string | null
+    privacy?: $Enums.VideoPrivacy | null
+    scheduledFor?: Date | string | null
+    startedAt?: Date | string | null
+    completedAt?: Date | string | null
+    platformVideoId?: string | null
+    platformVideoUrl?: string | null
+    errorMessage?: string | null
+    retryCount?: number
+    videoId: string
+    platformConnectionId: string
+    createdById: string
+  }
+
+  export type PublishJobUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    platform?: EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
+    status?: EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: NullableStringFieldUpdateOperationsInput | string | null
+    privacy?: NullableEnumVideoPrivacyFieldUpdateOperationsInput | $Enums.VideoPrivacy | null
+    scheduledFor?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    platformVideoId?: NullableStringFieldUpdateOperationsInput | string | null
+    platformVideoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    retryCount?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type PublishJobUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    platform?: EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
+    status?: EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: NullableStringFieldUpdateOperationsInput | string | null
+    privacy?: NullableEnumVideoPrivacyFieldUpdateOperationsInput | $Enums.VideoPrivacy | null
+    scheduledFor?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    platformVideoId?: NullableStringFieldUpdateOperationsInput | string | null
+    platformVideoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    retryCount?: IntFieldUpdateOperationsInput | number
+    videoId?: StringFieldUpdateOperationsInput | string
+    platformConnectionId?: StringFieldUpdateOperationsInput | string
+    createdById?: StringFieldUpdateOperationsInput | string
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -7939,6 +13022,24 @@ export namespace Prisma {
     none?: PostWhereInput
   }
 
+  export type VideoListRelationFilter = {
+    every?: VideoWhereInput
+    some?: VideoWhereInput
+    none?: VideoWhereInput
+  }
+
+  export type PlatformConnectionListRelationFilter = {
+    every?: PlatformConnectionWhereInput
+    some?: PlatformConnectionWhereInput
+    none?: PlatformConnectionWhereInput
+  }
+
+  export type PublishJobListRelationFilter = {
+    every?: PublishJobWhereInput
+    some?: PublishJobWhereInput
+    none?: PublishJobWhereInput
+  }
+
   export type AccountOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -7948,6 +13049,18 @@ export namespace Prisma {
   }
 
   export type PostOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type VideoOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type PlatformConnectionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type PublishJobOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -8019,6 +13132,376 @@ export namespace Prisma {
     expiresAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type BigIntFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    in?: bigint[] | number[]
+    notIn?: bigint[] | number[]
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntFilter<$PrismaModel> | bigint | number
+  }
+
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type EnumVideoPrivacyFilter<$PrismaModel = never> = {
+    equals?: $Enums.VideoPrivacy | EnumVideoPrivacyFieldRefInput<$PrismaModel>
+    in?: $Enums.VideoPrivacy[]
+    notIn?: $Enums.VideoPrivacy[]
+    not?: NestedEnumVideoPrivacyFilter<$PrismaModel> | $Enums.VideoPrivacy
+  }
+
+  export type VideoCountOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    s3Key?: SortOrder
+    s3Bucket?: SortOrder
+    fileName?: SortOrder
+    fileSize?: SortOrder
+    mimeType?: SortOrder
+    duration?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    tags?: SortOrder
+    thumbnailUrl?: SortOrder
+    privacy?: SortOrder
+    createdById?: SortOrder
+  }
+
+  export type VideoAvgOrderByAggregateInput = {
+    fileSize?: SortOrder
+    duration?: SortOrder
+  }
+
+  export type VideoMaxOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    s3Key?: SortOrder
+    s3Bucket?: SortOrder
+    fileName?: SortOrder
+    fileSize?: SortOrder
+    mimeType?: SortOrder
+    duration?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    tags?: SortOrder
+    thumbnailUrl?: SortOrder
+    privacy?: SortOrder
+    createdById?: SortOrder
+  }
+
+  export type VideoMinOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    s3Key?: SortOrder
+    s3Bucket?: SortOrder
+    fileName?: SortOrder
+    fileSize?: SortOrder
+    mimeType?: SortOrder
+    duration?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    tags?: SortOrder
+    thumbnailUrl?: SortOrder
+    privacy?: SortOrder
+    createdById?: SortOrder
+  }
+
+  export type VideoSumOrderByAggregateInput = {
+    fileSize?: SortOrder
+    duration?: SortOrder
+  }
+
+  export type BigIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    in?: bigint[] | number[]
+    notIn?: bigint[] | number[]
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntWithAggregatesFilter<$PrismaModel> | bigint | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedBigIntFilter<$PrismaModel>
+    _min?: NestedBigIntFilter<$PrismaModel>
+    _max?: NestedBigIntFilter<$PrismaModel>
+  }
+
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type EnumVideoPrivacyWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.VideoPrivacy | EnumVideoPrivacyFieldRefInput<$PrismaModel>
+    in?: $Enums.VideoPrivacy[]
+    notIn?: $Enums.VideoPrivacy[]
+    not?: NestedEnumVideoPrivacyWithAggregatesFilter<$PrismaModel> | $Enums.VideoPrivacy
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumVideoPrivacyFilter<$PrismaModel>
+    _max?: NestedEnumVideoPrivacyFilter<$PrismaModel>
+  }
+
+  export type EnumPlatformFilter<$PrismaModel = never> = {
+    equals?: $Enums.Platform | EnumPlatformFieldRefInput<$PrismaModel>
+    in?: $Enums.Platform[]
+    notIn?: $Enums.Platform[]
+    not?: NestedEnumPlatformFilter<$PrismaModel> | $Enums.Platform
+  }
+  export type JsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type PlatformConnectionUserIdPlatformCompoundUniqueInput = {
+    userId: string
+    platform: $Enums.Platform
+  }
+
+  export type PlatformConnectionCountOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    platform?: SortOrder
+    platformUserId?: SortOrder
+    platformUsername?: SortOrder
+    accessToken?: SortOrder
+    refreshToken?: SortOrder
+    tokenExpiry?: SortOrder
+    metadata?: SortOrder
+    isActive?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type PlatformConnectionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    platform?: SortOrder
+    platformUserId?: SortOrder
+    platformUsername?: SortOrder
+    accessToken?: SortOrder
+    refreshToken?: SortOrder
+    tokenExpiry?: SortOrder
+    isActive?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type PlatformConnectionMinOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    platform?: SortOrder
+    platformUserId?: SortOrder
+    platformUsername?: SortOrder
+    accessToken?: SortOrder
+    refreshToken?: SortOrder
+    tokenExpiry?: SortOrder
+    isActive?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type EnumPlatformWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Platform | EnumPlatformFieldRefInput<$PrismaModel>
+    in?: $Enums.Platform[]
+    notIn?: $Enums.Platform[]
+    not?: NestedEnumPlatformWithAggregatesFilter<$PrismaModel> | $Enums.Platform
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumPlatformFilter<$PrismaModel>
+    _max?: NestedEnumPlatformFilter<$PrismaModel>
+  }
+  export type JsonNullableWithAggregatesFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedJsonNullableFilter<$PrismaModel>
+    _max?: NestedJsonNullableFilter<$PrismaModel>
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type EnumPublishStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.PublishStatus | EnumPublishStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.PublishStatus[]
+    notIn?: $Enums.PublishStatus[]
+    not?: NestedEnumPublishStatusFilter<$PrismaModel> | $Enums.PublishStatus
+  }
+
+  export type EnumVideoPrivacyNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.VideoPrivacy | EnumVideoPrivacyFieldRefInput<$PrismaModel> | null
+    in?: $Enums.VideoPrivacy[] | null
+    notIn?: $Enums.VideoPrivacy[] | null
+    not?: NestedEnumVideoPrivacyNullableFilter<$PrismaModel> | $Enums.VideoPrivacy | null
+  }
+
+  export type VideoScalarRelationFilter = {
+    is?: VideoWhereInput
+    isNot?: VideoWhereInput
+  }
+
+  export type PlatformConnectionScalarRelationFilter = {
+    is?: PlatformConnectionWhereInput
+    isNot?: PlatformConnectionWhereInput
+  }
+
+  export type PublishJobCountOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    platform?: SortOrder
+    status?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    tags?: SortOrder
+    privacy?: SortOrder
+    scheduledFor?: SortOrder
+    startedAt?: SortOrder
+    completedAt?: SortOrder
+    platformVideoId?: SortOrder
+    platformVideoUrl?: SortOrder
+    errorMessage?: SortOrder
+    retryCount?: SortOrder
+    videoId?: SortOrder
+    platformConnectionId?: SortOrder
+    createdById?: SortOrder
+  }
+
+  export type PublishJobAvgOrderByAggregateInput = {
+    retryCount?: SortOrder
+  }
+
+  export type PublishJobMaxOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    platform?: SortOrder
+    status?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    tags?: SortOrder
+    privacy?: SortOrder
+    scheduledFor?: SortOrder
+    startedAt?: SortOrder
+    completedAt?: SortOrder
+    platformVideoId?: SortOrder
+    platformVideoUrl?: SortOrder
+    errorMessage?: SortOrder
+    retryCount?: SortOrder
+    videoId?: SortOrder
+    platformConnectionId?: SortOrder
+    createdById?: SortOrder
+  }
+
+  export type PublishJobMinOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    platform?: SortOrder
+    status?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    tags?: SortOrder
+    privacy?: SortOrder
+    scheduledFor?: SortOrder
+    startedAt?: SortOrder
+    completedAt?: SortOrder
+    platformVideoId?: SortOrder
+    platformVideoUrl?: SortOrder
+    errorMessage?: SortOrder
+    retryCount?: SortOrder
+    videoId?: SortOrder
+    platformConnectionId?: SortOrder
+    createdById?: SortOrder
+  }
+
+  export type PublishJobSumOrderByAggregateInput = {
+    retryCount?: SortOrder
+  }
+
+  export type EnumPublishStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.PublishStatus | EnumPublishStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.PublishStatus[]
+    notIn?: $Enums.PublishStatus[]
+    not?: NestedEnumPublishStatusWithAggregatesFilter<$PrismaModel> | $Enums.PublishStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumPublishStatusFilter<$PrismaModel>
+    _max?: NestedEnumPublishStatusFilter<$PrismaModel>
+  }
+
+  export type EnumVideoPrivacyNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.VideoPrivacy | EnumVideoPrivacyFieldRefInput<$PrismaModel> | null
+    in?: $Enums.VideoPrivacy[] | null
+    notIn?: $Enums.VideoPrivacy[] | null
+    not?: NestedEnumVideoPrivacyNullableWithAggregatesFilter<$PrismaModel> | $Enums.VideoPrivacy | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumVideoPrivacyNullableFilter<$PrismaModel>
+    _max?: NestedEnumVideoPrivacyNullableFilter<$PrismaModel>
   }
 
   export type UserCreateNestedOneWithoutPostsInput = {
@@ -8108,6 +13591,27 @@ export namespace Prisma {
     connect?: PostWhereUniqueInput | PostWhereUniqueInput[]
   }
 
+  export type VideoCreateNestedManyWithoutCreatedByInput = {
+    create?: XOR<VideoCreateWithoutCreatedByInput, VideoUncheckedCreateWithoutCreatedByInput> | VideoCreateWithoutCreatedByInput[] | VideoUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: VideoCreateOrConnectWithoutCreatedByInput | VideoCreateOrConnectWithoutCreatedByInput[]
+    createMany?: VideoCreateManyCreatedByInputEnvelope
+    connect?: VideoWhereUniqueInput | VideoWhereUniqueInput[]
+  }
+
+  export type PlatformConnectionCreateNestedManyWithoutUserInput = {
+    create?: XOR<PlatformConnectionCreateWithoutUserInput, PlatformConnectionUncheckedCreateWithoutUserInput> | PlatformConnectionCreateWithoutUserInput[] | PlatformConnectionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PlatformConnectionCreateOrConnectWithoutUserInput | PlatformConnectionCreateOrConnectWithoutUserInput[]
+    createMany?: PlatformConnectionCreateManyUserInputEnvelope
+    connect?: PlatformConnectionWhereUniqueInput | PlatformConnectionWhereUniqueInput[]
+  }
+
+  export type PublishJobCreateNestedManyWithoutCreatedByInput = {
+    create?: XOR<PublishJobCreateWithoutCreatedByInput, PublishJobUncheckedCreateWithoutCreatedByInput> | PublishJobCreateWithoutCreatedByInput[] | PublishJobUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: PublishJobCreateOrConnectWithoutCreatedByInput | PublishJobCreateOrConnectWithoutCreatedByInput[]
+    createMany?: PublishJobCreateManyCreatedByInputEnvelope
+    connect?: PublishJobWhereUniqueInput | PublishJobWhereUniqueInput[]
+  }
+
   export type AccountUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -8127,6 +13631,27 @@ export namespace Prisma {
     connectOrCreate?: PostCreateOrConnectWithoutCreatedByInput | PostCreateOrConnectWithoutCreatedByInput[]
     createMany?: PostCreateManyCreatedByInputEnvelope
     connect?: PostWhereUniqueInput | PostWhereUniqueInput[]
+  }
+
+  export type VideoUncheckedCreateNestedManyWithoutCreatedByInput = {
+    create?: XOR<VideoCreateWithoutCreatedByInput, VideoUncheckedCreateWithoutCreatedByInput> | VideoCreateWithoutCreatedByInput[] | VideoUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: VideoCreateOrConnectWithoutCreatedByInput | VideoCreateOrConnectWithoutCreatedByInput[]
+    createMany?: VideoCreateManyCreatedByInputEnvelope
+    connect?: VideoWhereUniqueInput | VideoWhereUniqueInput[]
+  }
+
+  export type PlatformConnectionUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<PlatformConnectionCreateWithoutUserInput, PlatformConnectionUncheckedCreateWithoutUserInput> | PlatformConnectionCreateWithoutUserInput[] | PlatformConnectionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PlatformConnectionCreateOrConnectWithoutUserInput | PlatformConnectionCreateOrConnectWithoutUserInput[]
+    createMany?: PlatformConnectionCreateManyUserInputEnvelope
+    connect?: PlatformConnectionWhereUniqueInput | PlatformConnectionWhereUniqueInput[]
+  }
+
+  export type PublishJobUncheckedCreateNestedManyWithoutCreatedByInput = {
+    create?: XOR<PublishJobCreateWithoutCreatedByInput, PublishJobUncheckedCreateWithoutCreatedByInput> | PublishJobCreateWithoutCreatedByInput[] | PublishJobUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: PublishJobCreateOrConnectWithoutCreatedByInput | PublishJobCreateOrConnectWithoutCreatedByInput[]
+    createMany?: PublishJobCreateManyCreatedByInputEnvelope
+    connect?: PublishJobWhereUniqueInput | PublishJobWhereUniqueInput[]
   }
 
   export type NullableBoolFieldUpdateOperationsInput = {
@@ -8175,6 +13700,48 @@ export namespace Prisma {
     deleteMany?: PostScalarWhereInput | PostScalarWhereInput[]
   }
 
+  export type VideoUpdateManyWithoutCreatedByNestedInput = {
+    create?: XOR<VideoCreateWithoutCreatedByInput, VideoUncheckedCreateWithoutCreatedByInput> | VideoCreateWithoutCreatedByInput[] | VideoUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: VideoCreateOrConnectWithoutCreatedByInput | VideoCreateOrConnectWithoutCreatedByInput[]
+    upsert?: VideoUpsertWithWhereUniqueWithoutCreatedByInput | VideoUpsertWithWhereUniqueWithoutCreatedByInput[]
+    createMany?: VideoCreateManyCreatedByInputEnvelope
+    set?: VideoWhereUniqueInput | VideoWhereUniqueInput[]
+    disconnect?: VideoWhereUniqueInput | VideoWhereUniqueInput[]
+    delete?: VideoWhereUniqueInput | VideoWhereUniqueInput[]
+    connect?: VideoWhereUniqueInput | VideoWhereUniqueInput[]
+    update?: VideoUpdateWithWhereUniqueWithoutCreatedByInput | VideoUpdateWithWhereUniqueWithoutCreatedByInput[]
+    updateMany?: VideoUpdateManyWithWhereWithoutCreatedByInput | VideoUpdateManyWithWhereWithoutCreatedByInput[]
+    deleteMany?: VideoScalarWhereInput | VideoScalarWhereInput[]
+  }
+
+  export type PlatformConnectionUpdateManyWithoutUserNestedInput = {
+    create?: XOR<PlatformConnectionCreateWithoutUserInput, PlatformConnectionUncheckedCreateWithoutUserInput> | PlatformConnectionCreateWithoutUserInput[] | PlatformConnectionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PlatformConnectionCreateOrConnectWithoutUserInput | PlatformConnectionCreateOrConnectWithoutUserInput[]
+    upsert?: PlatformConnectionUpsertWithWhereUniqueWithoutUserInput | PlatformConnectionUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: PlatformConnectionCreateManyUserInputEnvelope
+    set?: PlatformConnectionWhereUniqueInput | PlatformConnectionWhereUniqueInput[]
+    disconnect?: PlatformConnectionWhereUniqueInput | PlatformConnectionWhereUniqueInput[]
+    delete?: PlatformConnectionWhereUniqueInput | PlatformConnectionWhereUniqueInput[]
+    connect?: PlatformConnectionWhereUniqueInput | PlatformConnectionWhereUniqueInput[]
+    update?: PlatformConnectionUpdateWithWhereUniqueWithoutUserInput | PlatformConnectionUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: PlatformConnectionUpdateManyWithWhereWithoutUserInput | PlatformConnectionUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: PlatformConnectionScalarWhereInput | PlatformConnectionScalarWhereInput[]
+  }
+
+  export type PublishJobUpdateManyWithoutCreatedByNestedInput = {
+    create?: XOR<PublishJobCreateWithoutCreatedByInput, PublishJobUncheckedCreateWithoutCreatedByInput> | PublishJobCreateWithoutCreatedByInput[] | PublishJobUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: PublishJobCreateOrConnectWithoutCreatedByInput | PublishJobCreateOrConnectWithoutCreatedByInput[]
+    upsert?: PublishJobUpsertWithWhereUniqueWithoutCreatedByInput | PublishJobUpsertWithWhereUniqueWithoutCreatedByInput[]
+    createMany?: PublishJobCreateManyCreatedByInputEnvelope
+    set?: PublishJobWhereUniqueInput | PublishJobWhereUniqueInput[]
+    disconnect?: PublishJobWhereUniqueInput | PublishJobWhereUniqueInput[]
+    delete?: PublishJobWhereUniqueInput | PublishJobWhereUniqueInput[]
+    connect?: PublishJobWhereUniqueInput | PublishJobWhereUniqueInput[]
+    update?: PublishJobUpdateWithWhereUniqueWithoutCreatedByInput | PublishJobUpdateWithWhereUniqueWithoutCreatedByInput[]
+    updateMany?: PublishJobUpdateManyWithWhereWithoutCreatedByInput | PublishJobUpdateManyWithWhereWithoutCreatedByInput[]
+    deleteMany?: PublishJobScalarWhereInput | PublishJobScalarWhereInput[]
+  }
+
   export type AccountUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -8215,6 +13782,238 @@ export namespace Prisma {
     update?: PostUpdateWithWhereUniqueWithoutCreatedByInput | PostUpdateWithWhereUniqueWithoutCreatedByInput[]
     updateMany?: PostUpdateManyWithWhereWithoutCreatedByInput | PostUpdateManyWithWhereWithoutCreatedByInput[]
     deleteMany?: PostScalarWhereInput | PostScalarWhereInput[]
+  }
+
+  export type VideoUncheckedUpdateManyWithoutCreatedByNestedInput = {
+    create?: XOR<VideoCreateWithoutCreatedByInput, VideoUncheckedCreateWithoutCreatedByInput> | VideoCreateWithoutCreatedByInput[] | VideoUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: VideoCreateOrConnectWithoutCreatedByInput | VideoCreateOrConnectWithoutCreatedByInput[]
+    upsert?: VideoUpsertWithWhereUniqueWithoutCreatedByInput | VideoUpsertWithWhereUniqueWithoutCreatedByInput[]
+    createMany?: VideoCreateManyCreatedByInputEnvelope
+    set?: VideoWhereUniqueInput | VideoWhereUniqueInput[]
+    disconnect?: VideoWhereUniqueInput | VideoWhereUniqueInput[]
+    delete?: VideoWhereUniqueInput | VideoWhereUniqueInput[]
+    connect?: VideoWhereUniqueInput | VideoWhereUniqueInput[]
+    update?: VideoUpdateWithWhereUniqueWithoutCreatedByInput | VideoUpdateWithWhereUniqueWithoutCreatedByInput[]
+    updateMany?: VideoUpdateManyWithWhereWithoutCreatedByInput | VideoUpdateManyWithWhereWithoutCreatedByInput[]
+    deleteMany?: VideoScalarWhereInput | VideoScalarWhereInput[]
+  }
+
+  export type PlatformConnectionUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<PlatformConnectionCreateWithoutUserInput, PlatformConnectionUncheckedCreateWithoutUserInput> | PlatformConnectionCreateWithoutUserInput[] | PlatformConnectionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PlatformConnectionCreateOrConnectWithoutUserInput | PlatformConnectionCreateOrConnectWithoutUserInput[]
+    upsert?: PlatformConnectionUpsertWithWhereUniqueWithoutUserInput | PlatformConnectionUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: PlatformConnectionCreateManyUserInputEnvelope
+    set?: PlatformConnectionWhereUniqueInput | PlatformConnectionWhereUniqueInput[]
+    disconnect?: PlatformConnectionWhereUniqueInput | PlatformConnectionWhereUniqueInput[]
+    delete?: PlatformConnectionWhereUniqueInput | PlatformConnectionWhereUniqueInput[]
+    connect?: PlatformConnectionWhereUniqueInput | PlatformConnectionWhereUniqueInput[]
+    update?: PlatformConnectionUpdateWithWhereUniqueWithoutUserInput | PlatformConnectionUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: PlatformConnectionUpdateManyWithWhereWithoutUserInput | PlatformConnectionUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: PlatformConnectionScalarWhereInput | PlatformConnectionScalarWhereInput[]
+  }
+
+  export type PublishJobUncheckedUpdateManyWithoutCreatedByNestedInput = {
+    create?: XOR<PublishJobCreateWithoutCreatedByInput, PublishJobUncheckedCreateWithoutCreatedByInput> | PublishJobCreateWithoutCreatedByInput[] | PublishJobUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: PublishJobCreateOrConnectWithoutCreatedByInput | PublishJobCreateOrConnectWithoutCreatedByInput[]
+    upsert?: PublishJobUpsertWithWhereUniqueWithoutCreatedByInput | PublishJobUpsertWithWhereUniqueWithoutCreatedByInput[]
+    createMany?: PublishJobCreateManyCreatedByInputEnvelope
+    set?: PublishJobWhereUniqueInput | PublishJobWhereUniqueInput[]
+    disconnect?: PublishJobWhereUniqueInput | PublishJobWhereUniqueInput[]
+    delete?: PublishJobWhereUniqueInput | PublishJobWhereUniqueInput[]
+    connect?: PublishJobWhereUniqueInput | PublishJobWhereUniqueInput[]
+    update?: PublishJobUpdateWithWhereUniqueWithoutCreatedByInput | PublishJobUpdateWithWhereUniqueWithoutCreatedByInput[]
+    updateMany?: PublishJobUpdateManyWithWhereWithoutCreatedByInput | PublishJobUpdateManyWithWhereWithoutCreatedByInput[]
+    deleteMany?: PublishJobScalarWhereInput | PublishJobScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutVideosInput = {
+    create?: XOR<UserCreateWithoutVideosInput, UserUncheckedCreateWithoutVideosInput>
+    connectOrCreate?: UserCreateOrConnectWithoutVideosInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type PublishJobCreateNestedManyWithoutVideoInput = {
+    create?: XOR<PublishJobCreateWithoutVideoInput, PublishJobUncheckedCreateWithoutVideoInput> | PublishJobCreateWithoutVideoInput[] | PublishJobUncheckedCreateWithoutVideoInput[]
+    connectOrCreate?: PublishJobCreateOrConnectWithoutVideoInput | PublishJobCreateOrConnectWithoutVideoInput[]
+    createMany?: PublishJobCreateManyVideoInputEnvelope
+    connect?: PublishJobWhereUniqueInput | PublishJobWhereUniqueInput[]
+  }
+
+  export type PublishJobUncheckedCreateNestedManyWithoutVideoInput = {
+    create?: XOR<PublishJobCreateWithoutVideoInput, PublishJobUncheckedCreateWithoutVideoInput> | PublishJobCreateWithoutVideoInput[] | PublishJobUncheckedCreateWithoutVideoInput[]
+    connectOrCreate?: PublishJobCreateOrConnectWithoutVideoInput | PublishJobCreateOrConnectWithoutVideoInput[]
+    createMany?: PublishJobCreateManyVideoInputEnvelope
+    connect?: PublishJobWhereUniqueInput | PublishJobWhereUniqueInput[]
+  }
+
+  export type BigIntFieldUpdateOperationsInput = {
+    set?: bigint | number
+    increment?: bigint | number
+    decrement?: bigint | number
+    multiply?: bigint | number
+    divide?: bigint | number
+  }
+
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type EnumVideoPrivacyFieldUpdateOperationsInput = {
+    set?: $Enums.VideoPrivacy
+  }
+
+  export type UserUpdateOneRequiredWithoutVideosNestedInput = {
+    create?: XOR<UserCreateWithoutVideosInput, UserUncheckedCreateWithoutVideosInput>
+    connectOrCreate?: UserCreateOrConnectWithoutVideosInput
+    upsert?: UserUpsertWithoutVideosInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutVideosInput, UserUpdateWithoutVideosInput>, UserUncheckedUpdateWithoutVideosInput>
+  }
+
+  export type PublishJobUpdateManyWithoutVideoNestedInput = {
+    create?: XOR<PublishJobCreateWithoutVideoInput, PublishJobUncheckedCreateWithoutVideoInput> | PublishJobCreateWithoutVideoInput[] | PublishJobUncheckedCreateWithoutVideoInput[]
+    connectOrCreate?: PublishJobCreateOrConnectWithoutVideoInput | PublishJobCreateOrConnectWithoutVideoInput[]
+    upsert?: PublishJobUpsertWithWhereUniqueWithoutVideoInput | PublishJobUpsertWithWhereUniqueWithoutVideoInput[]
+    createMany?: PublishJobCreateManyVideoInputEnvelope
+    set?: PublishJobWhereUniqueInput | PublishJobWhereUniqueInput[]
+    disconnect?: PublishJobWhereUniqueInput | PublishJobWhereUniqueInput[]
+    delete?: PublishJobWhereUniqueInput | PublishJobWhereUniqueInput[]
+    connect?: PublishJobWhereUniqueInput | PublishJobWhereUniqueInput[]
+    update?: PublishJobUpdateWithWhereUniqueWithoutVideoInput | PublishJobUpdateWithWhereUniqueWithoutVideoInput[]
+    updateMany?: PublishJobUpdateManyWithWhereWithoutVideoInput | PublishJobUpdateManyWithWhereWithoutVideoInput[]
+    deleteMany?: PublishJobScalarWhereInput | PublishJobScalarWhereInput[]
+  }
+
+  export type PublishJobUncheckedUpdateManyWithoutVideoNestedInput = {
+    create?: XOR<PublishJobCreateWithoutVideoInput, PublishJobUncheckedCreateWithoutVideoInput> | PublishJobCreateWithoutVideoInput[] | PublishJobUncheckedCreateWithoutVideoInput[]
+    connectOrCreate?: PublishJobCreateOrConnectWithoutVideoInput | PublishJobCreateOrConnectWithoutVideoInput[]
+    upsert?: PublishJobUpsertWithWhereUniqueWithoutVideoInput | PublishJobUpsertWithWhereUniqueWithoutVideoInput[]
+    createMany?: PublishJobCreateManyVideoInputEnvelope
+    set?: PublishJobWhereUniqueInput | PublishJobWhereUniqueInput[]
+    disconnect?: PublishJobWhereUniqueInput | PublishJobWhereUniqueInput[]
+    delete?: PublishJobWhereUniqueInput | PublishJobWhereUniqueInput[]
+    connect?: PublishJobWhereUniqueInput | PublishJobWhereUniqueInput[]
+    update?: PublishJobUpdateWithWhereUniqueWithoutVideoInput | PublishJobUpdateWithWhereUniqueWithoutVideoInput[]
+    updateMany?: PublishJobUpdateManyWithWhereWithoutVideoInput | PublishJobUpdateManyWithWhereWithoutVideoInput[]
+    deleteMany?: PublishJobScalarWhereInput | PublishJobScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutPlatformConnectionsInput = {
+    create?: XOR<UserCreateWithoutPlatformConnectionsInput, UserUncheckedCreateWithoutPlatformConnectionsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutPlatformConnectionsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type PublishJobCreateNestedManyWithoutPlatformConnectionInput = {
+    create?: XOR<PublishJobCreateWithoutPlatformConnectionInput, PublishJobUncheckedCreateWithoutPlatformConnectionInput> | PublishJobCreateWithoutPlatformConnectionInput[] | PublishJobUncheckedCreateWithoutPlatformConnectionInput[]
+    connectOrCreate?: PublishJobCreateOrConnectWithoutPlatformConnectionInput | PublishJobCreateOrConnectWithoutPlatformConnectionInput[]
+    createMany?: PublishJobCreateManyPlatformConnectionInputEnvelope
+    connect?: PublishJobWhereUniqueInput | PublishJobWhereUniqueInput[]
+  }
+
+  export type PublishJobUncheckedCreateNestedManyWithoutPlatformConnectionInput = {
+    create?: XOR<PublishJobCreateWithoutPlatformConnectionInput, PublishJobUncheckedCreateWithoutPlatformConnectionInput> | PublishJobCreateWithoutPlatformConnectionInput[] | PublishJobUncheckedCreateWithoutPlatformConnectionInput[]
+    connectOrCreate?: PublishJobCreateOrConnectWithoutPlatformConnectionInput | PublishJobCreateOrConnectWithoutPlatformConnectionInput[]
+    createMany?: PublishJobCreateManyPlatformConnectionInputEnvelope
+    connect?: PublishJobWhereUniqueInput | PublishJobWhereUniqueInput[]
+  }
+
+  export type EnumPlatformFieldUpdateOperationsInput = {
+    set?: $Enums.Platform
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
+  export type UserUpdateOneRequiredWithoutPlatformConnectionsNestedInput = {
+    create?: XOR<UserCreateWithoutPlatformConnectionsInput, UserUncheckedCreateWithoutPlatformConnectionsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutPlatformConnectionsInput
+    upsert?: UserUpsertWithoutPlatformConnectionsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutPlatformConnectionsInput, UserUpdateWithoutPlatformConnectionsInput>, UserUncheckedUpdateWithoutPlatformConnectionsInput>
+  }
+
+  export type PublishJobUpdateManyWithoutPlatformConnectionNestedInput = {
+    create?: XOR<PublishJobCreateWithoutPlatformConnectionInput, PublishJobUncheckedCreateWithoutPlatformConnectionInput> | PublishJobCreateWithoutPlatformConnectionInput[] | PublishJobUncheckedCreateWithoutPlatformConnectionInput[]
+    connectOrCreate?: PublishJobCreateOrConnectWithoutPlatformConnectionInput | PublishJobCreateOrConnectWithoutPlatformConnectionInput[]
+    upsert?: PublishJobUpsertWithWhereUniqueWithoutPlatformConnectionInput | PublishJobUpsertWithWhereUniqueWithoutPlatformConnectionInput[]
+    createMany?: PublishJobCreateManyPlatformConnectionInputEnvelope
+    set?: PublishJobWhereUniqueInput | PublishJobWhereUniqueInput[]
+    disconnect?: PublishJobWhereUniqueInput | PublishJobWhereUniqueInput[]
+    delete?: PublishJobWhereUniqueInput | PublishJobWhereUniqueInput[]
+    connect?: PublishJobWhereUniqueInput | PublishJobWhereUniqueInput[]
+    update?: PublishJobUpdateWithWhereUniqueWithoutPlatformConnectionInput | PublishJobUpdateWithWhereUniqueWithoutPlatformConnectionInput[]
+    updateMany?: PublishJobUpdateManyWithWhereWithoutPlatformConnectionInput | PublishJobUpdateManyWithWhereWithoutPlatformConnectionInput[]
+    deleteMany?: PublishJobScalarWhereInput | PublishJobScalarWhereInput[]
+  }
+
+  export type PublishJobUncheckedUpdateManyWithoutPlatformConnectionNestedInput = {
+    create?: XOR<PublishJobCreateWithoutPlatformConnectionInput, PublishJobUncheckedCreateWithoutPlatformConnectionInput> | PublishJobCreateWithoutPlatformConnectionInput[] | PublishJobUncheckedCreateWithoutPlatformConnectionInput[]
+    connectOrCreate?: PublishJobCreateOrConnectWithoutPlatformConnectionInput | PublishJobCreateOrConnectWithoutPlatformConnectionInput[]
+    upsert?: PublishJobUpsertWithWhereUniqueWithoutPlatformConnectionInput | PublishJobUpsertWithWhereUniqueWithoutPlatformConnectionInput[]
+    createMany?: PublishJobCreateManyPlatformConnectionInputEnvelope
+    set?: PublishJobWhereUniqueInput | PublishJobWhereUniqueInput[]
+    disconnect?: PublishJobWhereUniqueInput | PublishJobWhereUniqueInput[]
+    delete?: PublishJobWhereUniqueInput | PublishJobWhereUniqueInput[]
+    connect?: PublishJobWhereUniqueInput | PublishJobWhereUniqueInput[]
+    update?: PublishJobUpdateWithWhereUniqueWithoutPlatformConnectionInput | PublishJobUpdateWithWhereUniqueWithoutPlatformConnectionInput[]
+    updateMany?: PublishJobUpdateManyWithWhereWithoutPlatformConnectionInput | PublishJobUpdateManyWithWhereWithoutPlatformConnectionInput[]
+    deleteMany?: PublishJobScalarWhereInput | PublishJobScalarWhereInput[]
+  }
+
+  export type VideoCreateNestedOneWithoutPublishJobsInput = {
+    create?: XOR<VideoCreateWithoutPublishJobsInput, VideoUncheckedCreateWithoutPublishJobsInput>
+    connectOrCreate?: VideoCreateOrConnectWithoutPublishJobsInput
+    connect?: VideoWhereUniqueInput
+  }
+
+  export type PlatformConnectionCreateNestedOneWithoutPublishJobsInput = {
+    create?: XOR<PlatformConnectionCreateWithoutPublishJobsInput, PlatformConnectionUncheckedCreateWithoutPublishJobsInput>
+    connectOrCreate?: PlatformConnectionCreateOrConnectWithoutPublishJobsInput
+    connect?: PlatformConnectionWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutPublishJobsInput = {
+    create?: XOR<UserCreateWithoutPublishJobsInput, UserUncheckedCreateWithoutPublishJobsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutPublishJobsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type EnumPublishStatusFieldUpdateOperationsInput = {
+    set?: $Enums.PublishStatus
+  }
+
+  export type NullableEnumVideoPrivacyFieldUpdateOperationsInput = {
+    set?: $Enums.VideoPrivacy | null
+  }
+
+  export type VideoUpdateOneRequiredWithoutPublishJobsNestedInput = {
+    create?: XOR<VideoCreateWithoutPublishJobsInput, VideoUncheckedCreateWithoutPublishJobsInput>
+    connectOrCreate?: VideoCreateOrConnectWithoutPublishJobsInput
+    upsert?: VideoUpsertWithoutPublishJobsInput
+    connect?: VideoWhereUniqueInput
+    update?: XOR<XOR<VideoUpdateToOneWithWhereWithoutPublishJobsInput, VideoUpdateWithoutPublishJobsInput>, VideoUncheckedUpdateWithoutPublishJobsInput>
+  }
+
+  export type PlatformConnectionUpdateOneRequiredWithoutPublishJobsNestedInput = {
+    create?: XOR<PlatformConnectionCreateWithoutPublishJobsInput, PlatformConnectionUncheckedCreateWithoutPublishJobsInput>
+    connectOrCreate?: PlatformConnectionCreateOrConnectWithoutPublishJobsInput
+    upsert?: PlatformConnectionUpsertWithoutPublishJobsInput
+    connect?: PlatformConnectionWhereUniqueInput
+    update?: XOR<XOR<PlatformConnectionUpdateToOneWithWhereWithoutPublishJobsInput, PlatformConnectionUpdateWithoutPublishJobsInput>, PlatformConnectionUncheckedUpdateWithoutPublishJobsInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutPublishJobsNestedInput = {
+    create?: XOR<UserCreateWithoutPublishJobsInput, UserUncheckedCreateWithoutPublishJobsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutPublishJobsInput
+    upsert?: UserUpsertWithoutPublishJobsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutPublishJobsInput, UserUpdateWithoutPublishJobsInput>, UserUncheckedUpdateWithoutPublishJobsInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -8391,6 +14190,159 @@ export namespace Prisma {
     _max?: NestedBoolNullableFilter<$PrismaModel>
   }
 
+  export type NestedBigIntFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    in?: bigint[] | number[]
+    notIn?: bigint[] | number[]
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntFilter<$PrismaModel> | bigint | number
+  }
+
+  export type NestedEnumVideoPrivacyFilter<$PrismaModel = never> = {
+    equals?: $Enums.VideoPrivacy | EnumVideoPrivacyFieldRefInput<$PrismaModel>
+    in?: $Enums.VideoPrivacy[]
+    notIn?: $Enums.VideoPrivacy[]
+    not?: NestedEnumVideoPrivacyFilter<$PrismaModel> | $Enums.VideoPrivacy
+  }
+
+  export type NestedBigIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    in?: bigint[] | number[]
+    notIn?: bigint[] | number[]
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntWithAggregatesFilter<$PrismaModel> | bigint | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedBigIntFilter<$PrismaModel>
+    _min?: NestedBigIntFilter<$PrismaModel>
+    _max?: NestedBigIntFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedEnumVideoPrivacyWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.VideoPrivacy | EnumVideoPrivacyFieldRefInput<$PrismaModel>
+    in?: $Enums.VideoPrivacy[]
+    notIn?: $Enums.VideoPrivacy[]
+    not?: NestedEnumVideoPrivacyWithAggregatesFilter<$PrismaModel> | $Enums.VideoPrivacy
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumVideoPrivacyFilter<$PrismaModel>
+    _max?: NestedEnumVideoPrivacyFilter<$PrismaModel>
+  }
+
+  export type NestedEnumPlatformFilter<$PrismaModel = never> = {
+    equals?: $Enums.Platform | EnumPlatformFieldRefInput<$PrismaModel>
+    in?: $Enums.Platform[]
+    notIn?: $Enums.Platform[]
+    not?: NestedEnumPlatformFilter<$PrismaModel> | $Enums.Platform
+  }
+
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type NestedEnumPlatformWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Platform | EnumPlatformFieldRefInput<$PrismaModel>
+    in?: $Enums.Platform[]
+    notIn?: $Enums.Platform[]
+    not?: NestedEnumPlatformWithAggregatesFilter<$PrismaModel> | $Enums.Platform
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumPlatformFilter<$PrismaModel>
+    _max?: NestedEnumPlatformFilter<$PrismaModel>
+  }
+  export type NestedJsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<NestedJsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type NestedEnumPublishStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.PublishStatus | EnumPublishStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.PublishStatus[]
+    notIn?: $Enums.PublishStatus[]
+    not?: NestedEnumPublishStatusFilter<$PrismaModel> | $Enums.PublishStatus
+  }
+
+  export type NestedEnumVideoPrivacyNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.VideoPrivacy | EnumVideoPrivacyFieldRefInput<$PrismaModel> | null
+    in?: $Enums.VideoPrivacy[] | null
+    notIn?: $Enums.VideoPrivacy[] | null
+    not?: NestedEnumVideoPrivacyNullableFilter<$PrismaModel> | $Enums.VideoPrivacy | null
+  }
+
+  export type NestedEnumPublishStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.PublishStatus | EnumPublishStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.PublishStatus[]
+    notIn?: $Enums.PublishStatus[]
+    not?: NestedEnumPublishStatusWithAggregatesFilter<$PrismaModel> | $Enums.PublishStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumPublishStatusFilter<$PrismaModel>
+    _max?: NestedEnumPublishStatusFilter<$PrismaModel>
+  }
+
+  export type NestedEnumVideoPrivacyNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.VideoPrivacy | EnumVideoPrivacyFieldRefInput<$PrismaModel> | null
+    in?: $Enums.VideoPrivacy[] | null
+    notIn?: $Enums.VideoPrivacy[] | null
+    not?: NestedEnumVideoPrivacyNullableWithAggregatesFilter<$PrismaModel> | $Enums.VideoPrivacy | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumVideoPrivacyNullableFilter<$PrismaModel>
+    _max?: NestedEnumVideoPrivacyNullableFilter<$PrismaModel>
+  }
+
   export type UserCreateWithoutPostsInput = {
     id?: string
     name?: string | null
@@ -8401,6 +14353,9 @@ export namespace Prisma {
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
+    videos?: VideoCreateNestedManyWithoutCreatedByInput
+    platformConnections?: PlatformConnectionCreateNestedManyWithoutUserInput
+    publishJobs?: PublishJobCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutPostsInput = {
@@ -8413,6 +14368,9 @@ export namespace Prisma {
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    videos?: VideoUncheckedCreateNestedManyWithoutCreatedByInput
+    platformConnections?: PlatformConnectionUncheckedCreateNestedManyWithoutUserInput
+    publishJobs?: PublishJobUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutPostsInput = {
@@ -8441,6 +14399,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
+    videos?: VideoUpdateManyWithoutCreatedByNestedInput
+    platformConnections?: PlatformConnectionUpdateManyWithoutUserNestedInput
+    publishJobs?: PublishJobUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPostsInput = {
@@ -8453,6 +14414,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    videos?: VideoUncheckedUpdateManyWithoutCreatedByNestedInput
+    platformConnections?: PlatformConnectionUncheckedUpdateManyWithoutUserNestedInput
+    publishJobs?: PublishJobUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateWithoutAccountsInput = {
@@ -8465,6 +14429,9 @@ export namespace Prisma {
     updatedAt?: Date | string
     sessions?: SessionCreateNestedManyWithoutUserInput
     posts?: PostCreateNestedManyWithoutCreatedByInput
+    videos?: VideoCreateNestedManyWithoutCreatedByInput
+    platformConnections?: PlatformConnectionCreateNestedManyWithoutUserInput
+    publishJobs?: PublishJobCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutAccountsInput = {
@@ -8477,6 +14444,9 @@ export namespace Prisma {
     updatedAt?: Date | string
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     posts?: PostUncheckedCreateNestedManyWithoutCreatedByInput
+    videos?: VideoUncheckedCreateNestedManyWithoutCreatedByInput
+    platformConnections?: PlatformConnectionUncheckedCreateNestedManyWithoutUserInput
+    publishJobs?: PublishJobUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutAccountsInput = {
@@ -8505,6 +14475,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUpdateManyWithoutUserNestedInput
     posts?: PostUpdateManyWithoutCreatedByNestedInput
+    videos?: VideoUpdateManyWithoutCreatedByNestedInput
+    platformConnections?: PlatformConnectionUpdateManyWithoutUserNestedInput
+    publishJobs?: PublishJobUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -8517,6 +14490,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     posts?: PostUncheckedUpdateManyWithoutCreatedByNestedInput
+    videos?: VideoUncheckedUpdateManyWithoutCreatedByNestedInput
+    platformConnections?: PlatformConnectionUncheckedUpdateManyWithoutUserNestedInput
+    publishJobs?: PublishJobUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateWithoutSessionsInput = {
@@ -8529,6 +14505,9 @@ export namespace Prisma {
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
     posts?: PostCreateNestedManyWithoutCreatedByInput
+    videos?: VideoCreateNestedManyWithoutCreatedByInput
+    platformConnections?: PlatformConnectionCreateNestedManyWithoutUserInput
+    publishJobs?: PublishJobCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -8541,6 +14520,9 @@ export namespace Prisma {
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     posts?: PostUncheckedCreateNestedManyWithoutCreatedByInput
+    videos?: VideoUncheckedCreateNestedManyWithoutCreatedByInput
+    platformConnections?: PlatformConnectionUncheckedCreateNestedManyWithoutUserInput
+    publishJobs?: PublishJobUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutSessionsInput = {
@@ -8569,6 +14551,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
     posts?: PostUpdateManyWithoutCreatedByNestedInput
+    videos?: VideoUpdateManyWithoutCreatedByNestedInput
+    platformConnections?: PlatformConnectionUpdateManyWithoutUserNestedInput
+    publishJobs?: PublishJobUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -8581,6 +14566,9 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     posts?: PostUncheckedUpdateManyWithoutCreatedByNestedInput
+    videos?: VideoUncheckedUpdateManyWithoutCreatedByNestedInput
+    platformConnections?: PlatformConnectionUncheckedUpdateManyWithoutUserNestedInput
+    publishJobs?: PublishJobUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type AccountCreateWithoutUserInput = {
@@ -8671,6 +14659,141 @@ export namespace Prisma {
 
   export type PostCreateManyCreatedByInputEnvelope = {
     data: PostCreateManyCreatedByInput | PostCreateManyCreatedByInput[]
+  }
+
+  export type VideoCreateWithoutCreatedByInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    s3Key: string
+    s3Bucket: string
+    fileName: string
+    fileSize: bigint | number
+    mimeType: string
+    duration?: number | null
+    title: string
+    description?: string | null
+    tags?: string | null
+    thumbnailUrl?: string | null
+    privacy?: $Enums.VideoPrivacy
+    publishJobs?: PublishJobCreateNestedManyWithoutVideoInput
+  }
+
+  export type VideoUncheckedCreateWithoutCreatedByInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    s3Key: string
+    s3Bucket: string
+    fileName: string
+    fileSize: bigint | number
+    mimeType: string
+    duration?: number | null
+    title: string
+    description?: string | null
+    tags?: string | null
+    thumbnailUrl?: string | null
+    privacy?: $Enums.VideoPrivacy
+    publishJobs?: PublishJobUncheckedCreateNestedManyWithoutVideoInput
+  }
+
+  export type VideoCreateOrConnectWithoutCreatedByInput = {
+    where: VideoWhereUniqueInput
+    create: XOR<VideoCreateWithoutCreatedByInput, VideoUncheckedCreateWithoutCreatedByInput>
+  }
+
+  export type VideoCreateManyCreatedByInputEnvelope = {
+    data: VideoCreateManyCreatedByInput | VideoCreateManyCreatedByInput[]
+  }
+
+  export type PlatformConnectionCreateWithoutUserInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    platform: $Enums.Platform
+    platformUserId: string
+    platformUsername?: string | null
+    accessToken: string
+    refreshToken?: string | null
+    tokenExpiry?: Date | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    isActive?: boolean
+    publishJobs?: PublishJobCreateNestedManyWithoutPlatformConnectionInput
+  }
+
+  export type PlatformConnectionUncheckedCreateWithoutUserInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    platform: $Enums.Platform
+    platformUserId: string
+    platformUsername?: string | null
+    accessToken: string
+    refreshToken?: string | null
+    tokenExpiry?: Date | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    isActive?: boolean
+    publishJobs?: PublishJobUncheckedCreateNestedManyWithoutPlatformConnectionInput
+  }
+
+  export type PlatformConnectionCreateOrConnectWithoutUserInput = {
+    where: PlatformConnectionWhereUniqueInput
+    create: XOR<PlatformConnectionCreateWithoutUserInput, PlatformConnectionUncheckedCreateWithoutUserInput>
+  }
+
+  export type PlatformConnectionCreateManyUserInputEnvelope = {
+    data: PlatformConnectionCreateManyUserInput | PlatformConnectionCreateManyUserInput[]
+  }
+
+  export type PublishJobCreateWithoutCreatedByInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    platform: $Enums.Platform
+    status?: $Enums.PublishStatus
+    title?: string | null
+    description?: string | null
+    tags?: string | null
+    privacy?: $Enums.VideoPrivacy | null
+    scheduledFor?: Date | string | null
+    startedAt?: Date | string | null
+    completedAt?: Date | string | null
+    platformVideoId?: string | null
+    platformVideoUrl?: string | null
+    errorMessage?: string | null
+    retryCount?: number
+    video: VideoCreateNestedOneWithoutPublishJobsInput
+    platformConnection: PlatformConnectionCreateNestedOneWithoutPublishJobsInput
+  }
+
+  export type PublishJobUncheckedCreateWithoutCreatedByInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    platform: $Enums.Platform
+    status?: $Enums.PublishStatus
+    title?: string | null
+    description?: string | null
+    tags?: string | null
+    privacy?: $Enums.VideoPrivacy | null
+    scheduledFor?: Date | string | null
+    startedAt?: Date | string | null
+    completedAt?: Date | string | null
+    platformVideoId?: string | null
+    platformVideoUrl?: string | null
+    errorMessage?: string | null
+    retryCount?: number
+    videoId: string
+    platformConnectionId: string
+  }
+
+  export type PublishJobCreateOrConnectWithoutCreatedByInput = {
+    where: PublishJobWhereUniqueInput
+    create: XOR<PublishJobCreateWithoutCreatedByInput, PublishJobUncheckedCreateWithoutCreatedByInput>
+  }
+
+  export type PublishJobCreateManyCreatedByInputEnvelope = {
+    data: PublishJobCreateManyCreatedByInput | PublishJobCreateManyCreatedByInput[]
   }
 
   export type AccountUpsertWithWhereUniqueWithoutUserInput = {
@@ -8765,6 +14888,644 @@ export namespace Prisma {
     createdById?: StringFilter<"Post"> | string
   }
 
+  export type VideoUpsertWithWhereUniqueWithoutCreatedByInput = {
+    where: VideoWhereUniqueInput
+    update: XOR<VideoUpdateWithoutCreatedByInput, VideoUncheckedUpdateWithoutCreatedByInput>
+    create: XOR<VideoCreateWithoutCreatedByInput, VideoUncheckedCreateWithoutCreatedByInput>
+  }
+
+  export type VideoUpdateWithWhereUniqueWithoutCreatedByInput = {
+    where: VideoWhereUniqueInput
+    data: XOR<VideoUpdateWithoutCreatedByInput, VideoUncheckedUpdateWithoutCreatedByInput>
+  }
+
+  export type VideoUpdateManyWithWhereWithoutCreatedByInput = {
+    where: VideoScalarWhereInput
+    data: XOR<VideoUpdateManyMutationInput, VideoUncheckedUpdateManyWithoutCreatedByInput>
+  }
+
+  export type VideoScalarWhereInput = {
+    AND?: VideoScalarWhereInput | VideoScalarWhereInput[]
+    OR?: VideoScalarWhereInput[]
+    NOT?: VideoScalarWhereInput | VideoScalarWhereInput[]
+    id?: StringFilter<"Video"> | string
+    createdAt?: DateTimeFilter<"Video"> | Date | string
+    updatedAt?: DateTimeFilter<"Video"> | Date | string
+    s3Key?: StringFilter<"Video"> | string
+    s3Bucket?: StringFilter<"Video"> | string
+    fileName?: StringFilter<"Video"> | string
+    fileSize?: BigIntFilter<"Video"> | bigint | number
+    mimeType?: StringFilter<"Video"> | string
+    duration?: IntNullableFilter<"Video"> | number | null
+    title?: StringFilter<"Video"> | string
+    description?: StringNullableFilter<"Video"> | string | null
+    tags?: StringNullableFilter<"Video"> | string | null
+    thumbnailUrl?: StringNullableFilter<"Video"> | string | null
+    privacy?: EnumVideoPrivacyFilter<"Video"> | $Enums.VideoPrivacy
+    createdById?: StringFilter<"Video"> | string
+  }
+
+  export type PlatformConnectionUpsertWithWhereUniqueWithoutUserInput = {
+    where: PlatformConnectionWhereUniqueInput
+    update: XOR<PlatformConnectionUpdateWithoutUserInput, PlatformConnectionUncheckedUpdateWithoutUserInput>
+    create: XOR<PlatformConnectionCreateWithoutUserInput, PlatformConnectionUncheckedCreateWithoutUserInput>
+  }
+
+  export type PlatformConnectionUpdateWithWhereUniqueWithoutUserInput = {
+    where: PlatformConnectionWhereUniqueInput
+    data: XOR<PlatformConnectionUpdateWithoutUserInput, PlatformConnectionUncheckedUpdateWithoutUserInput>
+  }
+
+  export type PlatformConnectionUpdateManyWithWhereWithoutUserInput = {
+    where: PlatformConnectionScalarWhereInput
+    data: XOR<PlatformConnectionUpdateManyMutationInput, PlatformConnectionUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type PlatformConnectionScalarWhereInput = {
+    AND?: PlatformConnectionScalarWhereInput | PlatformConnectionScalarWhereInput[]
+    OR?: PlatformConnectionScalarWhereInput[]
+    NOT?: PlatformConnectionScalarWhereInput | PlatformConnectionScalarWhereInput[]
+    id?: StringFilter<"PlatformConnection"> | string
+    createdAt?: DateTimeFilter<"PlatformConnection"> | Date | string
+    updatedAt?: DateTimeFilter<"PlatformConnection"> | Date | string
+    platform?: EnumPlatformFilter<"PlatformConnection"> | $Enums.Platform
+    platformUserId?: StringFilter<"PlatformConnection"> | string
+    platformUsername?: StringNullableFilter<"PlatformConnection"> | string | null
+    accessToken?: StringFilter<"PlatformConnection"> | string
+    refreshToken?: StringNullableFilter<"PlatformConnection"> | string | null
+    tokenExpiry?: DateTimeNullableFilter<"PlatformConnection"> | Date | string | null
+    metadata?: JsonNullableFilter<"PlatformConnection">
+    isActive?: BoolFilter<"PlatformConnection"> | boolean
+    userId?: StringFilter<"PlatformConnection"> | string
+  }
+
+  export type PublishJobUpsertWithWhereUniqueWithoutCreatedByInput = {
+    where: PublishJobWhereUniqueInput
+    update: XOR<PublishJobUpdateWithoutCreatedByInput, PublishJobUncheckedUpdateWithoutCreatedByInput>
+    create: XOR<PublishJobCreateWithoutCreatedByInput, PublishJobUncheckedCreateWithoutCreatedByInput>
+  }
+
+  export type PublishJobUpdateWithWhereUniqueWithoutCreatedByInput = {
+    where: PublishJobWhereUniqueInput
+    data: XOR<PublishJobUpdateWithoutCreatedByInput, PublishJobUncheckedUpdateWithoutCreatedByInput>
+  }
+
+  export type PublishJobUpdateManyWithWhereWithoutCreatedByInput = {
+    where: PublishJobScalarWhereInput
+    data: XOR<PublishJobUpdateManyMutationInput, PublishJobUncheckedUpdateManyWithoutCreatedByInput>
+  }
+
+  export type PublishJobScalarWhereInput = {
+    AND?: PublishJobScalarWhereInput | PublishJobScalarWhereInput[]
+    OR?: PublishJobScalarWhereInput[]
+    NOT?: PublishJobScalarWhereInput | PublishJobScalarWhereInput[]
+    id?: StringFilter<"PublishJob"> | string
+    createdAt?: DateTimeFilter<"PublishJob"> | Date | string
+    updatedAt?: DateTimeFilter<"PublishJob"> | Date | string
+    platform?: EnumPlatformFilter<"PublishJob"> | $Enums.Platform
+    status?: EnumPublishStatusFilter<"PublishJob"> | $Enums.PublishStatus
+    title?: StringNullableFilter<"PublishJob"> | string | null
+    description?: StringNullableFilter<"PublishJob"> | string | null
+    tags?: StringNullableFilter<"PublishJob"> | string | null
+    privacy?: EnumVideoPrivacyNullableFilter<"PublishJob"> | $Enums.VideoPrivacy | null
+    scheduledFor?: DateTimeNullableFilter<"PublishJob"> | Date | string | null
+    startedAt?: DateTimeNullableFilter<"PublishJob"> | Date | string | null
+    completedAt?: DateTimeNullableFilter<"PublishJob"> | Date | string | null
+    platformVideoId?: StringNullableFilter<"PublishJob"> | string | null
+    platformVideoUrl?: StringNullableFilter<"PublishJob"> | string | null
+    errorMessage?: StringNullableFilter<"PublishJob"> | string | null
+    retryCount?: IntFilter<"PublishJob"> | number
+    videoId?: StringFilter<"PublishJob"> | string
+    platformConnectionId?: StringFilter<"PublishJob"> | string
+    createdById?: StringFilter<"PublishJob"> | string
+  }
+
+  export type UserCreateWithoutVideosInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: boolean | null
+    image?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    posts?: PostCreateNestedManyWithoutCreatedByInput
+    platformConnections?: PlatformConnectionCreateNestedManyWithoutUserInput
+    publishJobs?: PublishJobCreateNestedManyWithoutCreatedByInput
+  }
+
+  export type UserUncheckedCreateWithoutVideosInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: boolean | null
+    image?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    posts?: PostUncheckedCreateNestedManyWithoutCreatedByInput
+    platformConnections?: PlatformConnectionUncheckedCreateNestedManyWithoutUserInput
+    publishJobs?: PublishJobUncheckedCreateNestedManyWithoutCreatedByInput
+  }
+
+  export type UserCreateOrConnectWithoutVideosInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutVideosInput, UserUncheckedCreateWithoutVideosInput>
+  }
+
+  export type PublishJobCreateWithoutVideoInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    platform: $Enums.Platform
+    status?: $Enums.PublishStatus
+    title?: string | null
+    description?: string | null
+    tags?: string | null
+    privacy?: $Enums.VideoPrivacy | null
+    scheduledFor?: Date | string | null
+    startedAt?: Date | string | null
+    completedAt?: Date | string | null
+    platformVideoId?: string | null
+    platformVideoUrl?: string | null
+    errorMessage?: string | null
+    retryCount?: number
+    platformConnection: PlatformConnectionCreateNestedOneWithoutPublishJobsInput
+    createdBy: UserCreateNestedOneWithoutPublishJobsInput
+  }
+
+  export type PublishJobUncheckedCreateWithoutVideoInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    platform: $Enums.Platform
+    status?: $Enums.PublishStatus
+    title?: string | null
+    description?: string | null
+    tags?: string | null
+    privacy?: $Enums.VideoPrivacy | null
+    scheduledFor?: Date | string | null
+    startedAt?: Date | string | null
+    completedAt?: Date | string | null
+    platformVideoId?: string | null
+    platformVideoUrl?: string | null
+    errorMessage?: string | null
+    retryCount?: number
+    platformConnectionId: string
+    createdById: string
+  }
+
+  export type PublishJobCreateOrConnectWithoutVideoInput = {
+    where: PublishJobWhereUniqueInput
+    create: XOR<PublishJobCreateWithoutVideoInput, PublishJobUncheckedCreateWithoutVideoInput>
+  }
+
+  export type PublishJobCreateManyVideoInputEnvelope = {
+    data: PublishJobCreateManyVideoInput | PublishJobCreateManyVideoInput[]
+  }
+
+  export type UserUpsertWithoutVideosInput = {
+    update: XOR<UserUpdateWithoutVideosInput, UserUncheckedUpdateWithoutVideosInput>
+    create: XOR<UserCreateWithoutVideosInput, UserUncheckedCreateWithoutVideosInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutVideosInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutVideosInput, UserUncheckedUpdateWithoutVideosInput>
+  }
+
+  export type UserUpdateWithoutVideosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    posts?: PostUpdateManyWithoutCreatedByNestedInput
+    platformConnections?: PlatformConnectionUpdateManyWithoutUserNestedInput
+    publishJobs?: PublishJobUpdateManyWithoutCreatedByNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutVideosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    posts?: PostUncheckedUpdateManyWithoutCreatedByNestedInput
+    platformConnections?: PlatformConnectionUncheckedUpdateManyWithoutUserNestedInput
+    publishJobs?: PublishJobUncheckedUpdateManyWithoutCreatedByNestedInput
+  }
+
+  export type PublishJobUpsertWithWhereUniqueWithoutVideoInput = {
+    where: PublishJobWhereUniqueInput
+    update: XOR<PublishJobUpdateWithoutVideoInput, PublishJobUncheckedUpdateWithoutVideoInput>
+    create: XOR<PublishJobCreateWithoutVideoInput, PublishJobUncheckedCreateWithoutVideoInput>
+  }
+
+  export type PublishJobUpdateWithWhereUniqueWithoutVideoInput = {
+    where: PublishJobWhereUniqueInput
+    data: XOR<PublishJobUpdateWithoutVideoInput, PublishJobUncheckedUpdateWithoutVideoInput>
+  }
+
+  export type PublishJobUpdateManyWithWhereWithoutVideoInput = {
+    where: PublishJobScalarWhereInput
+    data: XOR<PublishJobUpdateManyMutationInput, PublishJobUncheckedUpdateManyWithoutVideoInput>
+  }
+
+  export type UserCreateWithoutPlatformConnectionsInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: boolean | null
+    image?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    posts?: PostCreateNestedManyWithoutCreatedByInput
+    videos?: VideoCreateNestedManyWithoutCreatedByInput
+    publishJobs?: PublishJobCreateNestedManyWithoutCreatedByInput
+  }
+
+  export type UserUncheckedCreateWithoutPlatformConnectionsInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: boolean | null
+    image?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    posts?: PostUncheckedCreateNestedManyWithoutCreatedByInput
+    videos?: VideoUncheckedCreateNestedManyWithoutCreatedByInput
+    publishJobs?: PublishJobUncheckedCreateNestedManyWithoutCreatedByInput
+  }
+
+  export type UserCreateOrConnectWithoutPlatformConnectionsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutPlatformConnectionsInput, UserUncheckedCreateWithoutPlatformConnectionsInput>
+  }
+
+  export type PublishJobCreateWithoutPlatformConnectionInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    platform: $Enums.Platform
+    status?: $Enums.PublishStatus
+    title?: string | null
+    description?: string | null
+    tags?: string | null
+    privacy?: $Enums.VideoPrivacy | null
+    scheduledFor?: Date | string | null
+    startedAt?: Date | string | null
+    completedAt?: Date | string | null
+    platformVideoId?: string | null
+    platformVideoUrl?: string | null
+    errorMessage?: string | null
+    retryCount?: number
+    video: VideoCreateNestedOneWithoutPublishJobsInput
+    createdBy: UserCreateNestedOneWithoutPublishJobsInput
+  }
+
+  export type PublishJobUncheckedCreateWithoutPlatformConnectionInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    platform: $Enums.Platform
+    status?: $Enums.PublishStatus
+    title?: string | null
+    description?: string | null
+    tags?: string | null
+    privacy?: $Enums.VideoPrivacy | null
+    scheduledFor?: Date | string | null
+    startedAt?: Date | string | null
+    completedAt?: Date | string | null
+    platformVideoId?: string | null
+    platformVideoUrl?: string | null
+    errorMessage?: string | null
+    retryCount?: number
+    videoId: string
+    createdById: string
+  }
+
+  export type PublishJobCreateOrConnectWithoutPlatformConnectionInput = {
+    where: PublishJobWhereUniqueInput
+    create: XOR<PublishJobCreateWithoutPlatformConnectionInput, PublishJobUncheckedCreateWithoutPlatformConnectionInput>
+  }
+
+  export type PublishJobCreateManyPlatformConnectionInputEnvelope = {
+    data: PublishJobCreateManyPlatformConnectionInput | PublishJobCreateManyPlatformConnectionInput[]
+  }
+
+  export type UserUpsertWithoutPlatformConnectionsInput = {
+    update: XOR<UserUpdateWithoutPlatformConnectionsInput, UserUncheckedUpdateWithoutPlatformConnectionsInput>
+    create: XOR<UserCreateWithoutPlatformConnectionsInput, UserUncheckedCreateWithoutPlatformConnectionsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutPlatformConnectionsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutPlatformConnectionsInput, UserUncheckedUpdateWithoutPlatformConnectionsInput>
+  }
+
+  export type UserUpdateWithoutPlatformConnectionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    posts?: PostUpdateManyWithoutCreatedByNestedInput
+    videos?: VideoUpdateManyWithoutCreatedByNestedInput
+    publishJobs?: PublishJobUpdateManyWithoutCreatedByNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutPlatformConnectionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    posts?: PostUncheckedUpdateManyWithoutCreatedByNestedInput
+    videos?: VideoUncheckedUpdateManyWithoutCreatedByNestedInput
+    publishJobs?: PublishJobUncheckedUpdateManyWithoutCreatedByNestedInput
+  }
+
+  export type PublishJobUpsertWithWhereUniqueWithoutPlatformConnectionInput = {
+    where: PublishJobWhereUniqueInput
+    update: XOR<PublishJobUpdateWithoutPlatformConnectionInput, PublishJobUncheckedUpdateWithoutPlatformConnectionInput>
+    create: XOR<PublishJobCreateWithoutPlatformConnectionInput, PublishJobUncheckedCreateWithoutPlatformConnectionInput>
+  }
+
+  export type PublishJobUpdateWithWhereUniqueWithoutPlatformConnectionInput = {
+    where: PublishJobWhereUniqueInput
+    data: XOR<PublishJobUpdateWithoutPlatformConnectionInput, PublishJobUncheckedUpdateWithoutPlatformConnectionInput>
+  }
+
+  export type PublishJobUpdateManyWithWhereWithoutPlatformConnectionInput = {
+    where: PublishJobScalarWhereInput
+    data: XOR<PublishJobUpdateManyMutationInput, PublishJobUncheckedUpdateManyWithoutPlatformConnectionInput>
+  }
+
+  export type VideoCreateWithoutPublishJobsInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    s3Key: string
+    s3Bucket: string
+    fileName: string
+    fileSize: bigint | number
+    mimeType: string
+    duration?: number | null
+    title: string
+    description?: string | null
+    tags?: string | null
+    thumbnailUrl?: string | null
+    privacy?: $Enums.VideoPrivacy
+    createdBy: UserCreateNestedOneWithoutVideosInput
+  }
+
+  export type VideoUncheckedCreateWithoutPublishJobsInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    s3Key: string
+    s3Bucket: string
+    fileName: string
+    fileSize: bigint | number
+    mimeType: string
+    duration?: number | null
+    title: string
+    description?: string | null
+    tags?: string | null
+    thumbnailUrl?: string | null
+    privacy?: $Enums.VideoPrivacy
+    createdById: string
+  }
+
+  export type VideoCreateOrConnectWithoutPublishJobsInput = {
+    where: VideoWhereUniqueInput
+    create: XOR<VideoCreateWithoutPublishJobsInput, VideoUncheckedCreateWithoutPublishJobsInput>
+  }
+
+  export type PlatformConnectionCreateWithoutPublishJobsInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    platform: $Enums.Platform
+    platformUserId: string
+    platformUsername?: string | null
+    accessToken: string
+    refreshToken?: string | null
+    tokenExpiry?: Date | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    isActive?: boolean
+    user: UserCreateNestedOneWithoutPlatformConnectionsInput
+  }
+
+  export type PlatformConnectionUncheckedCreateWithoutPublishJobsInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    platform: $Enums.Platform
+    platformUserId: string
+    platformUsername?: string | null
+    accessToken: string
+    refreshToken?: string | null
+    tokenExpiry?: Date | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    isActive?: boolean
+    userId: string
+  }
+
+  export type PlatformConnectionCreateOrConnectWithoutPublishJobsInput = {
+    where: PlatformConnectionWhereUniqueInput
+    create: XOR<PlatformConnectionCreateWithoutPublishJobsInput, PlatformConnectionUncheckedCreateWithoutPublishJobsInput>
+  }
+
+  export type UserCreateWithoutPublishJobsInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: boolean | null
+    image?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    posts?: PostCreateNestedManyWithoutCreatedByInput
+    videos?: VideoCreateNestedManyWithoutCreatedByInput
+    platformConnections?: PlatformConnectionCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutPublishJobsInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: boolean | null
+    image?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    posts?: PostUncheckedCreateNestedManyWithoutCreatedByInput
+    videos?: VideoUncheckedCreateNestedManyWithoutCreatedByInput
+    platformConnections?: PlatformConnectionUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutPublishJobsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutPublishJobsInput, UserUncheckedCreateWithoutPublishJobsInput>
+  }
+
+  export type VideoUpsertWithoutPublishJobsInput = {
+    update: XOR<VideoUpdateWithoutPublishJobsInput, VideoUncheckedUpdateWithoutPublishJobsInput>
+    create: XOR<VideoCreateWithoutPublishJobsInput, VideoUncheckedCreateWithoutPublishJobsInput>
+    where?: VideoWhereInput
+  }
+
+  export type VideoUpdateToOneWithWhereWithoutPublishJobsInput = {
+    where?: VideoWhereInput
+    data: XOR<VideoUpdateWithoutPublishJobsInput, VideoUncheckedUpdateWithoutPublishJobsInput>
+  }
+
+  export type VideoUpdateWithoutPublishJobsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    s3Key?: StringFieldUpdateOperationsInput | string
+    s3Bucket?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    fileSize?: BigIntFieldUpdateOperationsInput | bigint | number
+    mimeType?: StringFieldUpdateOperationsInput | string
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: NullableStringFieldUpdateOperationsInput | string | null
+    thumbnailUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    privacy?: EnumVideoPrivacyFieldUpdateOperationsInput | $Enums.VideoPrivacy
+    createdBy?: UserUpdateOneRequiredWithoutVideosNestedInput
+  }
+
+  export type VideoUncheckedUpdateWithoutPublishJobsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    s3Key?: StringFieldUpdateOperationsInput | string
+    s3Bucket?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    fileSize?: BigIntFieldUpdateOperationsInput | bigint | number
+    mimeType?: StringFieldUpdateOperationsInput | string
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: NullableStringFieldUpdateOperationsInput | string | null
+    thumbnailUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    privacy?: EnumVideoPrivacyFieldUpdateOperationsInput | $Enums.VideoPrivacy
+    createdById?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type PlatformConnectionUpsertWithoutPublishJobsInput = {
+    update: XOR<PlatformConnectionUpdateWithoutPublishJobsInput, PlatformConnectionUncheckedUpdateWithoutPublishJobsInput>
+    create: XOR<PlatformConnectionCreateWithoutPublishJobsInput, PlatformConnectionUncheckedCreateWithoutPublishJobsInput>
+    where?: PlatformConnectionWhereInput
+  }
+
+  export type PlatformConnectionUpdateToOneWithWhereWithoutPublishJobsInput = {
+    where?: PlatformConnectionWhereInput
+    data: XOR<PlatformConnectionUpdateWithoutPublishJobsInput, PlatformConnectionUncheckedUpdateWithoutPublishJobsInput>
+  }
+
+  export type PlatformConnectionUpdateWithoutPublishJobsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    platform?: EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
+    platformUserId?: StringFieldUpdateOperationsInput | string
+    platformUsername?: NullableStringFieldUpdateOperationsInput | string | null
+    accessToken?: StringFieldUpdateOperationsInput | string
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    user?: UserUpdateOneRequiredWithoutPlatformConnectionsNestedInput
+  }
+
+  export type PlatformConnectionUncheckedUpdateWithoutPublishJobsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    platform?: EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
+    platformUserId?: StringFieldUpdateOperationsInput | string
+    platformUsername?: NullableStringFieldUpdateOperationsInput | string | null
+    accessToken?: StringFieldUpdateOperationsInput | string
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UserUpsertWithoutPublishJobsInput = {
+    update: XOR<UserUpdateWithoutPublishJobsInput, UserUncheckedUpdateWithoutPublishJobsInput>
+    create: XOR<UserCreateWithoutPublishJobsInput, UserUncheckedCreateWithoutPublishJobsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutPublishJobsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutPublishJobsInput, UserUncheckedUpdateWithoutPublishJobsInput>
+  }
+
+  export type UserUpdateWithoutPublishJobsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    posts?: PostUpdateManyWithoutCreatedByNestedInput
+    videos?: VideoUpdateManyWithoutCreatedByNestedInput
+    platformConnections?: PlatformConnectionUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutPublishJobsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    posts?: PostUncheckedUpdateManyWithoutCreatedByNestedInput
+    videos?: VideoUncheckedUpdateManyWithoutCreatedByNestedInput
+    platformConnections?: PlatformConnectionUncheckedUpdateManyWithoutUserNestedInput
+  }
+
   export type AccountCreateManyUserInput = {
     id?: string
     accountId: string
@@ -8795,6 +15556,58 @@ export namespace Prisma {
     name: string
     createdAt?: Date | string
     updatedAt?: Date | string
+  }
+
+  export type VideoCreateManyCreatedByInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    s3Key: string
+    s3Bucket: string
+    fileName: string
+    fileSize: bigint | number
+    mimeType: string
+    duration?: number | null
+    title: string
+    description?: string | null
+    tags?: string | null
+    thumbnailUrl?: string | null
+    privacy?: $Enums.VideoPrivacy
+  }
+
+  export type PlatformConnectionCreateManyUserInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    platform: $Enums.Platform
+    platformUserId: string
+    platformUsername?: string | null
+    accessToken: string
+    refreshToken?: string | null
+    tokenExpiry?: Date | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    isActive?: boolean
+  }
+
+  export type PublishJobCreateManyCreatedByInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    platform: $Enums.Platform
+    status?: $Enums.PublishStatus
+    title?: string | null
+    description?: string | null
+    tags?: string | null
+    privacy?: $Enums.VideoPrivacy | null
+    scheduledFor?: Date | string | null
+    startedAt?: Date | string | null
+    completedAt?: Date | string | null
+    platformVideoId?: string | null
+    platformVideoUrl?: string | null
+    errorMessage?: string | null
+    retryCount?: number
+    videoId: string
+    platformConnectionId: string
   }
 
   export type AccountUpdateWithoutUserInput = {
@@ -8890,6 +15703,334 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VideoUpdateWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    s3Key?: StringFieldUpdateOperationsInput | string
+    s3Bucket?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    fileSize?: BigIntFieldUpdateOperationsInput | bigint | number
+    mimeType?: StringFieldUpdateOperationsInput | string
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: NullableStringFieldUpdateOperationsInput | string | null
+    thumbnailUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    privacy?: EnumVideoPrivacyFieldUpdateOperationsInput | $Enums.VideoPrivacy
+    publishJobs?: PublishJobUpdateManyWithoutVideoNestedInput
+  }
+
+  export type VideoUncheckedUpdateWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    s3Key?: StringFieldUpdateOperationsInput | string
+    s3Bucket?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    fileSize?: BigIntFieldUpdateOperationsInput | bigint | number
+    mimeType?: StringFieldUpdateOperationsInput | string
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: NullableStringFieldUpdateOperationsInput | string | null
+    thumbnailUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    privacy?: EnumVideoPrivacyFieldUpdateOperationsInput | $Enums.VideoPrivacy
+    publishJobs?: PublishJobUncheckedUpdateManyWithoutVideoNestedInput
+  }
+
+  export type VideoUncheckedUpdateManyWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    s3Key?: StringFieldUpdateOperationsInput | string
+    s3Bucket?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    fileSize?: BigIntFieldUpdateOperationsInput | bigint | number
+    mimeType?: StringFieldUpdateOperationsInput | string
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: NullableStringFieldUpdateOperationsInput | string | null
+    thumbnailUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    privacy?: EnumVideoPrivacyFieldUpdateOperationsInput | $Enums.VideoPrivacy
+  }
+
+  export type PlatformConnectionUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    platform?: EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
+    platformUserId?: StringFieldUpdateOperationsInput | string
+    platformUsername?: NullableStringFieldUpdateOperationsInput | string | null
+    accessToken?: StringFieldUpdateOperationsInput | string
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    publishJobs?: PublishJobUpdateManyWithoutPlatformConnectionNestedInput
+  }
+
+  export type PlatformConnectionUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    platform?: EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
+    platformUserId?: StringFieldUpdateOperationsInput | string
+    platformUsername?: NullableStringFieldUpdateOperationsInput | string | null
+    accessToken?: StringFieldUpdateOperationsInput | string
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    publishJobs?: PublishJobUncheckedUpdateManyWithoutPlatformConnectionNestedInput
+  }
+
+  export type PlatformConnectionUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    platform?: EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
+    platformUserId?: StringFieldUpdateOperationsInput | string
+    platformUsername?: NullableStringFieldUpdateOperationsInput | string | null
+    accessToken?: StringFieldUpdateOperationsInput | string
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type PublishJobUpdateWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    platform?: EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
+    status?: EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: NullableStringFieldUpdateOperationsInput | string | null
+    privacy?: NullableEnumVideoPrivacyFieldUpdateOperationsInput | $Enums.VideoPrivacy | null
+    scheduledFor?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    platformVideoId?: NullableStringFieldUpdateOperationsInput | string | null
+    platformVideoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    retryCount?: IntFieldUpdateOperationsInput | number
+    video?: VideoUpdateOneRequiredWithoutPublishJobsNestedInput
+    platformConnection?: PlatformConnectionUpdateOneRequiredWithoutPublishJobsNestedInput
+  }
+
+  export type PublishJobUncheckedUpdateWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    platform?: EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
+    status?: EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: NullableStringFieldUpdateOperationsInput | string | null
+    privacy?: NullableEnumVideoPrivacyFieldUpdateOperationsInput | $Enums.VideoPrivacy | null
+    scheduledFor?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    platformVideoId?: NullableStringFieldUpdateOperationsInput | string | null
+    platformVideoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    retryCount?: IntFieldUpdateOperationsInput | number
+    videoId?: StringFieldUpdateOperationsInput | string
+    platformConnectionId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type PublishJobUncheckedUpdateManyWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    platform?: EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
+    status?: EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: NullableStringFieldUpdateOperationsInput | string | null
+    privacy?: NullableEnumVideoPrivacyFieldUpdateOperationsInput | $Enums.VideoPrivacy | null
+    scheduledFor?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    platformVideoId?: NullableStringFieldUpdateOperationsInput | string | null
+    platformVideoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    retryCount?: IntFieldUpdateOperationsInput | number
+    videoId?: StringFieldUpdateOperationsInput | string
+    platformConnectionId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type PublishJobCreateManyVideoInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    platform: $Enums.Platform
+    status?: $Enums.PublishStatus
+    title?: string | null
+    description?: string | null
+    tags?: string | null
+    privacy?: $Enums.VideoPrivacy | null
+    scheduledFor?: Date | string | null
+    startedAt?: Date | string | null
+    completedAt?: Date | string | null
+    platformVideoId?: string | null
+    platformVideoUrl?: string | null
+    errorMessage?: string | null
+    retryCount?: number
+    platformConnectionId: string
+    createdById: string
+  }
+
+  export type PublishJobUpdateWithoutVideoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    platform?: EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
+    status?: EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: NullableStringFieldUpdateOperationsInput | string | null
+    privacy?: NullableEnumVideoPrivacyFieldUpdateOperationsInput | $Enums.VideoPrivacy | null
+    scheduledFor?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    platformVideoId?: NullableStringFieldUpdateOperationsInput | string | null
+    platformVideoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    retryCount?: IntFieldUpdateOperationsInput | number
+    platformConnection?: PlatformConnectionUpdateOneRequiredWithoutPublishJobsNestedInput
+    createdBy?: UserUpdateOneRequiredWithoutPublishJobsNestedInput
+  }
+
+  export type PublishJobUncheckedUpdateWithoutVideoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    platform?: EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
+    status?: EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: NullableStringFieldUpdateOperationsInput | string | null
+    privacy?: NullableEnumVideoPrivacyFieldUpdateOperationsInput | $Enums.VideoPrivacy | null
+    scheduledFor?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    platformVideoId?: NullableStringFieldUpdateOperationsInput | string | null
+    platformVideoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    retryCount?: IntFieldUpdateOperationsInput | number
+    platformConnectionId?: StringFieldUpdateOperationsInput | string
+    createdById?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type PublishJobUncheckedUpdateManyWithoutVideoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    platform?: EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
+    status?: EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: NullableStringFieldUpdateOperationsInput | string | null
+    privacy?: NullableEnumVideoPrivacyFieldUpdateOperationsInput | $Enums.VideoPrivacy | null
+    scheduledFor?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    platformVideoId?: NullableStringFieldUpdateOperationsInput | string | null
+    platformVideoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    retryCount?: IntFieldUpdateOperationsInput | number
+    platformConnectionId?: StringFieldUpdateOperationsInput | string
+    createdById?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type PublishJobCreateManyPlatformConnectionInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    platform: $Enums.Platform
+    status?: $Enums.PublishStatus
+    title?: string | null
+    description?: string | null
+    tags?: string | null
+    privacy?: $Enums.VideoPrivacy | null
+    scheduledFor?: Date | string | null
+    startedAt?: Date | string | null
+    completedAt?: Date | string | null
+    platformVideoId?: string | null
+    platformVideoUrl?: string | null
+    errorMessage?: string | null
+    retryCount?: number
+    videoId: string
+    createdById: string
+  }
+
+  export type PublishJobUpdateWithoutPlatformConnectionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    platform?: EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
+    status?: EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: NullableStringFieldUpdateOperationsInput | string | null
+    privacy?: NullableEnumVideoPrivacyFieldUpdateOperationsInput | $Enums.VideoPrivacy | null
+    scheduledFor?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    platformVideoId?: NullableStringFieldUpdateOperationsInput | string | null
+    platformVideoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    retryCount?: IntFieldUpdateOperationsInput | number
+    video?: VideoUpdateOneRequiredWithoutPublishJobsNestedInput
+    createdBy?: UserUpdateOneRequiredWithoutPublishJobsNestedInput
+  }
+
+  export type PublishJobUncheckedUpdateWithoutPlatformConnectionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    platform?: EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
+    status?: EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: NullableStringFieldUpdateOperationsInput | string | null
+    privacy?: NullableEnumVideoPrivacyFieldUpdateOperationsInput | $Enums.VideoPrivacy | null
+    scheduledFor?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    platformVideoId?: NullableStringFieldUpdateOperationsInput | string | null
+    platformVideoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    retryCount?: IntFieldUpdateOperationsInput | number
+    videoId?: StringFieldUpdateOperationsInput | string
+    createdById?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type PublishJobUncheckedUpdateManyWithoutPlatformConnectionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    platform?: EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
+    status?: EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: NullableStringFieldUpdateOperationsInput | string | null
+    privacy?: NullableEnumVideoPrivacyFieldUpdateOperationsInput | $Enums.VideoPrivacy | null
+    scheduledFor?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    platformVideoId?: NullableStringFieldUpdateOperationsInput | string | null
+    platformVideoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    retryCount?: IntFieldUpdateOperationsInput | number
+    videoId?: StringFieldUpdateOperationsInput | string
+    createdById?: StringFieldUpdateOperationsInput | string
   }
 
 
