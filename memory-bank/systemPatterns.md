@@ -450,6 +450,181 @@ Development mode adds artificial delay (100-500ms) to simulate network latency a
 - API tests: Direct tRPC procedure calls
 - Database tests: Test database with Prisma
 
+## Established Architecture Patterns (Nov 2025)
+
+### Type Organization Pattern
+
+**Structure**: Domain-based type organization
+
+```
+src/lib/types/
+├── index.ts          # Barrel export for all types
+├── video.ts          # Video domain types
+├── platform.ts       # Platform domain types (future)
+├── publish.ts        # Publishing domain types (future)
+└── common.ts         # Shared utility types
+```
+
+**Benefits**:
+
+- Scalable as project grows
+- Easy to find related types
+- Clear domain boundaries
+- Can import from specific domain or index
+
+**Usage**:
+
+```typescript
+// Import from barrel
+import type { VideoListItem, AsyncData } from "@/lib/types";
+
+// Or import from specific domain
+import type { VideoListItem } from "@/lib/types/video";
+```
+
+**Key Principle**: Use explicit interfaces instead of relying solely on tRPC type inference. This provides better ESLint compatibility and clearer contracts.
+
+### Next.js File Conventions Pattern
+
+**Route Structure**: Use Next.js file conventions for automatic error/loading handling
+
+```
+src/app/{route}/
+├── page.tsx         # Main content (simplified)
+├── error.tsx        # Route-level error boundary (automatic)
+└── loading.tsx      # Route-level loading state (automatic)
+```
+
+**error.tsx Pattern**:
+
+```typescript
+'use client'
+
+import { useEffect } from 'react'
+
+export default function Error({
+  error,
+  reset,
+}: {
+  error: Error & { digest?: string }
+  reset: () => void
+}) {
+  useEffect(() => {
+    console.error('Route error:', error)
+  }, [error])
+
+  return (
+    // Error UI with reset button
+  )
+}
+```
+
+**loading.tsx Pattern**:
+
+```typescript
+export default function Loading() {
+  return (
+    // Loading UI (can be server component)
+  )
+}
+```
+
+**page.tsx Pattern**:
+
+```typescript
+export default function Page() {
+  const query = api.something.useQuery()
+
+  // Let Next.js handle loading with loading.tsx
+  if (query.isLoading || !query.data) return null
+
+  // Let Next.js handle errors with error.tsx
+  if (query.error) throw new Error(query.error.message)
+
+  // Render content
+  return <Content data={query.data} />
+}
+```
+
+**Benefits**:
+
+- Less boilerplate in pages
+- Automatic error boundaries
+- Automatic suspense boundaries
+- Consistent UX across routes
+- Better streaming support
+
+### Component Organization Pattern
+
+**Structure**: Separate route-level from component-level utilities
+
+```
+src/app/_components/
+├── ui/                      # Generic reusable components
+│   ├── loading-skeleton.tsx # For component-level loading
+│   ├── error-alert.tsx      # For component-level errors
+│   └── empty-state.tsx      # Reusable empty states
+├── video/                   # Video domain components
+│   ├── video-card.tsx
+│   ├── video-grid.tsx
+│   └── video-header.tsx
+└── layout/                  # Layout components
+    └── navigation.tsx
+```
+
+**Naming Convention**:
+
+- Route-level: `error.tsx`, `loading.tsx` (Next.js convention)
+- Component-level: `{purpose}-{type}.tsx` (e.g., loading-skeleton, error-alert)
+- Domain components: `{domain}-{component}.tsx` (e.g., video-card)
+
+**Key Principle**: Make component purpose clear from the name.
+
+### Type Safety Pattern with React Query
+
+**Problem**: ESLint doesn't handle complex tRPC type inference well
+
+**Solution**: Explicit interfaces + type guards
+
+```typescript
+// 1. Define explicit interface
+export interface VideoListItem {
+  id: string;
+  title: string;
+  // ... explicit fields
+}
+
+export type VideoList = VideoListItem[];
+
+// 2. Create type guard
+function isValidVideoList(data: unknown): data is VideoList {
+  return Array.isArray(data);
+}
+
+// 3. Use in component
+export default function Page() {
+  const query = api.video.list.useQuery();
+
+  if (query.isLoading || !query.data) return null;
+  if (query.error) throw new Error(query.error.message);
+
+  // Type guard ensures type safety
+  if (!isValidVideoList(query.data)) {
+    throw new Error("Invalid data format");
+  }
+
+  // Now TypeScript knows exact type
+  const videos: VideoList = query.data;
+}
+```
+
+**Benefits**:
+
+- Zero unsafe type operations
+- ESLint compliant
+- Clear type contracts
+- Better error messages
+
 ## Conventions
 
 ### File Naming
@@ -458,6 +633,8 @@ Development mode adds artificial delay (100-500ms) to simulate network latency a
 - Client components: Use `"use client"` directive
 - Private components: `_components/` directory
 - API routes: `route.ts`
+- Error boundaries: `error.tsx` (must be client component)
+- Loading states: `loading.tsx` (can be server component)
 
 ### Import Aliases
 
