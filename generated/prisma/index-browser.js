@@ -172,9 +172,69 @@ exports.Prisma.VerificationScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.VideoScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  s3Key: 's3Key',
+  s3Bucket: 's3Bucket',
+  fileName: 'fileName',
+  fileSize: 'fileSize',
+  mimeType: 'mimeType',
+  duration: 'duration',
+  title: 'title',
+  description: 'description',
+  tags: 'tags',
+  thumbnailUrl: 'thumbnailUrl',
+  privacy: 'privacy',
+  createdById: 'createdById'
+};
+
+exports.Prisma.PlatformConnectionScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  platform: 'platform',
+  platformUserId: 'platformUserId',
+  platformUsername: 'platformUsername',
+  accessToken: 'accessToken',
+  refreshToken: 'refreshToken',
+  tokenExpiry: 'tokenExpiry',
+  metadata: 'metadata',
+  isActive: 'isActive',
+  userId: 'userId'
+};
+
+exports.Prisma.PublishJobScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  platform: 'platform',
+  status: 'status',
+  title: 'title',
+  description: 'description',
+  tags: 'tags',
+  privacy: 'privacy',
+  scheduledFor: 'scheduledFor',
+  startedAt: 'startedAt',
+  completedAt: 'completedAt',
+  platformVideoId: 'platformVideoId',
+  platformVideoUrl: 'platformVideoUrl',
+  errorMessage: 'errorMessage',
+  retryCount: 'retryCount',
+  videoId: 'videoId',
+  platformConnectionId: 'platformConnectionId',
+  createdById: 'createdById'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
+};
+
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
 };
 
 exports.Prisma.NullsOrder = {
@@ -182,13 +242,44 @@ exports.Prisma.NullsOrder = {
   last: 'last'
 };
 
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
+};
+
+exports.Prisma.QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+};
+exports.VideoPrivacy = exports.$Enums.VideoPrivacy = {
+  PUBLIC: 'PUBLIC',
+  UNLISTED: 'UNLISTED',
+  PRIVATE: 'PRIVATE'
+};
+
+exports.Platform = exports.$Enums.Platform = {
+  YOUTUBE: 'YOUTUBE',
+  RUMBLE: 'RUMBLE'
+};
+
+exports.PublishStatus = exports.$Enums.PublishStatus = {
+  PENDING: 'PENDING',
+  PROCESSING: 'PROCESSING',
+  COMPLETED: 'COMPLETED',
+  FAILED: 'FAILED',
+  CANCELLED: 'CANCELLED'
+};
 
 exports.Prisma.ModelName = {
   Post: 'Post',
   Account: 'Account',
   Session: 'Session',
   User: 'User',
-  Verification: 'Verification'
+  Verification: 'Verification',
+  Video: 'Video',
+  PlatformConnection: 'PlatformConnection',
+  PublishJob: 'PublishJob'
 };
 
 /**
