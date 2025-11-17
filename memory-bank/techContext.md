@@ -38,6 +38,14 @@
 - Tree-shakeable icons
 - Used for UI elements
 
+**shadcn/ui Components**
+
+- Card, Button, Badge (Step 3)
+- Input, Textarea, Label, Select (Step 6)
+- Professional, accessible UI components
+- Built on Radix UI primitives
+- Customizable with Tailwind CSS
+
 ### Backend
 
 **tRPC 11.0.0**
