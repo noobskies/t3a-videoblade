@@ -182,6 +182,46 @@
 **Time to Complete**: ~2-3 hours (as estimated)  
 **Status**: ✅ Complete - Ready for Step 2 (S3 Upload)
 
+### ✅ Phase 1, Step 2: S3 Video Upload (Complete) - 2025-11-17
+
+**Implementation**
+
+- [x] S3 utility functions (`src/lib/s3.ts`)
+- [x] Video tRPC router (`src/server/api/routers/video.ts`)
+- [x] Upload component with progress tracking
+- [x] Upload page at `/upload`
+- [x] Video router added to app router
+- [x] AWS S3 environment variables required
+
+**Features**
+
+- [x] Presigned URL generation (10-minute expiry)
+- [x] Direct S3 uploads (no file through server)
+- [x] Real-time progress tracking (0-100%)
+- [x] File size validation (max 5GB)
+- [x] Video type validation (video/\* only)
+- [x] BigInt handling for large file sizes
+- [x] Ownership-based access control
+- [x] Form reset after successful upload
+
+**tRPC Procedures**
+
+- [x] `video.getUploadUrl` - Generate presigned URL
+- [x] `video.confirmUpload` - Create database record
+- [x] `video.list` - Get user's videos
+- [x] `video.delete` - Delete from S3 and database
+
+**Testing**
+
+- [x] 26.8 MB video uploaded successfully
+- [x] Progress bar working (0-100%)
+- [x] Database record created correctly
+- [x] S3 file stored in correct path
+- [x] All tRPC procedures working
+
+**Time to Complete**: ~2 hours (beat 4-6 hour estimate!)  
+**Status**: ✅ Complete - Ready for Step 3 (Video Library)
+
 ## What's Left to Build - VideoBlade Features
 
 ### 🔲 Phase 1: MVP - YouTube Only (Not Started)
@@ -543,14 +583,15 @@ Documentation:     ████████████████████ 
 Roadmap:           ████████████████████ 100%  ✅ (Phase 1 & 2)
 Prerequisites:     ████████████████████ 100%  ✅
 Database Schema:   ████████████████████ 100%  ✅
-VideoBlade MVP:    ████░░░░░░░░░░░░░░░░  18%  🎯 IN PROGRESS (Step 2/11)
-Infrastructure:    ██████░░░░░░░░░░░░░░  30%
+S3 Video Upload:   ████████████████████ 100%  ✅
+VideoBlade MVP:    █████░░░░░░░░░░░░░░░  27%  🎯 IN PROGRESS (Step 3/11)
+Infrastructure:    ███████░░░░░░░░░░░░░  35%
 Testing:           ░░░░░░░░░░░░░░░░░░░░   0%
-Production Ready:  ██████░░░░░░░░░░░░░░  30%
+Production Ready:  ███████░░░░░░░░░░░░░  35%
 
-Overall Progress:  ████████████░░░░░░░░  40%
+Overall Progress:  █████████░░░░░░░░░░░  45%
 ```
 
-**Status**: Phase 1 Step 1 Complete - Database schema implemented  
+**Status**: Phase 1 Step 2 Complete - S3 video upload implemented  
 **Product**: VideoBlade - Multi-Platform Video Publishing Tool  
-**Next Action**: Step 2 - S3 Video Upload (`memory-bank/roadmap/phase1/02-s3-upload.md`)
+**Next Action**: Step 3 - Video Library UI (`memory-bank/roadmap/phase1/03-video-library.md`)
