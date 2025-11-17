@@ -135,6 +135,52 @@
 - Tailwind CSS integration
 - Configuration: `postcss.config.js`
 
+## MCP Servers (Development Tools)
+
+This project has access to **Model Context Protocol (MCP) servers** that extend Cline's development capabilities beyond standard file operations.
+
+### Available Servers
+
+**next-devtools** (`next-devtools-mcp@latest`)
+
+- Next.js-specific debugging and runtime inspection
+- Browser automation with Playwright
+- Dev server interaction and diagnostics
+- Perfect for debugging VideoBlade's Next.js application
+
+**Context7** (`@upstash/context7-mcp@latest`)
+
+- AI-powered documentation retrieval for libraries
+- Instant access to API references and code examples
+- Essential for learning YouTube API, BullMQ, Cloudflare R2, etc.
+
+**Sentry** (`@sentry/mcp-server@latest`)
+
+- Error tracking and production monitoring
+- Pre-configured with access token
+- AI-powered root cause analysis with Seer
+- Critical for VideoBlade production debugging
+
+### When to Use MCP Servers
+
+**During Development**:
+
+- Use `next-devtools` for debugging video upload flows and OAuth integrations
+- Query `Context7` for platform API documentation (YouTube, Vimeo)
+- Check `Sentry` for similar past errors before implementing new features
+
+**For Testing**:
+
+- Browser automation via `next-devtools` to test upload UI
+- Verify OAuth flows end-to-end
+
+**In Production**:
+
+- Monitor errors in real-time with `Sentry`
+- Use AI analysis for complex production issues
+
+**See [`memory-bank/mcpServers.md`](./mcpServers.md) for comprehensive documentation, VideoBlade-specific use cases, and detailed usage examples.**
+
 ## Development Setup
 
 ### Prerequisites

@@ -312,6 +312,7 @@ Needed for deployment:
 ### Most Important Files
 
 - `memory-bank/projectbrief.md` - Project scope and goals
+- `memory-bank/mcpServers.md` - Available MCP development tools
 - `prisma/schema.prisma` - Database schema
 - `src/server/api/routers/` - API endpoints
 - `src/app/page.tsx` - Homepage
@@ -327,6 +328,16 @@ npm run db:push      # Update database schema
 npm run check        # Lint + typecheck
 ```
 
+### Development Tools (MCP Servers)
+
+Powerful tools available via Model Context Protocol:
+
+- **next-devtools**: Next.js debugging, browser automation, runtime inspection
+- **Context7**: AI-powered library documentation retrieval
+- **Sentry**: Error tracking and production monitoring (pre-configured)
+
+**See `memory-bank/mcpServers.md` for detailed usage and VideoBlade-specific use cases.**
+
 ### Quick Links
 
 - [T3 Stack Docs](https://create.t3.gg/)
@@ -340,8 +351,9 @@ npm run check        # Lint + typecheck
 After each memory reset, I (Cline) will read all Memory Bank files to understand the project state. Key reminders:
 
 1. **Read ALL Memory Bank files** at the start of each session
-2. **Project is named "videoblade"** but video features are not yet implemented
-3. **T3 Stack foundation is complete** - focus should be on video features
-4. **SQLite is temporary** - production needs PostgreSQL
-5. **Document new patterns** as they emerge during feature development
-6. **Update Memory Bank** after significant changes or new learnings
+2. **MCP servers available** - Use next-devtools, Context7, and Sentry (see `mcpServers.md`)
+3. **Project is "VideoBlade"** - Multi-platform video publishing tool
+4. **T3 Stack foundation is complete** - focus should be on video features
+5. **SQLite is temporary** - production needs PostgreSQL
+6. **Document new patterns** as they emerge during feature development
+7. **Update Memory Bank** after significant changes or new learnings
