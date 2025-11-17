@@ -14,11 +14,14 @@
 
 **Authentication System**
 
-- [x] NextAuth.js 5.0 beta integrated
+- [x] Better Auth 1.3.4+ integrated (migrated from NextAuth.js)
 - [x] Prisma adapter configured
+- [x] Google OAuth with YouTube API scopes
+- [x] Refresh token support enabled
 - [x] Session management working
-- [x] Sign in/out functionality
+- [x] Sign in/out functionality working
 - [x] Protected route middleware
+- [x] Client-side auth hooks (React Query)
 - [x] User model in database
 
 **Database Layer**
@@ -358,9 +361,7 @@ The foundation is stable and functional. No blocking issues.
 
 1. **Example Post Feature**: The default T3 post functionality could be removed once video features are implemented (or adapted as a template)
 
-2. **Default Styling**: Homepage uses T3 default gradient - will need custom design for videoblade
-
-3. **NextAuth Beta**: Using beta version may require updates when stable is released
+2. **Default Styling**: Homepage uses T3 default gradient - will need custom design for VideoBlade
 
 ### Future Considerations
 

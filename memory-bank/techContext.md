@@ -55,13 +55,15 @@
 - Schema: `prisma/schema.prisma`
 - Generated client: `generated/prisma/`
 
-**NextAuth.js 5.0.0-beta.25**
+**Better Auth 1.3.4+**
 
-- Authentication library
-- OAuth provider support
-- Session management
-- Prisma adapter integration
-- Configuration: `src/server/auth/config.ts`
+- Modern TypeScript-first authentication library
+- Framework-agnostic design
+- OAuth provider support with flexible scope configuration
+- Session management with Prisma adapter
+- Plugin ecosystem (2FA, passkeys, magic links)
+- Configuration: `src/server/auth.ts`
+- Client hooks: `src/lib/auth-client.ts`
 
 ### Database
 
@@ -194,18 +196,27 @@ This project has access to **Model Context Protocol (MCP) servers** that extend 
 
 ```env
 # Database
-DATABASE_URL="file:./dev.db"
+DATABASE_URL="file:./db.sqlite"
 
-# NextAuth.js
-NEXTAUTH_SECRET="your-secret-here"
-NEXTAUTH_URL="http://localhost:3000"
+# Better Auth
+BETTER_AUTH_SECRET="your-secret-here"
+BETTER_AUTH_URL="http://localhost:3000"
 
-# OAuth Providers (optional)
-# DISCORD_CLIENT_ID=""
-# DISCORD_CLIENT_SECRET=""
+# Google OAuth (for YouTube API access)
+GOOGLE_CLIENT_ID="your-google-client-id"
+GOOGLE_CLIENT_SECRET="your-google-client-secret"
+
+# Optional: Public Better Auth URL (for client-side)
+# NEXT_PUBLIC_BETTER_AUTH_URL="http://localhost:3000"
 ```
 
 **Validation**: `src/env.js` validates all environment variables using Zod
+
+**Generate Secret**:
+
+```bash
+openssl rand -base64 32
+```
 
 ### Installation
 
@@ -272,11 +283,13 @@ t3a-videoblade/
 │   │   ├── layout.tsx          # Root layout
 │   │   ├── page.tsx            # Homepage
 │   │   ├── _components/        # Private components
+│   │   │   ├── post.tsx        # Post component
+│   │   │   └── auth-button.tsx # Auth button
 │   │   └── api/
-│   │       ├── auth/           # NextAuth.js routes
+│   │       ├── auth/[...all]/  # Better Auth routes
 │   │       └── trpc/           # tRPC API handler
 │   ├── server/
-│   │   ├── auth/               # Authentication config
+│   │   ├── auth.ts             # Better Auth config
 │   │   ├── api/
 │   │   │   ├── root.ts         # Root tRPC router
 │   │   │   ├── trpc.ts         # tRPC setup
@@ -287,7 +300,8 @@ t3a-videoblade/
 │   │   ├── server.ts           # Server tRPC
 │   │   └── query-client.ts     # React Query config
 │   ├── lib/
-│   │   └── utils.ts            # Utility functions
+│   │   ├── utils.ts            # Utility functions
+│   │   └── auth-client.ts      # Better Auth client
 │   ├── styles/
 │   │   └── globals.css         # Global styles
 │   └── env.js                  # Environment validation
@@ -322,7 +336,7 @@ t3a-videoblade/
 
 ## Dependencies Overview
 
-### Production Dependencies (22 packages)
+### Production Dependencies (~20 packages)
 
 **Core Framework** (6):
 
@@ -330,19 +344,19 @@ t3a-videoblade/
 - @t3-oss/env-nextjs, server-only
 - typescript
 
-**API & Data** (7):
+**API & Data** (6):
 
 - @trpc/client, @trpc/server, @trpc/react-query
 - @tanstack/react-query
-- @prisma/client, @auth/prisma-adapter
-- next-auth
+- @prisma/client
+- better-auth
 
 **Validation & Utilities** (5):
 
 - zod, superjson
 - clsx, class-variance-authority, tailwind-merge
 
-**UI** (4):
+**UI** (3):
 
 - lucide-react
 - tailwindcss (via PostCSS)
@@ -422,12 +436,6 @@ npm run db:studio  # Visual database editor
 **React**: React DevTools browser extension
 
 ## Known Technical Issues
-
-### NextAuth.js Beta
-
-- Using beta version (5.0.0-beta.25)
-- API may change before stable release
-- Some providers may have incomplete documentation
 
 ### SQLite Limitations
 
