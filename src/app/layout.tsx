@@ -35,6 +35,9 @@ export default function RootLayout({
                   <Link href="/library">Library</Link>
                 </Button>
                 <Button variant="ghost" asChild>
+                  <Link href="/platforms">Platforms</Link>
+                </Button>
+                <Button variant="ghost" asChild>
                   <Link href="/upload">Upload</Link>
                 </Button>
               </div>

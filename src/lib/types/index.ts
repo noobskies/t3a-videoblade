@@ -20,6 +20,13 @@ export type {
 // Common utility types
 export type { AsyncData } from "./common";
 
+// Platform domain types
+export type {
+  PlatformConnection,
+  PlatformConnectionList,
+  PlatformListFromRouter,
+} from "./platform";
+export { isPlatformConnectionList } from "./platform";
+
 // Future exports:
-// export type { ... } from './platform'
 // export type { ... } from './publish'
