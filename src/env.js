@@ -23,8 +23,8 @@ export const env = createEnv({
     AWS_SECRET_ACCESS_KEY: z.string(),
     AWS_S3_BUCKET_NAME: z.string(),
     // Inngest
-    INNGEST_EVENT_KEY: z.string().optional(),
-    INNGEST_SIGNING_KEY: z.string().optional(),
+    INNGEST_EVENT_KEY: z.string(),
+    INNGEST_SIGNING_KEY: z.string(),
   },
 
   /**

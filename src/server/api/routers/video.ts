@@ -7,6 +7,7 @@ import {
 } from "@/lib/s3";
 import { TRPCError } from "@trpc/server";
 import { env } from "@/env";
+import { inngest } from "@/lib/inngest";
 
 export const videoRouter = createTRPCRouter({
   /**
@@ -235,5 +236,76 @@ export const videoRouter = createTRPCRouter({
       });
 
       return { success: true };
+    }),
+
+  /**
+   * Trigger publish job for video
+   */
+  publish: protectedProcedure
+    .input(
+      z.object({
+        videoId: z.string().cuid(),
+        platformConnectionId: z.string().cuid(),
+        title: z.string().min(1).max(100).optional(),
+        description: z.string().max(5000).optional(),
+        tags: z.string().max(500).optional(),
+        privacy: z.enum(["PUBLIC", "UNLISTED", "PRIVATE"]).optional(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      // Verify user owns the video
+      const video = await ctx.db.video.findUnique({
+        where: { id: input.videoId },
+        select: { createdById: true },
+      });
+
+      if (!video || video.createdById !== ctx.session.user.id) {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: "You don't own this video",
+        });
+      }
+
+      // Verify user owns the platform connection
+      const platformConnection = await ctx.db.platformConnection.findUnique({
+        where: { id: input.platformConnectionId },
+        select: { userId: true, platform: true },
+      });
+
+      if (
+        !platformConnection ||
+        platformConnection.userId !== ctx.session.user.id
+      ) {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: "Platform connection not found",
+        });
+      }
+
+      // Create publish job
+      const job = await ctx.db.publishJob.create({
+        data: {
+          platform: platformConnection.platform,
+          status: "PENDING",
+          videoId: input.videoId,
+          platformConnectionId: input.platformConnectionId,
+          createdById: ctx.session.user.id,
+          title: input.title,
+          description: input.description,
+          tags: input.tags,
+          privacy: input.privacy,
+        },
+      });
+
+      // Trigger Inngest function
+      await inngest.send({
+        name: "video/publish.youtube",
+        data: { jobId: job.id },
+      });
+
+      return {
+        jobId: job.id,
+        status: job.status,
+      };
     }),
 });
