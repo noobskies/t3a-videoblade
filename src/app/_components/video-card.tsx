@@ -3,15 +3,15 @@
 import Image from "next/image";
 import { api } from "@/trpc/react";
 import { useState } from "react";
-import { Video as VideoIcon, Trash2, Edit, Upload } from "lucide-react";
+import { Video as VideoIcon } from "lucide-react";
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { Button, IconButton, Chip, Stack } from "@mui/material";
+import { Delete, Edit, Upload } from "@mui/icons-material";
 import type { VideoListItem } from "@/lib/types";
 
 type VideoCardProps = {
@@ -55,18 +55,20 @@ export function VideoCard({ video, onDelete }: VideoCardProps) {
     }
   };
 
-  const getStatusVariant = (status: string) => {
+  const getStatusColor = (
+    status: string,
+  ): "success" | "info" | "error" | "warning" | "default" => {
     switch (status) {
       case "COMPLETED":
-        return "default"; // green
+        return "success"; // green
       case "PROCESSING":
-        return "secondary"; // blue
+        return "info"; // blue
       case "FAILED":
-        return "destructive"; // red
+        return "error"; // red
       case "PENDING":
-        return "outline"; // yellow/neutral
+        return "warning"; // yellow
       default:
-        return "outline";
+        return "default";
     }
   };
 
@@ -109,39 +111,42 @@ export function VideoCard({ video, onDelete }: VideoCardProps) {
 
         {/* Publish Status */}
         {video.publishJobs.length > 0 && (
-          <div className="mb-3 flex flex-wrap gap-2">
+          <Stack direction="row" spacing={1} sx={{ mb: 2, flexWrap: "wrap" }}>
             {video.publishJobs.map((job) => (
-              <Badge key={job.platform} variant={getStatusVariant(job.status)}>
-                {job.platform}: {job.status}
-              </Badge>
+              <Chip
+                key={job.platform}
+                label={`${job.platform}: ${job.status}`}
+                color={getStatusColor(job.status)}
+                size="small"
+              />
             ))}
-          </div>
+          </Stack>
         )}
       </CardContent>
 
       <CardFooter className="flex gap-2 p-4 pt-0">
         <Button
-          className="flex-1"
+          variant="contained"
+          startIcon={<Upload />}
           onClick={() => (window.location.href = `/publish/${video.id}`)}
+          sx={{ flex: 1 }}
         >
-          <Upload className="mr-2 h-4 w-4" />
           Publish
         </Button>
-        <Button
-          variant="outline"
-          size="icon"
+        <IconButton
           onClick={() => (window.location.href = `/video/${video.id}/edit`)}
+          aria-label="edit video"
         >
-          <Edit className="h-4 w-4" />
-        </Button>
-        <Button
-          variant="destructive"
-          size="icon"
+          <Edit />
+        </IconButton>
+        <IconButton
+          color="error"
           onClick={handleDelete}
           disabled={isDeleting}
+          aria-label="delete video"
         >
-          <Trash2 className="h-4 w-4" />
-        </Button>
+          <Delete />
+        </IconButton>
       </CardFooter>
     </Card>
   );

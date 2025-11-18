@@ -6,8 +6,8 @@
  * This component is for component-level error states (e.g., form validation, API errors within a component, etc.)
  */
 
-import { AlertCircle } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Box, Typography, Button } from "@mui/material";
+import { ErrorOutline } from "@mui/icons-material";
 
 type ErrorAlertProps = {
   message: string;
@@ -16,16 +16,27 @@ type ErrorAlertProps = {
 
 export function ErrorAlert({ message, onRetry }: ErrorAlertProps) {
   return (
-    <main className="flex min-h-screen items-center justify-center bg-gradient-to-b from-gray-900 to-black text-white">
-      <div className="text-center">
-        <AlertCircle className="mx-auto mb-4 h-12 w-12 text-red-400" />
-        <p className="mb-4 text-red-400">Error: {message}</p>
+    <Box
+      component="main"
+      sx={{
+        minHeight: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        bgcolor: "background.default",
+      }}
+    >
+      <Box sx={{ textAlign: "center" }}>
+        <ErrorOutline sx={{ fontSize: 48, color: "error.main", mb: 2 }} />
+        <Typography variant="body1" color="error" sx={{ mb: 3 }}>
+          Error: {message}
+        </Typography>
         {onRetry && (
-          <Button onClick={onRetry} variant="outline">
+          <Button onClick={onRetry} variant="outlined">
             Try Again
           </Button>
         )}
-      </div>
-    </main>
+      </Box>
+    </Box>
   );
 }

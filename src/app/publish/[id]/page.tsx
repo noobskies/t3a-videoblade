@@ -6,10 +6,9 @@
  */
 
 import { api } from "@/trpc/react";
-import { Button } from "@/components/ui/button";
+import { Button, Chip } from "@mui/material";
+import { ArrowBack, Send, YouTube } from "@mui/icons-material";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Send, Youtube } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { use, useState } from "react";
 import Link from "next/link";
@@ -115,11 +114,13 @@ export default function PublishPage({
       <div className="container mx-auto max-w-4xl px-4 py-8">
         {/* Header */}
         <div className="mb-8">
-          <Button variant="ghost" asChild className="mb-4">
-            <Link href="/library">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to Library
-            </Link>
+          <Button
+            component={Link}
+            href="/library"
+            startIcon={<ArrowBack />}
+            sx={{ mb: 2 }}
+          >
+            Back to Library
           </Button>
           <h1 className="text-4xl font-bold">Publish Video</h1>
           <p className="mt-2 text-gray-400">
@@ -166,7 +167,7 @@ export default function PublishPage({
               )}
               <div>
                 <span className="text-gray-400">Privacy:</span>{" "}
-                <Badge variant="outline">{video.privacy}</Badge>
+                <Chip label={video.privacy} variant="outlined" size="small" />
               </div>
             </div>
           </CardContent>
@@ -182,7 +183,7 @@ export default function PublishPage({
               <CardContent className="space-y-4 p-6">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-4">
-                    <Youtube className="h-10 w-10 text-red-500" />
+                    <YouTube sx={{ fontSize: 40, color: "error.main" }} />
                     <div>
                       <h3 className="text-lg font-semibold">YouTube</h3>
                       <p className="text-sm text-gray-400">
@@ -192,10 +193,11 @@ export default function PublishPage({
                     </div>
                   </div>
                   <Button
+                    variant="contained"
+                    startIcon={<Send />}
                     onClick={() => handlePublish(youtubePlatform.id)}
                     disabled={isPublishing || publishSuccess}
                   >
-                    <Send className="mr-2 h-4 w-4" />
                     {isPublishing
                       ? isUpdate
                         ? "Updating..."
@@ -231,7 +233,7 @@ export default function PublishPage({
             <Card>
               <CardContent className="flex items-center justify-between p-6">
                 <div className="flex items-center gap-4">
-                  <Youtube className="h-10 w-10 text-gray-600" />
+                  <YouTube sx={{ fontSize: 40, color: "text.disabled" }} />
                   <div>
                     <h3 className="text-lg font-semibold text-gray-400">
                       YouTube
@@ -239,8 +241,8 @@ export default function PublishPage({
                     <p className="text-sm text-gray-500">Not connected</p>
                   </div>
                 </div>
-                <Button variant="outline" asChild>
-                  <Link href="/platforms">Connect YouTube</Link>
+                <Button variant="outlined" component={Link} href="/platforms">
+                  Connect YouTube
                 </Button>
               </CardContent>
             </Card>

@@ -7,8 +7,8 @@
  */
 
 import { useEffect } from "react";
-import { AlertCircle } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Box, Typography, Button } from "@mui/material";
+import { ErrorOutline } from "@mui/icons-material";
 
 export default function Error({
   error,
@@ -23,15 +23,30 @@ export default function Error({
   }, [error]);
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-gradient-to-b from-gray-900 to-black text-white">
-      <div className="text-center">
-        <AlertCircle className="mx-auto mb-4 h-12 w-12 text-red-400" />
-        <h2 className="mb-2 text-2xl font-bold">Something went wrong</h2>
-        <p className="mb-4 text-red-400">{error.message}</p>
-        <Button onClick={reset} variant="outline">
+    <Box
+      component="main"
+      sx={{
+        minHeight: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        bgcolor: "background.default",
+      }}
+    >
+      <Box sx={{ textAlign: "center" }}>
+        <ErrorOutline
+          sx={{ fontSize: 48, color: "error.main", mb: 2, mx: "auto" }}
+        />
+        <Typography variant="h4" sx={{ mb: 1, fontWeight: "bold" }}>
+          Something went wrong
+        </Typography>
+        <Typography variant="body1" color="error" sx={{ mb: 3 }}>
+          {error.message}
+        </Typography>
+        <Button onClick={reset} variant="outlined">
           Try Again
         </Button>
-      </div>
-    </main>
+      </Box>
+    </Box>
   );
 }

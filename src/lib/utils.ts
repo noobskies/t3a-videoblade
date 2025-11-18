@@ -1,6 +1,5 @@
-import { clsx, type ClassValue } from "clsx"
-import { twMerge } from "tailwind-merge"
-
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+// Temporary placeholder - will be removed in Phase 6
+// MUI uses sx prop instead of className utilities
+export function cn(...inputs: (string | boolean | undefined)[]) {
+  return inputs.filter((input) => typeof input === "string").join(" ");
 }

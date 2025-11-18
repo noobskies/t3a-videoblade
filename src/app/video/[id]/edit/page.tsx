@@ -3,10 +3,16 @@
 import { api } from "@/trpc/react";
 import { useParams, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
+import {
+  Box,
+  Button,
+  IconButton,
+  TextField,
+  Typography,
+  Paper,
+  Stack,
+} from "@mui/material";
+import { ArrowBack, Save } from "@mui/icons-material";
 import {
   Select,
   SelectContent,
@@ -14,8 +20,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Card } from "@/components/ui/card";
-import { ArrowLeft, Save } from "lucide-react";
+import { Label } from "@/components/ui/label";
 
 export default function EditVideoPage() {
   const params = useParams();
@@ -96,82 +101,64 @@ export default function EditVideoPage() {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-gray-900 to-black text-white">
-      <div className="container mx-auto px-4 py-8">
+    <Box sx={{ minHeight: "100vh", py: 4, px: 2 }}>
+      <Box sx={{ maxWidth: 800, mx: "auto" }}>
         {/* Header */}
-        <div className="mb-8 flex items-center gap-4">
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={handleCancel}
-            className="border-gray-700 bg-gray-800 hover:bg-gray-700"
-          >
-            <ArrowLeft className="h-4 w-4" />
-          </Button>
-          <div>
-            <h1 className="text-4xl font-bold">Edit Video</h1>
-            <p className="text-gray-400">{video.fileName}</p>
-          </div>
-        </div>
+        <Stack direction="row" spacing={2} alignItems="center" sx={{ mb: 4 }}>
+          <IconButton onClick={handleCancel} aria-label="back to library">
+            <ArrowBack />
+          </IconButton>
+          <Box>
+            <Typography variant="h4" component="h1" gutterBottom>
+              Edit Video
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              {video.fileName}
+            </Typography>
+          </Box>
+        </Stack>
 
         {/* Edit Form */}
-        <Card className="max-w-2xl border-gray-700 bg-gray-800 p-6">
-          <div className="space-y-6">
+        <Paper sx={{ p: 3 }}>
+          <Stack spacing={3}>
             {/* Title */}
-            <div className="space-y-2">
-              <Label htmlFor="title">
-                Title <span className="text-red-500">*</span>
-              </Label>
-              <Input
-                id="title"
-                type="text"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                maxLength={100}
-                placeholder="Enter video title"
-                className="border-gray-600 bg-gray-700"
-              />
-              <p className="text-xs text-gray-400">
-                {title.length}/100 characters
-              </p>
-            </div>
+            <TextField
+              label="Title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="Enter video title"
+              required
+              fullWidth
+              inputProps={{ maxLength: 100 }}
+              helperText={`${title.length}/100 characters`}
+            />
 
             {/* Description */}
-            <div className="space-y-2">
-              <Label htmlFor="description">Description</Label>
-              <Textarea
-                id="description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                maxLength={5000}
-                rows={6}
-                placeholder="Enter video description"
-                className="border-gray-600 bg-gray-700"
-              />
-              <p className="text-xs text-gray-400">
-                {description.length}/5,000 characters
-              </p>
-            </div>
+            <TextField
+              label="Description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder="Enter video description"
+              multiline
+              rows={6}
+              fullWidth
+              inputProps={{ maxLength: 5000 }}
+              helperText={`${description.length}/5,000 characters`}
+            />
 
             {/* Tags */}
-            <div className="space-y-2">
-              <Label htmlFor="tags">Tags</Label>
-              <Input
-                id="tags"
-                type="text"
-                value={tags}
-                onChange={(e) => setTags(e.target.value)}
-                maxLength={500}
-                placeholder="tech, tutorial, coding (comma-separated)"
-                className="border-gray-600 bg-gray-700"
-              />
-              <p className="text-xs text-gray-400">
-                {tags.length}/500 characters
-              </p>
-            </div>
+            <TextField
+              label="Tags"
+              value={tags}
+              onChange={(e) => setTags(e.target.value)}
+              placeholder="tech, tutorial, coding (comma-separated)"
+              fullWidth
+              inputProps={{ maxLength: 500 }}
+              helperText={`${tags.length}/500 characters`}
+            />
 
-            {/* Privacy */}
-            <div className="space-y-2">
+            {/* Privacy - TODO: Migrate in Phase 4 */}
+            <Box>
               <Label htmlFor="privacy">Privacy</Label>
               <Select
                 value={privacy}
@@ -188,42 +175,54 @@ export default function EditVideoPage() {
                   <SelectItem value="PRIVATE">Private</SelectItem>
                 </SelectContent>
               </Select>
-              <p className="text-xs text-gray-400">
+              <Typography
+                variant="caption"
+                color="text.secondary"
+                sx={{ mt: 0.5, display: "block" }}
+              >
                 {privacy === "PUBLIC" && "Anyone can find and view"}
                 {privacy === "UNLISTED" && "Only people with the link can view"}
                 {privacy === "PRIVATE" && "Only you can view"}
-              </p>
-            </div>
+              </Typography>
+            </Box>
 
             {/* Actions */}
-            <div className="flex gap-3 pt-4">
+            <Stack direction="row" spacing={2} sx={{ pt: 2 }}>
               <Button
+                variant="contained"
+                startIcon={<Save />}
                 onClick={handleSave}
                 disabled={updateVideo.isPending || !title.trim()}
-                className="flex-1"
+                sx={{ flex: 1 }}
               >
-                <Save className="mr-2 h-4 w-4" />
                 {updateVideo.isPending ? "Saving..." : "Save Changes"}
               </Button>
               <Button
-                variant="outline"
+                variant="outlined"
                 onClick={handleCancel}
                 disabled={updateVideo.isPending}
-                className="border-gray-600 bg-gray-800 hover:bg-gray-700"
               >
                 Cancel
               </Button>
-            </div>
+            </Stack>
 
             {/* Error message */}
             {updateVideo.error && (
-              <div className="rounded-md bg-red-900/20 p-3 text-sm text-red-400">
-                Failed to update video: {updateVideo.error.message}
-              </div>
+              <Paper
+                sx={{
+                  p: 2,
+                  bgcolor: "error.dark",
+                  color: "error.contrastText",
+                }}
+              >
+                <Typography variant="body2">
+                  Failed to update video: {updateVideo.error.message}
+                </Typography>
+              </Paper>
             )}
-          </div>
-        </Card>
-      </div>
-    </main>
+          </Stack>
+        </Paper>
+      </Box>
+    </Box>
   );
 }

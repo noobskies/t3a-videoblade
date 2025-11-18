@@ -11,9 +11,9 @@
 import { api } from "@/trpc/react";
 import type { VideoList } from "@/lib/types";
 import { VideoCard } from "@/app/_components/video-card";
-import { Upload, Video as VideoIcon } from "lucide-react";
+import { Upload as UploadIcon, Video as VideoIcon } from "lucide-react";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { Button } from "@mui/material";
 
 /**
  * Type guard to ensure we have valid video data
@@ -73,11 +73,13 @@ function Header({ videoCount }: { videoCount: number }) {
           {videoCount} video{videoCount !== 1 ? "s" : ""}
         </p>
       </div>
-      <Button asChild>
-        <Link href="/upload">
-          <Upload className="mr-2 h-5 w-5" />
-          Upload Video
-        </Link>
+      <Button
+        component={Link}
+        href="/upload"
+        variant="contained"
+        startIcon={<UploadIcon className="h-5 w-5" />}
+      >
+        Upload Video
       </Button>
     </div>
   );
@@ -117,11 +119,14 @@ function EmptyState() {
       <p className="mb-6 text-gray-500">
         Upload your first video to get started
       </p>
-      <Button asChild size="lg">
-        <Link href="/upload">
-          <Upload className="mr-2 h-5 w-5" />
-          Upload Video
-        </Link>
+      <Button
+        component={Link}
+        href="/upload"
+        variant="contained"
+        size="large"
+        startIcon={<UploadIcon className="h-5 w-5" />}
+      >
+        Upload Video
       </Button>
     </div>
   );
