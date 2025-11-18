@@ -75,14 +75,13 @@
 
 ### Database
 
-**SQLite** (Development)
+**PostgreSQL** (Production - Prisma Accelerate)
 
-- File-based database
-- Zero configuration
-- Location: `prisma/dev.db` (gitignored)
-- Connection string in `.env`
-
-**Future**: PostgreSQL or MySQL for production
+- Cloud-hosted PostgreSQL via Prisma
+- Connection pooling and query caching with Prisma Accelerate
+- Location: `db.prisma.io:5432`
+- Configured with connection pooling for serverless environments
+- Migrated from SQLite: 2025-11-17
 
 ### Data Validation
 

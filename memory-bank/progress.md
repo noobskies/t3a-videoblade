@@ -27,11 +27,11 @@
 **Database Layer**
 
 - [x] Prisma ORM configured
-- [x] SQLite database for development
+- [x] Production PostgreSQL database (Prisma Accelerate) - Migrated 2025-11-17
 - [x] Database schema defined
 - [x] Migration system ready
 - [x] Prisma Studio available for inspection
-- [x] User, Account, Session, Post models
+- [x] User, Account, Session, Post, Video, PlatformConnection, PublishJob models
 
 **API Layer**
 
