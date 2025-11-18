@@ -40,8 +40,10 @@ export default function PlatformsPage() {
     try {
       await disconnect.mutateAsync({ id });
       await query.refetch();
-    } catch (error) {
-      alert("Failed to disconnect");
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Failed to disconnect";
+      alert(errorMessage);
     }
   };
 

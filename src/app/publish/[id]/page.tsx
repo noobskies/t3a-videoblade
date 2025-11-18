@@ -11,17 +11,24 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Send, Youtube } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { use, useState } from "react";
 import Link from "next/link";
 
-export default function PublishPage({ params }: { params: { id: string } }) {
+export default function PublishPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  // Unwrap async params (Next.js 15 requirement)
+  const { id } = use(params);
+
   const router = useRouter();
   const [isPublishing, setIsPublishing] = useState(false);
   const [publishError, setPublishError] = useState<string | null>(null);
   const [publishSuccess, setPublishSuccess] = useState(false);
 
   // Get video details
-  const videoQuery = api.video.get.useQuery({ id: params.id });
+  const videoQuery = api.video.get.useQuery({ id });
 
   // Get platform connections
   const platformsQuery = api.platform.list.useQuery();
@@ -38,7 +45,7 @@ export default function PublishPage({ params }: { params: { id: string } }) {
 
     try {
       await publishMutation.mutateAsync({
-        videoId: params.id,
+        videoId: id,
         platformConnectionId,
         // Use video's existing metadata
         title: videoQuery.data.title,
@@ -101,7 +108,7 @@ export default function PublishPage({ params }: { params: { id: string } }) {
           </Button>
           <h1 className="text-4xl font-bold">Publish Video</h1>
           <p className="mt-2 text-gray-400">
-            Select a platform to publish "{video.title}"
+            Select a platform to publish &quot;{video.title}&quot;
           </p>
         </div>
 
