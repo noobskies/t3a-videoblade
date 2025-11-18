@@ -1,10 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+// Note: Prisma generated types cause ESLint false positives. Types are actually safe.
+
 import { inngest } from "@/lib/inngest";
 import { db } from "@/server/db";
-import type {
-  Video,
-  PlatformConnection,
-  PublishJob,
-} from "../../generated/prisma";
+import { uploadVideoToYouTube } from "@/lib/youtube";
 
 /**
  * Inngest function to publish a video to YouTube
@@ -20,63 +19,79 @@ export const publishToYouTubeFunction = inngest.createFunction(
   {
     id: "publish-to-youtube",
     name: "Publish Video to YouTube",
+    retries: 3, // Retry 3 times on failure
   },
   { event: "video/publish.youtube" },
   async ({ event, step }) => {
     const { jobId } = event.data;
 
     // Step 1: Get job details and update status to PROCESSING
-    const job = await step.run(
-      "get-job",
-      async (): Promise<
-        PublishJob & { video: Video; platformConnection: PlatformConnection }
-      > => {
-        const job = await db.publishJob.findUnique({
-          where: { id: jobId },
-          include: {
-            video: true,
-            platformConnection: true,
-          },
+    const job = await step.run("get-job", async () => {
+      const job = await db.publishJob.findUnique({
+        where: { id: jobId },
+        include: {
+          video: true,
+          platformConnection: true,
+        },
+      });
+
+      if (!job) {
+        throw new Error(`Job not found: ${jobId}`);
+      }
+
+      // Update status to PROCESSING
+      await db.publishJob.update({
+        where: { id: jobId },
+        data: {
+          status: "PROCESSING",
+          startedAt: new Date(),
+          retryCount: { increment: 1 },
+        },
+      });
+
+      return job;
+    });
+
+    // Step 2: Upload video to YouTube
+    const result = await step.run("upload-video", async () => {
+      try {
+        const result = await uploadVideoToYouTube({
+          accessToken: job.platformConnection.accessToken,
+          refreshToken: job.platformConnection.refreshToken,
+          s3Key: job.video.s3Key,
+          title: job.title ?? job.video.title,
+          description: job.description ?? job.video.description,
+          tags: job.tags ?? job.video.tags,
+          privacy:
+            (job.privacy?.toLowerCase() as "public" | "unlisted" | "private") ??
+            (job.video.privacy.toLowerCase() as
+              | "public"
+              | "unlisted"
+              | "private"),
         });
 
-        if (!job) {
-          throw new Error(`Job not found: ${jobId}`);
-        }
+        return { success: true, ...result };
+      } catch (error: unknown) {
+        // Log error
+        const errorMessage =
+          error instanceof Error ? error.message : "Unknown error";
+        console.error("YouTube upload failed:", errorMessage);
 
-        // Update status to PROCESSING
+        // Mark job as failed
         await db.publishJob.update({
           where: { id: jobId },
           data: {
-            status: "PROCESSING",
-            startedAt: new Date(),
+            status: "FAILED",
+            errorMessage,
+            completedAt: new Date(),
           },
         });
 
-        return job;
-      },
-    );
-
-    // Step 2: Upload video to YouTube
-    // TODO: Implement actual YouTube API upload in Step 8
-    // For now, we use a placeholder that simulates a successful upload
-    const result = await step.run("upload-video", async () => {
-      // Placeholder for YouTube API upload
-      // In Step 8, this will:
-      // 1. Get OAuth tokens from platformConnection
-      // 2. Download video from S3
-      // 3. Upload to YouTube with metadata
-      // 4. Return YouTube video ID and URL
-
-      const videoId = `yt-${Date.now()}`;
-      const url = `https://youtube.com/watch?v=${videoId}`;
-
-      return {
-        videoId,
-        url,
-      };
+        throw error; // Re-throw for Inngest retry
+      }
     });
 
-    // Step 3: Update job with result
+    // Step 3: Update job with success
     await step.run("update-job", async () => {
       await db.publishJob.update({
         where: { id: jobId },
@@ -89,10 +104,6 @@ export const publishToYouTubeFunction = inngest.createFunction(
       });
     });
 
-    return {
-      success: true,
-      videoId: result.videoId,
-      url: result.url,
-    };
+    return result;
   },
 );

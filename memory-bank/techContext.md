@@ -344,7 +344,7 @@ t3a-videoblade/
 
 ## Dependencies Overview
 
-### Production Dependencies (~20 packages)
+### Production Dependencies (~27 packages)
 
 **Core Framework** (6):
 
@@ -352,12 +352,23 @@ t3a-videoblade/
 - @t3-oss/env-nextjs, server-only
 - typescript
 
-**API & Data** (6):
+**API & Data** (7):
 
 - @trpc/client, @trpc/server, @trpc/react-query
 - @tanstack/react-query
 - @prisma/client
 - better-auth
+- googleapis
+
+**AWS & Storage** (3):
+
+- @aws-sdk/client-s3
+- @aws-sdk/s3-request-presigner
+- (S3 integration for video storage)
+
+**Background Jobs** (1):
+
+- inngest
 
 **Validation & Utilities** (5):
 
