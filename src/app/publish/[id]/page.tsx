@@ -44,7 +44,7 @@ export default function PublishPage({
     setPublishSuccess(false);
 
     try {
-      await publishMutation.mutateAsync({
+      const result = await publishMutation.mutateAsync({
         videoId: id,
         platformConnectionId,
         // Use video's existing metadata
@@ -55,6 +55,11 @@ export default function PublishPage({
       });
 
       setPublishSuccess(true);
+
+      // Show appropriate success message
+      console.log(
+        result.isUpdate ? "Update job created" : "Publish job created",
+      );
 
       // Redirect to library after 2 seconds
       setTimeout(() => {
@@ -94,6 +99,16 @@ export default function PublishPage({
   }
 
   const youtubePlatform = platforms.find((p) => p.platform === "YOUTUBE");
+
+  // Check if video has already been published to YouTube
+  const existingYouTubePublish = video.publishJobs?.find(
+    (job) =>
+      job.platformConnection.platform === "YOUTUBE" &&
+      job.status === "COMPLETED" &&
+      job.platformVideoId,
+  );
+
+  const isUpdate = !!existingYouTubePublish;
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-gray-900 to-black text-white">
@@ -164,24 +179,52 @@ export default function PublishPage({
           {/* YouTube */}
           {youtubePlatform ? (
             <Card>
-              <CardContent className="flex items-center justify-between p-6">
-                <div className="flex items-center gap-4">
-                  <Youtube className="h-10 w-10 text-red-500" />
-                  <div>
-                    <h3 className="text-lg font-semibold">YouTube</h3>
-                    <p className="text-sm text-gray-400">
-                      Connected as{" "}
-                      {youtubePlatform.platformUsername ?? "YouTube"}
+              <CardContent className="space-y-4 p-6">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-4">
+                    <Youtube className="h-10 w-10 text-red-500" />
+                    <div>
+                      <h3 className="text-lg font-semibold">YouTube</h3>
+                      <p className="text-sm text-gray-400">
+                        Connected as{" "}
+                        {youtubePlatform.platformUsername ?? "YouTube"}
+                      </p>
+                    </div>
+                  </div>
+                  <Button
+                    onClick={() => handlePublish(youtubePlatform.id)}
+                    disabled={isPublishing || publishSuccess}
+                  >
+                    <Send className="mr-2 h-4 w-4" />
+                    {isPublishing
+                      ? isUpdate
+                        ? "Updating..."
+                        : "Publishing..."
+                      : isUpdate
+                        ? "Update on YouTube"
+                        : "Publish to YouTube"}
+                  </Button>
+                </div>
+                {isUpdate && existingYouTubePublish && (
+                  <div className="rounded-md border border-yellow-500/30 bg-yellow-950/20 p-3">
+                    <p className="text-sm text-yellow-300">
+                      ⚠️ This video is already on YouTube. Clicking will update
+                      the existing video&apos;s metadata (title, description,
+                      tags, privacy) without re-uploading the file.
+                    </p>
+                    <p className="mt-1 text-xs text-yellow-400">
+                      Video URL:{" "}
+                      <a
+                        href={existingYouTubePublish.platformVideoUrl ?? "#"}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="underline hover:text-yellow-300"
+                      >
+                        {existingYouTubePublish.platformVideoUrl}
+                      </a>
                     </p>
                   </div>
-                </div>
-                <Button
-                  onClick={() => handlePublish(youtubePlatform.id)}
-                  disabled={isPublishing || publishSuccess}
-                >
-                  <Send className="mr-2 h-4 w-4" />
-                  {isPublishing ? "Publishing..." : "Publish to YouTube"}
-                </Button>
+                )}
               </CardContent>
             </Card>
           ) : (

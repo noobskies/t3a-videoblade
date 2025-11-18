@@ -197,6 +197,10 @@ model PublishJob {
   errorMessage     String?
   retryCount       Int     @default(0)
 
+  // Update logic (for editing already-published videos)
+  isUpdate            Boolean @default(false)
+  updateTargetVideoId String?
+
   // Relationships
   video   Video  @relation(fields: [videoId], references: [id], onDelete: Cascade)
   videoId String

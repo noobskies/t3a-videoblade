@@ -240,6 +240,7 @@ export const videoRouter = createTRPCRouter({
 
   /**
    * Trigger publish job for video
+   * Smart publish: Creates new video OR updates existing video on platform
    */
   publish: protectedProcedure
     .input(
@@ -282,7 +283,20 @@ export const videoRouter = createTRPCRouter({
         });
       }
 
-      // Create publish job
+      // Check if video has already been published to this platform
+      const existingJob = await ctx.db.publishJob.findFirst({
+        where: {
+          videoId: input.videoId,
+          platformConnectionId: input.platformConnectionId,
+          status: "COMPLETED",
+          platformVideoId: { not: null },
+        },
+        orderBy: { completedAt: "desc" },
+      });
+
+      const isUpdate = !!existingJob;
+
+      // Create publish job (either upload or update)
       const job = await ctx.db.publishJob.create({
         data: {
           platform: platformConnection.platform,
@@ -294,18 +308,21 @@ export const videoRouter = createTRPCRouter({
           description: input.description,
           tags: input.tags,
           privacy: input.privacy,
+          isUpdate,
+          updateTargetVideoId: existingJob?.platformVideoId ?? null,
         },
       });
 
-      // Trigger Inngest function
+      // Trigger appropriate Inngest function
       await inngest.send({
-        name: "video/publish.youtube",
+        name: isUpdate ? "video/update.youtube" : "video/publish.youtube",
         data: { jobId: job.id },
       });
 
       return {
         jobId: job.id,
         status: job.status,
+        isUpdate,
       };
     }),
 });

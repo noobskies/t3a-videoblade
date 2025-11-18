@@ -9743,6 +9743,8 @@ export namespace Prisma {
     platformVideoUrl: string | null
     errorMessage: string | null
     retryCount: number | null
+    isUpdate: boolean | null
+    updateTargetVideoId: string | null
     videoId: string | null
     platformConnectionId: string | null
     createdById: string | null
@@ -9765,6 +9767,8 @@ export namespace Prisma {
     platformVideoUrl: string | null
     errorMessage: string | null
     retryCount: number | null
+    isUpdate: boolean | null
+    updateTargetVideoId: string | null
     videoId: string | null
     platformConnectionId: string | null
     createdById: string | null
@@ -9787,6 +9791,8 @@ export namespace Prisma {
     platformVideoUrl: number
     errorMessage: number
     retryCount: number
+    isUpdate: number
+    updateTargetVideoId: number
     videoId: number
     platformConnectionId: number
     createdById: number
@@ -9819,6 +9825,8 @@ export namespace Prisma {
     platformVideoUrl?: true
     errorMessage?: true
     retryCount?: true
+    isUpdate?: true
+    updateTargetVideoId?: true
     videoId?: true
     platformConnectionId?: true
     createdById?: true
@@ -9841,6 +9849,8 @@ export namespace Prisma {
     platformVideoUrl?: true
     errorMessage?: true
     retryCount?: true
+    isUpdate?: true
+    updateTargetVideoId?: true
     videoId?: true
     platformConnectionId?: true
     createdById?: true
@@ -9863,6 +9873,8 @@ export namespace Prisma {
     platformVideoUrl?: true
     errorMessage?: true
     retryCount?: true
+    isUpdate?: true
+    updateTargetVideoId?: true
     videoId?: true
     platformConnectionId?: true
     createdById?: true
@@ -9972,6 +9984,8 @@ export namespace Prisma {
     platformVideoUrl: string | null
     errorMessage: string | null
     retryCount: number
+    isUpdate: boolean
+    updateTargetVideoId: string | null
     videoId: string
     platformConnectionId: string
     createdById: string
@@ -10013,6 +10027,8 @@ export namespace Prisma {
     platformVideoUrl?: boolean
     errorMessage?: boolean
     retryCount?: boolean
+    isUpdate?: boolean
+    updateTargetVideoId?: boolean
     videoId?: boolean
     platformConnectionId?: boolean
     createdById?: boolean
@@ -10038,6 +10054,8 @@ export namespace Prisma {
     platformVideoUrl?: boolean
     errorMessage?: boolean
     retryCount?: boolean
+    isUpdate?: boolean
+    updateTargetVideoId?: boolean
     videoId?: boolean
     platformConnectionId?: boolean
     createdById?: boolean
@@ -10063,6 +10081,8 @@ export namespace Prisma {
     platformVideoUrl?: boolean
     errorMessage?: boolean
     retryCount?: boolean
+    isUpdate?: boolean
+    updateTargetVideoId?: boolean
     videoId?: boolean
     platformConnectionId?: boolean
     createdById?: boolean
@@ -10088,12 +10108,14 @@ export namespace Prisma {
     platformVideoUrl?: boolean
     errorMessage?: boolean
     retryCount?: boolean
+    isUpdate?: boolean
+    updateTargetVideoId?: boolean
     videoId?: boolean
     platformConnectionId?: boolean
     createdById?: boolean
   }
 
-  export type PublishJobOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "platform" | "status" | "title" | "description" | "tags" | "privacy" | "scheduledFor" | "startedAt" | "completedAt" | "platformVideoId" | "platformVideoUrl" | "errorMessage" | "retryCount" | "videoId" | "platformConnectionId" | "createdById", ExtArgs["result"]["publishJob"]>
+  export type PublishJobOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "platform" | "status" | "title" | "description" | "tags" | "privacy" | "scheduledFor" | "startedAt" | "completedAt" | "platformVideoId" | "platformVideoUrl" | "errorMessage" | "retryCount" | "isUpdate" | "updateTargetVideoId" | "videoId" | "platformConnectionId" | "createdById", ExtArgs["result"]["publishJob"]>
   export type PublishJobInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     video?: boolean | VideoDefaultArgs<ExtArgs>
     platformConnection?: boolean | PlatformConnectionDefaultArgs<ExtArgs>
@@ -10134,6 +10156,8 @@ export namespace Prisma {
       platformVideoUrl: string | null
       errorMessage: string | null
       retryCount: number
+      isUpdate: boolean
+      updateTargetVideoId: string | null
       videoId: string
       platformConnectionId: string
       createdById: string
@@ -10579,6 +10603,8 @@ export namespace Prisma {
     readonly platformVideoUrl: FieldRef<"PublishJob", 'String'>
     readonly errorMessage: FieldRef<"PublishJob", 'String'>
     readonly retryCount: FieldRef<"PublishJob", 'Int'>
+    readonly isUpdate: FieldRef<"PublishJob", 'Boolean'>
+    readonly updateTargetVideoId: FieldRef<"PublishJob", 'String'>
     readonly videoId: FieldRef<"PublishJob", 'String'>
     readonly platformConnectionId: FieldRef<"PublishJob", 'String'>
     readonly createdById: FieldRef<"PublishJob", 'String'>
@@ -11135,6 +11161,8 @@ export namespace Prisma {
     platformVideoUrl: 'platformVideoUrl',
     errorMessage: 'errorMessage',
     retryCount: 'retryCount',
+    isUpdate: 'isUpdate',
+    updateTargetVideoId: 'updateTargetVideoId',
     videoId: 'videoId',
     platformConnectionId: 'platformConnectionId',
     createdById: 'createdById'
@@ -11910,6 +11938,8 @@ export namespace Prisma {
     platformVideoUrl?: StringNullableFilter<"PublishJob"> | string | null
     errorMessage?: StringNullableFilter<"PublishJob"> | string | null
     retryCount?: IntFilter<"PublishJob"> | number
+    isUpdate?: BoolFilter<"PublishJob"> | boolean
+    updateTargetVideoId?: StringNullableFilter<"PublishJob"> | string | null
     videoId?: StringFilter<"PublishJob"> | string
     platformConnectionId?: StringFilter<"PublishJob"> | string
     createdById?: StringFilter<"PublishJob"> | string
@@ -11935,6 +11965,8 @@ export namespace Prisma {
     platformVideoUrl?: SortOrderInput | SortOrder
     errorMessage?: SortOrderInput | SortOrder
     retryCount?: SortOrder
+    isUpdate?: SortOrder
+    updateTargetVideoId?: SortOrderInput | SortOrder
     videoId?: SortOrder
     platformConnectionId?: SortOrder
     createdById?: SortOrder
@@ -11963,6 +11995,8 @@ export namespace Prisma {
     platformVideoUrl?: StringNullableFilter<"PublishJob"> | string | null
     errorMessage?: StringNullableFilter<"PublishJob"> | string | null
     retryCount?: IntFilter<"PublishJob"> | number
+    isUpdate?: BoolFilter<"PublishJob"> | boolean
+    updateTargetVideoId?: StringNullableFilter<"PublishJob"> | string | null
     videoId?: StringFilter<"PublishJob"> | string
     platformConnectionId?: StringFilter<"PublishJob"> | string
     createdById?: StringFilter<"PublishJob"> | string
@@ -11988,6 +12022,8 @@ export namespace Prisma {
     platformVideoUrl?: SortOrderInput | SortOrder
     errorMessage?: SortOrderInput | SortOrder
     retryCount?: SortOrder
+    isUpdate?: SortOrder
+    updateTargetVideoId?: SortOrderInput | SortOrder
     videoId?: SortOrder
     platformConnectionId?: SortOrder
     createdById?: SortOrder
@@ -12018,6 +12054,8 @@ export namespace Prisma {
     platformVideoUrl?: StringNullableWithAggregatesFilter<"PublishJob"> | string | null
     errorMessage?: StringNullableWithAggregatesFilter<"PublishJob"> | string | null
     retryCount?: IntWithAggregatesFilter<"PublishJob"> | number
+    isUpdate?: BoolWithAggregatesFilter<"PublishJob"> | boolean
+    updateTargetVideoId?: StringNullableWithAggregatesFilter<"PublishJob"> | string | null
     videoId?: StringWithAggregatesFilter<"PublishJob"> | string
     platformConnectionId?: StringWithAggregatesFilter<"PublishJob"> | string
     createdById?: StringWithAggregatesFilter<"PublishJob"> | string
@@ -12673,6 +12711,8 @@ export namespace Prisma {
     platformVideoUrl?: string | null
     errorMessage?: string | null
     retryCount?: number
+    isUpdate?: boolean
+    updateTargetVideoId?: string | null
     video: VideoCreateNestedOneWithoutPublishJobsInput
     platformConnection: PlatformConnectionCreateNestedOneWithoutPublishJobsInput
     createdBy: UserCreateNestedOneWithoutPublishJobsInput
@@ -12695,6 +12735,8 @@ export namespace Prisma {
     platformVideoUrl?: string | null
     errorMessage?: string | null
     retryCount?: number
+    isUpdate?: boolean
+    updateTargetVideoId?: string | null
     videoId: string
     platformConnectionId: string
     createdById: string
@@ -12717,6 +12759,8 @@ export namespace Prisma {
     platformVideoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
     retryCount?: IntFieldUpdateOperationsInput | number
+    isUpdate?: BoolFieldUpdateOperationsInput | boolean
+    updateTargetVideoId?: NullableStringFieldUpdateOperationsInput | string | null
     video?: VideoUpdateOneRequiredWithoutPublishJobsNestedInput
     platformConnection?: PlatformConnectionUpdateOneRequiredWithoutPublishJobsNestedInput
     createdBy?: UserUpdateOneRequiredWithoutPublishJobsNestedInput
@@ -12739,6 +12783,8 @@ export namespace Prisma {
     platformVideoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
     retryCount?: IntFieldUpdateOperationsInput | number
+    isUpdate?: BoolFieldUpdateOperationsInput | boolean
+    updateTargetVideoId?: NullableStringFieldUpdateOperationsInput | string | null
     videoId?: StringFieldUpdateOperationsInput | string
     platformConnectionId?: StringFieldUpdateOperationsInput | string
     createdById?: StringFieldUpdateOperationsInput | string
@@ -12761,6 +12807,8 @@ export namespace Prisma {
     platformVideoUrl?: string | null
     errorMessage?: string | null
     retryCount?: number
+    isUpdate?: boolean
+    updateTargetVideoId?: string | null
     videoId: string
     platformConnectionId: string
     createdById: string
@@ -12783,6 +12831,8 @@ export namespace Prisma {
     platformVideoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
     retryCount?: IntFieldUpdateOperationsInput | number
+    isUpdate?: BoolFieldUpdateOperationsInput | boolean
+    updateTargetVideoId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type PublishJobUncheckedUpdateManyInput = {
@@ -12802,6 +12852,8 @@ export namespace Prisma {
     platformVideoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
     retryCount?: IntFieldUpdateOperationsInput | number
+    isUpdate?: BoolFieldUpdateOperationsInput | boolean
+    updateTargetVideoId?: NullableStringFieldUpdateOperationsInput | string | null
     videoId?: StringFieldUpdateOperationsInput | string
     platformConnectionId?: StringFieldUpdateOperationsInput | string
     createdById?: StringFieldUpdateOperationsInput | string
@@ -13516,6 +13568,8 @@ export namespace Prisma {
     platformVideoUrl?: SortOrder
     errorMessage?: SortOrder
     retryCount?: SortOrder
+    isUpdate?: SortOrder
+    updateTargetVideoId?: SortOrder
     videoId?: SortOrder
     platformConnectionId?: SortOrder
     createdById?: SortOrder
@@ -13542,6 +13596,8 @@ export namespace Prisma {
     platformVideoUrl?: SortOrder
     errorMessage?: SortOrder
     retryCount?: SortOrder
+    isUpdate?: SortOrder
+    updateTargetVideoId?: SortOrder
     videoId?: SortOrder
     platformConnectionId?: SortOrder
     createdById?: SortOrder
@@ -13564,6 +13620,8 @@ export namespace Prisma {
     platformVideoUrl?: SortOrder
     errorMessage?: SortOrder
     retryCount?: SortOrder
+    isUpdate?: SortOrder
+    updateTargetVideoId?: SortOrder
     videoId?: SortOrder
     platformConnectionId?: SortOrder
     createdById?: SortOrder
@@ -14861,6 +14919,8 @@ export namespace Prisma {
     platformVideoUrl?: string | null
     errorMessage?: string | null
     retryCount?: number
+    isUpdate?: boolean
+    updateTargetVideoId?: string | null
     video: VideoCreateNestedOneWithoutPublishJobsInput
     platformConnection: PlatformConnectionCreateNestedOneWithoutPublishJobsInput
   }
@@ -14882,6 +14942,8 @@ export namespace Prisma {
     platformVideoUrl?: string | null
     errorMessage?: string | null
     retryCount?: number
+    isUpdate?: boolean
+    updateTargetVideoId?: string | null
     videoId: string
     platformConnectionId: string
   }
@@ -15095,6 +15157,8 @@ export namespace Prisma {
     platformVideoUrl?: StringNullableFilter<"PublishJob"> | string | null
     errorMessage?: StringNullableFilter<"PublishJob"> | string | null
     retryCount?: IntFilter<"PublishJob"> | number
+    isUpdate?: BoolFilter<"PublishJob"> | boolean
+    updateTargetVideoId?: StringNullableFilter<"PublishJob"> | string | null
     videoId?: StringFilter<"PublishJob"> | string
     platformConnectionId?: StringFilter<"PublishJob"> | string
     createdById?: StringFilter<"PublishJob"> | string
@@ -15152,6 +15216,8 @@ export namespace Prisma {
     platformVideoUrl?: string | null
     errorMessage?: string | null
     retryCount?: number
+    isUpdate?: boolean
+    updateTargetVideoId?: string | null
     platformConnection: PlatformConnectionCreateNestedOneWithoutPublishJobsInput
     createdBy: UserCreateNestedOneWithoutPublishJobsInput
   }
@@ -15173,6 +15239,8 @@ export namespace Prisma {
     platformVideoUrl?: string | null
     errorMessage?: string | null
     retryCount?: number
+    isUpdate?: boolean
+    updateTargetVideoId?: string | null
     platformConnectionId: string
     createdById: string
   }
@@ -15296,6 +15364,8 @@ export namespace Prisma {
     platformVideoUrl?: string | null
     errorMessage?: string | null
     retryCount?: number
+    isUpdate?: boolean
+    updateTargetVideoId?: string | null
     video: VideoCreateNestedOneWithoutPublishJobsInput
     createdBy: UserCreateNestedOneWithoutPublishJobsInput
   }
@@ -15317,6 +15387,8 @@ export namespace Prisma {
     platformVideoUrl?: string | null
     errorMessage?: string | null
     retryCount?: number
+    isUpdate?: boolean
+    updateTargetVideoId?: string | null
     videoId: string
     createdById: string
   }
@@ -15708,6 +15780,8 @@ export namespace Prisma {
     platformVideoUrl?: string | null
     errorMessage?: string | null
     retryCount?: number
+    isUpdate?: boolean
+    updateTargetVideoId?: string | null
     videoId: string
     platformConnectionId: string
   }
@@ -15921,6 +15995,8 @@ export namespace Prisma {
     platformVideoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
     retryCount?: IntFieldUpdateOperationsInput | number
+    isUpdate?: BoolFieldUpdateOperationsInput | boolean
+    updateTargetVideoId?: NullableStringFieldUpdateOperationsInput | string | null
     video?: VideoUpdateOneRequiredWithoutPublishJobsNestedInput
     platformConnection?: PlatformConnectionUpdateOneRequiredWithoutPublishJobsNestedInput
   }
@@ -15942,6 +16018,8 @@ export namespace Prisma {
     platformVideoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
     retryCount?: IntFieldUpdateOperationsInput | number
+    isUpdate?: BoolFieldUpdateOperationsInput | boolean
+    updateTargetVideoId?: NullableStringFieldUpdateOperationsInput | string | null
     videoId?: StringFieldUpdateOperationsInput | string
     platformConnectionId?: StringFieldUpdateOperationsInput | string
   }
@@ -15963,6 +16041,8 @@ export namespace Prisma {
     platformVideoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
     retryCount?: IntFieldUpdateOperationsInput | number
+    isUpdate?: BoolFieldUpdateOperationsInput | boolean
+    updateTargetVideoId?: NullableStringFieldUpdateOperationsInput | string | null
     videoId?: StringFieldUpdateOperationsInput | string
     platformConnectionId?: StringFieldUpdateOperationsInput | string
   }
@@ -15984,6 +16064,8 @@ export namespace Prisma {
     platformVideoUrl?: string | null
     errorMessage?: string | null
     retryCount?: number
+    isUpdate?: boolean
+    updateTargetVideoId?: string | null
     platformConnectionId: string
     createdById: string
   }
@@ -16005,6 +16087,8 @@ export namespace Prisma {
     platformVideoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
     retryCount?: IntFieldUpdateOperationsInput | number
+    isUpdate?: BoolFieldUpdateOperationsInput | boolean
+    updateTargetVideoId?: NullableStringFieldUpdateOperationsInput | string | null
     platformConnection?: PlatformConnectionUpdateOneRequiredWithoutPublishJobsNestedInput
     createdBy?: UserUpdateOneRequiredWithoutPublishJobsNestedInput
   }
@@ -16026,6 +16110,8 @@ export namespace Prisma {
     platformVideoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
     retryCount?: IntFieldUpdateOperationsInput | number
+    isUpdate?: BoolFieldUpdateOperationsInput | boolean
+    updateTargetVideoId?: NullableStringFieldUpdateOperationsInput | string | null
     platformConnectionId?: StringFieldUpdateOperationsInput | string
     createdById?: StringFieldUpdateOperationsInput | string
   }
@@ -16047,6 +16133,8 @@ export namespace Prisma {
     platformVideoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
     retryCount?: IntFieldUpdateOperationsInput | number
+    isUpdate?: BoolFieldUpdateOperationsInput | boolean
+    updateTargetVideoId?: NullableStringFieldUpdateOperationsInput | string | null
     platformConnectionId?: StringFieldUpdateOperationsInput | string
     createdById?: StringFieldUpdateOperationsInput | string
   }
@@ -16068,6 +16156,8 @@ export namespace Prisma {
     platformVideoUrl?: string | null
     errorMessage?: string | null
     retryCount?: number
+    isUpdate?: boolean
+    updateTargetVideoId?: string | null
     videoId: string
     createdById: string
   }
@@ -16089,6 +16179,8 @@ export namespace Prisma {
     platformVideoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
     retryCount?: IntFieldUpdateOperationsInput | number
+    isUpdate?: BoolFieldUpdateOperationsInput | boolean
+    updateTargetVideoId?: NullableStringFieldUpdateOperationsInput | string | null
     video?: VideoUpdateOneRequiredWithoutPublishJobsNestedInput
     createdBy?: UserUpdateOneRequiredWithoutPublishJobsNestedInput
   }
@@ -16110,6 +16202,8 @@ export namespace Prisma {
     platformVideoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
     retryCount?: IntFieldUpdateOperationsInput | number
+    isUpdate?: BoolFieldUpdateOperationsInput | boolean
+    updateTargetVideoId?: NullableStringFieldUpdateOperationsInput | string | null
     videoId?: StringFieldUpdateOperationsInput | string
     createdById?: StringFieldUpdateOperationsInput | string
   }
@@ -16131,6 +16225,8 @@ export namespace Prisma {
     platformVideoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
     retryCount?: IntFieldUpdateOperationsInput | number
+    isUpdate?: BoolFieldUpdateOperationsInput | boolean
+    updateTargetVideoId?: NullableStringFieldUpdateOperationsInput | string | null
     videoId?: StringFieldUpdateOperationsInput | string
     createdById?: StringFieldUpdateOperationsInput | string
   }

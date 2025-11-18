@@ -18,6 +18,72 @@ export interface UploadVideoResult {
   url: string;
 }
 
+export interface UpdateVideoParams {
+  accessToken: string;
+  refreshToken: string | null;
+  videoId: string; // YouTube video ID to update
+  title: string;
+  description?: string | null;
+  tags?: string | null;
+  privacy: "public" | "unlisted" | "private";
+}
+
+export interface UpdateVideoResult {
+  videoId: string;
+  url: string;
+}
+
+/**
+ * Update an existing YouTube video's metadata
+ * Does NOT re-upload the video file
+ */
+export async function updateVideoOnYouTube(
+  params: UpdateVideoParams,
+): Promise<UpdateVideoResult> {
+  const oauth2Client = new google.auth.OAuth2(
+    env.GOOGLE_CLIENT_ID,
+    env.GOOGLE_CLIENT_SECRET,
+    "https://t3a-videoblade.vercel.app/api/auth/callback/google",
+  );
+
+  oauth2Client.setCredentials({
+    access_token: params.accessToken,
+    refresh_token: params.refreshToken,
+  });
+
+  const youtube = google.youtube({ version: "v3", auth: oauth2Client });
+
+  // Prepare tags
+  const tags = params.tags ? params.tags.split(",").map((t) => t.trim()) : [];
+
+  // Update video metadata on YouTube
+  const response = await youtube.videos.update({
+    part: ["snippet", "status"],
+    requestBody: {
+      id: params.videoId, // IMPORTANT: This tells YouTube which video to update
+      snippet: {
+        title: params.title,
+        description: params.description ?? "",
+        tags,
+        categoryId: "22", // People & Blogs (default)
+      },
+      status: {
+        privacyStatus: params.privacy,
+      },
+    },
+  });
+
+  const videoId = response.data.id;
+  if (!videoId) {
+    throw new Error("YouTube did not return video ID");
+  }
+
+  return {
+    videoId,
+    url: `https://www.youtube.com/watch?v=${videoId}`,
+  };
+}
+
 export async function uploadVideoToYouTube(
   params: UploadVideoParams,
 ): Promise<UploadVideoResult> {

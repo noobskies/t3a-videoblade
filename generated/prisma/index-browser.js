@@ -225,6 +225,8 @@ exports.Prisma.PublishJobScalarFieldEnum = {
   platformVideoUrl: 'platformVideoUrl',
   errorMessage: 'errorMessage',
   retryCount: 'retryCount',
+  isUpdate: 'isUpdate',
+  updateTargetVideoId: 'updateTargetVideoId',
   videoId: 'videoId',
   platformConnectionId: 'platformConnectionId',
   createdById: 'createdById'
