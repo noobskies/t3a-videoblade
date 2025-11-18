@@ -478,6 +478,40 @@ npm run db:studio  # Visual database editor
 
 ## Future Technical Considerations
 
+### UI Framework Migration (Planned - 2025-11-18)
+
+**Material-UI (MUI) v6 Migration**:
+
+- **Status**: Planning complete, documentation ready at `docs/migration/`
+- **Scope**: Complete replacement of shadcn UI (7 components) with MUI equivalents
+- **Timeline**: 11-17 hours estimated (6 phases)
+- **Approach**: Zero backward compatibility - clean break from Tailwind CSS + shadcn
+- **Key Technologies**:
+  - `@mui/material` v6 - Component library
+  - `@emotion/react` - CSS-in-JS styling
+  - `@mui/material-nextjs` - Next.js integration for SSR
+  - `@mui/icons-material` - Icon library (evaluate replacing lucide-react)
+
+**Migration Strategy**:
+
+- Phase 1: Foundation (theme, providers, SSR)
+- Phase 2: Core Inputs (TextField)
+- Phase 3: Button & Badge (Button, Chip)
+- Phase 4: Select Component
+- Phase 5: Card Composition (most complex)
+- Phase 6: Layout & Polish (accessibility, cleanup)
+
+**Benefits**:
+
+- Enterprise-grade maturity (10+ years)
+- 50+ production-ready components
+- Built-in theming with automatic dark mode
+- WCAG 2.1 AA accessibility compliance
+- TypeScript-native with full type safety
+- Better performance and smaller bundles
+
+**Decision Point**: Execute after Phase 1 MVP complete or independently
+
 ### For Video Features
 
 **Potential Libraries**:

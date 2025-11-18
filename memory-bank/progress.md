@@ -110,6 +110,24 @@
 
 **Status**: Ready for implementation - Follow `phase1/00-prerequisites.md` to start
 
+### ✅ MUI Migration Planning (Complete) - 2025-11-18
+
+**UI Framework Migration Documentation**
+
+- [x] MUI v6 documentation researched via Context7 MCP
+- [x] Current shadcn usage audited (7 components, 6 files)
+- [x] Migration strategy designed (6 phases, 11-17 hours)
+- [x] Comprehensive documentation created (7 files)
+- [x] Component mapping defined (shadcn → MUI equivalents)
+- [x] Theming architecture planned (colorSchemes, sx prop)
+- [x] Accessibility strategy (WCAG 2.1 AA)
+- [x] Testing checklists created for each phase
+- [x] Risk assessment and mitigation strategies
+
+**Documentation Location**: `docs/migration/`
+
+**Status**: Planning complete - Implementation ready when needed (execute after Phase 1 MVP or independently)
+
 ### ✅ Phase 1, Step 0: Prerequisites (Complete) - 2025-11-17
 
 **Infrastructure Setup**
