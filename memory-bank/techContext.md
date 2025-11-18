@@ -73,6 +73,15 @@
 - Configuration: `src/server/auth.ts`
 - Client hooks: `src/lib/auth-client.ts`
 
+**YouTube OAuth Scope Configuration** (Updated 2025-11-18):
+
+- **Current Scope**: `https://www.googleapis.com/auth/youtube` (full access)
+- **Includes**: Upload, update, delete, and all video management operations
+- **Required for**: Smart Publish feature (update existing video metadata)
+- **Previous Issue**: Narrow scopes (`youtube.upload`, `youtube.readonly`) insufficient for `videos.update` API
+- **Google Cloud Console**: Must enable `youtube` scope in OAuth consent screen
+- **Re-authentication**: Users must reconnect after scope changes (tokens issued with specific scopes)
+
 ### Database
 
 **PostgreSQL** (Production - Prisma Accelerate)

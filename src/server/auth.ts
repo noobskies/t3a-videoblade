@@ -19,8 +19,7 @@ export const auth = betterAuth({
       scope: [
         "https://www.googleapis.com/auth/userinfo.email",
         "https://www.googleapis.com/auth/userinfo.profile",
-        "https://www.googleapis.com/auth/youtube.upload", // YouTube API access
-        "https://www.googleapis.com/auth/youtube.readonly",
+        "https://www.googleapis.com/auth/youtube", // Full YouTube API access (upload, update, manage)
       ],
     },
     // Add more providers later (Vimeo, etc.)

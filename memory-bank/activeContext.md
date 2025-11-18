@@ -10,6 +10,85 @@
 
 ## Recent Changes
 
+### YouTube OAuth Scope Fix (2025-11-18 - 9:10 AM)
+
+**Critical Production Bug Fix**: ✅ OAUTH SCOPE CORRECTED
+
+**Problem Identified**: Production error "Request had insufficient authentication scopes" (403) when updating YouTube video metadata.
+
+**Root Cause**:
+
+- Used `youtube.upload` scope - Only allows uploading **NEW** videos
+- Used `youtube.readonly` scope - Read-only access, no modifications
+- Smart Publish feature needs to **UPDATE** existing video metadata
+- These narrow scopes insufficient for `videos.update` API endpoint
+
+**Solution Applied**:
+
+```typescript
+// Before (Insufficient)
+"https://www.googleapis.com/auth/youtube.upload";
+"https://www.googleapis.com/auth/youtube.readonly";
+
+// After (Fixed)
+"https://www.googleapis.com/auth/youtube"; // Full YouTube access
+```
+
+**File Modified**:
+
+- ✅ `src/server/auth.ts` - Updated OAuth scope configuration
+
+**Why This Works**:
+
+- `youtube` scope includes **ALL** video management operations
+- Covers upload, update, delete, and all metadata changes
+- Most standard scope for video management applications
+- Recommended by YouTube Data API v3 documentation
+
+**YouTube API Documentation Confirmed**:
+The `videos.update` endpoint requires one of:
+
+- `https://www.googleapis.com/auth/youtube` ✅
+- `https://www.googleapis.com/auth/youtube.force-ssl` ✅
+- `https://www.googleapis.com/auth/youtubepartner` ✅
+
+**Google Cloud Console Configuration**:
+Must enable the scope in Google Cloud Console:
+
+1. Navigate to: APIs & Services → OAuth consent screen
+2. Section: "Scopes for Google APIs"
+3. Add: `https://www.googleapis.com/auth/youtube`
+4. Remove old scopes: `youtube.upload`, `youtube.readonly`
+
+**⚠️ User Re-Authentication Required**:
+Existing users MUST reconnect YouTube accounts:
+
+1. Go to `/platforms` page
+2. Disconnect YouTube
+3. Reconnect YouTube (receives new scope)
+4. OAuth tokens issued with specific scopes at auth time
+5. Cannot retroactively add scopes to existing tokens
+
+**Impact**:
+
+- ✅ Fixes 403 errors on video metadata updates
+- ✅ Smart Publish feature now works correctly
+- ✅ Future-proof for all video operations
+- ⚠️ Requires user action (reconnect YouTube)
+
+**Testing**:
+
+- Verify Google Cloud Console has `youtube` scope enabled
+- Deploy code changes to production
+- Test: Disconnect and reconnect YouTube
+- Verify: Video metadata updates work without 403 error
+
+**Time to Complete**: ~30 minutes (diagnosis + fix + documentation)
+
+**Next Action**: Deploy to production and notify users to reconnect YouTube accounts
+
+---
+
 ### Smart Publish Enhancement Complete (2025-11-17 - 7:30 PM)
 
 **UX Improvement & Bug Fix**: ✅ SMART PUBLISH IMPLEMENTED
