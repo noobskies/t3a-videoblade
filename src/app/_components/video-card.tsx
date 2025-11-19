@@ -3,7 +3,12 @@
 import Image from "next/image";
 import { api } from "@/trpc/react";
 import { useState } from "react";
-import { Video as VideoIcon, Trash2, Edit, Upload } from "lucide-react";
+import {
+  Movie as VideoIcon,
+  Delete as Trash2,
+  Edit,
+  CloudUpload as Upload,
+} from "@mui/icons-material";
 import {
   Card,
   CardContent,

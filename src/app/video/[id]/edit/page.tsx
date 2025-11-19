@@ -15,7 +15,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Card } from "@/components/ui/card";
-import { ArrowLeft, Save } from "lucide-react";
+import { ArrowBack as ArrowLeft, Save } from "@mui/icons-material";
 
 export default function EditVideoPage() {
   const params = useParams();

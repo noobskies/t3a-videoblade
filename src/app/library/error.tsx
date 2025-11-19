@@ -7,7 +7,7 @@
  */
 
 import { useEffect } from "react";
-import { AlertCircle } from "lucide-react";
+import { ErrorOutline as AlertCircle } from "@mui/icons-material";
 import { Button } from "@/components/ui/button";
 
 export default function Error({

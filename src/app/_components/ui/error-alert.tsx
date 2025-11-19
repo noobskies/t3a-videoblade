@@ -6,7 +6,7 @@
  * This component is for component-level error states (e.g., form validation, API errors within a component, etc.)
  */
 
-import { AlertCircle } from "lucide-react";
+import { ErrorOutline as AlertCircle } from "@mui/icons-material";
 import { Button } from "@/components/ui/button";
 
 type ErrorAlertProps = {

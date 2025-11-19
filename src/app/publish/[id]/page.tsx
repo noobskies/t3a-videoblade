@@ -9,7 +9,11 @@ import { api } from "@/trpc/react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Send, Youtube } from "lucide-react";
+import {
+  ArrowBack as ArrowLeft,
+  Send,
+  YouTube as Youtube,
+} from "@mui/icons-material";
 import { useRouter } from "next/navigation";
 import { use, useState } from "react";
 import Link from "next/link";

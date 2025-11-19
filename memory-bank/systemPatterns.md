@@ -188,33 +188,32 @@ It's **acceptable and encouraged** to break backwards compatibility when:
 
 ## Design Patterns in Use
 
-### MUI Styling Pattern (New)
+### MUI Styling Pattern (Active)
 
 **Primary Method**: `sx` prop
 
 - Use for one-off styles and layout
 - Access theme variables directly
 - Type-safe CSS-in-JS
-
-```tsx
-<Box sx={{ p: 2, bgcolor: "background.paper" }}>
-  <Typography variant="h4">Title</Typography>
-</Box>
-```
+- Example: `<Box sx={{ p: 2, bgcolor: "background.paper" }}>`
 
 **Secondary Method**: `styled` API
 
-- Use for reusable components
+- Use for reusable custom components
 - Clean separation of styles and logic
+- Example: `const CustomCard = styled(Card)(({ theme }) => ({ ... }))`
 
-```tsx
-const CustomCard = styled(Card)(({ theme }) => ({
-  padding: theme.spacing(2),
-  [theme.breakpoints.up("md")]: {
-    padding: theme.spacing(4),
-  },
-}));
-```
+**Theming Engine**: CSS Variables
+
+- `cssVariables: true` in `createTheme`
+- Use generated variables (e.g., `--mui-palette-primary-main`)
+- Native dark mode via `colorSchemes: { light: true, dark: true }`
+
+**Layout Strategy**:
+
+- `Grid` (v2) for complex layouts
+- `Stack` for linear layouts (flex column/row)
+- `Container` for page constraints
 
 ### tRPC Router Pattern
 

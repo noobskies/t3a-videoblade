@@ -25,28 +25,27 @@
 - Strict mode enabled
 - Configuration: `tsconfig.json`
 
-**Material-UI v6 (MUI)**
+**Material-UI v6 (MUI) - Active UI Framework**
 
 - **Core**: `@mui/material`, `@emotion/react`, `@emotion/styled`
 - **Integration**: `@mui/material-nextjs` for App Router cache
-- **Icons**: `@mui/icons-material`
-- **Theming**: CSS Variables (`cssVariables: true`)
-- **Status**: Migration Target (Phase 1)
+- **Icons**: `@mui/icons-material` (replaced Lucide)
+- **Theming**: CSS Variables (`cssVariables: true`) + Native Dark Mode
+- **Font**: `@fontsource/roboto` / `next/font/google` (Roboto)
+- **Status**: **Primary Framework (Phase 1 Installed)**
 
 **Tailwind CSS 4.0.15** [DEPRECATED - MIGRATING TO MUI]
 
 - Utility-first styling
-- Status: Being removed in favor of MUI `sx` prop
+- Status: Being removed phase-by-phase. Still present until final cleanup.
 
-**Lucide React 0.554.0** [DEPRECATED - MIGRATING TO MUI]
+**Lucide React** [REMOVED]
 
-- Icon library
-- Status: Being replaced by Material Icons
+- Replaced by `@mui/icons-material`.
 
 **shadcn/ui Components** [DEPRECATED - MIGRATING TO MUI]
 
-- Card, Button, Badge, Input, etc.
-- Status: Being replaced by native MUI components
+- Status: Components exist but are being replaced by native MUI components.
 
 ### Backend
 
@@ -75,14 +74,10 @@
 - Configuration: `src/server/auth.ts`
 - Client hooks: `src/lib/auth-client.ts`
 
-**YouTube OAuth Scope Configuration** (Updated 2025-11-18):
+**YouTube OAuth Scope Configuration**:
 
-- **Current Scope**: `https://www.googleapis.com/auth/youtube` (full access)
-- **Includes**: Upload, update, delete, and all video management operations
+- **Scope**: `https://www.googleapis.com/auth/youtube` (full access)
 - **Required for**: Smart Publish feature (update existing video metadata)
-- **Previous Issue**: Narrow scopes (`youtube.upload`, `youtube.readonly`) insufficient for `videos.update` API
-- **Google Cloud Console**: Must enable `youtube` scope in OAuth consent screen
-- **Re-authentication**: Users must reconnect after scope changes (tokens issued with specific scopes)
 
 ### Database
 
@@ -111,13 +106,6 @@
 - Integrated with tRPC
 - Configuration: `src/trpc/query-client.ts`
 
-### Utilities
-
-**class-variance-authority 0.7.1** - Component variant styling  
-**clsx 2.1.1** - Conditional classNames  
-**tailwind-merge 3.4.0** - Merge Tailwind classes intelligently  
-**server-only 0.0.1** - Enforce server-only code
-
 ## Development Tools
 
 ### Code Quality
@@ -132,7 +120,6 @@
 **Prettier 3.5.3**
 
 - Code formatting
-- Tailwind CSS plugin for class sorting
 - Configuration: `prettier.config.js`
 - Commands: `npm run format:check`, `npm run format:write`
 
@@ -152,7 +139,7 @@
 **PostCSS 8.5.3**
 
 - CSS processing
-- Tailwind CSS integration
+- Tailwind CSS integration (Legacy support during migration)
 - Configuration: `postcss.config.js`
 
 ## MCP Servers (Development Tools)
@@ -180,26 +167,6 @@ This project has access to **Model Context Protocol (MCP) servers** that extend 
 - Pre-configured with access token
 - AI-powered root cause analysis with Seer
 - Critical for VideoBlade production debugging
-
-### When to Use MCP Servers
-
-**During Development**:
-
-- Use `next-devtools` for debugging video upload flows and OAuth integrations
-- Query `Context7` for platform API documentation (YouTube, Vimeo)
-- Check `Sentry` for similar past errors before implementing new features
-
-**For Testing**:
-
-- Browser automation via `next-devtools` to test upload UI
-- Verify OAuth flows end-to-end
-
-**In Production**:
-
-- Monitor errors in real-time with `Sentry`
-- Use AI analysis for complex production issues
-
-**See [`memory-bank/mcpServers.md`](./mcpServers.md) for comprehensive documentation, VideoBlade-specific use cases, and detailed usage examples.**
 
 ## Development Setup
 
@@ -298,7 +265,7 @@ t3a-videoblade/
 │   └── favicon.ico             # Static assets
 ├── src/
 │   ├── app/                    # Next.js App Router
-│   │   ├── layout.tsx          # Root layout
+│   │   ├── layout.tsx          # Root layout (Providers: MUI + tRPC)
 │   │   ├── page.tsx            # Homepage
 │   │   ├── _components/        # Private components
 │   │   │   ├── post.tsx        # Post component
@@ -306,6 +273,7 @@ t3a-videoblade/
 │   │   └── api/
 │   │       ├── auth/[...all]/  # Better Auth routes
 │   │       └── trpc/           # tRPC API handler
+│   ├── theme.ts                # MUI Theme Configuration
 │   ├── server/
 │   │   ├── auth.ts             # Better Auth config
 │   │   ├── api/
@@ -335,190 +303,27 @@ t3a-videoblade/
 └── memory-bank/                # Cline's memory
 ```
 
-## Technical Constraints
-
-### Hard Constraints
-
-1. **TypeScript Required**: All code must be TypeScript
-2. **Type Safety**: No `any` types without justification
-3. **ESLint Compliance**: Code must pass linting
-4. **SQLite for Dev**: Database is file-based in development
-5. **Server Components Default**: Components are server-rendered unless marked `"use client"`
-
-### Soft Constraints
-
-1. **Prettier Formatting**: Code should be formatted
-2. **No Semicolons**: Prettier config removes them
-3. **Import Aliases**: Use `@/` prefix for imports from `src/`
-4. **Environment Validation**: All env vars must be in `src/env.js`
-
 ## Dependencies Overview
 
-### Production Dependencies (~27 packages)
+### Production Dependencies
 
-**Core Framework** (6):
+**Core Framework**: Next.js, React, TypeScript
+**UI Framework**: **Material-UI v6** (Core, Icons, Emotion)
+**API & Data**: tRPC, TanStack Query, Prisma, Better Auth, Google APIs
+**Storage**: AWS SDK (S3)
+**Background Jobs**: Inngest
+**Validation**: Zod, SuperJSON
 
-- next, react, react-dom
-- @t3-oss/env-nextjs, server-only
-- typescript
+### Legacy Dependencies (To Be Removed)
 
-**API & Data** (7):
+- `tailwindcss`
+- `class-variance-authority`
+- `clsx`
+- `tailwind-merge`
+- `lucide-react` (Already removed)
 
-- @trpc/client, @trpc/server, @trpc/react-query
-- @tanstack/react-query
-- @prisma/client
-- better-auth
-- googleapis
+### Development Dependencies
 
-**AWS & Storage** (3):
-
-- @aws-sdk/client-s3
-- @aws-sdk/s3-request-presigner
-- (S3 integration for video storage)
-
-**Background Jobs** (1):
-
-- inngest
-
-**Validation & Utilities** (5):
-
-- zod, superjson
-- clsx, class-variance-authority, tailwind-merge
-
-**UI** (3):
-
-- lucide-react
-- tailwindcss (via PostCSS)
-
-### Development Dependencies (13 packages)
-
-**TypeScript** (3):
-
-- typescript, @types/node, @types/react, @types/react-dom
-
-**Linting** (4):
-
-- eslint, eslint-config-next, @eslint/eslintrc, typescript-eslint
-
-**Formatting** (2):
-
-- prettier, prettier-plugin-tailwindcss
-
-**Build Tools** (3):
-
-- postcss, @tailwindcss/postcss, tw-animate-css
-
-**Database** (1):
-
-- prisma
-
-## Tool Usage Patterns
-
-### Adding a New Dependency
-
-```bash
-# Production dependency
-npm install package-name
-
-# Development dependency
-npm install -D package-name
-
-# Update lock file
-npm install
-```
-
-### Database Workflow
-
-**Development**:
-
-1. Edit `prisma/schema.prisma`
-2. Run `npm run db:push` (quick, no migration)
-3. Test changes
-4. When ready for production, use `npm run db:generate`
-
-**Production**:
-
-1. Create proper migrations with `npm run db:generate`
-2. Commit migration files
-3. Deploy and run `npm run db:migrate`
-
-### Type Generation
-
-**Prisma**: Runs automatically on `npm install` (postinstall script)
-
-**Manual**:
-
-```bash
-npx prisma generate
-```
-
-### Debugging
-
-**Database**:
-
-```bash
-npm run db:studio  # Visual database editor
-```
-
-**Network**: Next.js dev tools in browser  
-**tRPC**: Console logs with timing middleware  
-**React**: React DevTools browser extension
-
-## Known Technical Issues
-
-### SQLite Limitations
-
-- Not suitable for production
-- No concurrent writes support
-- Limited data types compared to PostgreSQL
-
-### Prisma Generated Client Location
-
-- Custom output path: `generated/prisma/`
-- Must be in `.gitignore`
-- Regenerated on every `npm install`
-
-## Future Technical Considerations
-
-### For Video Features
-
-**Potential Libraries**:
-
-- `@ffmpeg/ffmpeg` - Client-side video processing
-- `videojs` or `plyr` - Video player components
-- `aws-sdk` - S3 integration for storage
-- `sharp` - Thumbnail generation
-- `fluent-ffmpeg` - Server-side video processing
-
-**Infrastructure Needs**:
-
-- Cloud storage (S3, R2, etc.)
-- CDN for video delivery
-- Transcoding service
-- Webhook handling for async processing
-
-### Database Migration
-
-**For Production**:
-
-- Switch from SQLite to PostgreSQL
-- Update `schema.prisma` provider
-- Update `DATABASE_URL` format
-- May need to uncomment `@db.Text` annotations in schema
-
-### Deployment Platforms
-
-**Recommended**:
-
-- Vercel (optimal for Next.js)
-- Railway (includes PostgreSQL)
-- Fly.io
-- AWS/GCP/Azure
-
-**Requirements**:
-
-- Node.js 20+ runtime
-- PostgreSQL database
-- Environment variables configured
-- Build command: `npm run build`
-- Start command: `npm run start`
+- TypeScript, ESLint, Prettier
+- PostCSS (for legacy Tailwind support)
+- Prisma CLI

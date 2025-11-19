@@ -2,7 +2,7 @@
 
 import { api } from "@/trpc/react";
 import type { PlatformConnectionList } from "@/lib/types";
-import { Youtube, Check } from "lucide-react";
+import { YouTube as Youtube, Check } from "@mui/icons-material";
 
 /**
  * Type guard to ensure we have valid platform connection data

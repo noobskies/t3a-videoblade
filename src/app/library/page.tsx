@@ -11,7 +11,7 @@
 import { api } from "@/trpc/react";
 import type { VideoList } from "@/lib/types";
 import { VideoCard } from "@/app/_components/video-card";
-import { Upload, Video as VideoIcon } from "lucide-react";
+import { CloudUpload as Upload, Movie as VideoIcon } from "@mui/icons-material";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
