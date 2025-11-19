@@ -2,53 +2,48 @@
 
 ## Current Focus
 
-**Phase 1: MVP Feature Implementation (Resumed)**
+**Phase 2: Multi-Platform Integration (TikTok)**
 
-We have successfully completed the MUI migration and the Retry Logic (Step 10).
+We have started Phase 2 implementation.
+
+- **Step 1: TikTok OAuth**: Completed.
+- **Next Step**: Step 2: TikTok Publisher.
 
 ## Recent Changes
 
+- **Feature: TikTok OAuth** (2025-11-19)
+  - Added `TIKTOK` to `Platform` enum in Prisma schema.
+  - Configured `better-auth` with TikTok provider using `TIKTOK_CLIENT_KEY` and `TIKTOK_CLIENT_SECRET`.
+  - Added `connectTikTok` mutation to `platformRouter`.
+  - Updated `src/app/platforms/page.tsx` with TikTok connection card.
+  - Added environment variable validation for TikTok credentials.
+
 - **Feature: Retry Logic** (2025-11-19)
-  - Added `retryPublish` mutation to `src/server/api/routers/video.ts`.
-  - Updated `src/lib/types/video.ts` to include `id` and `errorMessage` in `PublishJob`.
-  - Updated `src/app/_components/video-card.tsx` to display a retry button (using `Replay` icon) and error messages for failed jobs.
+  - Added `retryPublish` mutation.
+  - Updated UI to show retry button for failed jobs.
 
 - **Feature: Video Thumbnails** (2025-11-19)
-  - Updated `src/inngest/publish-to-youtube.ts` to automatically fetch the YouTube thumbnail URL after successful publish.
-  - **Enhanced Strategy**: Implemented **client-side thumbnail generation** during upload.
-    - The `VideoUpload` component captures a frame from the video preview.
-    - Uploads this image to S3 alongside the video file.
-    - Saves the S3 URL as the initial `thumbnailUrl`.
-  - This ensures thumbnails are visible **immediately** in the Library/Edit pages, even before publishing to YouTube.
-  - **UI Update**: Added thumbnail display to **Edit Page** and **Publish Page**.
-  - **Upload Preview**: Added local video preview to the **Upload Page**.
-  - **Config Update**: Updated `next.config.js` to allow loading images from `img.youtube.com`.
+  - Client-side thumbnail generation during upload.
+  - Thumbnails visible immediately in Library/Edit.
 
 - **Homepage Update** (2025-11-19)
-  - Replaced default T3 App template with branded VideoBlade landing page.
-  - Implemented MUI layout with `Container`, `Stack`, `Box`, `Typography`.
-  - Added navigation buttons to "Library", "Upload", and "Platforms".
-  - Improved authentication flow visuals.
+  - Modern MUI layout for homepage.
 
 ## Active Decisions
 
-- **Retry Strategy**: Users can manually retry failed publish jobs from the video card. This resets the job status to `PENDING`, clears the error message, and re-triggers the Inngest workflow.
-- **Thumbnail Strategy**: We have evolved from "Option 3" (YouTube only) to a **Hybrid Approach**. We generate an initial thumbnail on the client-side during upload for immediate feedback. The YouTube thumbnail (fetched after publish) can still be used as a fallback or high-quality replacement if needed (though currently we stick with the uploaded one unless logic changes).
-- **Homepage Design**: Kept it simple and functional. Focusing on directing users to the core app features (Library/Upload).
+- **TikTok Auth Flow**: We use Better Auth's `signIn.social` to link the TikTok account. The `connectTikTok` mutation then syncs the tokens to our `PlatformConnection` table.
+- **MUI Icons**: Used `MusicNote` as placeholder for TikTok icon since `@mui/icons-material` doesn't have a dedicated TikTok icon.
 
 ## Next Steps
 
-1.  **Phase 1 Completion Review**
-    - Verify all Phase 1 requirements are met.
-    - Ensure all features work as expected: Upload -> Publish -> Thumbnail -> Retry.
-
-2.  **Prepare for Phase 2 (Multi-Platform)**
-    - Review Phase 2 roadmap.
-    - Begin planning Rumble integration.
+1.  **Implement TikTok Publisher** (Phase 2 - Step 2)
+    - Create `src/lib/tiktok.ts` (API wrapper).
+    - Create `src/inngest/publish-to-tiktok.ts`.
+    - Update `publish-video` logic to handle `TIKTOK` platform.
 
 ## Current Context
 
 - **Project**: VideoBlade (Multi-Platform Video Publisher)
-- **Phase**: Phase 1 (MVP - YouTube Only)
-- **Status**: Phase 1 Complete (Pending Final Review)
-- **Current Task**: Transitioning to Phase 2
+- **Phase**: Phase 2 (Multi-Platform - TikTok)
+- **Status**: Phase 2 Step 1 Complete.
+- **Current Task**: Proceeding to Step 2 (TikTok Publisher).

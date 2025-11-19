@@ -16,6 +16,7 @@ datasource db {
 enum Platform {
   YOUTUBE
   RUMBLE
+  TIKTOK
 }
 
 enum PublishStatus {

@@ -2,9 +2,11 @@
 
 import type { PlatformConnectionList } from "@/lib/types";
 import { api } from "@/trpc/react";
+import { authClient } from "@/lib/auth-client";
 import {
   Check as CheckIcon,
   YouTube as YouTubeIcon,
+  MusicNote as TikTokIcon,
 } from "@mui/icons-material";
 import {
   Alert,
@@ -29,6 +31,7 @@ function isValidPlatformList(data: unknown): data is PlatformConnectionList {
 export default function PlatformsPage() {
   const query = api.platform.list.useQuery();
   const connectYouTube = api.platform.connectYouTube.useMutation();
+  const connectTikTok = api.platform.connectTikTok.useMutation();
   const disconnect = api.platform.disconnect.useMutation();
 
   const handleConnectYouTube = async () => {
@@ -39,6 +42,32 @@ export default function PlatformsPage() {
     } catch (error: unknown) {
       const errorMessage =
         error instanceof Error ? error.message : "Failed to connect YouTube";
+      alert(errorMessage);
+    }
+  };
+
+  const handleConnectTikTok = async () => {
+    try {
+      // Try to connect using existing link first
+      await connectTikTok.mutateAsync();
+      await query.refetch();
+      alert("TikTok connected successfully!");
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Failed to connect TikTok";
+
+      // If account not found, redirect to link it
+      if (
+        errorMessage.includes("not connected") ||
+        errorMessage.includes("link your TikTok")
+      ) {
+        await authClient.signIn.social({
+          provider: "tiktok",
+          callbackURL: "/platforms", // User will need to click Connect again after return
+        });
+        return;
+      }
+
       alert(errorMessage);
     }
   };
@@ -80,6 +109,7 @@ export default function PlatformsPage() {
 
   const connections: PlatformConnectionList = query.data;
   const youtubeConnection = connections.find((c) => c.platform === "YOUTUBE");
+  const tiktokConnection = connections.find((c) => c.platform === "TIKTOK");
 
   return (
     <Container maxWidth="md" sx={{ py: 8 }}>
@@ -143,6 +173,68 @@ export default function PlatformsPage() {
                 <Typography variant="body2" color="text.secondary">
                   Connected:{" "}
                   {new Date(youtubeConnection.createdAt).toLocaleDateString()}
+                </Typography>
+              </Box>
+            )}
+          </CardContent>
+        </Card>
+
+        {/* TikTok Card */}
+        <Card>
+          <CardContent>
+            <Stack
+              direction={{ xs: "column", sm: "row" }}
+              justifyContent="space-between"
+              alignItems={{ xs: "flex-start", sm: "center" }}
+              spacing={2}
+            >
+              <Stack direction="row" spacing={2} alignItems="center">
+                <TikTokIcon sx={{ fontSize: 40, color: "secondary.main" }} />
+                <Box>
+                  <Typography variant="h6">TikTok</Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Upload and publish short-form videos
+                  </Typography>
+                </Box>
+              </Stack>
+
+              {tiktokConnection ? (
+                <Stack direction="row" spacing={2} alignItems="center">
+                  <Chip
+                    icon={<CheckIcon />}
+                    label="Connected"
+                    color="success"
+                    variant="outlined"
+                  />
+                  <Button
+                    variant="outlined"
+                    color="error"
+                    onClick={() => handleDisconnect(tiktokConnection.id)}
+                    disabled={disconnect.isPending}
+                  >
+                    {disconnect.isPending ? "Disconnecting..." : "Disconnect"}
+                  </Button>
+                </Stack>
+              ) : (
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={handleConnectTikTok}
+                  disabled={connectTikTok.isPending}
+                >
+                  {connectTikTok.isPending ? "Connecting..." : "Connect"}
+                </Button>
+              )}
+            </Stack>
+
+            {tiktokConnection && (
+              <Box mt={2} pt={2} borderTop={1} borderColor="divider">
+                <Typography variant="body2" color="text.secondary">
+                  User: {tiktokConnection.platformUsername}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  Connected:{" "}
+                  {new Date(tiktokConnection.createdAt).toLocaleDateString()}
                 </Typography>
               </Box>
             )}

@@ -265,7 +265,8 @@ exports.VideoPrivacy = exports.$Enums.VideoPrivacy = {
 
 exports.Platform = exports.$Enums.Platform = {
   YOUTUBE: 'YOUTUBE',
-  RUMBLE: 'RUMBLE'
+  RUMBLE: 'RUMBLE',
+  TIKTOK: 'TIKTOK'
 };
 
 exports.PublishStatus = exports.$Enums.PublishStatus = {

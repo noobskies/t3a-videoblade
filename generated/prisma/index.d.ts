@@ -60,7 +60,8 @@ export type PublishJob = $Result.DefaultSelection<Prisma.$PublishJobPayload>
 export namespace $Enums {
   export const Platform: {
   YOUTUBE: 'YOUTUBE',
-  RUMBLE: 'RUMBLE'
+  RUMBLE: 'RUMBLE',
+  TIKTOK: 'TIKTOK'
 };
 
 export type Platform = (typeof Platform)[keyof typeof Platform]

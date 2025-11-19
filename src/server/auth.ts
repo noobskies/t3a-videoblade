@@ -22,7 +22,15 @@ export const auth = betterAuth({
         "https://www.googleapis.com/auth/youtube", // Full YouTube API access (upload, update, manage)
       ],
     },
-    // Add more providers later (Vimeo, etc.)
+    tiktok: {
+      clientKey: process.env.TIKTOK_CLIENT_KEY!,
+      clientSecret: process.env.TIKTOK_CLIENT_SECRET!,
+      scope: [
+        "user.info.basic",
+        "video.upload",
+        "video.publish",
+      ],
+    },
   },
   plugins: [
     nextCookies(), // Must be last plugin

@@ -94,6 +94,73 @@ export const platformRouter = createTRPCRouter({
   }),
 
   /**
+   * Create platform connection from TikTok account
+   */
+  connectTikTok: protectedProcedure.mutation(async ({ ctx }) => {
+    // Get user's TikTok account from Better Auth
+    const tiktokAccount = await ctx.db.account.findFirst({
+      where: {
+        userId: ctx.session.user.id,
+        providerId: "tiktok",
+      },
+    });
+
+    if (!tiktokAccount) {
+      throw new TRPCError({
+        code: "NOT_FOUND",
+        message: "TikTok account not connected. Please link your TikTok account.",
+      });
+    }
+
+    if (!tiktokAccount.accessToken) {
+      throw new TRPCError({
+        code: "BAD_REQUEST",
+        message: "No access token found. Please reconnect your TikTok account.",
+      });
+    }
+
+    // Check if already connected
+    const existing = await ctx.db.platformConnection.findUnique({
+      where: {
+        userId_platform: {
+          userId: ctx.session.user.id,
+          platform: "TIKTOK",
+        },
+      },
+    });
+
+    if (existing) {
+      // Update existing connection
+      const updated = await ctx.db.platformConnection.update({
+        where: { id: existing.id },
+        data: {
+          accessToken: tiktokAccount.accessToken,
+          refreshToken: tiktokAccount.refreshToken ?? null,
+          tokenExpiry: tiktokAccount.accessTokenExpiresAt ?? null,
+          isActive: true,
+        },
+      });
+
+      return { id: updated.id, platform: "TIKTOK" as const, new: false };
+    }
+
+    // Create new connection
+    const connection = await ctx.db.platformConnection.create({
+      data: {
+        platform: "TIKTOK",
+        platformUserId: tiktokAccount.accountId, // TikTok user ID
+        platformUsername: "TikTok User", // TikTok API doesn't always give username in basic info, update later if possible
+        accessToken: tiktokAccount.accessToken,
+        refreshToken: tiktokAccount.refreshToken ?? null,
+        tokenExpiry: tiktokAccount.accessTokenExpiresAt ?? null,
+        userId: ctx.session.user.id,
+      },
+    });
+
+    return { id: connection.id, platform: "TIKTOK" as const, new: true };
+  }),
+
+  /**
    * Disconnect platform
    */
   disconnect: protectedProcedure
