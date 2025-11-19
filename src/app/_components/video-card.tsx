@@ -1,17 +1,22 @@
 "use client";
 
-import Image from "next/image";
 import { api } from "@/trpc/react";
 import { useState } from "react";
 import { Video as VideoIcon } from "lucide-react";
 import {
   Card,
+  CardMedia,
   CardContent,
-  CardFooter,
-  CardHeader,
-} from "@/components/ui/card";
-import { Button, IconButton, Chip, Stack } from "@mui/material";
+  CardActions,
+  Typography,
+  Button,
+  IconButton,
+  Chip,
+  Stack,
+  Box,
+} from "@mui/material";
 import { Delete, Edit, Upload } from "@mui/icons-material";
+import { useRouter } from "next/navigation";
 import type { VideoListItem } from "@/lib/types";
 
 type VideoCardProps = {
@@ -20,6 +25,7 @@ type VideoCardProps = {
 };
 
 export function VideoCard({ video, onDelete }: VideoCardProps) {
+  const router = useRouter();
   const [isDeleting, setIsDeleting] = useState(false);
   const deleteVideo = api.video.delete.useMutation();
 
@@ -73,45 +79,84 @@ export function VideoCard({ video, onDelete }: VideoCardProps) {
   };
 
   return (
-    <Card className="hover:border-primary/50 overflow-hidden transition-colors">
-      <CardHeader className="p-0">
-        {/* Thumbnail */}
-        <div className="bg-muted aspect-video w-full overflow-hidden">
-          {video.thumbnailUrl ? (
-            <Image
-              src={video.thumbnailUrl}
-              alt={video.title}
-              className="h-full w-full object-cover"
-            />
-          ) : (
-            <div className="flex h-full items-center justify-center">
-              <VideoIcon className="text-muted-foreground h-12 w-12" />
-            </div>
-          )}
-        </div>
-      </CardHeader>
+    <Card
+      sx={{
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        transition: "border-color 0.2s",
+        "&:hover": {
+          borderColor: "primary.main",
+          borderWidth: 2,
+        },
+      }}
+    >
+      {/* Thumbnail */}
+      <CardMedia
+        component="div"
+        sx={{
+          height: 200,
+          bgcolor: "grey.200",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          position: "relative",
+        }}
+      >
+        {video.thumbnailUrl ? (
+          <Box
+            component="img"
+            src={video.thumbnailUrl}
+            alt={video.title}
+            sx={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+            }}
+          />
+        ) : (
+          <VideoIcon style={{ fontSize: 48, color: "rgba(0,0,0,0.3)" }} />
+        )}
+      </CardMedia>
 
-      <CardContent className="p-4">
-        {/* Title & Description */}
-        <h3 className="mb-1 truncate text-lg font-semibold">{video.title}</h3>
+      {/* Content */}
+      <CardContent sx={{ flexGrow: 1 }}>
+        {/* Title */}
+        <Typography variant="h6" component="h3" noWrap gutterBottom>
+          {video.title}
+        </Typography>
+
+        {/* Description */}
         {video.description && (
-          <p className="text-muted-foreground mb-2 line-clamp-2 text-sm">
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              display: "-webkit-box",
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: "vertical",
+              mb: 1,
+            }}
+          >
             {video.description}
-          </p>
+          </Typography>
         )}
 
         {/* Metadata */}
-        <div className="text-muted-foreground mb-3 flex gap-2 text-xs">
-          <span>{formatFileSize(video.fileSize)}</span>
-          <span>•</span>
-          <span>{formatDate(video.createdAt)}</span>
-          <span>•</span>
-          <span className="capitalize">{video.privacy.toLowerCase()}</span>
-        </div>
+        <Typography
+          variant="caption"
+          color="text.secondary"
+          sx={{ display: "block", mb: 1 }}
+        >
+          {formatFileSize(video.fileSize)} • {formatDate(video.createdAt)} •{" "}
+          {video.privacy.toLowerCase()}
+        </Typography>
 
         {/* Publish Status */}
         {video.publishJobs.length > 0 && (
-          <Stack direction="row" spacing={1} sx={{ mb: 2, flexWrap: "wrap" }}>
+          <Stack direction="row" spacing={1} sx={{ mt: 1, flexWrap: "wrap" }}>
             {video.publishJobs.map((job) => (
               <Chip
                 key={job.platform}
@@ -124,17 +169,18 @@ export function VideoCard({ video, onDelete }: VideoCardProps) {
         )}
       </CardContent>
 
-      <CardFooter className="flex gap-2 p-4 pt-0">
+      {/* Actions */}
+      <CardActions sx={{ p: 2, pt: 0 }}>
         <Button
           variant="contained"
           startIcon={<Upload />}
-          onClick={() => (window.location.href = `/publish/${video.id}`)}
-          sx={{ flex: 1 }}
+          onClick={() => router.push(`/publish/${video.id}`)}
+          sx={{ flexGrow: 1 }}
         >
           Publish
         </Button>
         <IconButton
-          onClick={() => (window.location.href = `/video/${video.id}/edit`)}
+          onClick={() => router.push(`/video/${video.id}/edit`)}
           aria-label="edit video"
         >
           <Edit />
@@ -147,7 +193,7 @@ export function VideoCard({ video, onDelete }: VideoCardProps) {
         >
           <Delete />
         </IconButton>
-      </CardFooter>
+      </CardActions>
     </Card>
   );
 }

@@ -1,68 +1,186 @@
-import Link from "next/link";
 import { headers } from "next/headers";
-
-import { LatestPost } from "@/app/_components/post";
-import { AuthButton } from "@/app/_components/auth-button";
+import Link from "next/link";
 import { auth } from "@/server/auth";
-import { api, HydrateClient } from "@/trpc/server";
+import { api } from "@/trpc/server";
+import {
+  Container,
+  Stack,
+  Typography,
+  Button,
+  Box,
+  Card,
+  CardContent,
+  Chip,
+} from "@mui/material";
+import { Upload, Video, Youtube, CheckCircle } from "lucide-react";
 
 export default async function Home() {
-  const hello = await api.post.hello({ text: "from tRPC" });
   const session = await auth.api.getSession({
     headers: await headers(),
   });
 
+  // Get user stats if authenticated
+  let videoCount = 0;
+  let platformCount = 0;
+
   if (session?.user) {
-    void api.post.getLatest.prefetch();
+    try {
+      const videos = await api.video.list();
+      const platforms = await api.platform.list();
+      videoCount = videos.length;
+      platformCount = platforms.length;
+    } catch (error) {
+      console.error("Failed to load user stats:", error);
+    }
   }
 
   return (
-    <HydrateClient>
-      <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-        <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
-          <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
-            Create <span className="text-[hsl(280,100%,70%)]">T3</span> App
-          </h1>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
-            <Link
-              className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 hover:bg-white/20"
-              href="https://create.t3.gg/en/usage/first-steps"
-              target="_blank"
+    <Container maxWidth="md" component="main" sx={{ py: 8 }}>
+      <Stack spacing={6} alignItems="center">
+        {/* Hero Section */}
+        <Stack spacing={2} alignItems="center" textAlign="center">
+          <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+            <Video className="h-12 w-12" />
+            <Typography
+              variant="h2"
+              component="h1"
+              fontWeight="bold"
+              sx={{
+                background: "linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)",
+                backgroundClip: "text",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+              }}
             >
-              <h3 className="text-2xl font-bold">First Steps →</h3>
-              <div className="text-lg">
-                Just the basics - Everything you need to know to set up your
-                database and authentication.
-              </div>
-            </Link>
-            <Link
-              className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 hover:bg-white/20"
-              href="https://create.t3.gg/en/introduction"
-              target="_blank"
+              VideoBlade
+            </Typography>
+          </Box>
+
+          <Typography variant="h5" color="text.secondary" gutterBottom>
+            Upload once, publish everywhere
+          </Typography>
+
+          <Typography variant="body1" color="text.secondary" maxWidth="sm">
+            Streamline your video publishing workflow. Upload your video to
+            VideoBlade and distribute it to multiple platforms simultaneously.
+          </Typography>
+        </Stack>
+
+        {/* Authenticated User Section */}
+        {session?.user ? (
+          <Stack spacing={3} alignItems="center" sx={{ width: "100%" }}>
+            <Typography variant="h6" color="text.secondary">
+              Welcome back, {session.user.name}!
+            </Typography>
+
+            {/* Quick Stats */}
+            <Stack direction="row" spacing={3}>
+              <Chip
+                label={`${videoCount} ${videoCount === 1 ? "Video" : "Videos"}`}
+                color="primary"
+                variant="outlined"
+              />
+              <Chip
+                label={`${platformCount} ${platformCount === 1 ? "Platform" : "Platforms"} Connected`}
+                color="success"
+                variant="outlined"
+              />
+            </Stack>
+
+            {/* Quick Actions */}
+            <Stack
+              direction={{ xs: "column", sm: "row" }}
+              spacing={2}
+              sx={{ width: "100%", maxWidth: "sm" }}
             >
-              <h3 className="text-2xl font-bold">Documentation →</h3>
-              <div className="text-lg">
-                Learn more about Create T3 App, the libraries it uses, and how
-                to deploy it.
-              </div>
-            </Link>
-          </div>
-          <div className="flex flex-col items-center gap-2">
-            <p className="text-2xl text-white">
-              {hello ? hello.greeting : "Loading tRPC query..."}
-            </p>
+              <Button
+                component={Link}
+                href="/library"
+                variant="contained"
+                size="large"
+                fullWidth
+                startIcon={<Video className="h-5 w-5" />}
+              >
+                My Library
+              </Button>
+              <Button
+                component={Link}
+                href="/upload"
+                variant="contained"
+                size="large"
+                fullWidth
+                startIcon={<Upload className="h-5 w-5" />}
+              >
+                Upload Video
+              </Button>
+            </Stack>
 
-            <div className="flex flex-col items-center justify-center gap-4">
-              <p className="text-center text-2xl text-white">
-                {session && <span>Logged in as {session.user?.name}</span>}
-              </p>
-              <AuthButton />
-            </div>
-          </div>
+            <Button
+              component={Link}
+              href="/platforms"
+              variant="outlined"
+              size="medium"
+            >
+              Manage Platforms
+            </Button>
+          </Stack>
+        ) : (
+          /* Unauthenticated User Section */
+          <Stack spacing={4} alignItems="center" sx={{ width: "100%" }}>
+            {/* Features */}
+            <Box
+              sx={{
+                display: "grid",
+                gridTemplateColumns: { xs: "1fr", sm: "repeat(2, 1fr)" },
+                gap: 3,
+                width: "100%",
+                mt: 2,
+              }}
+            >
+              <Card variant="outlined">
+                <CardContent>
+                  <Stack spacing={2} alignItems="center" textAlign="center">
+                    <Youtube className="h-10 w-10 text-red-500" />
+                    <Typography variant="h6">Multi-Platform</Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Publish to YouTube, Rumble, and more platforms from one
+                      place
+                    </Typography>
+                  </Stack>
+                </CardContent>
+              </Card>
 
-          {session?.user && <LatestPost />}
-        </div>
-      </main>
-    </HydrateClient>
+              <Card variant="outlined">
+                <CardContent>
+                  <Stack spacing={2} alignItems="center" textAlign="center">
+                    <CheckCircle className="h-10 w-10 text-green-500" />
+                    <Typography variant="h6">Save Time</Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Upload once and let VideoBlade handle distribution to all
+                      your platforms
+                    </Typography>
+                  </Stack>
+                </CardContent>
+              </Card>
+            </Box>
+
+            {/* CTA */}
+            <Button
+              component={Link}
+              href="/api/auth/signin/google"
+              variant="contained"
+              size="large"
+              sx={{ mt: 4 }}
+            >
+              Sign in with Google to Get Started
+            </Button>
+
+            <Typography variant="caption" color="text.secondary">
+              Connect your video platforms and start publishing in minutes
+            </Typography>
+          </Stack>
+        )}
+      </Stack>
+    </Container>
   );
 }

@@ -2,6 +2,18 @@
 
 import { useState } from "react";
 import { api } from "@/trpc/react";
+import {
+  Card,
+  CardContent,
+  Typography,
+  TextField,
+  Button,
+  LinearProgress,
+  Alert,
+  Stack,
+  Box,
+} from "@mui/material";
+import { Upload as UploadIcon } from "lucide-react";
 
 export function VideoUpload() {
   const [file, setFile] = useState<File | null>(null);
@@ -107,90 +119,98 @@ export function VideoUpload() {
   };
 
   return (
-    <div className="w-full max-w-2xl rounded-lg border border-gray-700 bg-gray-800 p-6">
-      <h2 className="mb-4 text-2xl font-bold">Upload Video</h2>
+    <Card sx={{ width: "100%", maxWidth: 672 }}>
+      <CardContent>
+        <Stack spacing={3}>
+          <Typography variant="h5" component="h2">
+            Upload Video
+          </Typography>
 
-      {/* File Input */}
-      <div className="mb-4">
-        <label className="mb-2 block text-sm font-medium">Video File</label>
-        <input
-          type="file"
-          accept="video/*"
-          onChange={handleFileChange}
-          disabled={isUploading}
-          className="w-full rounded border border-gray-600 bg-gray-700 p-2"
-        />
-        {file && (
-          <p className="mt-1 text-sm text-gray-400">
-            {file.name} - {(file.size / 1024 / 1024).toFixed(2)} MB
-          </p>
-        )}
-      </div>
+          {/* File Input */}
+          <Box>
+            <Button
+              variant="outlined"
+              component="label"
+              fullWidth
+              disabled={isUploading}
+              sx={{ py: 1.5 }}
+            >
+              {file ? "Change Video File" : "Select Video File"}
+              <input
+                type="file"
+                accept="video/*"
+                onChange={handleFileChange}
+                hidden
+              />
+            </Button>
+            {file && (
+              <Typography
+                variant="caption"
+                color="text.secondary"
+                sx={{ mt: 1, display: "block" }}
+              >
+                {file.name} - {(file.size / 1024 / 1024).toFixed(2)} MB
+              </Typography>
+            )}
+          </Box>
 
-      {/* Title Input */}
-      <div className="mb-4">
-        <label className="mb-2 block text-sm font-medium">Title</label>
-        <input
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          disabled={isUploading}
-          className="w-full rounded border border-gray-600 bg-gray-700 p-2"
-          placeholder="My awesome video"
-        />
-      </div>
+          {/* Title Input */}
+          <TextField
+            label="Title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            disabled={isUploading}
+            placeholder="My awesome video"
+            required
+            fullWidth
+          />
 
-      {/* Description Input */}
-      <div className="mb-4">
-        <label className="mb-2 block text-sm font-medium">
-          Description (optional)
-        </label>
-        <textarea
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          disabled={isUploading}
-          rows={4}
-          className="w-full rounded border border-gray-600 bg-gray-700 p-2"
-          placeholder="Video description..."
-        />
-      </div>
+          {/* Description Input */}
+          <TextField
+            label="Description (optional)"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            disabled={isUploading}
+            placeholder="Video description..."
+            multiline
+            rows={4}
+            fullWidth
+          />
 
-      {/* Upload Progress */}
-      {isUploading && (
-        <div className="mb-4">
-          <div className="mb-1 flex justify-between text-sm">
-            <span>Uploading...</span>
-            <span>{uploadProgress}%</span>
-          </div>
-          <div className="h-2 w-full rounded-full bg-gray-700">
-            <div
-              className="h-full rounded-full bg-blue-500 transition-all"
-              style={{ width: `${uploadProgress}%` }}
-            />
-          </div>
-        </div>
-      )}
+          {/* Upload Progress */}
+          {isUploading && (
+            <Box>
+              <Box
+                sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}
+              >
+                <Typography variant="body2">Uploading...</Typography>
+                <Typography variant="body2">{uploadProgress}%</Typography>
+              </Box>
+              <LinearProgress variant="determinate" value={uploadProgress} />
+            </Box>
+          )}
 
-      {/* Status Messages */}
-      {uploadStatus === "success" && (
-        <div className="mb-4 rounded bg-green-900/50 p-3 text-green-200">
-          ✅ Upload successful!
-        </div>
-      )}
-      {uploadStatus === "error" && (
-        <div className="mb-4 rounded bg-red-900/50 p-3 text-red-200">
-          ❌ Upload failed. Please try again.
-        </div>
-      )}
+          {/* Status Messages */}
+          {uploadStatus === "success" && (
+            <Alert severity="success">✅ Upload successful!</Alert>
+          )}
+          {uploadStatus === "error" && (
+            <Alert severity="error">❌ Upload failed. Please try again.</Alert>
+          )}
 
-      {/* Upload Button */}
-      <button
-        onClick={handleUpload}
-        disabled={!file || !title || isUploading}
-        className="w-full rounded bg-blue-600 px-4 py-2 font-semibold hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
-      >
-        {isUploading ? "Uploading..." : "Upload Video"}
-      </button>
-    </div>
+          {/* Upload Button */}
+          <Button
+            variant="contained"
+            size="large"
+            onClick={handleUpload}
+            disabled={!file || !title || isUploading}
+            startIcon={<UploadIcon className="h-5 w-5" />}
+            fullWidth
+          >
+            {isUploading ? "Uploading..." : "Upload Video"}
+          </Button>
+        </Stack>
+      </CardContent>
+    </Card>
   );
 }

@@ -1,12 +1,15 @@
 import { VideoUpload } from "@/app/_components/video-upload";
+import { Container, Typography, Stack } from "@mui/material";
 
 export default function UploadPage() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-gray-900 to-black text-white">
-      <div className="container flex flex-col items-center gap-8 px-4 py-16">
-        <h1 className="text-4xl font-bold">Upload Video</h1>
+    <Container maxWidth="md" component="main" sx={{ py: 8 }}>
+      <Stack spacing={4} alignItems="center">
+        <Typography variant="h4" component="h1">
+          Upload Video
+        </Typography>
         <VideoUpload />
-      </div>
-    </main>
+      </Stack>
+    </Container>
   );
 }

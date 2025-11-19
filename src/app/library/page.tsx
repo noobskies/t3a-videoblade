@@ -13,7 +13,7 @@ import type { VideoList } from "@/lib/types";
 import { VideoCard } from "@/app/_components/video-card";
 import { Upload as UploadIcon, Video as VideoIcon } from "lucide-react";
 import Link from "next/link";
-import { Button } from "@mui/material";
+import { Button, Box, Container, Stack, Typography } from "@mui/material";
 
 /**
  * Type guard to ensure we have valid video data
@@ -44,8 +44,8 @@ export default function LibraryPage() {
   const videoList: VideoList = query.data;
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-gray-900 to-black text-white">
-      <div className="container mx-auto px-4 py-8">
+    <Container maxWidth="xl" component="main" sx={{ py: 4 }}>
+      <Stack spacing={4}>
         <Header videoCount={videoList.length} />
         {videoList.length > 0 ? (
           <VideoGrid
@@ -55,8 +55,8 @@ export default function LibraryPage() {
         ) : (
           <EmptyState />
         )}
-      </div>
-    </main>
+      </Stack>
+    </Container>
   );
 }
 
@@ -66,13 +66,20 @@ export default function LibraryPage() {
  */
 function Header({ videoCount }: { videoCount: number }) {
   return (
-    <div className="mb-8 flex items-center justify-between">
-      <div>
-        <h1 className="text-4xl font-bold">Video Library</h1>
-        <p className="mt-2 text-gray-400">
+    <Stack
+      direction={{ xs: "column", sm: "row" }}
+      justifyContent="space-between"
+      alignItems={{ xs: "flex-start", sm: "center" }}
+      spacing={2}
+    >
+      <Box>
+        <Typography variant="h4" component="h1" gutterBottom>
+          Video Library
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
           {videoCount} video{videoCount !== 1 ? "s" : ""}
-        </p>
-      </div>
+        </Typography>
+      </Box>
       <Button
         component={Link}
         href="/upload"
@@ -81,7 +88,7 @@ function Header({ videoCount }: { videoCount: number }) {
       >
         Upload Video
       </Button>
-    </div>
+    </Stack>
   );
 }
 
@@ -97,11 +104,22 @@ function VideoGrid({
   onRefresh: () => void;
 }) {
   return (
-    <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <Box
+      sx={{
+        display: "grid",
+        gridTemplateColumns: {
+          xs: "repeat(1, 1fr)",
+          sm: "repeat(2, 1fr)",
+          md: "repeat(3, 1fr)",
+          lg: "repeat(4, 1fr)",
+        },
+        gap: 3,
+      }}
+    >
       {videos.map((video) => (
         <VideoCard key={video.id} video={video} onDelete={onRefresh} />
       ))}
-    </div>
+    </Box>
   );
 }
 
@@ -111,14 +129,21 @@ function VideoGrid({
  */
 function EmptyState() {
   return (
-    <div className="flex flex-col items-center justify-center py-20 text-center">
-      <VideoIcon className="mb-4 h-20 w-20 text-gray-700" />
-      <h2 className="mb-2 text-2xl font-semibold text-gray-400">
-        No videos yet
-      </h2>
-      <p className="mb-6 text-gray-500">
-        Upload your first video to get started
-      </p>
+    <Stack
+      spacing={3}
+      alignItems="center"
+      justifyContent="center"
+      sx={{ py: 10, textAlign: "center" }}
+    >
+      <VideoIcon className="h-20 w-20" style={{ opacity: 0.3 }} />
+      <Box>
+        <Typography variant="h5" gutterBottom color="text.secondary">
+          No videos yet
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          Upload your first video to get started
+        </Typography>
+      </Box>
       <Button
         component={Link}
         href="/upload"
@@ -128,6 +153,6 @@ function EmptyState() {
       >
         Upload Video
       </Button>
-    </div>
+    </Stack>
   );
 }

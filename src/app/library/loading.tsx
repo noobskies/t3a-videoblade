@@ -4,13 +4,20 @@
  * Can be a server component (no "use client" needed)
  */
 
+import { Container, Stack, CircularProgress, Typography } from "@mui/material";
+
 export default function Loading() {
   return (
-    <main className="flex min-h-screen items-center justify-center bg-gradient-to-b from-gray-900 to-black text-white">
-      <div className="text-center">
-        <div className="mb-4 inline-block h-12 w-12 animate-spin rounded-full border-4 border-gray-700 border-t-blue-500" />
-        <p className="text-gray-400">Loading videos...</p>
-      </div>
-    </main>
+    <Container maxWidth="xl" component="main" sx={{ py: 4 }}>
+      <Stack
+        spacing={2}
+        alignItems="center"
+        justifyContent="center"
+        sx={{ minHeight: "60vh" }}
+      >
+        <CircularProgress size={48} />
+        <Typography color="text.secondary">Loading videos...</Typography>
+      </Stack>
+    </Container>
   );
 }

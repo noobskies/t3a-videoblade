@@ -3,6 +3,18 @@
 import { api } from "@/trpc/react";
 import type { PlatformConnectionList } from "@/lib/types";
 import { Youtube, Check } from "lucide-react";
+import {
+  Container,
+  Typography,
+  Card,
+  CardContent,
+  Stack,
+  Box,
+  Button,
+  Chip,
+  Alert,
+  Divider,
+} from "@mui/material";
 
 /**
  * Type guard to ensure we have valid platform connection data
@@ -68,68 +80,86 @@ export default function PlatformsPage() {
   const youtubeConnection = connections.find((c) => c.platform === "YOUTUBE");
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-gray-900 to-black text-white">
-      <div className="container mx-auto px-4 py-8">
-        <h1 className="mb-8 text-4xl font-bold">Platform Connections</h1>
+    <Container maxWidth="md" component="main" sx={{ py: 4 }}>
+      <Stack spacing={4}>
+        <Typography variant="h4" component="h1">
+          Platform Connections
+        </Typography>
 
         {/* YouTube Card */}
-        <div className="max-w-2xl rounded-lg border border-gray-700 bg-gray-800 p-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <Youtube className="h-10 w-10 text-red-500" />
-              <div>
-                <h2 className="text-xl font-semibold">YouTube</h2>
-                <p className="text-sm text-gray-400">
-                  Upload and publish videos to your channel
-                </p>
-              </div>
-            </div>
+        <Card>
+          <CardContent>
+            <Stack
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <Stack direction="row" spacing={2} alignItems="center">
+                <Youtube className="h-10 w-10 text-red-500" />
+                <Box>
+                  <Typography variant="h6" component="h2">
+                    YouTube
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Upload and publish videos to your channel
+                  </Typography>
+                </Box>
+              </Stack>
 
-            {youtubeConnection ? (
-              <div className="flex items-center gap-3">
-                <div className="flex items-center gap-2 text-green-400">
-                  <Check className="h-5 w-5" />
-                  <span className="text-sm">Connected</span>
-                </div>
-                <button
-                  onClick={() => handleDisconnect(youtubeConnection.id)}
-                  disabled={disconnect.isPending}
-                  className="rounded bg-red-900/50 px-4 py-2 text-sm hover:bg-red-900 disabled:opacity-50"
+              {youtubeConnection ? (
+                <Stack direction="row" spacing={2} alignItems="center">
+                  <Chip
+                    icon={<Check className="h-4 w-4" />}
+                    label="Connected"
+                    color="success"
+                    size="small"
+                  />
+                  <Button
+                    onClick={() => handleDisconnect(youtubeConnection.id)}
+                    disabled={disconnect.isPending}
+                    variant="outlined"
+                    color="error"
+                    size="small"
+                  >
+                    {disconnect.isPending ? "Disconnecting..." : "Disconnect"}
+                  </Button>
+                </Stack>
+              ) : (
+                <Button
+                  onClick={handleConnectYouTube}
+                  disabled={connectYouTube.isPending}
+                  variant="contained"
                 >
-                  {disconnect.isPending ? "Disconnecting..." : "Disconnect"}
-                </button>
-              </div>
-            ) : (
-              <button
-                onClick={handleConnectYouTube}
-                disabled={connectYouTube.isPending}
-                className="rounded bg-blue-600 px-4 py-2 hover:bg-blue-700 disabled:opacity-50"
-              >
-                {connectYouTube.isPending ? "Connecting..." : "Connect"}
-              </button>
-            )}
-          </div>
+                  {connectYouTube.isPending ? "Connecting..." : "Connect"}
+                </Button>
+              )}
+            </Stack>
 
-          {youtubeConnection && (
-            <div className="mt-4 border-t border-gray-700 pt-4 text-sm text-gray-400">
-              <p>Channel: {youtubeConnection.platformUsername}</p>
-              <p>
-                Connected:{" "}
-                {new Date(youtubeConnection.createdAt).toLocaleDateString()}
-              </p>
-            </div>
-          )}
-        </div>
+            {youtubeConnection && (
+              <>
+                <Divider sx={{ my: 2 }} />
+                <Stack spacing={1}>
+                  <Typography variant="body2" color="text.secondary">
+                    <strong>Channel:</strong>{" "}
+                    {youtubeConnection.platformUsername}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    <strong>Connected:</strong>{" "}
+                    {new Date(youtubeConnection.createdAt).toLocaleDateString()}
+                  </Typography>
+                </Stack>
+              </>
+            )}
+          </CardContent>
+        </Card>
 
         {/* Info Box */}
-        <div className="mt-6 max-w-2xl rounded-lg border border-blue-900/50 bg-blue-900/20 p-4 text-sm">
-          <p className="text-blue-200">
-            <strong>Note:</strong> You must sign in with Google to connect
-            YouTube. Make sure you&apos;ve granted YouTube permissions during
-            sign-in.
-          </p>
-        </div>
-      </div>
-    </main>
+        <Alert severity="info">
+          <strong>Note:</strong> You must sign in with Google to connect
+          YouTube. Make sure you&apos;ve granted YouTube permissions during
+          sign-in.
+        </Alert>
+      </Stack>
+    </Container>
   );
 }
