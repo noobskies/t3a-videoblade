@@ -3,12 +3,35 @@
 ## Current Work Focus
 
 **Phase**: UI Overhaul - MUI Migration  
-**Current Step**: Phase 2 (Core Layout Migration) Complete ✅ → Moving to Phase 3 (Generic UI Components)  
+**Current Step**: Phase 4 (Feature - Library) Complete ✅ → Moving to Phase 5 (Feature - Upload)  
 **Product**: VideoBlade - Multi-Platform Video Publishing Tool  
-**Status**: Performing complete UI migration from shadcn/Tailwind to Material-UI v6.  
+**Status**: Performing complete UI migration from shadcn/Tailwind to Material-UI v6/v7.  
 **Last Updated**: 2025-11-19
 
 ## Recent Changes
+
+### MUI Migration - Phase 4: Library Feature Complete (2025-11-19)
+
+**Milestone**: ✅ Library & Dashboard Migration
+
+**Accomplishments**:
+
+- **VideoCard**: Migrated to MUI `Card`, `Chip`, and `IconButton`.
+- **Library Page**:
+  - Replaced Tailwind grid with MUI `Grid` (using v7 `size` prop).
+  - Used `Container` and `Stack` for layout.
+- **Loading State**: Replaced Tailwind spinner with MUI `CircularProgress`.
+- **Error Boundary**: Replaced Tailwind alert with MUI `Alert` and `Button`.
+
+### MUI Migration - Phase 3: Generic UI Components Complete (2025-11-19)
+
+**Milestone**: ✅ Generic UI Components
+
+**Accomplishments**:
+
+- **AuthButton**: Migrated to MUI `Button` + `Avatar` + `Menu`.
+- **ErrorAlert**: Migrated to MUI `Alert`.
+- **LoadingSkeleton**: Migrated to MUI `Skeleton`.
 
 ### MUI Migration - Phase 2: Core Layout Complete (2025-11-19)
 
@@ -16,19 +39,8 @@
 
 **Accomplishments**:
 
-- **Layout Migration**:
-  - Updated `src/app/layout.tsx` to use MUI `AppBar`, `Toolbar`, and `Container`.
-  - Replaced Tailwind navigation with MUI components.
-  - Replaced generic HTML wrappers with MUI `Box` and `Container`.
-- **Style Cleanup**:
-  - Removed conflicting `@layer base` styles from `globals.css`.
-  - Allowed MUI `CssBaseline` to control global styles.
-
-**Impact**:
-
-- Application shell (Navbar, Footer, Container) is now fully native MUI.
-- Layout is responsive and centered using MUI Container.
-- Removed reliance on Tailwind base styles.
+- **Layout Migration**: Updated `src/app/layout.tsx` to use MUI `AppBar`, `Toolbar`, and `Container`.
+- **Style Cleanup**: Removed conflicting `@layer base` styles.
 
 ### MUI Migration - Phase 1: Foundation Complete (2025-11-19)
 
@@ -36,75 +48,23 @@
 
 **Accomplishments**:
 
-- **Dependency Management**:
-  - Uninstalled `lucide-react` (removed legacy icons).
-  - Installed `@mui/material`, `@mui/material-nextjs`, `@emotion/react`, `@emotion/styled`.
-  - Installed `@mui/icons-material` (replaced Lucide).
-  - Installed `@fontsource/roboto` and configured `next/font/google`.
-- **Theme Configuration**:
-  - Created `src/theme.ts` with `cssVariables: true` and native dark mode (`colorSchemes`).
-- **Layout Integration**:
-  - Updated `src/app/layout.tsx` with `AppRouterCacheProvider` and `ThemeProvider`.
-  - Injected `CssBaseline` for consistent styling.
-- **Build Fixes**:
-  - Migrated icons in 8 files (`video-card.tsx`, `error-alert.tsx`, etc.) from Lucide to Material Icons to ensure build passes.
-
-**Impact**:
-
-- Application now runs with MUI engine enabled.
-- Mixed styling state (MUI + Tailwind) temporarily, but functional.
-- Build pipeline is green.
-
-### YouTube OAuth Scope Fix (2025-11-18 - 9:10 AM)
-
-**Critical Production Bug Fix**: ✅ OAUTH SCOPE CORRECTED
-
-**Problem Identified**: Production error "Request had insufficient authentication scopes" (403) when updating YouTube video metadata.
-
-**Root Cause**:
-
-- Used `youtube.upload` scope - Only allows uploading **NEW** videos
-- Used `youtube.readonly` scope - Read-only access, no modifications
-- Smart Publish feature needs to **UPDATE** existing video metadata
-- These narrow scopes insufficient for `videos.update` API endpoint
-
-**Solution Applied**:
-
-```typescript
-// Before (Insufficient)
-"https://www.googleapis.com/auth/youtube.upload";
-"https://www.googleapis.com/auth/youtube.readonly";
-
-// After (Fixed)
-"https://www.googleapis.com/auth/youtube"; // Full YouTube access
-```
-
-**File Modified**:
-
-- ✅ `src/server/auth.ts` - Updated OAuth scope configuration
-
-**Impact**:
-
-- ✅ Fixes 403 errors on video metadata updates
-- ✅ Smart Publish feature now works correctly
-- ✅ Future-proof for all video operations
-- ⚠️ Requires user action (reconnect YouTube)
+- **Dependency Management**: Installed `@mui/material` (v7), `@mui/icons-material` (v7), etc.
+- **Theme Configuration**: Created `src/theme.ts` with `cssVariables: true` and native dark mode.
 
 ## Next Steps
 
-### Immediate (MUI Migration Phase 3)
+### Immediate (MUI Migration Phase 5)
 
-**Goal**: Migrate generic UI components to native MUI.
+**Goal**: Migrate the Upload Feature.
 
 **Tasks**:
 
-1.  Migrate `AuthButton` (use MUI `Button` + `Avatar` + `Menu`).
-2.  Migrate `ErrorAlert` (use MUI `Alert`).
-3.  Migrate `LoadingSkeleton` (use MUI `Skeleton`).
+1.  Migrate `src/app/_components/video-upload.tsx` (Dropzone, Progress, Form).
+2.  Migrate `src/app/upload/page.tsx` (Container layout).
 
-### Phase 4-7: Feature Migration
+### Phase 6-7: Feature Migration
 
-- Library, Upload, Edit, Publish, Platforms pages.
+- Edit (Forms), Publish, Platforms pages.
 
 ### Phase 8: Cleanup
 
@@ -114,13 +74,13 @@
 
 ### UI Architecture
 
-**MUI v6 Strategy**:
+**MUI v7 Strategy**:
 
+- **Grid System**: Using MUI v7 `Grid` which follows the "Grid v2" architecture (no `item` prop, uses `size` prop).
 - **Theming**: CSS Variables (`cssVariables: true`) for performance and flexibility.
 - **Dark Mode**: Native `colorSchemes` (light/dark) adaptation.
 - **Styling**: Prefer `sx` prop for one-off styles, `styled()` for reusable components.
 - **Icons**: Material Icons (`@mui/icons-material`) exclusively.
-- **Layout**: `Grid` (v2) and `Stack` for layout primitives.
 
 ### Technology Choices Made
 
@@ -130,7 +90,7 @@
 - ✅ TypeScript for type safety
 - ✅ App Router (not Pages Router)
 - ✅ Server Components as default
-- ✅ **Material-UI v6** (Replacing Tailwind/shadcn)
+- ✅ **Material-UI v7** (Replacing Tailwind/shadcn) - Validated via `package.json`
 
 **Pending Video-Related Decisions**:
 
@@ -139,16 +99,16 @@
 
 ## Current Blockers
 
-**None** - Phase 2 complete, ready for Phase 3.
+**None** - Phase 4 complete, ready for Phase 5.
 
-**Next Action**: Begin MUI Migration Phase 3 (Generic UI Components).
+**Next Action**: Begin MUI Migration Phase 5 (Upload Feature).
 
 ## Environment Status
 
 **Development Environment**: ✅ Ready
 
 - Node.js and npm installed
-- Dependencies installed (MUI added)
+- Dependencies installed (MUI v7 added)
 - Database initialized (SQLite)
 - Build passes ✅
 

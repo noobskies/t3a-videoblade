@@ -3,14 +3,26 @@
  * Automatically displayed by Next.js while page.tsx is loading
  * Can be a server component (no "use client" needed)
  */
+import { CircularProgress, Box, Typography, Stack } from "@mui/material";
 
 export default function Loading() {
   return (
-    <main className="flex min-h-screen items-center justify-center bg-gradient-to-b from-gray-900 to-black text-white">
-      <div className="text-center">
-        <div className="mb-4 inline-block h-12 w-12 animate-spin rounded-full border-4 border-gray-700 border-t-blue-500" />
-        <p className="text-gray-400">Loading videos...</p>
-      </div>
-    </main>
+    <Box
+      sx={{
+        minHeight: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        bgcolor: "background.default",
+        color: "text.primary",
+      }}
+    >
+      <Stack alignItems="center" spacing={2}>
+        <CircularProgress size={48} />
+        <Typography variant="body1" color="text.secondary">
+          Loading videos...
+        </Typography>
+      </Stack>
+    </Box>
   );
 }

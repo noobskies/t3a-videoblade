@@ -8,7 +8,14 @@
 
 import { useEffect } from "react";
 import { ErrorOutline as AlertCircle } from "@mui/icons-material";
-import { Button } from "@/components/ui/button";
+import {
+  Button,
+  Box,
+  Typography,
+  Stack,
+  Alert,
+  AlertTitle,
+} from "@mui/material";
 
 export default function Error({
   error,
@@ -23,15 +30,43 @@ export default function Error({
   }, [error]);
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-gradient-to-b from-gray-900 to-black text-white">
-      <div className="text-center">
-        <AlertCircle className="mx-auto mb-4 h-12 w-12 text-red-400" />
-        <h2 className="mb-2 text-2xl font-bold">Something went wrong</h2>
-        <p className="mb-4 text-red-400">{error.message}</p>
-        <Button onClick={reset} variant="outline">
+    <Box
+      sx={{
+        minHeight: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        bgcolor: "background.default",
+        color: "text.primary",
+        p: 3,
+      }}
+    >
+      <Stack alignItems="center" spacing={3} maxWidth="sm">
+        <AlertCircle sx={{ fontSize: 64, color: "error.main" }} />
+
+        <Box textAlign="center">
+          <Typography variant="h4" gutterBottom fontWeight="bold">
+            Something went wrong
+          </Typography>
+          <Alert
+            severity="error"
+            variant="outlined"
+            sx={{ width: "100%", mb: 3, textAlign: "left" }}
+          >
+            <AlertTitle>Error Details</AlertTitle>
+            {error.message}
+          </Alert>
+        </Box>
+
+        <Button
+          onClick={reset}
+          variant="contained"
+          color="primary"
+          size="large"
+        >
           Try Again
         </Button>
-      </div>
-    </main>
+      </Stack>
+    </Box>
   );
 }

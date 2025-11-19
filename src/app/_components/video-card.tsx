@@ -8,15 +8,20 @@ import {
   Delete as Trash2,
   Edit,
   CloudUpload as Upload,
+  PlayArrow,
 } from "@mui/icons-material";
 import {
   Card,
   CardContent,
-  CardFooter,
-  CardHeader,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+  CardActions,
+  Button,
+  IconButton,
+  Typography,
+  Box,
+  Chip,
+  Stack,
+  CardActionArea,
+} from "@mui/material";
 import type { VideoListItem } from "@/lib/types";
 
 type VideoCardProps = {
@@ -60,94 +65,171 @@ export function VideoCard({ video, onDelete }: VideoCardProps) {
     }
   };
 
-  const getStatusVariant = (status: string) => {
+  const getStatusColor = (
+    status: string,
+  ):
+    | "default"
+    | "primary"
+    | "secondary"
+    | "error"
+    | "info"
+    | "success"
+    | "warning" => {
     switch (status) {
       case "COMPLETED":
-        return "default"; // green
+        return "success";
       case "PROCESSING":
-        return "secondary"; // blue
+        return "info";
       case "FAILED":
-        return "destructive"; // red
+        return "error";
       case "PENDING":
-        return "outline"; // yellow/neutral
+        return "warning";
       default:
-        return "outline";
+        return "default";
     }
   };
 
   return (
-    <Card className="hover:border-primary/50 overflow-hidden transition-colors">
-      <CardHeader className="p-0">
-        {/* Thumbnail */}
-        <div className="bg-muted aspect-video w-full overflow-hidden">
-          {video.thumbnailUrl ? (
-            <Image
-              src={video.thumbnailUrl}
-              alt={video.title}
-              className="h-full w-full object-cover"
-            />
-          ) : (
-            <div className="flex h-full items-center justify-center">
-              <VideoIcon className="text-muted-foreground h-12 w-12" />
-            </div>
-          )}
-        </div>
-      </CardHeader>
+    <Card
+      sx={{
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        transition: "all 0.2s ease-in-out",
+        "&:hover": {
+          transform: "translateY(-4px)",
+          boxShadow: 4,
+        },
+      }}
+    >
+      {/* Thumbnail Area */}
+      <Box
+        sx={{
+          position: "relative",
+          paddingTop: "56.25%",
+          bgcolor: "action.hover",
+        }}
+      >
+        {video.thumbnailUrl ? (
+          <Image
+            src={video.thumbnailUrl}
+            alt={video.title}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            style={{ objectFit: "cover" }}
+          />
+        ) : (
+          <Box
+            sx={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "text.secondary",
+            }}
+          >
+            <VideoIcon sx={{ fontSize: 48, opacity: 0.5 }} />
+          </Box>
+        )}
+      </Box>
 
-      <CardContent className="p-4">
-        {/* Title & Description */}
-        <h3 className="mb-1 truncate text-lg font-semibold">{video.title}</h3>
+      <CardContent sx={{ flexGrow: 1, pb: 1 }}>
+        {/* Title */}
+        <Typography
+          variant="h6"
+          component="h3"
+          noWrap
+          gutterBottom
+          title={video.title}
+        >
+          {video.title}
+        </Typography>
+
+        {/* Description */}
         {video.description && (
-          <p className="text-muted-foreground mb-2 line-clamp-2 text-sm">
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{
+              mb: 2,
+              display: "-webkit-box",
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: "vertical",
+              overflow: "hidden",
+              height: "40px", // Approx 2 lines
+            }}
+          >
             {video.description}
-          </p>
+          </Typography>
         )}
 
         {/* Metadata */}
-        <div className="text-muted-foreground mb-3 flex gap-2 text-xs">
-          <span>{formatFileSize(video.fileSize)}</span>
-          <span>•</span>
-          <span>{formatDate(video.createdAt)}</span>
-          <span>•</span>
-          <span className="capitalize">{video.privacy.toLowerCase()}</span>
-        </div>
+        <Stack
+          direction="row"
+          spacing={1}
+          alignItems="center"
+          sx={{ mb: 2, color: "text.secondary" }}
+        >
+          <Typography variant="caption">
+            {formatFileSize(video.fileSize)}
+          </Typography>
+          <Typography variant="caption">•</Typography>
+          <Typography variant="caption">
+            {formatDate(video.createdAt)}
+          </Typography>
+          <Typography variant="caption">•</Typography>
+          <Typography variant="caption" sx={{ textTransform: "capitalize" }}>
+            {video.privacy.toLowerCase()}
+          </Typography>
+        </Stack>
 
-        {/* Publish Status */}
+        {/* Publish Status Chips */}
         {video.publishJobs.length > 0 && (
-          <div className="mb-3 flex flex-wrap gap-2">
+          <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
             {video.publishJobs.map((job) => (
-              <Badge key={job.platform} variant={getStatusVariant(job.status)}>
-                {job.platform}: {job.status}
-              </Badge>
+              <Chip
+                key={job.platform}
+                label={`${job.platform}: ${job.status}`}
+                size="small"
+                color={getStatusColor(job.status)}
+                variant="outlined"
+              />
             ))}
-          </div>
+          </Box>
         )}
       </CardContent>
 
-      <CardFooter className="flex gap-2 p-4 pt-0">
+      <CardActions sx={{ p: 2, pt: 0 }}>
         <Button
-          className="flex-1"
-          onClick={() => (window.location.href = `/publish/${video.id}`)}
+          variant="contained"
+          startIcon={<Upload />}
+          href={`/publish/${video.id}`}
+          fullWidth
         >
-          <Upload className="mr-2 h-4 w-4" />
           Publish
         </Button>
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={() => (window.location.href = `/video/${video.id}/edit`)}
+        <IconButton
+          aria-label="edit"
+          href={`/video/${video.id}/edit`}
+          size="small"
+          sx={{ ml: 1 }}
         >
-          <Edit className="h-4 w-4" />
-        </Button>
-        <Button
-          variant="destructive"
-          size="icon"
+          <Edit fontSize="small" />
+        </IconButton>
+        <IconButton
+          aria-label="delete"
           onClick={handleDelete}
           disabled={isDeleting}
+          size="small"
+          color="error"
         >
-          <Trash2 className="h-4 w-4" />
-        </Button>
-      </CardFooter>
+          <Trash2 fontSize="small" />
+        </IconButton>
+      </CardActions>
     </Card>
   );
 }

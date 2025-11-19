@@ -13,7 +13,7 @@ import type { VideoList } from "@/lib/types";
 import { VideoCard } from "@/app/_components/video-card";
 import { CloudUpload as Upload, Movie as VideoIcon } from "@mui/icons-material";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { Button, Container, Typography, Box, Stack, Grid } from "@mui/material";
 
 /**
  * Type guard to ensure we have valid video data
@@ -44,19 +44,14 @@ export default function LibraryPage() {
   const videoList: VideoList = query.data;
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-gray-900 to-black text-white">
-      <div className="container mx-auto px-4 py-8">
-        <Header videoCount={videoList.length} />
-        {videoList.length > 0 ? (
-          <VideoGrid
-            videos={videoList}
-            onRefresh={() => void query.refetch()}
-          />
-        ) : (
-          <EmptyState />
-        )}
-      </div>
-    </main>
+    <Container maxWidth="xl" sx={{ py: 4 }}>
+      <Header videoCount={videoList.length} />
+      {videoList.length > 0 ? (
+        <VideoGrid videos={videoList} onRefresh={() => void query.refetch()} />
+      ) : (
+        <EmptyState />
+      )}
+    </Container>
   );
 }
 
@@ -66,20 +61,31 @@ export default function LibraryPage() {
  */
 function Header({ videoCount }: { videoCount: number }) {
   return (
-    <div className="mb-8 flex items-center justify-between">
-      <div>
-        <h1 className="text-4xl font-bold">Video Library</h1>
-        <p className="mt-2 text-gray-400">
+    <Stack
+      direction={{ xs: "column", sm: "row" }}
+      justifyContent="space-between"
+      alignItems={{ xs: "flex-start", sm: "center" }}
+      spacing={2}
+      sx={{ mb: 4 }}
+    >
+      <Box>
+        <Typography variant="h4" component="h1" fontWeight="bold">
+          Video Library
+        </Typography>
+        <Typography variant="body1" color="text.secondary" sx={{ mt: 1 }}>
           {videoCount} video{videoCount !== 1 ? "s" : ""}
-        </p>
-      </div>
-      <Button asChild>
-        <Link href="/upload">
-          <Upload className="mr-2 h-5 w-5" />
-          Upload Video
-        </Link>
+        </Typography>
+      </Box>
+      <Button
+        component={Link}
+        href="/upload"
+        variant="contained"
+        size="large"
+        startIcon={<Upload />}
+      >
+        Upload Video
       </Button>
-    </div>
+    </Stack>
   );
 }
 
@@ -95,11 +101,13 @@ function VideoGrid({
   onRefresh: () => void;
 }) {
   return (
-    <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <Grid container spacing={3}>
       {videos.map((video) => (
-        <VideoCard key={video.id} video={video} onDelete={onRefresh} />
+        <Grid key={video.id} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
+          <VideoCard video={video} onDelete={onRefresh} />
+        </Grid>
       ))}
-    </div>
+    </Grid>
   );
 }
 
@@ -109,20 +117,30 @@ function VideoGrid({
  */
 function EmptyState() {
   return (
-    <div className="flex flex-col items-center justify-center py-20 text-center">
-      <VideoIcon className="mb-4 h-20 w-20 text-gray-700" />
-      <h2 className="mb-2 text-2xl font-semibold text-gray-400">
-        No videos yet
-      </h2>
-      <p className="mb-6 text-gray-500">
-        Upload your first video to get started
-      </p>
-      <Button asChild size="lg">
-        <Link href="/upload">
-          <Upload className="mr-2 h-5 w-5" />
+    <Stack
+      alignItems="center"
+      justifyContent="center"
+      spacing={2}
+      sx={{ py: 10, textAlign: "center" }}
+    >
+      <VideoIcon sx={{ fontSize: 80, color: "text.secondary", opacity: 0.5 }} />
+      <Box>
+        <Typography variant="h5" gutterBottom fontWeight="medium">
+          No videos yet
+        </Typography>
+        <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
+          Upload your first video to get started
+        </Typography>
+        <Button
+          component={Link}
+          href="/upload"
+          variant="contained"
+          size="large"
+          startIcon={<Upload />}
+        >
           Upload Video
-        </Link>
-      </Button>
-    </div>
+        </Button>
+      </Box>
+    </Stack>
   );
 }
