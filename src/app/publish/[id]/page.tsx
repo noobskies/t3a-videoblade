@@ -6,17 +6,28 @@
  */
 
 import { api } from "@/trpc/react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import {
-  ArrowBack as ArrowLeft,
-  Send,
-  YouTube as Youtube,
+  ArrowBack as ArrowBackIcon,
+  Send as SendIcon,
+  YouTube as YouTubeIcon,
 } from "@mui/icons-material";
+import {
+  Alert,
+  Box,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  Chip,
+  CircularProgress,
+  Container,
+  Link as MuiLink,
+  Stack,
+  Typography,
+} from "@mui/material";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { use, useState } from "react";
-import Link from "next/link";
 
 export default function PublishPage({
   params,
@@ -82,24 +93,34 @@ export default function PublishPage({
   // Loading state
   if (videoQuery.isLoading || platformsQuery.isLoading) {
     return (
-      <main className="min-h-screen bg-gradient-to-b from-gray-900 to-black text-white">
-        <div className="container mx-auto px-4 py-8">
-          <div className="text-center">Loading...</div>
-        </div>
-      </main>
+      <Container maxWidth="md" sx={{ py: 8 }}>
+        <Box display="flex" justifyContent="center">
+          <CircularProgress />
+        </Box>
+      </Container>
     );
   }
 
   // Error state
   if (videoQuery.error || platformsQuery.error) {
-    throw new Error(videoQuery.error?.message ?? platformsQuery.error?.message);
+    return (
+      <Container maxWidth="md" sx={{ py: 8 }}>
+        <Alert severity="error">
+          {videoQuery.error?.message ?? platformsQuery.error?.message}
+        </Alert>
+      </Container>
+    );
   }
 
   const video = videoQuery.data;
   const platforms = platformsQuery.data;
 
   if (!video || !platforms) {
-    throw new Error("Data not loaded");
+    return (
+      <Container maxWidth="md" sx={{ py: 8 }}>
+        <Alert severity="error">Data not loaded</Alert>
+      </Container>
+    );
   }
 
   const youtubePlatform = platforms.find((p) => p.platform === "YOUTUBE");
@@ -115,151 +136,178 @@ export default function PublishPage({
   const isUpdate = !!existingYouTubePublish;
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-gray-900 to-black text-white">
-      <div className="container mx-auto max-w-4xl px-4 py-8">
-        {/* Header */}
-        <div className="mb-8">
-          <Button variant="ghost" asChild className="mb-4">
-            <Link href="/library">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to Library
-            </Link>
-          </Button>
-          <h1 className="text-4xl font-bold">Publish Video</h1>
-          <p className="mt-2 text-gray-400">
-            Select a platform to publish &quot;{video.title}&quot;
-          </p>
-        </div>
+    <Container maxWidth="md" sx={{ py: 8 }}>
+      {/* Header */}
+      <Box mb={4}>
+        <Button
+          component={Link}
+          href="/library"
+          variant="text"
+          startIcon={<ArrowBackIcon />}
+          sx={{ mb: 2 }}
+        >
+          Back to Library
+        </Button>
+        <Typography variant="h4" component="h1" gutterBottom fontWeight="bold">
+          Publish Video
+        </Typography>
+        <Typography variant="body1" color="text.secondary">
+          Select a platform to publish &quot;{video.title}&quot;
+        </Typography>
+      </Box>
 
+      <Stack spacing={4}>
         {/* Success Message */}
         {publishSuccess && (
-          <Card className="mb-6 border-green-500 bg-green-950/50">
-            <CardContent className="p-4">
-              <p className="text-green-400">
-                ✓ Publish job created successfully! Redirecting...
-              </p>
-            </CardContent>
-          </Card>
+          <Alert severity="success">
+            Publish job created successfully! Redirecting...
+          </Alert>
         )}
 
         {/* Error Message */}
-        {publishError && (
-          <Card className="mb-6 border-red-500 bg-red-950/50">
-            <CardContent className="p-4">
-              <p className="text-red-400">✗ {publishError}</p>
-            </CardContent>
-          </Card>
-        )}
+        {publishError && <Alert severity="error">{publishError}</Alert>}
 
         {/* Video Info */}
-        <Card className="mb-6">
-          <CardHeader>
-            <CardTitle>Video Details</CardTitle>
-          </CardHeader>
+        <Card>
+          <CardHeader title="Video Details" />
           <CardContent>
-            <div className="space-y-2">
-              <div>
-                <span className="text-gray-400">Title:</span>{" "}
-                <span className="font-medium">{video.title}</span>
-              </div>
+            <Stack spacing={2}>
+              <Box>
+                <Typography variant="subtitle2" color="text.secondary">
+                  Title
+                </Typography>
+                <Typography variant="body1" fontWeight="medium">
+                  {video.title}
+                </Typography>
+              </Box>
               {video.description && (
-                <div>
-                  <span className="text-gray-400">Description:</span>{" "}
-                  <span className="text-sm">{video.description}</span>
-                </div>
+                <Box>
+                  <Typography variant="subtitle2" color="text.secondary">
+                    Description
+                  </Typography>
+                  <Typography variant="body2" sx={{ whiteSpace: "pre-wrap" }}>
+                    {video.description}
+                  </Typography>
+                </Box>
               )}
-              <div>
-                <span className="text-gray-400">Privacy:</span>{" "}
-                <Badge variant="outline">{video.privacy}</Badge>
-              </div>
-            </div>
+              <Box>
+                <Typography
+                  variant="subtitle2"
+                  color="text.secondary"
+                  gutterBottom
+                >
+                  Privacy
+                </Typography>
+                <Chip label={video.privacy} variant="outlined" size="small" />
+              </Box>
+            </Stack>
           </CardContent>
         </Card>
 
         {/* Platform Selection */}
-        <div className="space-y-4">
-          <h2 className="text-2xl font-semibold">Select Platform</h2>
+        <Box>
+          <Typography variant="h5" gutterBottom fontWeight="semibold">
+            Select Platform
+          </Typography>
 
           {/* YouTube */}
-          {youtubePlatform ? (
-            <Card>
-              <CardContent className="space-y-4 p-6">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-4">
-                    <Youtube className="h-10 w-10 text-red-500" />
-                    <div>
-                      <h3 className="text-lg font-semibold">YouTube</h3>
-                      <p className="text-sm text-gray-400">
-                        Connected as{" "}
-                        {youtubePlatform.platformUsername ?? "YouTube"}
-                      </p>
-                    </div>
-                  </div>
-                  <Button
-                    onClick={() => handlePublish(youtubePlatform.id)}
-                    disabled={isPublishing || publishSuccess}
+          <Card>
+            <CardContent>
+              {youtubePlatform ? (
+                <Stack spacing={3}>
+                  <Stack
+                    direction={{ xs: "column", sm: "row" }}
+                    justifyContent="space-between"
+                    alignItems={{ xs: "flex-start", sm: "center" }}
+                    spacing={2}
                   >
-                    <Send className="mr-2 h-4 w-4" />
-                    {isPublishing
-                      ? isUpdate
-                        ? "Updating..."
-                        : "Publishing..."
-                      : isUpdate
-                        ? "Update on YouTube"
-                        : "Publish to YouTube"}
+                    <Stack direction="row" spacing={2} alignItems="center">
+                      <YouTubeIcon sx={{ fontSize: 40, color: "error.main" }} />
+                      <Box>
+                        <Typography variant="h6">YouTube</Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          Connected as{" "}
+                          {youtubePlatform.platformUsername ?? "YouTube"}
+                        </Typography>
+                      </Box>
+                    </Stack>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => handlePublish(youtubePlatform.id)}
+                      disabled={isPublishing || publishSuccess}
+                      startIcon={<SendIcon />}
+                    >
+                      {isPublishing
+                        ? isUpdate
+                          ? "Updating..."
+                          : "Publishing..."
+                        : isUpdate
+                          ? "Update on YouTube"
+                          : "Publish to YouTube"}
+                    </Button>
+                  </Stack>
+
+                  {isUpdate && existingYouTubePublish && (
+                    <Alert severity="warning" sx={{ alignItems: "center" }}>
+                      <Typography variant="body2" gutterBottom>
+                        This video is already on YouTube. Clicking will update
+                        the existing video&apos;s metadata (title, description,
+                        tags, privacy) without re-uploading the file.
+                      </Typography>
+                      {existingYouTubePublish.platformVideoUrl && (
+                        <Typography variant="caption">
+                          Video URL:{" "}
+                          <MuiLink
+                            href={existingYouTubePublish.platformVideoUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            color="inherit"
+                            underline="always"
+                          >
+                            {existingYouTubePublish.platformVideoUrl}
+                          </MuiLink>
+                        </Typography>
+                      )}
+                    </Alert>
+                  )}
+                </Stack>
+              ) : (
+                <Stack
+                  direction={{ xs: "column", sm: "row" }}
+                  justifyContent="space-between"
+                  alignItems={{ xs: "flex-start", sm: "center" }}
+                  spacing={2}
+                >
+                  <Stack direction="row" spacing={2} alignItems="center">
+                    <YouTubeIcon
+                      sx={{ fontSize: 40, color: "text.disabled" }}
+                    />
+                    <Box>
+                      <Typography variant="h6" color="text.disabled">
+                        YouTube
+                      </Typography>
+                      <Typography variant="body2" color="text.disabled">
+                        Not connected
+                      </Typography>
+                    </Box>
+                  </Stack>
+                  <Button component={Link} href="/platforms" variant="outlined">
+                    Connect YouTube
                   </Button>
-                </div>
-                {isUpdate && existingYouTubePublish && (
-                  <div className="rounded-md border border-yellow-500/30 bg-yellow-950/20 p-3">
-                    <p className="text-sm text-yellow-300">
-                      ⚠️ This video is already on YouTube. Clicking will update
-                      the existing video&apos;s metadata (title, description,
-                      tags, privacy) without re-uploading the file.
-                    </p>
-                    <p className="mt-1 text-xs text-yellow-400">
-                      Video URL:{" "}
-                      <a
-                        href={existingYouTubePublish.platformVideoUrl ?? "#"}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="underline hover:text-yellow-300"
-                      >
-                        {existingYouTubePublish.platformVideoUrl}
-                      </a>
-                    </p>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          ) : (
-            <Card>
-              <CardContent className="flex items-center justify-between p-6">
-                <div className="flex items-center gap-4">
-                  <Youtube className="h-10 w-10 text-gray-600" />
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-400">
-                      YouTube
-                    </h3>
-                    <p className="text-sm text-gray-500">Not connected</p>
-                  </div>
-                </div>
-                <Button variant="outline" asChild>
-                  <Link href="/platforms">Connect YouTube</Link>
-                </Button>
-              </CardContent>
-            </Card>
-          )}
-        </div>
+                </Stack>
+              )}
+            </CardContent>
+          </Card>
+        </Box>
 
         {/* Info */}
-        <div className="mt-8 rounded-lg border border-blue-500/20 bg-blue-950/20 p-4">
-          <p className="text-sm text-blue-300">
-            ℹ️ Publishing happens in the background. You can continue using
-            VideoBlade while your video uploads to the platform. Check the video
-            library for publish status updates.
-          </p>
-        </div>
-      </div>
-    </main>
+        <Alert severity="info">
+          Publishing happens in the background. You can continue using
+          VideoBlade while your video uploads to the platform. Check the video
+          library for publish status updates.
+        </Alert>
+      </Stack>
+    </Container>
   );
 }
