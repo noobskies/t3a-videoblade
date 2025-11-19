@@ -2,6 +2,7 @@ import { serve } from "inngest/next";
 import { inngest } from "@/lib/inngest";
 import { publishToYouTubeFunction } from "@/inngest/publish-to-youtube";
 import { updateYouTubeVideoFunction } from "@/inngest/update-youtube-video";
+import { publishToTikTokFunction } from "@/inngest/publish-to-tiktok";
 
 /**
  * Inngest API endpoint for handling background jobs
@@ -14,6 +15,7 @@ export const { GET, POST, PUT } = serve({
   functions: [
     publishToYouTubeFunction,
     updateYouTubeVideoFunction,
+    publishToTikTokFunction,
     // Add more functions here as needed (e.g., Rumble publishing in Phase 2)
   ],
 });

@@ -35,3 +35,31 @@ export function isPlatformConnectionList(
  * Type from router output for validation
  */
 export type PlatformListFromRouter = RouterOutputs["platform"]["list"];
+
+/**
+ * TikTok API Response Types
+ */
+export interface TikTokInitResponse {
+  data: {
+    upload_url: string;
+    publish_id: string;
+  };
+  error: {
+    code: string;
+    message: string;
+    log_id: string;
+  };
+}
+
+export interface TikTokStatusResponse {
+  data: {
+    status: string;
+    fail_reason?: string;
+    publicaly_available_post_id?: string[];
+  };
+  error: {
+    code: string;
+    message: string;
+    log_id: string;
+  };
+}

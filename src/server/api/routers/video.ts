@@ -374,10 +374,21 @@ export const videoRouter = createTRPCRouter({
       });
 
       // Trigger appropriate Inngest function
-      await inngest.send({
-        name: isUpdate ? "video/update.youtube" : "video/publish.youtube",
-        data: { jobId: job.id },
-      });
+      if (platformConnection.platform === "YOUTUBE") {
+        await inngest.send({
+          name: isUpdate ? "video/update.youtube" : "video/publish.youtube",
+          data: { jobId: job.id },
+        });
+      } else if (platformConnection.platform === "TIKTOK") {
+        // TikTok doesn't support update yet
+        await inngest.send({
+          name: "video/publish.tiktok",
+          data: { jobId: job.id },
+        });
+      } else {
+        // Fallback or error for unsupported platforms
+        // Currently we only have YouTube and TikTok implemented
+      }
 
       return {
         jobId: job.id,
@@ -417,10 +428,17 @@ export const videoRouter = createTRPCRouter({
       });
 
       // Trigger Inngest again
-      await inngest.send({
-        name: "video/publish.youtube",
-        data: { jobId: input.jobId },
-      });
+      if (job.platform === "YOUTUBE") {
+        await inngest.send({
+          name: job.isUpdate ? "video/update.youtube" : "video/publish.youtube",
+          data: { jobId: input.jobId },
+        });
+      } else if (job.platform === "TIKTOK") {
+        await inngest.send({
+          name: "video/publish.tiktok",
+          data: { jobId: input.jobId },
+        });
+      }
 
       return { success: true };
     }),

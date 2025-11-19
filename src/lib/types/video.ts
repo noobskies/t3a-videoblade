@@ -5,13 +5,21 @@
 
 import type { RouterOutputs } from "@/trpc/react";
 
+export type Platform = "YOUTUBE" | "TIKTOK" | "RUMBLE";
+export type PublishStatus =
+  | "PENDING"
+  | "PROCESSING"
+  | "COMPLETED"
+  | "FAILED"
+  | "CANCELLED";
+
 /**
  * Publish job for a video on a specific platform
  */
 export interface PublishJob {
   id: string;
-  platform: string;
-  status: string;
+  platform: Platform;
+  status: PublishStatus;
   errorMessage: string | null;
 }
 

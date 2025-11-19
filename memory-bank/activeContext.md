@@ -7,9 +7,16 @@
 We have started Phase 2 implementation.
 
 - **Step 1: TikTok OAuth**: Completed.
-- **Next Step**: Step 2: TikTok Publisher.
+- **Step 2: TikTok Publisher**: Completed.
+- **Next Step**: Step 3: Multi-Platform UI.
 
 ## Recent Changes
+
+- **Feature: TikTok Publisher** (2025-11-19)
+  - Created `src/lib/tiktok.ts` for API interaction.
+  - Implemented `publishToTikTokFunction` Inngest job.
+  - Updated `videoRouter` to dispatch `video/publish.tiktok` events.
+  - Refactored types in `src/lib/types/video.ts` and `platform.ts`.
 
 - **Feature: TikTok OAuth** (2025-11-19)
   - Added `TIKTOK` to `Platform` enum in Prisma schema.
@@ -36,14 +43,14 @@ We have started Phase 2 implementation.
 
 ## Next Steps
 
-1.  **Implement TikTok Publisher** (Phase 2 - Step 2)
-    - Create `src/lib/tiktok.ts` (API wrapper).
-    - Create `src/inngest/publish-to-tiktok.ts`.
-    - Update `publish-video` logic to handle `TIKTOK` platform.
+1.  **Implement Multi-Platform UI** (Phase 2 - Step 3)
+    - Update publish page to allow selecting multiple platforms.
+    - Update library to show status per platform.
+    - Handle platform-specific metadata fields if needed.
 
 ## Current Context
 
 - **Project**: VideoBlade (Multi-Platform Video Publisher)
 - **Phase**: Phase 2 (Multi-Platform - TikTok)
-- **Status**: Phase 2 Step 1 Complete.
-- **Current Task**: Proceeding to Step 2 (TikTok Publisher).
+- **Status**: Phase 2 Step 2 Complete.
+- **Current Task**: Proceeding to Step 3 (Multi-Platform UI).
