@@ -130,8 +130,10 @@ export const videoRouter = createTRPCRouter({
         createdAt: true,
         publishJobs: {
           select: {
+            id: true,
             platform: true,
             status: true,
+            errorMessage: true,
           },
         },
       },
@@ -382,5 +384,44 @@ export const videoRouter = createTRPCRouter({
         status: job.status,
         isUpdate,
       };
+    }),
+
+  /**
+   * Retry failed publish job
+   */
+  retryPublish: protectedProcedure
+    .input(z.object({ jobId: z.string().cuid() }))
+    .mutation(async ({ ctx, input }) => {
+      // Get job
+      const job = await ctx.db.publishJob.findUnique({
+        where: { id: input.jobId },
+      });
+
+      if (!job) {
+        throw new TRPCError({ code: "NOT_FOUND" });
+      }
+
+      if (job.createdById !== ctx.session.user.id) {
+        throw new TRPCError({ code: "FORBIDDEN" });
+      }
+
+      // Reset job status
+      await ctx.db.publishJob.update({
+        where: { id: input.jobId },
+        data: {
+          status: "PENDING",
+          errorMessage: null,
+          startedAt: null,
+          completedAt: null,
+        },
+      });
+
+      // Trigger Inngest again
+      await inngest.send({
+        name: "video/publish.youtube",
+        data: { jobId: input.jobId },
+      });
+
+      return { success: true };
     }),
 });

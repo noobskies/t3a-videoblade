@@ -9,8 +9,10 @@ import type { RouterOutputs } from "@/trpc/react";
  * Publish job for a video on a specific platform
  */
 export interface PublishJob {
+  id: string;
   platform: string;
   status: string;
+  errorMessage: string | null;
 }
 
 /**

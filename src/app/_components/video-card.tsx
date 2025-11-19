@@ -8,6 +8,7 @@ import {
   Delete as Trash2,
   Edit,
   CloudUpload as Upload,
+  Replay as RetryIcon,
 } from "@mui/icons-material";
 import {
   Card,
@@ -19,6 +20,7 @@ import {
   Box,
   Chip,
   Stack,
+  Alert,
 } from "@mui/material";
 import type { VideoListItem } from "@/lib/types";
 
@@ -30,6 +32,7 @@ type VideoCardProps = {
 export function VideoCard({ video, onDelete }: VideoCardProps) {
   const [isDeleting, setIsDeleting] = useState(false);
   const deleteVideo = api.video.delete.useMutation();
+  const retryPublish = api.video.retryPublish.useMutation();
 
   const formatFileSize = (bytes: string) => {
     const size = parseInt(bytes);
@@ -60,6 +63,17 @@ export function VideoCard({ video, onDelete }: VideoCardProps) {
       alert("Failed to delete video");
     } finally {
       setIsDeleting(false);
+    }
+  };
+
+  const handleRetry = async (jobId: string) => {
+    try {
+      await retryPublish.mutateAsync({ jobId });
+      onDelete(); // Refetch to update status
+      alert("Retrying publish...");
+    } catch (error) {
+      console.error("Retry failed:", error);
+      alert("Failed to retry");
     }
   };
 
@@ -187,17 +201,43 @@ export function VideoCard({ video, onDelete }: VideoCardProps) {
 
         {/* Publish Status Chips */}
         {video.publishJobs.length > 0 && (
-          <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-            {video.publishJobs.map((job) => (
-              <Chip
-                key={job.platform}
-                label={`${job.platform}: ${job.status}`}
-                size="small"
-                color={getStatusColor(job.status)}
-                variant="outlined"
-              />
-            ))}
-          </Box>
+          <Stack spacing={1}>
+            <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+              {video.publishJobs.map((job) => (
+                <Chip
+                  key={job.platform}
+                  label={`${job.platform}: ${job.status}`}
+                  size="small"
+                  color={getStatusColor(job.status)}
+                  variant="outlined"
+                  deleteIcon={<RetryIcon />}
+                  onDelete={
+                    job.status === "FAILED"
+                      ? () => handleRetry(job.id)
+                      : undefined
+                  }
+                />
+              ))}
+            </Box>
+
+            {/* Error Messages */}
+            {video.publishJobs
+              .filter((j) => j.status === "FAILED" && j.errorMessage)
+              .map((job) => (
+                <Alert
+                  key={`error-${job.id}`}
+                  severity="error"
+                  variant="outlined"
+                  sx={{
+                    py: 0,
+                    px: 1,
+                    "& .MuiAlert-message": { fontSize: "0.75rem" },
+                  }}
+                >
+                  {job.platform}: {job.errorMessage}
+                </Alert>
+              ))}
+          </Stack>
         )}
       </CardContent>
 
