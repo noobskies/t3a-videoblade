@@ -6,17 +6,35 @@
  * This component is for component-level loading states (e.g., within a form, modal, etc.)
  */
 
+import { Box, CircularProgress, Typography, Stack } from "@mui/material";
+
 export function LoadingSkeleton({
   message = "Loading...",
 }: {
   message?: string;
 }) {
   return (
-    <main className="flex min-h-screen items-center justify-center bg-gradient-to-b from-gray-900 to-black text-white">
-      <div className="text-center">
-        <div className="mb-4 inline-block h-12 w-12 animate-spin rounded-full border-4 border-gray-700 border-t-blue-500" />
-        <p className="text-gray-400">{message}</p>
-      </div>
-    </main>
+    <Box
+      component="main"
+      sx={{
+        display: "flex",
+        minHeight: "100vh",
+        alignItems: "center",
+        justifyContent: "center",
+        background: "linear-gradient(to bottom, #111827, #000000)",
+        color: "white",
+      }}
+    >
+      <Stack spacing={2} alignItems="center" textAlign="center">
+        <CircularProgress size={48} thickness={4} />
+        <Typography
+          variant="body1"
+          color="text.secondary"
+          sx={{ color: "gray" }}
+        >
+          {message}
+        </Typography>
+      </Stack>
+    </Box>
   );
 }

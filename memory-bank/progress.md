@@ -53,8 +53,10 @@
 - [x] Theme with CSS Variables & Dark Mode setup
 - [x] Roboto font configured
 - [x] Material Icons installed (Lucide removed)
-- [ ] Core Layout migration (Navbar/Footer) - Next Step
-- [ ] Generic Component migration
+- [x] **Core Layout migration (Navbar/Footer)** (2025-11-19)
+  - [x] Replaced Tailwind Navbar with MUI AppBar/Toolbar
+  - [x] Cleaned up globals.css conflicts
+- [ ] Generic Component migration - Next Step
 - [ ] Feature page migration
 
 **Code Quality**
@@ -110,17 +112,22 @@ _(See previous progress for details on Database, S3, Library, OAuth, Platform Mg
   - [x] Uninstall Lucide, Install MUI + Icons
   - [x] Configure Theme & Providers
   - [x] Fix build errors (Icon migration)
-- [ ] **Phase 2**: Core Layout Migration (Navbar, Footer)
-- [ ] **Phase 3**: Generic UI Components (AuthButton, ErrorAlert, etc.)
-- [ ] **Phase 4**: Feature - Library (VideoCard, Grid)
+- [x] **Phase 2**: Core Layout Migration (Navbar, Footer) - **COMPLETED**
+  - [x] Migrate Navbar to MUI AppBar
+  - [x] Clean up globals.css
+- [x] **Phase 3**: Generic UI Components (AuthButton, ErrorAlert, etc.) - **COMPLETED**
+  - [x] AuthButton (MUI Button + Avatar + Stack)
+  - [x] ErrorAlert (MUI Box + Stack + Typography)
+  - [x] LoadingSkeleton (MUI CircularProgress)
+- [ ] **Phase 4**: Feature - Library (VideoCard, Grid) - Next Step
 - [ ] **Phase 5**: Feature - Upload (Progress, Dropzone)
 - [ ] **Phase 6**: Feature - Edit (Forms, Validation)
 - [ ] **Phase 7**: Feature - Publish & Platforms
 - [ ] **Phase 8**: Cleanup & Polish (Delete shadcn, Tailwind)
 
-**Status**: Phase 1 Complete. Ready for Phase 2.
+**Status**: Phase 3 Complete. Ready for Phase 4.
 
-**Next Step**: 👉 Phase 2: Core Layout Migration
+**Next Step**: 👉 Phase 4: Feature - Library (VideoCard, Grid)
 
 ## What's Left to Build - VideoBlade Features
 
@@ -143,8 +150,8 @@ _(Features paused for UI Migration)_
 
 ### Phase 3: Implementation Phase 1 (Features) ⏸️ PAUSED (Step 8/11 Done)
 
-### Phase 4: UI Migration (MUI) 🚧 IN PROGRESS (Phase 1/8 Done)
+### Phase 4: UI Migration (MUI) 🚧 IN PROGRESS (Phase 2/8 Done)
 
-**Status**: MUI Migration Phase 1 Complete - Foundation laid. Build is green.
+**Status**: MUI Migration Phase 3 Complete - Generic UI components migrated.
 **Product**: VideoBlade - Multi-Platform Video Publishing Tool
-**Next Action**: MUI Migration Phase 2 - Core Layout (`src/app/layout.tsx` Navbar)
+**Next Action**: MUI Migration Phase 4 - Feature: Library (`VideoCard`, `Grid`)

@@ -1,43 +1,55 @@
 "use client";
 
 import { signIn, signOut, useSession } from "@/lib/auth-client";
+import { Button, Avatar, Stack } from "@mui/material";
+import GoogleIcon from "@mui/icons-material/Google";
 
 export function AuthButton() {
   const { data: session, isPending } = useSession();
 
   if (isPending) {
     return (
-      <button
-        disabled
-        className="rounded-full bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20"
-      >
+      <Button disabled variant="outlined" sx={{ borderRadius: 20, px: 4 }}>
         Loading...
-      </button>
+      </Button>
     );
   }
 
   if (session) {
     return (
-      <button
-        onClick={() => signOut()}
-        className="rounded-full bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20"
-      >
-        Sign out
-      </button>
+      <Stack direction="row" spacing={2} alignItems="center">
+        {session.user?.image && (
+          <Avatar
+            src={session.user.image}
+            alt={session.user.name || "User"}
+            sx={{ width: 32, height: 32 }}
+          />
+        )}
+        <Button
+          onClick={() => signOut()}
+          variant="outlined"
+          color="inherit"
+          sx={{ borderRadius: 20, px: 4 }}
+        >
+          Sign out
+        </Button>
+      </Stack>
     );
   }
 
   return (
-    <button
+    <Button
       onClick={() =>
         signIn.social({
           provider: "google",
           callbackURL: "/",
         })
       }
-      className="rounded-full bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20"
+      variant="contained"
+      startIcon={<GoogleIcon />}
+      sx={{ borderRadius: 20, px: 4 }}
     >
       Sign in with Google
-    </button>
+    </Button>
   );
 }

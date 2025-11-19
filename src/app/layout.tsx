@@ -6,10 +6,15 @@ import Link from "next/link";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Box from "@mui/material/Box";
 import theme from "@/theme";
 
 import { TRPCReactProvider } from "@/trpc/react";
-import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
   title: "VideoBlade - Multi-Platform Video Publishing",
@@ -34,25 +39,52 @@ export default function RootLayout({
           <ThemeProvider theme={theme}>
             <CssBaseline />
             <TRPCReactProvider>
-              <nav className="border-b border-gray-800 bg-gray-900">
-                <div className="container mx-auto flex items-center justify-between px-4 py-4">
-                  <Link href="/" className="text-xl font-bold text-white">
-                    VideoBlade
-                  </Link>
-                  <div className="flex gap-2">
-                    <Button variant="ghost" asChild>
-                      <Link href="/library">Library</Link>
-                    </Button>
-                    <Button variant="ghost" asChild>
-                      <Link href="/platforms">Platforms</Link>
-                    </Button>
-                    <Button variant="ghost" asChild>
-                      <Link href="/upload">Upload</Link>
-                    </Button>
-                  </div>
-                </div>
-              </nav>
-              {children}
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  minHeight: "100vh",
+                }}
+              >
+                <AppBar
+                  position="static"
+                  elevation={0}
+                  sx={{ borderBottom: 1, borderColor: "divider" }}
+                >
+                  <Toolbar>
+                    <Typography
+                      variant="h6"
+                      component="div"
+                      sx={{ flexGrow: 1 }}
+                    >
+                      <Link
+                        href="/"
+                        style={{ color: "inherit", textDecoration: "none" }}
+                      >
+                        VideoBlade
+                      </Link>
+                    </Typography>
+                    <Box sx={{ display: "flex", gap: 1 }}>
+                      <Button color="inherit" component={Link} href="/library">
+                        Library
+                      </Button>
+                      <Button
+                        color="inherit"
+                        component={Link}
+                        href="/platforms"
+                      >
+                        Platforms
+                      </Button>
+                      <Button color="inherit" component={Link} href="/upload">
+                        Upload
+                      </Button>
+                    </Box>
+                  </Toolbar>
+                </AppBar>
+                <Container component="main" sx={{ mt: 4, mb: 4, flexGrow: 1 }}>
+                  {children}
+                </Container>
+              </Box>
             </TRPCReactProvider>
           </ThemeProvider>
         </AppRouterCacheProvider>
