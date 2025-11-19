@@ -103,7 +103,7 @@
 
 - [x] Master roadmap overview created
 - [x] Phase 1 roadmap (MVP - YouTube Only)
-- [x] Phase 2 roadmap (Multi-Platform - Rumble)
+- [x] Phase 2 roadmap (Multi-Platform - TikTok)
 - [x] Phase 3 marked as TBD
 - [x] **MUI Migration Plan completed**
 
@@ -134,8 +134,8 @@
 
 ### 🔲 Phase 2: Multi-Platform (Next)
 
-- [ ] **Step 1**: Rumble OAuth
-- [ ] **Step 2**: Rumble Publisher
+- [ ] **Step 1**: TikTok OAuth
+- [ ] **Step 2**: TikTok Publisher
 - [ ] **Step 3**: Multi-Platform UI
 - [ ] **Step 4**: Delete Videos (Cleanup)
 - [ ] **Step 5**: Scheduling
@@ -152,4 +152,4 @@
 
 **Status**: Phase 1 Feature Implementation Complete.
 **Product**: VideoBlade - Multi-Platform Video Publishing Tool
-**Next Action**: Review Phase 2 Roadmap & Begin Rumble Integration.
+**Next Action**: Begin TikTok Integration.

@@ -94,16 +94,16 @@ Timeline: COMPLETE              Est: 3-4 weeks            Est: 2-3 weeks        
 
 ---
 
-### ⏳ Phase 2: Multi-Platform - Rumble Integration
+### ⏳ Phase 2: Multi-Platform - TikTok Integration
 
 **Status**: Not Started  
 **Estimated Duration**: 2-3 weeks  
-**Target Features**: Add Rumble support + key features
+**Target Features**: Add TikTok support + key features
 
 **Core Deliverables**:
 
-- [ ] Rumble OAuth integration
-- [ ] Rumble API publish worker
+- [ ] TikTok OAuth integration (Login Kit)
+- [ ] TikTok API publish worker (Content Posting API)
 - [ ] Platform-specific metadata handling
 - [ ] Multi-platform publish UI (select platforms)
 - [ ] Delete videos feature
@@ -114,18 +114,18 @@ Timeline: COMPLETE              Est: 3-4 weeks            Est: 2-3 weeks        
 
 **Infrastructure Additions**:
 
-- [ ] Rumble API credentials
+- [ ] TikTok API credentials
 - [ ] Inngest scheduled jobs for publishing
 
 **Success Criteria**:
-✅ User can connect Rumble account  
-✅ User can publish to YouTube + Rumble simultaneously  
+✅ User can connect TikTok account  
+✅ User can publish to YouTube + TikTok simultaneously  
 ✅ User can delete videos from library  
 ✅ User can schedule videos for future publish  
 ✅ Each platform shows independent status  
 ✅ Platform-specific metadata configurable
 
-**See**: [`phase2-rumble-integration.md`](./phase2-rumble-integration.md) for detailed breakdown
+**See**: [`phase2/`](./phase2/) for detailed breakdown
 
 ---
 
@@ -140,7 +140,7 @@ Timeline: COMPLETE              Est: 3-4 weeks            Est: 2-3 weeks        
 **Platform Expansion Options**:
 
 - [ ] Vimeo integration
-- [ ] TikTok integration
+- [ ] Rumble integration
 - [ ] Dailymotion integration
 - [ ] LinkedIn Video integration
 - [ ] Twitter/X Video integration
@@ -189,7 +189,7 @@ Timeline: COMPLETE              Est: 3-4 weeks            Est: 2-3 weeks        
 
 **Can Start Independently**:
 
-- Rumble OAuth research and credentials
+- TikTok OAuth research and credentials
 - Platform-specific metadata schema design
 
 ### Phase 2 → Phase 3
@@ -261,6 +261,8 @@ Timeline: COMPLETE              Est: 3-4 weeks            Est: 2-3 weeks        
 
 ### Multi-Platform (Phase 2) - Rumble Added
 
+### Multi-Platform (Phase 2) - TikTok Added
+
 **Functional Metrics**:
 
 - User can publish to 2 platforms simultaneously
@@ -327,11 +329,11 @@ Timeline: COMPLETE              Est: 3-4 weeks            Est: 2-3 weeks        
 ```
 Same as Phase 1, but Inngest publishes to:
 - YouTube API
-- Rumble API
+- TikTok API
 - [Future platforms]
 
 Database schema includes:
-- Platform enum (YOUTUBE, RUMBLE, etc.)
+- Platform enum (YOUTUBE, TIKTOK, etc.)
 - PlatformConnection per user per platform
 - PublishJob with platform-specific metadata
 ```
@@ -434,7 +436,7 @@ As phases progress, update:
 
 ### Phase 2 Resources
 
-- Rumble API documentation: https://rumble.com/developer/
+- TikTok Developers: https://developers.tiktok.com/
 - OAuth 2.0 spec: https://oauth.net/2/
 
 ### MCP Servers Available
@@ -476,7 +478,7 @@ As phases progress, update:
 ```
 Foundation:        ████████████████████ 100%  ✅
 Phase 1 (MVP):     ░░░░░░░░░░░░░░░░░░░░   0%  🎯
-Phase 2 (Rumble):  ░░░░░░░░░░░░░░░░░░░░   0%  ⏳
+Phase 2 (TikTok):  ░░░░░░░░░░░░░░░░░░░░   0%  ⏳
 Phase 3+ (Future): ░░░░░░░░░░░░░░░░░░░░   0%  ⏳
 ```
 

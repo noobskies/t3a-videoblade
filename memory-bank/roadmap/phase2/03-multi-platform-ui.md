@@ -11,8 +11,8 @@ Build UI for publishing videos to multiple platforms simultaneously with platfor
 ## Prerequisites
 
 - [x] Phase 1 - Single platform publishing works
-- [x] 02-rumble-publisher.md - Rumble integration ready
-- [x] Both YouTube and Rumble connected
+- [x] 02-tiktok-publisher.md - TikTok integration ready
+- [x] Both YouTube and TikTok connected
 
 ---
 
@@ -20,7 +20,7 @@ Build UI for publishing videos to multiple platforms simultaneously with platfor
 
 A publish page where users can:
 
-- Select which platforms to publish to (YouTube, Rumble, or both)
+- Select which platforms to publish to (YouTube, TikTok, or both)
 - Configure platform-specific metadata
 - See per-platform publish status
 - Handle partial failures
@@ -39,7 +39,7 @@ Create `src/app/publish/[videoId]/page.tsx`:
 import { api } from "@/trpc/react";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
-import { Youtube, Video, CheckCircle } from "lucide-react";
+import { Youtube, Video, CheckCircle } from "lucide-react"; // Add TikTok icon
 
 export default function PublishPage() {
   const params = useParams();
@@ -54,7 +54,7 @@ export default function PublishPage() {
   const [metadata, setMetadata] = useState<Record<string, any>>({});
 
   const youtubeConnected = connections?.some((c) => c.platform === "YOUTUBE");
-  const rumbleConnected = connections?.some((c) => c.platform === "RUMBLE");
+  const tiktokConnected = connections?.some((c) => c.platform === "TIKTOK");
 
   const togglePlatform = (platform: string) => {
     if (selectedPlatforms.includes(platform)) {
@@ -135,26 +135,27 @@ export default function PublishPage() {
               </div>
             </div>
 
-            {/* Rumble */}
+            {/* TikTok */}
             <div
-              onClick={() => rumbleConnected && togglePlatform("RUMBLE")}
+              onClick={() => tiktokConnected && togglePlatform("TIKTOK")}
               className={`cursor-pointer rounded-lg border p-4 ${
-                selectedPlatforms.includes("RUMBLE")
-                  ? "border-green-500 bg-green-900/20"
+                selectedPlatforms.includes("TIKTOK")
+                  ? "border-pink-500 bg-pink-900/20"
                   : "border-gray-700 bg-gray-800"
-              } ${!rumbleConnected && "cursor-not-allowed opacity-50"}`}
+              } ${!tiktokConnected && "cursor-not-allowed opacity-50"}`}
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <Video className="h-8 w-8 text-green-500" />
+                  {/* Use TikTok Icon */}
+                  <Video className="h-8 w-8 text-pink-500" />
                   <div>
-                    <h4 className="font-semibold">Rumble</h4>
+                    <h4 className="font-semibold">TikTok</h4>
                     <p className="text-sm text-gray-400">
-                      {rumbleConnected ? "Connected" : "Not connected"}
+                      {tiktokConnected ? "Connected" : "Not connected"}
                     </p>
                   </div>
                 </div>
-                {selectedPlatforms.includes("RUMBLE") && (
+                {selectedPlatforms.includes("TIKTOK") && (
                   <CheckCircle className="h-6 w-6 text-green-400" />
                 )}
               </div>
@@ -219,9 +220,20 @@ export default function PublishPage() {
                   }
                   className="w-full rounded border border-gray-600 bg-gray-700 p-2"
                 >
-                  <option value="PUBLIC">Public</option>
-                  <option value="UNLISTED">Unlisted</option>
-                  <option value="PRIVATE">Private</option>
+                  {/* TikTok specific options */}
+                  {platform === "TIKTOK" ? (
+                    <>
+                      <option value="PUBLIC">Public</option>
+                      <option value="PRIVATE">Self Only</option>
+                      <option value="MUTUAL_FOLLOW_FRIENDS">Friends</option>
+                    </>
+                  ) : (
+                    <>
+                      <option value="PUBLIC">Public</option>
+                      <option value="UNLISTED">Unlisted</option>
+                      <option value="PRIVATE">Private</option>
+                    </>
+                  )}
                 </select>
               </div>
             </div>
@@ -256,12 +268,12 @@ publishMulti: protectedProcedure
   .input(
     z.object({
       videoId: z.string().cuid(),
-      platforms: z.array(z.enum(["YOUTUBE", "RUMBLE"])),
+      platforms: z.array(z.enum(["YOUTUBE", "TIKTOK"])),
       metadata: z.record(
         z.object({
           title: z.string().optional(),
           description: z.string().optional(),
-          privacy: z.enum(["PUBLIC", "UNLISTED", "PRIVATE"]).optional(),
+          privacy: z.enum(["PUBLIC", "UNLISTED", "PRIVATE", "MUTUAL_FOLLOW_FRIENDS"]).optional(),
         })
       ),
     })
@@ -304,8 +316,8 @@ publishMulti: protectedProcedure
 
       // Trigger Inngest
       const eventName =
-        platform === "RUMBLE"
-          ? "video/publish.rumble"
+        platform === "TIKTOK"
+          ? "video/publish.tiktok"
           : "video/publish.youtube";
 
       await inngest.send({
@@ -333,7 +345,7 @@ publishMulti: protectedProcedure
 
 ## Testing
 
-1. **Connect both** YouTube and Rumble
+1. **Connect both** YouTube and TikTok
 2. **Go to publish page** for a video
 3. **Select both platforms**
 4. **Configure different metadata** for each

@@ -97,9 +97,11 @@ deleteWithPlatforms: protectedProcedure
             // Delete from YouTube
             // await deleteFromYouTube(job.platformConnection.accessToken, job.platformVideoId);
           }
-          if (job.platform === "RUMBLE" && job.platformVideoId) {
-            // Delete from Rumble
-            // await deleteFromRumble(job.platformConnection.accessToken, job.platformVideoId);
+          if (job.platform === "TIKTOK" && job.platformVideoId) {
+            // Delete from TikTok
+            // Note: TikTok Content Posting API may not support deletion via API currently.
+            // We need to check docs or just handle local deletion.
+            // await deleteFromTikTok(job.platformConnection.accessToken, job.platformVideoId);
           }
         } catch (error) {
           console.error(`Failed to delete from ${job.platform}:`, error);

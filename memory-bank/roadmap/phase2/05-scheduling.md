@@ -93,12 +93,12 @@ publishMulti: protectedProcedure
   .input(
     z.object({
       videoId: z.string().cuid(),
-      platforms: z.array(z.enum(["YOUTUBE", "RUMBLE"])),
+      platforms: z.array(z.enum(["YOUTUBE", "TIKTOK"])),
       metadata: z.record(
         z.object({
           title: z.string().optional(),
           description: z.string().optional(),
-          privacy: z.enum(["PUBLIC", "UNLISTED", "PRIVATE"]).optional(),
+          privacy: z.enum(["PUBLIC", "UNLISTED", "PRIVATE", "MUTUAL_FOLLOW_FRIENDS"]).optional(),
         })
       ),
       schedules: z.record(z.date()).optional(), // Add this
@@ -144,8 +144,8 @@ publishMulti: protectedProcedure
       // Only trigger immediately if not scheduled
       if (!scheduledFor || scheduledFor <= new Date()) {
         const eventName =
-          platform === "RUMBLE"
-            ? "video/publish.rumble"
+          platform === "TIKTOK"
+            ? "video/publish.tiktok"
             : "video/publish.youtube";
 
         await inngest.send({
@@ -190,8 +190,8 @@ export const checkScheduledJobsFunction = inngest.createFunction(
     await step.run("trigger-jobs", async () => {
       for (const job of jobs) {
         const eventName =
-          job.platform === "RUMBLE"
-            ? "video/publish.rumble"
+          job.platform === "TIKTOK"
+            ? "video/publish.tiktok"
             : "video/publish.youtube";
 
         await inngest.send({
@@ -219,7 +219,7 @@ export const { GET, POST, PUT } = serve({
   client: inngest,
   functions: [
     publishToYouTubeFunction,
-    publishToRumbleFunction,
+    publishToTikTokFunction,
     checkScheduledJobsFunction, // Add this
   ],
 });
@@ -286,7 +286,7 @@ cancelScheduledJob: protectedProcedure
 ✅ **Per-Platform Scheduling**:
 
 - Each platform gets its own schedule time
-- YouTube: 9am, Rumble: 10am
+- YouTube: 9am, TikTok: 10am
 
 ✅ **Schedule UI**:
 
@@ -362,9 +362,9 @@ cancelScheduledJob: protectedProcedure
 
 With all 5 files complete, Phase 2 delivers:
 
-✅ Rumble OAuth & API integration
-✅ Rumble video publishing
-✅ Multi-platform UI (YouTube + Rumble)
+✅ TikTok OAuth & API integration
+✅ TikTok video publishing
+✅ Multi-platform UI (YouTube + TikTok)
 ✅ Enhanced delete functionality
 ✅ Per-platform scheduling
 
@@ -374,6 +374,6 @@ With all 5 files complete, Phase 2 delivers:
 
 ## Next Phase
 
-👉 **Phase 3** - Additional platforms (Vimeo, TikTok), analytics, team features, API access
+👉 **Phase 3** - Additional platforms (Vimeo, Rumble), analytics, team features, API access
 
 **Estimated Total Time Phase 1 + 2**: 43-61 hours (~5-8 weeks part-time)

@@ -79,12 +79,12 @@
 
 **Phase 2 (Multi-Platform)**:
 
-- Rumble API
+- TikTok Content Posting API
 
 **Phase 3+ (Future Platforms - TBD)**:
 
 - Vimeo API v3.4
-- TikTok Content Posting API
+- Rumble API
 - Dailymotion API
 - Facebook Video API
 - Instagram Video API
@@ -124,12 +124,12 @@ See `memory-bank/roadmap/phase1/` for complete 11-file roadmap (28-42 hours)
 - [ ] User can retry failed publishes
 - [ ] Platform connection management working
 
-### Implementation Phase 2 (Multi-Platform - Rumble)
+### Implementation Phase 2 (Multi-Platform - TikTok)
 
 See `memory-bank/roadmap/phase2/` for complete 5-file roadmap (15-19 hours)
 
-- [ ] Rumble OAuth & API integration
-- [ ] Multi-platform publishing UI (YouTube + Rumble simultaneously)
+- [ ] TikTok OAuth & API integration
+- [ ] Multi-platform publishing UI (YouTube + TikTok simultaneously)
 - [ ] Platform-specific metadata handling
 - [ ] Per-platform scheduled publishing
 - [ ] Enhanced delete functionality
@@ -210,9 +210,9 @@ This project was bootstrapped with `create-t3-app` (v7.40.0). VideoBlade's multi
 **Complete Implementation Roadmap**: `memory-bank/roadmap/`
 
 - **Phase 1**: 11 detailed files for YouTube MVP (28-42 hours)
-- **Phase 2**: 5 detailed files for Rumble integration (15-19 hours)
+- **Phase 2**: 5 detailed files for TikTok integration (15-19 hours)
 - **Phase 3**: TBD - Nice-to-have features for future
 
-**Tech Stack**: AWS S3 + Inngest + Vercel Postgres + Vercel + YouTube & Rumble APIs
+**Tech Stack**: AWS S3 + Inngest + Vercel Postgres + Vercel + YouTube & TikTok APIs
 
 **Start Implementation**: 👉 `memory-bank/roadmap/phase1/00-prerequisites.md`
