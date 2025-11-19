@@ -25,26 +25,28 @@
 - Strict mode enabled
 - Configuration: `tsconfig.json`
 
-**Tailwind CSS 4.0.15**
+**Material-UI v6 (MUI)**
+
+- **Core**: `@mui/material`, `@emotion/react`, `@emotion/styled`
+- **Integration**: `@mui/material-nextjs` for App Router cache
+- **Icons**: `@mui/icons-material`
+- **Theming**: CSS Variables (`cssVariables: true`)
+- **Status**: Migration Target (Phase 1)
+
+**Tailwind CSS 4.0.15** [DEPRECATED - MIGRATING TO MUI]
 
 - Utility-first styling
-- PostCSS integration
-- Custom configuration in `postcss.config.js`
-- Global styles: `src/styles/globals.css`
+- Status: Being removed in favor of MUI `sx` prop
 
-**Lucide React 0.554.0**
+**Lucide React 0.554.0** [DEPRECATED - MIGRATING TO MUI]
 
 - Icon library
-- Tree-shakeable icons
-- Used for UI elements
+- Status: Being replaced by Material Icons
 
-**shadcn/ui Components**
+**shadcn/ui Components** [DEPRECATED - MIGRATING TO MUI]
 
-- Card, Button, Badge (Step 3)
-- Input, Textarea, Label, Select (Step 6)
-- Professional, accessible UI components
-- Built on Radix UI primitives
-- Customizable with Tailwind CSS
+- Card, Button, Badge, Input, etc.
+- Status: Being replaced by native MUI components
 
 ### Backend
 
