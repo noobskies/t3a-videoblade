@@ -25,6 +25,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { use, useState } from "react";
@@ -171,7 +172,28 @@ export default function PublishPage({
         <Card>
           <CardHeader title="Video Details" />
           <CardContent>
-            <Stack spacing={2}>
+            <Stack spacing={3}>
+              {/* Thumbnail */}
+              {video.thumbnailUrl && (
+                <Box
+                  sx={{
+                    width: "100%",
+                    position: "relative",
+                    paddingTop: "56.25%", // 16:9 aspect ratio
+                    bgcolor: "action.hover",
+                    borderRadius: 1,
+                    overflow: "hidden",
+                  }}
+                >
+                  <Image
+                    src={video.thumbnailUrl}
+                    alt={video.title}
+                    fill
+                    style={{ objectFit: "cover" }}
+                  />
+                </Box>
+              )}
+
               <Box>
                 <Typography variant="subtitle2" color="text.secondary">
                   Title

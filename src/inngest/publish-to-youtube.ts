@@ -104,6 +104,18 @@ export const publishToYouTubeFunction = inngest.createFunction(
       });
     });
 
+    // Step 4: Update video with thumbnail (if successful)
+    if (result.success && result.videoId) {
+      await step.run("update-thumbnail", async () => {
+        const thumbnailUrl = `https://img.youtube.com/vi/${result.videoId}/mqdefault.jpg`;
+
+        await db.video.update({
+          where: { id: job.videoId },
+          data: { thumbnailUrl },
+        });
+      });
+    }
+
     return result;
   },
 );

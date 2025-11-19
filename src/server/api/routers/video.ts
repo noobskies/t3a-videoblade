@@ -4,6 +4,8 @@ import {
   generateVideoS3Key,
   getUploadPresignedUrl,
   deleteFromS3,
+  getS3Url,
+  getDownloadPresignedUrl,
 } from "@/lib/s3";
 import { TRPCError } from "@trpc/server";
 import { env } from "@/env";
@@ -19,6 +21,7 @@ export const videoRouter = createTRPCRouter({
         fileName: z.string(),
         fileSize: z.number().positive(),
         mimeType: z.string().regex(/^video\//),
+        thumbnailType: z.string().regex(/^image\//).optional(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -31,16 +34,32 @@ export const videoRouter = createTRPCRouter({
         });
       }
 
-      // Generate unique S3 key
+      // Generate unique S3 key for video
       const s3Key = generateVideoS3Key(ctx.session.user.id, input.fileName);
 
-      // Get presigned URL
+      // Get presigned URL for video
       const uploadUrl = await getUploadPresignedUrl(s3Key, input.mimeType);
+
+      // Handle thumbnail if present
+      let thumbnailUploadUrl: string | undefined;
+      let thumbnailS3Key: string | undefined;
+
+      if (input.thumbnailType) {
+        // Use same base name but with .jpg extension (or whatever input type is)
+        const ext = input.thumbnailType.split("/")[1] ?? "jpg";
+        thumbnailS3Key = s3Key.replace(/\.[^/.]+$/, `_thumb.${ext}`);
+        thumbnailUploadUrl = await getUploadPresignedUrl(
+          thumbnailS3Key,
+          input.thumbnailType,
+        );
+      }
 
       return {
         uploadUrl,
         s3Key,
         s3Bucket: env.AWS_S3_BUCKET_NAME,
+        thumbnailUploadUrl,
+        thumbnailS3Key,
       };
     }),
 
@@ -59,6 +78,7 @@ export const videoRouter = createTRPCRouter({
         description: z.string().max(5000).optional(),
         tags: z.string().max(500).optional(),
         privacy: z.enum(["PUBLIC", "UNLISTED", "PRIVATE"]).default("UNLISTED"),
+        thumbnailS3Key: z.string().optional(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -74,6 +94,9 @@ export const videoRouter = createTRPCRouter({
           description: input.description ?? null,
           tags: input.tags ?? null,
           privacy: input.privacy,
+          thumbnailUrl: input.thumbnailS3Key
+            ? getS3Url(input.thumbnailS3Key)
+            : null,
           createdById: ctx.session.user.id,
         },
       });
@@ -114,11 +137,32 @@ export const videoRouter = createTRPCRouter({
       },
     });
 
-    // Convert BigInt to string for JSON serialization
-    return videos.map((v) => ({
-      ...v,
-      fileSize: v.fileSize.toString(),
-    }));
+    // Process videos to sign S3 thumbnail URLs
+    const processedVideos = await Promise.all(
+      videos.map(async (v) => {
+        let thumbnailUrl = v.thumbnailUrl;
+
+        // If thumbnail is on S3 (private bucket), generate signed URL
+        if (thumbnailUrl?.includes("amazonaws.com")) {
+          try {
+            const url = new URL(thumbnailUrl);
+            // Extract key from pathname (remove leading slash)
+            const key = decodeURIComponent(url.pathname.substring(1));
+            thumbnailUrl = await getDownloadPresignedUrl(key);
+          } catch (error) {
+            console.error("Failed to sign thumbnail URL:", error);
+          }
+        }
+
+        return {
+          ...v,
+          thumbnailUrl,
+          fileSize: v.fileSize.toString(),
+        };
+      }),
+    );
+
+    return processedVideos;
   }),
 
   /**
@@ -145,8 +189,22 @@ export const videoRouter = createTRPCRouter({
         });
       }
 
+      let thumbnailUrl = video.thumbnailUrl;
+
+      // If thumbnail is on S3 (private bucket), generate signed URL
+      if (thumbnailUrl?.includes("amazonaws.com")) {
+        try {
+          const url = new URL(thumbnailUrl);
+          const key = decodeURIComponent(url.pathname.substring(1));
+          thumbnailUrl = await getDownloadPresignedUrl(key);
+        } catch (error) {
+          console.error("Failed to sign thumbnail URL:", error);
+        }
+      }
+
       return {
         ...video,
+        thumbnailUrl,
         fileSize: video.fileSize.toString(),
       };
     }),

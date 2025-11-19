@@ -16,7 +16,8 @@ import {
   Alert,
   IconButton,
 } from "@mui/material";
-import { ArrowBack, Save } from "@mui/icons-material";
+import { ArrowBack, Save, Movie as MovieIcon } from "@mui/icons-material";
+import Image from "next/image";
 
 export default function EditVideoPage() {
   const params = useParams();
@@ -132,6 +133,47 @@ export default function EditVideoPage() {
         {/* Edit Form */}
         <Paper elevation={1} sx={{ p: 4 }}>
           <Stack spacing={4}>
+            {/* Thumbnail */}
+            <Box
+              sx={{
+                width: "100%",
+                position: "relative",
+                paddingTop: "56.25%", // 16:9 aspect ratio
+                bgcolor: "action.hover",
+                borderRadius: 1,
+                overflow: "hidden",
+              }}
+            >
+              {video.thumbnailUrl ? (
+                <Image
+                  src={video.thumbnailUrl}
+                  alt={video.title}
+                  fill
+                  style={{ objectFit: "cover" }}
+                />
+              ) : (
+                <Box
+                  sx={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    flexDirection: "column",
+                    color: "text.secondary",
+                  }}
+                >
+                  <MovieIcon sx={{ fontSize: 64, opacity: 0.5, mb: 1 }} />
+                  <Typography variant="body2">
+                    No thumbnail available
+                  </Typography>
+                </Box>
+              )}
+            </Box>
+
             {/* Title */}
             <TextField
               label="Title"

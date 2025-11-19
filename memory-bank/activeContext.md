@@ -1,115 +1,47 @@
 # Active Context: t3a-videoblade
 
-## Current Work Focus
+## Current Focus
 
-**Phase**: Feature Development - Preview & Thumbnails
-**Current Step**: Phase 1 (MVP) - Step 9
-**Product**: VideoBlade - Multi-Platform Video Publishing Tool
-**Status**: MUI Migration Complete ✅ → Resuming Feature Development
-**Last Updated**: 2025-11-19
+**Phase 1: MVP Feature Implementation (Resumed)**
+
+We have successfully completed the MUI migration and are now back to finishing the Phase 1 MVP features.
 
 ## Recent Changes
 
-### MUI Migration - Phase 8: Cleanup & Polish Complete (2025-11-19)
+- **Homepage Update** (2025-11-19)
+  - Replaced default T3 App template with branded VideoBlade landing page.
+  - Implemented MUI layout with `Container`, `Stack`, `Box`, `Typography`.
+  - Added navigation buttons to "Library", "Upload", and "Platforms".
+  - Improved authentication flow visuals.
 
-**Milestone**: ✅ MUI Migration Complete
+- **Feature: Video Thumbnails** (2025-11-19)
+  - Updated `src/inngest/publish-to-youtube.ts` to automatically fetch the YouTube thumbnail URL after successful publish.
+  - **Enhanced Strategy**: Implemented **client-side thumbnail generation** during upload.
+    - The `VideoUpload` component captures a frame from the video preview.
+    - Uploads this image to S3 alongside the video file.
+    - Saves the S3 URL as the initial `thumbnailUrl`.
+  - This ensures thumbnails are visible **immediately** in the Library/Edit pages, even before publishing to YouTube.
+  - **UI Update**: Added thumbnail display to **Edit Page** and **Publish Page**.
+  - **Upload Preview**: Added local video preview to the **Upload Page**.
+  - **Config Update**: Updated `next.config.js` to allow loading images from `img.youtube.com`.
 
-**Accomplishments**:
+## Active Decisions
 
-- **Cleanup**:
-  - Deleted `src/components/ui` (shadcn components).
-  - Deleted `src/lib/utils.ts` (shadcn utility).
-  - Deleted `tailwind.config.ts` and `postcss.config.js`.
-  - Cleaned `src/styles/globals.css` (removed Tailwind directives).
-  - Updated `prettier.config.js` (removed Tailwind plugin).
-- **Dependencies**: Uninstalled `lucide-react`, `tailwindcss`, `postcss`, `autoprefixer`, etc.
-- **Verification**: Full production build passed successfully.
-
-### MUI Migration - Phase 7: Publish & Platforms Complete (2025-11-19)
-
-**Milestone**: ✅ Publish & Platforms Migration
-
-**Accomplishments**:
-
-- **Publish Page**: Migrated to MUI `Container`, `Stack`, `Card`, `Alert`.
-- **Platforms Page**: Migrated to MUI `Container`, `Stack`, `Card`, `Chip`.
-
-### MUI Migration - Phase 6: Edit Feature Complete (2025-11-19)
-
-**Milestone**: ✅ Edit Feature Migration
-
-**Accomplishments**:
-
-- **Edit Page**: Migrated to MUI `Box`, `TextField`, `Alert`, `CircularProgress`.
+- **Thumbnail Strategy**: We have evolved from "Option 3" (YouTube only) to a **Hybrid Approach**. We generate an initial thumbnail on the client-side during upload for immediate feedback. The YouTube thumbnail (fetched after publish) can still be used as a fallback or high-quality replacement if needed (though currently we stick with the uploaded one unless logic changes).
+- **Homepage Design**: Kept it simple and functional. Focusing on directing users to the core app features (Library/Upload).
 
 ## Next Steps
 
-### Immediate (Feature Development)
+1.  **Phase 1, Step 10: Retry Logic**
+    - Implement manual retry for failed jobs.
+    - Ensure UI handles retry status correctly.
 
-**Goal**: Resume Phase 1 Roadmap (MVP Features).
+2.  **Verify End-to-End Flow**
+    - Test full cycle: Upload -> Publish -> Thumbnail Generation.
 
-**Tasks**:
+## Current Context
 
-1.  **Step 9: Thumbnails & Preview** (`memory-bank/roadmap/phase1/09-thumbnails.md`)
-    - Implement thumbnail generation/upload.
-    - Add video preview player.
-2.  **Step 10: Retry Logic** (`memory-bank/roadmap/phase1/10-retry-logic.md`)
-    - Handle failed uploads/publishes.
-
-## Active Decisions and Considerations
-
-### UI Architecture
-
-**MUI v7 Strategy (Finalized)**:
-
-- **Grid System**: Using MUI v7 `Grid` (Grid2).
-- **Theming**: CSS Variables (`cssVariables: true`) + Native Dark Mode.
-- **Styling**: `sx` prop for layout, `styled()` for components.
-- **Icons**: Material Icons (`@mui/icons-material`).
-
-### Technology Choices Made
-
-**Confirmed**:
-
-- ✅ T3 Stack (Next.js + tRPC + Prisma + NextAuth)
-- ✅ TypeScript for type safety
-- ✅ App Router
-- ✅ **Material-UI v7** (Fully integrated, Tailwind removed)
-
-**Pending Video-Related Decisions**:
-
-- Video storage provider (S3, R2, local, etc.)
-- Video processing approach (client-side, server-side, service)
-
-## Current Blockers
-
-**None**.
-
-**Next Action**: Begin Phase 1, Step 9: Thumbnails & Preview.
-
-## Environment Status
-
-**Development Environment**: ✅ Ready
-
-- Node.js and npm installed
-- Dependencies installed (MUI v7, No Tailwind)
-- Database initialized (SQLite)
-- Build passes ✅
-
-**Production Environment**: ⏳ Not Yet Configured
-
-## Team Context
-
-**Current Phase**: Solo development with AI assistance (Cline)
-
-**Development Approach**:
-
-- AI-driven with Memory Bank for context persistence
-- Documentation-first approach
-- Iterative development (Migration Complete)
-
-## Quick Reference
-
-- `memory-bank/roadmap/overview.md` - Master roadmap
-- `src/theme.ts` - MUI Theme Configuration
-- `src/app/layout.tsx` - Root Layout (Providers)
+- **Project**: VideoBlade (Multi-Platform Video Publisher)
+- **Phase**: Phase 1 (MVP - YouTube Only)
+- **Status**: Implementation (Step 9 Complete with Enhancements)
+- **Current Task**: Moving to Step 10 (Retry Logic)

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { api } from "@/trpc/react";
 import {
   Box,
@@ -24,11 +24,24 @@ export function VideoUpload() {
     "idle" | "uploading" | "success" | "error"
   >("idle");
   const [error, setError] = useState<string | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const getUploadUrl = api.video.getUploadUrl.useMutation();
   const confirmUpload = api.video.confirmUpload.useMutation();
+
+  // Create preview URL when file changes
+  useEffect(() => {
+    if (file) {
+      const url = URL.createObjectURL(file);
+      setPreviewUrl(url);
+      return () => URL.revokeObjectURL(url);
+    } else {
+      setPreviewUrl(null);
+    }
+  }, [file]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
@@ -60,17 +73,19 @@ export function VideoUpload() {
     }
   };
 
-  const uploadToS3 = async (url: string, file: File) => {
+  const uploadToS3 = async (url: string, file: Blob, contentType: string) => {
     return new Promise<void>((resolve, reject) => {
       const xhr = new XMLHttpRequest();
 
-      // Track upload progress
-      xhr.upload.addEventListener("progress", (e) => {
-        if (e.lengthComputable) {
-          const percentComplete = Math.round((e.loaded / e.total) * 100);
-          setUploadProgress(percentComplete);
-        }
-      });
+      if (file instanceof File) {
+        // Only track progress for the main video file
+        xhr.upload.addEventListener("progress", (e) => {
+          if (e.lengthComputable) {
+            const percentComplete = Math.round((e.loaded / e.total) * 100);
+            setUploadProgress(percentComplete);
+          }
+        });
+      }
 
       xhr.addEventListener("load", () => {
         if (xhr.status === 200) {
@@ -85,9 +100,36 @@ export function VideoUpload() {
       });
 
       xhr.open("PUT", url);
-      xhr.setRequestHeader("Content-Type", file.type);
+      xhr.setRequestHeader("Content-Type", contentType);
       xhr.send(file);
     });
+  };
+
+  const captureThumbnail = async (): Promise<Blob | null> => {
+    if (!videoRef.current) return null;
+
+    try {
+      const video = videoRef.current;
+      const canvas = document.createElement("canvas");
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return null;
+
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      return new Promise((resolve) => {
+        canvas.toBlob(
+          (blob) => {
+            resolve(blob);
+          },
+          "image/jpeg",
+          0.7,
+        );
+      });
+    } catch (err) {
+      console.error("Failed to capture thumbnail", err);
+      return null;
+    }
   };
 
   const handleUpload = async () => {
@@ -99,15 +141,25 @@ export function VideoUpload() {
       setUploadProgress(0);
       setError(null);
 
-      // Step 1: Get presigned URL
-      const { uploadUrl, s3Key, s3Bucket } = await getUploadUrl.mutateAsync({
-        fileName: file.name,
-        fileSize: file.size,
-        mimeType: file.type,
-      });
+      // Generate thumbnail if possible
+      const thumbnailBlob = await captureThumbnail();
 
-      // Step 2: Upload to S3
-      await uploadToS3(uploadUrl, file);
+      // Step 1: Get presigned URLs
+      const { uploadUrl, s3Key, s3Bucket, thumbnailUploadUrl, thumbnailS3Key } =
+        await getUploadUrl.mutateAsync({
+          fileName: file.name,
+          fileSize: file.size,
+          mimeType: file.type,
+          thumbnailType: thumbnailBlob ? "image/jpeg" : undefined,
+        });
+
+      // Step 2: Upload video to S3
+      await uploadToS3(uploadUrl, file, file.type);
+
+      // Step 2b: Upload thumbnail if present
+      if (thumbnailBlob && thumbnailUploadUrl) {
+        await uploadToS3(thumbnailUploadUrl, thumbnailBlob, "image/jpeg");
+      }
 
       // Step 3: Confirm upload and create video record
       await confirmUpload.mutateAsync({
@@ -119,6 +171,7 @@ export function VideoUpload() {
         title,
         description: description || undefined,
         privacy: "UNLISTED",
+        thumbnailS3Key: thumbnailS3Key,
       });
 
       setUploadStatus("success");
@@ -185,9 +238,38 @@ export function VideoUpload() {
             style={{ display: "none" }}
             ref={fileInputRef}
           />
-          <CloudUploadIcon
-            sx={{ fontSize: 48, color: "primary.main", mb: 2 }}
-          />
+          {previewUrl ? (
+            <Box
+              sx={{
+                width: "100%",
+                position: "relative",
+                paddingTop: "56.25%", // 16:9
+                bgcolor: "black",
+                borderRadius: 1,
+                overflow: "hidden",
+                mb: 2,
+              }}
+              onClick={(e) => e.stopPropagation()} // Prevent clicking container to re-open file dialog
+            >
+              <video
+                ref={videoRef}
+                src={previewUrl}
+                controls
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "100%",
+                }}
+              />
+            </Box>
+          ) : (
+            <CloudUploadIcon
+              sx={{ fontSize: 48, color: "primary.main", mb: 2 }}
+            />
+          )}
+
           <Typography variant="body1" gutterBottom>
             {file ? file.name : "Drag & drop or click to select video"}
           </Typography>
@@ -195,6 +277,18 @@ export function VideoUpload() {
             <Typography variant="caption" color="text.secondary">
               {(file.size / 1024 / 1024).toFixed(2)} MB
             </Typography>
+          )}
+          {previewUrl && (
+            <Button
+              size="small"
+              onClick={(e) => {
+                e.stopPropagation();
+                fileInputRef.current?.click();
+              }}
+              sx={{ mt: 1 }}
+            >
+              Change Video
+            </Button>
           )}
         </Box>
 

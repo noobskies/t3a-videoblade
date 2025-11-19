@@ -2,6 +2,7 @@ import {
   S3Client,
   PutObjectCommand,
   DeleteObjectCommand,
+  GetObjectCommand,
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { env } from "@/env";
@@ -63,4 +64,21 @@ export async function deleteFromS3(key: string): Promise<void> {
  */
 export function getS3Url(key: string): string {
   return `https://${env.AWS_S3_BUCKET_NAME}.s3.${env.AWS_REGION}.amazonaws.com/${key}`;
+}
+
+/**
+ * Generate presigned URL for downloading/viewing from S3
+ */
+export async function getDownloadPresignedUrl(key: string): Promise<string> {
+  const command = new GetObjectCommand({
+    Bucket: env.AWS_S3_BUCKET_NAME,
+    Key: key,
+  });
+
+  // URL expires in 1 hour
+  const presignedUrl = await getSignedUrl(s3Client, command, {
+    expiresIn: 3600,
+  });
+
+  return presignedUrl;
 }

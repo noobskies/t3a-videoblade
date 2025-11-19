@@ -1,68 +1,129 @@
-import Link from "next/link";
 import { headers } from "next/headers";
-
-import { LatestPost } from "@/app/_components/post";
-import { AuthButton } from "@/app/_components/auth-button";
+import Link from "next/link";
 import { auth } from "@/server/auth";
-import { api, HydrateClient } from "@/trpc/server";
+import { HydrateClient } from "@/trpc/server";
+import { AuthButton } from "@/app/_components/auth-button";
+import {
+  Container,
+  Typography,
+  Box,
+  Stack,
+  Button,
+  Paper,
+} from "@mui/material";
+import {
+  VideoLibrary as LibraryIcon,
+  CloudUpload as UploadIcon,
+  Settings as SettingsIcon,
+} from "@mui/icons-material";
 
 export default async function Home() {
-  const hello = await api.post.hello({ text: "from tRPC" });
   const session = await auth.api.getSession({
     headers: await headers(),
   });
 
-  if (session?.user) {
-    void api.post.getLatest.prefetch();
-  }
-
   return (
     <HydrateClient>
-      <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-        <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
-          <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
-            Create <span className="text-[hsl(280,100%,70%)]">T3</span> App
-          </h1>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
-            <Link
-              className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 hover:bg-white/20"
-              href="https://create.t3.gg/en/usage/first-steps"
-              target="_blank"
-            >
-              <h3 className="text-2xl font-bold">First Steps →</h3>
-              <div className="text-lg">
-                Just the basics - Everything you need to know to set up your
-                database and authentication.
-              </div>
-            </Link>
-            <Link
-              className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 hover:bg-white/20"
-              href="https://create.t3.gg/en/introduction"
-              target="_blank"
-            >
-              <h3 className="text-2xl font-bold">Documentation →</h3>
-              <div className="text-lg">
-                Learn more about Create T3 App, the libraries it uses, and how
-                to deploy it.
-              </div>
-            </Link>
-          </div>
-          <div className="flex flex-col items-center gap-2">
-            <p className="text-2xl text-white">
-              {hello ? hello.greeting : "Loading tRPC query..."}
-            </p>
+      <Box
+        sx={{
+          minHeight: "80vh",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          background: "linear-gradient(to bottom, #1e1e1e, #121212)",
+        }}
+      >
+        <Container maxWidth="md">
+          <Stack spacing={4} alignItems="center" textAlign="center">
+            {/* Branding */}
+            <Box>
+              <Typography
+                variant="h2"
+                component="h1"
+                fontWeight="bold"
+                gutterBottom
+                sx={{
+                  background: "linear-gradient(45deg, #90caf9 30%, #ce93d8 90%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                }}
+              >
+                VideoBlade
+              </Typography>
+              <Typography variant="h5" color="text.secondary" gutterBottom>
+                Multi-Platform Video Publishing
+              </Typography>
+              <Typography variant="body1" color="text.secondary" sx={{ mt: 2 }}>
+                Upload once, publish everywhere. Manage your video content across
+                YouTube and more from a single dashboard.
+              </Typography>
+            </Box>
 
-            <div className="flex flex-col items-center justify-center gap-4">
-              <p className="text-center text-2xl text-white">
-                {session && <span>Logged in as {session.user?.name}</span>}
-              </p>
-              <AuthButton />
-            </div>
-          </div>
+            {/* Actions */}
+            <Paper
+              elevation={3}
+              sx={{
+                p: 4,
+                width: "100%",
+                maxWidth: 600,
+                borderRadius: 2,
+                bgcolor: "background.paper",
+              }}
+            >
+              {session?.user ? (
+                <Stack spacing={3}>
+                  <Typography variant="h6">
+                    Welcome back, {session.user.name}
+                  </Typography>
 
-          {session?.user && <LatestPost />}
-        </div>
-      </main>
+                  <Stack
+                    direction={{ xs: "column", sm: "row" }}
+                    spacing={2}
+                    justifyContent="center"
+                  >
+                    <Button
+                      variant="contained"
+                      size="large"
+                      startIcon={<LibraryIcon />}
+                      component={Link}
+                      href="/library"
+                    >
+                      Video Library
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      size="large"
+                      startIcon={<UploadIcon />}
+                      component={Link}
+                      href="/upload"
+                    >
+                      Upload New
+                    </Button>
+                  </Stack>
+
+                  <Button
+                    variant="text"
+                    startIcon={<SettingsIcon />}
+                    component={Link}
+                    href="/platforms"
+                    sx={{ alignSelf: "center" }}
+                  >
+                    Manage Platforms
+                  </Button>
+                </Stack>
+              ) : (
+                <Stack spacing={3} alignItems="center">
+                  <Typography variant="h6">
+                    Sign in to manage your videos
+                  </Typography>
+                  <AuthButton />
+                </Stack>
+              )}
+            </Paper>
+          </Stack>
+        </Container>
+      </Box>
     </HydrateClient>
   );
 }
