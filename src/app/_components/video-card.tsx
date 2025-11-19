@@ -8,7 +8,6 @@ import {
   Delete as Trash2,
   Edit,
   CloudUpload as Upload,
-  PlayArrow,
 } from "@mui/icons-material";
 import {
   Card,
@@ -20,7 +19,6 @@ import {
   Box,
   Chip,
   Stack,
-  CardActionArea,
 } from "@mui/material";
 import type { VideoListItem } from "@/lib/types";
 
