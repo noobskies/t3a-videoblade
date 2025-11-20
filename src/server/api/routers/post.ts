@@ -12,6 +12,7 @@ import { TRPCError } from "@trpc/server";
 import { env } from "@/env";
 import { inngest } from "@/lib/inngest";
 import { UPLOAD_LIMITS } from "@/lib/constants";
+import { QueueService } from "@/server/lib/queue-service";
 
 export const postRouter = createTRPCRouter({
   /**
@@ -466,6 +467,7 @@ export const postRouter = createTRPCRouter({
         postId: z.string().cuid(),
         platforms: z.array(z.enum(["YOUTUBE", "TIKTOK", "VIMEO"])),
         scheduledPublishAt: z.date().optional(),
+        smartQueue: z.boolean().default(false),
         metadata: z.record(
           z.object({
             title: z.string().optional(),
@@ -494,6 +496,8 @@ export const postRouter = createTRPCRouter({
         });
       }
 
+      const queueService = new QueueService(ctx.db);
+
       // Create job for each platform
       for (const platform of input.platforms) {
         // Get platform connection
@@ -513,6 +517,17 @@ export const postRouter = createTRPCRouter({
           });
         }
 
+        // Calculate scheduled time
+        let scheduledFor = input.scheduledPublishAt;
+        let status: "PENDING" | "SCHEDULED" = input.scheduledPublishAt
+          ? "SCHEDULED"
+          : "PENDING";
+
+        if (input.smartQueue) {
+          scheduledFor = await queueService.getNextAvailableSlot(connection.id);
+          status = "SCHEDULED";
+        }
+
         // Get platform specific metadata
         const meta = input.metadata[platform] ?? {};
 
@@ -520,8 +535,8 @@ export const postRouter = createTRPCRouter({
         const job = await ctx.db.publishJob.create({
           data: {
             platform,
-            status: input.scheduledPublishAt ? "SCHEDULED" : "PENDING",
-            scheduledFor: input.scheduledPublishAt,
+            status,
+            scheduledFor,
             postId: input.postId,
             platformConnectionId: connection.id,
             createdById: ctx.session.user.id,

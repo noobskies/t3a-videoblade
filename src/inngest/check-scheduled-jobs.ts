@@ -16,7 +16,7 @@ export const checkScheduledJobsFunction = inngest.createFunction(
     const jobsToTrigger = await step.run("find-pending-jobs", async () => {
       return await db.publishJob.findMany({
         where: {
-          status: "PENDING",
+          status: { in: ["PENDING", "SCHEDULED"] },
           scheduledFor: {
             lte: new Date(),
           },

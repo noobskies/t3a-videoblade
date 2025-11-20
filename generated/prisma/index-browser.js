@@ -226,6 +226,15 @@ exports.Prisma.PublishJobScalarFieldEnum = {
   createdById: 'createdById'
 };
 
+exports.Prisma.PostingScheduleScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  timezone: 'timezone',
+  slots: 'slots',
+  platformConnectionId: 'platformConnectionId'
+};
+
 exports.Prisma.MetricSnapshotScalarFieldEnum = {
   id: 'id',
   createdAt: 'createdAt',
@@ -243,6 +252,10 @@ exports.Prisma.SortOrder = {
 
 exports.Prisma.NullableJsonNullValueInput = {
   DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
+};
+
+exports.Prisma.JsonNullValueInput = {
   JsonNull: Prisma.JsonNull
 };
 
@@ -299,6 +312,7 @@ exports.Prisma.ModelName = {
   Post: 'Post',
   PlatformConnection: 'PlatformConnection',
   PublishJob: 'PublishJob',
+  PostingSchedule: 'PostingSchedule',
   MetricSnapshot: 'MetricSnapshot'
 };
 

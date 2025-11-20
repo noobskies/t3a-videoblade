@@ -9,13 +9,13 @@
  *   import type { VideoListItem } from '@/lib/types/video'
  */
 
-// Video domain types
+// Post domain types
 export type {
   PublishJob,
-  VideoListItem,
-  VideoList,
-  VideoListFromRouter,
-} from "./video";
+  PostListItem,
+  PostList,
+  PostListFromRouter,
+} from "./post";
 
 // Common utility types
 export type { AsyncData } from "./common";

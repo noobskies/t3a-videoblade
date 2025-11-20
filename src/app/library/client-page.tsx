@@ -9,35 +9,38 @@
  */
 
 import { api } from "@/trpc/react";
-import type { VideoList } from "@/lib/types";
+import type { PostList } from "@/lib/types";
 import { PostCard } from "@/app/_components/post-card";
-import { CloudUpload as Upload, Movie as VideoIcon } from "@mui/icons-material";
+import {
+  CloudUpload as Upload,
+  PermMedia as MediaIcon,
+} from "@mui/icons-material";
 import Link from "next/link";
 import { Button, Container, Typography, Box, Stack, Grid } from "@mui/material";
 
 /**
- * Type guard to ensure we have valid video data
+ * Type guard to ensure we have valid post data
  * This satisfies both TypeScript and ESLint's strict type checking
  */
-function isValidVideoList(data: unknown): data is VideoList {
+function isValidPostList(data: unknown): data is PostList {
   return Array.isArray(data);
 }
 
 export function LibraryPage() {
   // Use Suspense query to leverage loading.tsx automatically
-  const [videoList, queryUtils] = api.post.list.useSuspenseQuery();
+  const [postList, queryUtils] = api.post.list.useSuspenseQuery();
 
   // Validate data shape - this is an actual error if it fails
-  if (!isValidVideoList(videoList)) {
-    throw new Error("Invalid video data format received from API");
+  if (!isValidPostList(postList)) {
+    throw new Error("Invalid post data format received from API");
   }
 
   return (
     <Container maxWidth={false} sx={{ py: 3 }}>
-      <Header videoCount={videoList.length} />
-      {videoList.length > 0 ? (
-        <VideoGrid
-          videos={videoList}
+      <Header postCount={postList.length} />
+      {postList.length > 0 ? (
+        <PostGrid
+          posts={postList}
           onRefresh={() => void queryUtils.refetch()}
         />
       ) : (
@@ -48,10 +51,10 @@ export function LibraryPage() {
 }
 
 /**
- * Header component with video count
+ * Header component with post count
  * Single Responsibility: Display page header and upload CTA
  */
-function Header({ videoCount }: { videoCount: number }) {
+function Header({ postCount }: { postCount: number }) {
   return (
     <Stack
       direction={{ xs: "column", sm: "row" }}
@@ -62,10 +65,10 @@ function Header({ videoCount }: { videoCount: number }) {
     >
       <Box>
         <Typography variant="h4" component="h1" fontWeight="bold">
-          Video Library
+          Media Library
         </Typography>
         <Typography variant="body1" color="text.secondary" sx={{ mt: 1 }}>
-          {videoCount} video{videoCount !== 1 ? "s" : ""}
+          {postCount} post{postCount !== 1 ? "s" : ""}
         </Typography>
       </Box>
       <Button
@@ -75,28 +78,28 @@ function Header({ videoCount }: { videoCount: number }) {
         size="large"
         startIcon={<Upload />}
       >
-        Upload Video
+        Upload Media
       </Button>
     </Stack>
   );
 }
 
 /**
- * Video grid component
- * Single Responsibility: Render grid of video cards
+ * Post grid component
+ * Single Responsibility: Render grid of post cards
  */
-function VideoGrid({
-  videos,
+function PostGrid({
+  posts,
   onRefresh,
 }: {
-  videos: VideoList;
+  posts: PostList;
   onRefresh: () => void;
 }) {
   return (
     <Grid container spacing={3}>
-      {videos.map((video) => (
-        <Grid key={video.id} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
-          <PostCard video={video} onDelete={onRefresh} />
+      {posts.map((post) => (
+        <Grid key={post.id} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
+          <PostCard post={post} onDelete={onRefresh} />
         </Grid>
       ))}
     </Grid>
@@ -115,13 +118,13 @@ function EmptyState() {
       spacing={2}
       sx={{ py: 10, textAlign: "center" }}
     >
-      <VideoIcon sx={{ fontSize: 80, color: "text.secondary", opacity: 0.5 }} />
+      <MediaIcon sx={{ fontSize: 80, color: "text.secondary", opacity: 0.5 }} />
       <Box>
         <Typography variant="h5" gutterBottom fontWeight="medium">
-          No videos yet
+          No posts yet
         </Typography>
         <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
-          Upload your first video to get started
+          Upload your first media to get started
         </Typography>
         <Button
           component={Link}
@@ -130,7 +133,7 @@ function EmptyState() {
           size="large"
           startIcon={<Upload />}
         >
-          Upload Video
+          Upload Media
         </Button>
       </Box>
     </Stack>

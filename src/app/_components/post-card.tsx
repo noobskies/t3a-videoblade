@@ -29,14 +29,14 @@ import {
   FormControlLabel,
   Checkbox,
 } from "@mui/material";
-import type { VideoListItem } from "@/lib/types";
+import type { PostListItem } from "@/lib/types";
 
 type PostCardProps = {
-  video: VideoListItem;
+  post: PostListItem;
   onDelete: () => void;
 };
 
-export function PostCard({ video, onDelete }: PostCardProps) {
+export function PostCard({ post, onDelete }: PostCardProps) {
   const [isDeleting, setIsDeleting] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [deleteFromPlatforms, setDeleteFromPlatforms] = useState(false);
@@ -44,11 +44,12 @@ export function PostCard({ video, onDelete }: PostCardProps) {
   const deleteVideo = api.post.delete.useMutation();
   const retryPublish = api.post.retryPublish.useMutation();
 
-  const hasPublishedJobs = video.publishJobs.some(
+  const hasPublishedJobs = post.publishJobs.some(
     (job) => job.status === "COMPLETED",
   );
 
-  const formatFileSize = (bytes: string) => {
+  const formatFileSize = (bytes: string | null) => {
+    if (!bytes) return "0 B";
     const size = parseInt(bytes);
     if (size < 1024) return `${size} B`;
     if (size < 1024 * 1024) return `${(size / 1024).toFixed(1)} KB`;
@@ -79,7 +80,7 @@ export function PostCard({ video, onDelete }: PostCardProps) {
     setIsDeleting(true);
     try {
       await deleteVideo.mutateAsync({
-        id: video.id,
+        id: post.id,
         deleteFromPlatforms: deleteFromPlatforms,
       });
       onDelete();
@@ -147,10 +148,10 @@ export function PostCard({ video, onDelete }: PostCardProps) {
           bgcolor: "action.hover",
         }}
       >
-        {video.thumbnailUrl ? (
+        {post.thumbnailUrl ? (
           <Image
-            src={video.thumbnailUrl}
-            alt={video.title}
+            src={post.thumbnailUrl}
+            alt={post.title}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             style={{ objectFit: "cover" }}
@@ -181,13 +182,13 @@ export function PostCard({ video, onDelete }: PostCardProps) {
           component="h3"
           noWrap
           gutterBottom
-          title={video.title}
+          title={post.title}
         >
-          {video.title}
+          {post.title}
         </Typography>
 
         {/* Description */}
-        {video.description && (
+        {post.description && (
           <Typography
             variant="body2"
             color="text.secondary"
@@ -200,7 +201,7 @@ export function PostCard({ video, onDelete }: PostCardProps) {
               height: "40px", // Approx 2 lines
             }}
           >
-            {video.description}
+            {post.description}
           </Typography>
         )}
 
@@ -212,23 +213,23 @@ export function PostCard({ video, onDelete }: PostCardProps) {
           sx={{ mb: 2, color: "text.secondary" }}
         >
           <Typography variant="caption">
-            {formatFileSize(video.fileSize)}
+            {formatFileSize(post.fileSize)}
           </Typography>
           <Typography variant="caption">•</Typography>
           <Typography variant="caption">
-            {formatDate(video.createdAt)}
+            {formatDate(post.createdAt)}
           </Typography>
           <Typography variant="caption">•</Typography>
           <Typography variant="caption" sx={{ textTransform: "capitalize" }}>
-            {video.privacy.toLowerCase()}
+            {post.privacy.toLowerCase()}
           </Typography>
         </Stack>
 
         {/* Publish Status Chips */}
-        {video.publishJobs.length > 0 && (
+        {post.publishJobs.length > 0 && (
           <Stack spacing={1}>
             <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-              {video.publishJobs.map((job) => (
+              {post.publishJobs.map((job) => (
                 <Chip
                   key={job.platform}
                   label={`${job.platform}: ${job.status}`}
@@ -246,7 +247,7 @@ export function PostCard({ video, onDelete }: PostCardProps) {
             </Box>
 
             {/* Error Messages */}
-            {video.publishJobs
+            {post.publishJobs
               .filter((j) => j.status === "FAILED" && j.errorMessage)
               .map((job) => (
                 <Alert
@@ -270,14 +271,14 @@ export function PostCard({ video, onDelete }: PostCardProps) {
         <Button
           variant="contained"
           startIcon={<Upload />}
-          href={`/publish/${video.id}`}
+          href={`/publish/${post.id}`}
           fullWidth
         >
           Publish
         </Button>
         <IconButton
           aria-label="edit"
-          href={`/post/${video.id}/edit`}
+          href={`/post/${post.id}/edit`}
           size="small"
           sx={{ ml: 1 }}
         >
@@ -302,7 +303,7 @@ export function PostCard({ video, onDelete }: PostCardProps) {
         aria-describedby="delete-dialog-description"
       >
         <DialogTitle id="delete-dialog-title">
-          {`Delete "${video.title}"?`}
+          {`Delete "${post.title}"?`}
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="delete-dialog-description" gutterBottom>

@@ -49,6 +49,11 @@ export type PlatformConnection = $Result.DefaultSelection<Prisma.$PlatformConnec
  */
 export type PublishJob = $Result.DefaultSelection<Prisma.$PublishJobPayload>
 /**
+ * Model PostingSchedule
+ * 
+ */
+export type PostingSchedule = $Result.DefaultSelection<Prisma.$PostingSchedulePayload>
+/**
  * Model MetricSnapshot
  * 
  */
@@ -304,6 +309,16 @@ export class PrismaClient<
     * ```
     */
   get publishJob(): Prisma.PublishJobDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.postingSchedule`: Exposes CRUD operations for the **PostingSchedule** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more PostingSchedules
+    * const postingSchedules = await prisma.postingSchedule.findMany()
+    * ```
+    */
+  get postingSchedule(): Prisma.PostingScheduleDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.metricSnapshot`: Exposes CRUD operations for the **MetricSnapshot** model.
@@ -762,6 +777,7 @@ export namespace Prisma {
     Post: 'Post',
     PlatformConnection: 'PlatformConnection',
     PublishJob: 'PublishJob',
+    PostingSchedule: 'PostingSchedule',
     MetricSnapshot: 'MetricSnapshot'
   };
 
@@ -781,7 +797,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "account" | "session" | "user" | "verification" | "post" | "platformConnection" | "publishJob" | "metricSnapshot"
+      modelProps: "account" | "session" | "user" | "verification" | "post" | "platformConnection" | "publishJob" | "postingSchedule" | "metricSnapshot"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1303,6 +1319,80 @@ export namespace Prisma {
           }
         }
       }
+      PostingSchedule: {
+        payload: Prisma.$PostingSchedulePayload<ExtArgs>
+        fields: Prisma.PostingScheduleFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PostingScheduleFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PostingSchedulePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PostingScheduleFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PostingSchedulePayload>
+          }
+          findFirst: {
+            args: Prisma.PostingScheduleFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PostingSchedulePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PostingScheduleFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PostingSchedulePayload>
+          }
+          findMany: {
+            args: Prisma.PostingScheduleFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PostingSchedulePayload>[]
+          }
+          create: {
+            args: Prisma.PostingScheduleCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PostingSchedulePayload>
+          }
+          createMany: {
+            args: Prisma.PostingScheduleCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.PostingScheduleCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PostingSchedulePayload>[]
+          }
+          delete: {
+            args: Prisma.PostingScheduleDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PostingSchedulePayload>
+          }
+          update: {
+            args: Prisma.PostingScheduleUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PostingSchedulePayload>
+          }
+          deleteMany: {
+            args: Prisma.PostingScheduleDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PostingScheduleUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.PostingScheduleUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PostingSchedulePayload>[]
+          }
+          upsert: {
+            args: Prisma.PostingScheduleUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PostingSchedulePayload>
+          }
+          aggregate: {
+            args: Prisma.PostingScheduleAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePostingSchedule>
+          }
+          groupBy: {
+            args: Prisma.PostingScheduleGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PostingScheduleGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PostingScheduleCountArgs<ExtArgs>
+            result: $Utils.Optional<PostingScheduleCountAggregateOutputType> | number
+          }
+        }
+      }
       MetricSnapshot: {
         payload: Prisma.$MetricSnapshotPayload<ExtArgs>
         fields: Prisma.MetricSnapshotFieldRefs
@@ -1480,6 +1570,7 @@ export namespace Prisma {
     post?: PostOmit
     platformConnection?: PlatformConnectionOmit
     publishJob?: PublishJobOmit
+    postingSchedule?: PostingScheduleOmit
     metricSnapshot?: MetricSnapshotOmit
   }
 
@@ -7695,6 +7786,7 @@ export namespace Prisma {
     userId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     publishJobs?: boolean | PlatformConnection$publishJobsArgs<ExtArgs>
+    postingSchedule?: boolean | PlatformConnection$postingScheduleArgs<ExtArgs>
     _count?: boolean | PlatformConnectionCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["platformConnection"]>
 
@@ -7749,6 +7841,7 @@ export namespace Prisma {
   export type PlatformConnectionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     publishJobs?: boolean | PlatformConnection$publishJobsArgs<ExtArgs>
+    postingSchedule?: boolean | PlatformConnection$postingScheduleArgs<ExtArgs>
     _count?: boolean | PlatformConnectionCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type PlatformConnectionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7763,6 +7856,7 @@ export namespace Prisma {
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
       publishJobs: Prisma.$PublishJobPayload<ExtArgs>[]
+      postingSchedule: Prisma.$PostingSchedulePayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -8173,6 +8267,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     publishJobs<T extends PlatformConnection$publishJobsArgs<ExtArgs> = {}>(args?: Subset<T, PlatformConnection$publishJobsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PublishJobPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    postingSchedule<T extends PlatformConnection$postingScheduleArgs<ExtArgs> = {}>(args?: Subset<T, PlatformConnection$postingScheduleArgs<ExtArgs>>): Prisma__PostingScheduleClient<$Result.GetResult<Prisma.$PostingSchedulePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -8631,6 +8726,25 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: PublishJobScalarFieldEnum | PublishJobScalarFieldEnum[]
+  }
+
+  /**
+   * PlatformConnection.postingSchedule
+   */
+  export type PlatformConnection$postingScheduleArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PostingSchedule
+     */
+    select?: PostingScheduleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PostingSchedule
+     */
+    omit?: PostingScheduleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PostingScheduleInclude<ExtArgs> | null
+    where?: PostingScheduleWhereInput
   }
 
   /**
@@ -9999,6 +10113,1073 @@ export namespace Prisma {
 
 
   /**
+   * Model PostingSchedule
+   */
+
+  export type AggregatePostingSchedule = {
+    _count: PostingScheduleCountAggregateOutputType | null
+    _min: PostingScheduleMinAggregateOutputType | null
+    _max: PostingScheduleMaxAggregateOutputType | null
+  }
+
+  export type PostingScheduleMinAggregateOutputType = {
+    id: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    timezone: string | null
+    platformConnectionId: string | null
+  }
+
+  export type PostingScheduleMaxAggregateOutputType = {
+    id: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    timezone: string | null
+    platformConnectionId: string | null
+  }
+
+  export type PostingScheduleCountAggregateOutputType = {
+    id: number
+    createdAt: number
+    updatedAt: number
+    timezone: number
+    slots: number
+    platformConnectionId: number
+    _all: number
+  }
+
+
+  export type PostingScheduleMinAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    timezone?: true
+    platformConnectionId?: true
+  }
+
+  export type PostingScheduleMaxAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    timezone?: true
+    platformConnectionId?: true
+  }
+
+  export type PostingScheduleCountAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    timezone?: true
+    slots?: true
+    platformConnectionId?: true
+    _all?: true
+  }
+
+  export type PostingScheduleAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PostingSchedule to aggregate.
+     */
+    where?: PostingScheduleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PostingSchedules to fetch.
+     */
+    orderBy?: PostingScheduleOrderByWithRelationInput | PostingScheduleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PostingScheduleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PostingSchedules from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PostingSchedules.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned PostingSchedules
+    **/
+    _count?: true | PostingScheduleCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PostingScheduleMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PostingScheduleMaxAggregateInputType
+  }
+
+  export type GetPostingScheduleAggregateType<T extends PostingScheduleAggregateArgs> = {
+        [P in keyof T & keyof AggregatePostingSchedule]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePostingSchedule[P]>
+      : GetScalarType<T[P], AggregatePostingSchedule[P]>
+  }
+
+
+
+
+  export type PostingScheduleGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PostingScheduleWhereInput
+    orderBy?: PostingScheduleOrderByWithAggregationInput | PostingScheduleOrderByWithAggregationInput[]
+    by: PostingScheduleScalarFieldEnum[] | PostingScheduleScalarFieldEnum
+    having?: PostingScheduleScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PostingScheduleCountAggregateInputType | true
+    _min?: PostingScheduleMinAggregateInputType
+    _max?: PostingScheduleMaxAggregateInputType
+  }
+
+  export type PostingScheduleGroupByOutputType = {
+    id: string
+    createdAt: Date
+    updatedAt: Date
+    timezone: string
+    slots: JsonValue
+    platformConnectionId: string
+    _count: PostingScheduleCountAggregateOutputType | null
+    _min: PostingScheduleMinAggregateOutputType | null
+    _max: PostingScheduleMaxAggregateOutputType | null
+  }
+
+  type GetPostingScheduleGroupByPayload<T extends PostingScheduleGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PostingScheduleGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PostingScheduleGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PostingScheduleGroupByOutputType[P]>
+            : GetScalarType<T[P], PostingScheduleGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PostingScheduleSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    timezone?: boolean
+    slots?: boolean
+    platformConnectionId?: boolean
+    platformConnection?: boolean | PlatformConnectionDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["postingSchedule"]>
+
+  export type PostingScheduleSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    timezone?: boolean
+    slots?: boolean
+    platformConnectionId?: boolean
+    platformConnection?: boolean | PlatformConnectionDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["postingSchedule"]>
+
+  export type PostingScheduleSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    timezone?: boolean
+    slots?: boolean
+    platformConnectionId?: boolean
+    platformConnection?: boolean | PlatformConnectionDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["postingSchedule"]>
+
+  export type PostingScheduleSelectScalar = {
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    timezone?: boolean
+    slots?: boolean
+    platformConnectionId?: boolean
+  }
+
+  export type PostingScheduleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "timezone" | "slots" | "platformConnectionId", ExtArgs["result"]["postingSchedule"]>
+  export type PostingScheduleInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    platformConnection?: boolean | PlatformConnectionDefaultArgs<ExtArgs>
+  }
+  export type PostingScheduleIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    platformConnection?: boolean | PlatformConnectionDefaultArgs<ExtArgs>
+  }
+  export type PostingScheduleIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    platformConnection?: boolean | PlatformConnectionDefaultArgs<ExtArgs>
+  }
+
+  export type $PostingSchedulePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "PostingSchedule"
+    objects: {
+      platformConnection: Prisma.$PlatformConnectionPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      createdAt: Date
+      updatedAt: Date
+      timezone: string
+      slots: Prisma.JsonValue
+      platformConnectionId: string
+    }, ExtArgs["result"]["postingSchedule"]>
+    composites: {}
+  }
+
+  type PostingScheduleGetPayload<S extends boolean | null | undefined | PostingScheduleDefaultArgs> = $Result.GetResult<Prisma.$PostingSchedulePayload, S>
+
+  type PostingScheduleCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<PostingScheduleFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: PostingScheduleCountAggregateInputType | true
+    }
+
+  export interface PostingScheduleDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['PostingSchedule'], meta: { name: 'PostingSchedule' } }
+    /**
+     * Find zero or one PostingSchedule that matches the filter.
+     * @param {PostingScheduleFindUniqueArgs} args - Arguments to find a PostingSchedule
+     * @example
+     * // Get one PostingSchedule
+     * const postingSchedule = await prisma.postingSchedule.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PostingScheduleFindUniqueArgs>(args: SelectSubset<T, PostingScheduleFindUniqueArgs<ExtArgs>>): Prisma__PostingScheduleClient<$Result.GetResult<Prisma.$PostingSchedulePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one PostingSchedule that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {PostingScheduleFindUniqueOrThrowArgs} args - Arguments to find a PostingSchedule
+     * @example
+     * // Get one PostingSchedule
+     * const postingSchedule = await prisma.postingSchedule.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PostingScheduleFindUniqueOrThrowArgs>(args: SelectSubset<T, PostingScheduleFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PostingScheduleClient<$Result.GetResult<Prisma.$PostingSchedulePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PostingSchedule that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PostingScheduleFindFirstArgs} args - Arguments to find a PostingSchedule
+     * @example
+     * // Get one PostingSchedule
+     * const postingSchedule = await prisma.postingSchedule.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PostingScheduleFindFirstArgs>(args?: SelectSubset<T, PostingScheduleFindFirstArgs<ExtArgs>>): Prisma__PostingScheduleClient<$Result.GetResult<Prisma.$PostingSchedulePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PostingSchedule that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PostingScheduleFindFirstOrThrowArgs} args - Arguments to find a PostingSchedule
+     * @example
+     * // Get one PostingSchedule
+     * const postingSchedule = await prisma.postingSchedule.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PostingScheduleFindFirstOrThrowArgs>(args?: SelectSubset<T, PostingScheduleFindFirstOrThrowArgs<ExtArgs>>): Prisma__PostingScheduleClient<$Result.GetResult<Prisma.$PostingSchedulePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more PostingSchedules that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PostingScheduleFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all PostingSchedules
+     * const postingSchedules = await prisma.postingSchedule.findMany()
+     * 
+     * // Get first 10 PostingSchedules
+     * const postingSchedules = await prisma.postingSchedule.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const postingScheduleWithIdOnly = await prisma.postingSchedule.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PostingScheduleFindManyArgs>(args?: SelectSubset<T, PostingScheduleFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PostingSchedulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a PostingSchedule.
+     * @param {PostingScheduleCreateArgs} args - Arguments to create a PostingSchedule.
+     * @example
+     * // Create one PostingSchedule
+     * const PostingSchedule = await prisma.postingSchedule.create({
+     *   data: {
+     *     // ... data to create a PostingSchedule
+     *   }
+     * })
+     * 
+     */
+    create<T extends PostingScheduleCreateArgs>(args: SelectSubset<T, PostingScheduleCreateArgs<ExtArgs>>): Prisma__PostingScheduleClient<$Result.GetResult<Prisma.$PostingSchedulePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many PostingSchedules.
+     * @param {PostingScheduleCreateManyArgs} args - Arguments to create many PostingSchedules.
+     * @example
+     * // Create many PostingSchedules
+     * const postingSchedule = await prisma.postingSchedule.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PostingScheduleCreateManyArgs>(args?: SelectSubset<T, PostingScheduleCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many PostingSchedules and returns the data saved in the database.
+     * @param {PostingScheduleCreateManyAndReturnArgs} args - Arguments to create many PostingSchedules.
+     * @example
+     * // Create many PostingSchedules
+     * const postingSchedule = await prisma.postingSchedule.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many PostingSchedules and only return the `id`
+     * const postingScheduleWithIdOnly = await prisma.postingSchedule.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends PostingScheduleCreateManyAndReturnArgs>(args?: SelectSubset<T, PostingScheduleCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PostingSchedulePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a PostingSchedule.
+     * @param {PostingScheduleDeleteArgs} args - Arguments to delete one PostingSchedule.
+     * @example
+     * // Delete one PostingSchedule
+     * const PostingSchedule = await prisma.postingSchedule.delete({
+     *   where: {
+     *     // ... filter to delete one PostingSchedule
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PostingScheduleDeleteArgs>(args: SelectSubset<T, PostingScheduleDeleteArgs<ExtArgs>>): Prisma__PostingScheduleClient<$Result.GetResult<Prisma.$PostingSchedulePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one PostingSchedule.
+     * @param {PostingScheduleUpdateArgs} args - Arguments to update one PostingSchedule.
+     * @example
+     * // Update one PostingSchedule
+     * const postingSchedule = await prisma.postingSchedule.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PostingScheduleUpdateArgs>(args: SelectSubset<T, PostingScheduleUpdateArgs<ExtArgs>>): Prisma__PostingScheduleClient<$Result.GetResult<Prisma.$PostingSchedulePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more PostingSchedules.
+     * @param {PostingScheduleDeleteManyArgs} args - Arguments to filter PostingSchedules to delete.
+     * @example
+     * // Delete a few PostingSchedules
+     * const { count } = await prisma.postingSchedule.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PostingScheduleDeleteManyArgs>(args?: SelectSubset<T, PostingScheduleDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PostingSchedules.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PostingScheduleUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many PostingSchedules
+     * const postingSchedule = await prisma.postingSchedule.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PostingScheduleUpdateManyArgs>(args: SelectSubset<T, PostingScheduleUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PostingSchedules and returns the data updated in the database.
+     * @param {PostingScheduleUpdateManyAndReturnArgs} args - Arguments to update many PostingSchedules.
+     * @example
+     * // Update many PostingSchedules
+     * const postingSchedule = await prisma.postingSchedule.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more PostingSchedules and only return the `id`
+     * const postingScheduleWithIdOnly = await prisma.postingSchedule.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends PostingScheduleUpdateManyAndReturnArgs>(args: SelectSubset<T, PostingScheduleUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PostingSchedulePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one PostingSchedule.
+     * @param {PostingScheduleUpsertArgs} args - Arguments to update or create a PostingSchedule.
+     * @example
+     * // Update or create a PostingSchedule
+     * const postingSchedule = await prisma.postingSchedule.upsert({
+     *   create: {
+     *     // ... data to create a PostingSchedule
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the PostingSchedule we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PostingScheduleUpsertArgs>(args: SelectSubset<T, PostingScheduleUpsertArgs<ExtArgs>>): Prisma__PostingScheduleClient<$Result.GetResult<Prisma.$PostingSchedulePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of PostingSchedules.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PostingScheduleCountArgs} args - Arguments to filter PostingSchedules to count.
+     * @example
+     * // Count the number of PostingSchedules
+     * const count = await prisma.postingSchedule.count({
+     *   where: {
+     *     // ... the filter for the PostingSchedules we want to count
+     *   }
+     * })
+    **/
+    count<T extends PostingScheduleCountArgs>(
+      args?: Subset<T, PostingScheduleCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PostingScheduleCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a PostingSchedule.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PostingScheduleAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PostingScheduleAggregateArgs>(args: Subset<T, PostingScheduleAggregateArgs>): Prisma.PrismaPromise<GetPostingScheduleAggregateType<T>>
+
+    /**
+     * Group by PostingSchedule.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PostingScheduleGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PostingScheduleGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PostingScheduleGroupByArgs['orderBy'] }
+        : { orderBy?: PostingScheduleGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PostingScheduleGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPostingScheduleGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the PostingSchedule model
+   */
+  readonly fields: PostingScheduleFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for PostingSchedule.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PostingScheduleClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    platformConnection<T extends PlatformConnectionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PlatformConnectionDefaultArgs<ExtArgs>>): Prisma__PlatformConnectionClient<$Result.GetResult<Prisma.$PlatformConnectionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the PostingSchedule model
+   */
+  interface PostingScheduleFieldRefs {
+    readonly id: FieldRef<"PostingSchedule", 'String'>
+    readonly createdAt: FieldRef<"PostingSchedule", 'DateTime'>
+    readonly updatedAt: FieldRef<"PostingSchedule", 'DateTime'>
+    readonly timezone: FieldRef<"PostingSchedule", 'String'>
+    readonly slots: FieldRef<"PostingSchedule", 'Json'>
+    readonly platformConnectionId: FieldRef<"PostingSchedule", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * PostingSchedule findUnique
+   */
+  export type PostingScheduleFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PostingSchedule
+     */
+    select?: PostingScheduleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PostingSchedule
+     */
+    omit?: PostingScheduleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PostingScheduleInclude<ExtArgs> | null
+    /**
+     * Filter, which PostingSchedule to fetch.
+     */
+    where: PostingScheduleWhereUniqueInput
+  }
+
+  /**
+   * PostingSchedule findUniqueOrThrow
+   */
+  export type PostingScheduleFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PostingSchedule
+     */
+    select?: PostingScheduleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PostingSchedule
+     */
+    omit?: PostingScheduleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PostingScheduleInclude<ExtArgs> | null
+    /**
+     * Filter, which PostingSchedule to fetch.
+     */
+    where: PostingScheduleWhereUniqueInput
+  }
+
+  /**
+   * PostingSchedule findFirst
+   */
+  export type PostingScheduleFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PostingSchedule
+     */
+    select?: PostingScheduleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PostingSchedule
+     */
+    omit?: PostingScheduleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PostingScheduleInclude<ExtArgs> | null
+    /**
+     * Filter, which PostingSchedule to fetch.
+     */
+    where?: PostingScheduleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PostingSchedules to fetch.
+     */
+    orderBy?: PostingScheduleOrderByWithRelationInput | PostingScheduleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PostingSchedules.
+     */
+    cursor?: PostingScheduleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PostingSchedules from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PostingSchedules.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PostingSchedules.
+     */
+    distinct?: PostingScheduleScalarFieldEnum | PostingScheduleScalarFieldEnum[]
+  }
+
+  /**
+   * PostingSchedule findFirstOrThrow
+   */
+  export type PostingScheduleFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PostingSchedule
+     */
+    select?: PostingScheduleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PostingSchedule
+     */
+    omit?: PostingScheduleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PostingScheduleInclude<ExtArgs> | null
+    /**
+     * Filter, which PostingSchedule to fetch.
+     */
+    where?: PostingScheduleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PostingSchedules to fetch.
+     */
+    orderBy?: PostingScheduleOrderByWithRelationInput | PostingScheduleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PostingSchedules.
+     */
+    cursor?: PostingScheduleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PostingSchedules from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PostingSchedules.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PostingSchedules.
+     */
+    distinct?: PostingScheduleScalarFieldEnum | PostingScheduleScalarFieldEnum[]
+  }
+
+  /**
+   * PostingSchedule findMany
+   */
+  export type PostingScheduleFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PostingSchedule
+     */
+    select?: PostingScheduleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PostingSchedule
+     */
+    omit?: PostingScheduleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PostingScheduleInclude<ExtArgs> | null
+    /**
+     * Filter, which PostingSchedules to fetch.
+     */
+    where?: PostingScheduleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PostingSchedules to fetch.
+     */
+    orderBy?: PostingScheduleOrderByWithRelationInput | PostingScheduleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing PostingSchedules.
+     */
+    cursor?: PostingScheduleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PostingSchedules from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PostingSchedules.
+     */
+    skip?: number
+    distinct?: PostingScheduleScalarFieldEnum | PostingScheduleScalarFieldEnum[]
+  }
+
+  /**
+   * PostingSchedule create
+   */
+  export type PostingScheduleCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PostingSchedule
+     */
+    select?: PostingScheduleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PostingSchedule
+     */
+    omit?: PostingScheduleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PostingScheduleInclude<ExtArgs> | null
+    /**
+     * The data needed to create a PostingSchedule.
+     */
+    data: XOR<PostingScheduleCreateInput, PostingScheduleUncheckedCreateInput>
+  }
+
+  /**
+   * PostingSchedule createMany
+   */
+  export type PostingScheduleCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many PostingSchedules.
+     */
+    data: PostingScheduleCreateManyInput | PostingScheduleCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * PostingSchedule createManyAndReturn
+   */
+  export type PostingScheduleCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PostingSchedule
+     */
+    select?: PostingScheduleSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PostingSchedule
+     */
+    omit?: PostingScheduleOmit<ExtArgs> | null
+    /**
+     * The data used to create many PostingSchedules.
+     */
+    data: PostingScheduleCreateManyInput | PostingScheduleCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PostingScheduleIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * PostingSchedule update
+   */
+  export type PostingScheduleUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PostingSchedule
+     */
+    select?: PostingScheduleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PostingSchedule
+     */
+    omit?: PostingScheduleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PostingScheduleInclude<ExtArgs> | null
+    /**
+     * The data needed to update a PostingSchedule.
+     */
+    data: XOR<PostingScheduleUpdateInput, PostingScheduleUncheckedUpdateInput>
+    /**
+     * Choose, which PostingSchedule to update.
+     */
+    where: PostingScheduleWhereUniqueInput
+  }
+
+  /**
+   * PostingSchedule updateMany
+   */
+  export type PostingScheduleUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update PostingSchedules.
+     */
+    data: XOR<PostingScheduleUpdateManyMutationInput, PostingScheduleUncheckedUpdateManyInput>
+    /**
+     * Filter which PostingSchedules to update
+     */
+    where?: PostingScheduleWhereInput
+    /**
+     * Limit how many PostingSchedules to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * PostingSchedule updateManyAndReturn
+   */
+  export type PostingScheduleUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PostingSchedule
+     */
+    select?: PostingScheduleSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PostingSchedule
+     */
+    omit?: PostingScheduleOmit<ExtArgs> | null
+    /**
+     * The data used to update PostingSchedules.
+     */
+    data: XOR<PostingScheduleUpdateManyMutationInput, PostingScheduleUncheckedUpdateManyInput>
+    /**
+     * Filter which PostingSchedules to update
+     */
+    where?: PostingScheduleWhereInput
+    /**
+     * Limit how many PostingSchedules to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PostingScheduleIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * PostingSchedule upsert
+   */
+  export type PostingScheduleUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PostingSchedule
+     */
+    select?: PostingScheduleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PostingSchedule
+     */
+    omit?: PostingScheduleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PostingScheduleInclude<ExtArgs> | null
+    /**
+     * The filter to search for the PostingSchedule to update in case it exists.
+     */
+    where: PostingScheduleWhereUniqueInput
+    /**
+     * In case the PostingSchedule found by the `where` argument doesn't exist, create a new PostingSchedule with this data.
+     */
+    create: XOR<PostingScheduleCreateInput, PostingScheduleUncheckedCreateInput>
+    /**
+     * In case the PostingSchedule was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PostingScheduleUpdateInput, PostingScheduleUncheckedUpdateInput>
+  }
+
+  /**
+   * PostingSchedule delete
+   */
+  export type PostingScheduleDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PostingSchedule
+     */
+    select?: PostingScheduleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PostingSchedule
+     */
+    omit?: PostingScheduleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PostingScheduleInclude<ExtArgs> | null
+    /**
+     * Filter which PostingSchedule to delete.
+     */
+    where: PostingScheduleWhereUniqueInput
+  }
+
+  /**
+   * PostingSchedule deleteMany
+   */
+  export type PostingScheduleDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PostingSchedules to delete
+     */
+    where?: PostingScheduleWhereInput
+    /**
+     * Limit how many PostingSchedules to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * PostingSchedule without action
+   */
+  export type PostingScheduleDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PostingSchedule
+     */
+    select?: PostingScheduleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PostingSchedule
+     */
+    omit?: PostingScheduleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PostingScheduleInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model MetricSnapshot
    */
 
@@ -11268,6 +12449,18 @@ export namespace Prisma {
   export type PublishJobScalarFieldEnum = (typeof PublishJobScalarFieldEnum)[keyof typeof PublishJobScalarFieldEnum]
 
 
+  export const PostingScheduleScalarFieldEnum: {
+    id: 'id',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    timezone: 'timezone',
+    slots: 'slots',
+    platformConnectionId: 'platformConnectionId'
+  };
+
+  export type PostingScheduleScalarFieldEnum = (typeof PostingScheduleScalarFieldEnum)[keyof typeof PostingScheduleScalarFieldEnum]
+
+
   export const MetricSnapshotScalarFieldEnum: {
     id: 'id',
     createdAt: 'createdAt',
@@ -11295,6 +12488,13 @@ export namespace Prisma {
   };
 
   export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
+  export const JsonNullValueInput: {
+    JsonNull: typeof JsonNull
+  };
+
+  export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
   export const QueryMode: {
@@ -11916,6 +13116,7 @@ export namespace Prisma {
     userId?: StringFilter<"PlatformConnection"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     publishJobs?: PublishJobListRelationFilter
+    postingSchedule?: XOR<PostingScheduleNullableScalarRelationFilter, PostingScheduleWhereInput> | null
   }
 
   export type PlatformConnectionOrderByWithRelationInput = {
@@ -11933,6 +13134,7 @@ export namespace Prisma {
     userId?: SortOrder
     user?: UserOrderByWithRelationInput
     publishJobs?: PublishJobOrderByRelationAggregateInput
+    postingSchedule?: PostingScheduleOrderByWithRelationInput
   }
 
   export type PlatformConnectionWhereUniqueInput = Prisma.AtLeast<{
@@ -11954,6 +13156,7 @@ export namespace Prisma {
     userId?: StringFilter<"PlatformConnection"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     publishJobs?: PublishJobListRelationFilter
+    postingSchedule?: XOR<PostingScheduleNullableScalarRelationFilter, PostingScheduleWhereInput> | null
   }, "id" | "userId_platform">
 
   export type PlatformConnectionOrderByWithAggregationInput = {
@@ -12136,6 +13339,66 @@ export namespace Prisma {
     postId?: StringWithAggregatesFilter<"PublishJob"> | string
     platformConnectionId?: StringWithAggregatesFilter<"PublishJob"> | string
     createdById?: StringWithAggregatesFilter<"PublishJob"> | string
+  }
+
+  export type PostingScheduleWhereInput = {
+    AND?: PostingScheduleWhereInput | PostingScheduleWhereInput[]
+    OR?: PostingScheduleWhereInput[]
+    NOT?: PostingScheduleWhereInput | PostingScheduleWhereInput[]
+    id?: StringFilter<"PostingSchedule"> | string
+    createdAt?: DateTimeFilter<"PostingSchedule"> | Date | string
+    updatedAt?: DateTimeFilter<"PostingSchedule"> | Date | string
+    timezone?: StringFilter<"PostingSchedule"> | string
+    slots?: JsonFilter<"PostingSchedule">
+    platformConnectionId?: StringFilter<"PostingSchedule"> | string
+    platformConnection?: XOR<PlatformConnectionScalarRelationFilter, PlatformConnectionWhereInput>
+  }
+
+  export type PostingScheduleOrderByWithRelationInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    timezone?: SortOrder
+    slots?: SortOrder
+    platformConnectionId?: SortOrder
+    platformConnection?: PlatformConnectionOrderByWithRelationInput
+  }
+
+  export type PostingScheduleWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    platformConnectionId?: string
+    AND?: PostingScheduleWhereInput | PostingScheduleWhereInput[]
+    OR?: PostingScheduleWhereInput[]
+    NOT?: PostingScheduleWhereInput | PostingScheduleWhereInput[]
+    createdAt?: DateTimeFilter<"PostingSchedule"> | Date | string
+    updatedAt?: DateTimeFilter<"PostingSchedule"> | Date | string
+    timezone?: StringFilter<"PostingSchedule"> | string
+    slots?: JsonFilter<"PostingSchedule">
+    platformConnection?: XOR<PlatformConnectionScalarRelationFilter, PlatformConnectionWhereInput>
+  }, "id" | "platformConnectionId">
+
+  export type PostingScheduleOrderByWithAggregationInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    timezone?: SortOrder
+    slots?: SortOrder
+    platformConnectionId?: SortOrder
+    _count?: PostingScheduleCountOrderByAggregateInput
+    _max?: PostingScheduleMaxOrderByAggregateInput
+    _min?: PostingScheduleMinOrderByAggregateInput
+  }
+
+  export type PostingScheduleScalarWhereWithAggregatesInput = {
+    AND?: PostingScheduleScalarWhereWithAggregatesInput | PostingScheduleScalarWhereWithAggregatesInput[]
+    OR?: PostingScheduleScalarWhereWithAggregatesInput[]
+    NOT?: PostingScheduleScalarWhereWithAggregatesInput | PostingScheduleScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"PostingSchedule"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"PostingSchedule"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"PostingSchedule"> | Date | string
+    timezone?: StringWithAggregatesFilter<"PostingSchedule"> | string
+    slots?: JsonWithAggregatesFilter<"PostingSchedule">
+    platformConnectionId?: StringWithAggregatesFilter<"PostingSchedule"> | string
   }
 
   export type MetricSnapshotWhereInput = {
@@ -12702,6 +13965,7 @@ export namespace Prisma {
     isActive?: boolean
     user: UserCreateNestedOneWithoutPlatformConnectionsInput
     publishJobs?: PublishJobCreateNestedManyWithoutPlatformConnectionInput
+    postingSchedule?: PostingScheduleCreateNestedOneWithoutPlatformConnectionInput
   }
 
   export type PlatformConnectionUncheckedCreateInput = {
@@ -12718,6 +13982,7 @@ export namespace Prisma {
     isActive?: boolean
     userId: string
     publishJobs?: PublishJobUncheckedCreateNestedManyWithoutPlatformConnectionInput
+    postingSchedule?: PostingScheduleUncheckedCreateNestedOneWithoutPlatformConnectionInput
   }
 
   export type PlatformConnectionUpdateInput = {
@@ -12734,6 +13999,7 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     user?: UserUpdateOneRequiredWithoutPlatformConnectionsNestedInput
     publishJobs?: PublishJobUpdateManyWithoutPlatformConnectionNestedInput
+    postingSchedule?: PostingScheduleUpdateOneWithoutPlatformConnectionNestedInput
   }
 
   export type PlatformConnectionUncheckedUpdateInput = {
@@ -12750,6 +14016,7 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     userId?: StringFieldUpdateOperationsInput | string
     publishJobs?: PublishJobUncheckedUpdateManyWithoutPlatformConnectionNestedInput
+    postingSchedule?: PostingScheduleUncheckedUpdateOneWithoutPlatformConnectionNestedInput
   }
 
   export type PlatformConnectionCreateManyInput = {
@@ -12963,6 +14230,68 @@ export namespace Prisma {
     postId?: StringFieldUpdateOperationsInput | string
     platformConnectionId?: StringFieldUpdateOperationsInput | string
     createdById?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type PostingScheduleCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    timezone: string
+    slots: JsonNullValueInput | InputJsonValue
+    platformConnection: PlatformConnectionCreateNestedOneWithoutPostingScheduleInput
+  }
+
+  export type PostingScheduleUncheckedCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    timezone: string
+    slots: JsonNullValueInput | InputJsonValue
+    platformConnectionId: string
+  }
+
+  export type PostingScheduleUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    slots?: JsonNullValueInput | InputJsonValue
+    platformConnection?: PlatformConnectionUpdateOneRequiredWithoutPostingScheduleNestedInput
+  }
+
+  export type PostingScheduleUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    slots?: JsonNullValueInput | InputJsonValue
+    platformConnectionId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type PostingScheduleCreateManyInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    timezone: string
+    slots: JsonNullValueInput | InputJsonValue
+    platformConnectionId: string
+  }
+
+  export type PostingScheduleUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    slots?: JsonNullValueInput | InputJsonValue
+  }
+
+  export type PostingScheduleUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    slots?: JsonNullValueInput | InputJsonValue
+    platformConnectionId?: StringFieldUpdateOperationsInput | string
   }
 
   export type MetricSnapshotCreateInput = {
@@ -13564,6 +14893,11 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
+  export type PostingScheduleNullableScalarRelationFilter = {
+    is?: PostingScheduleWhereInput | null
+    isNot?: PostingScheduleWhereInput | null
+  }
+
   export type PlatformConnectionUserIdPlatformCompoundUniqueInput = {
     userId: string
     platform: $Enums.Platform
@@ -13815,6 +15149,80 @@ export namespace Prisma {
     _sum?: NestedIntFilter<$PrismaModel>
     _min?: NestedIntFilter<$PrismaModel>
     _max?: NestedIntFilter<$PrismaModel>
+  }
+  export type JsonFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type PostingScheduleCountOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    timezone?: SortOrder
+    slots?: SortOrder
+    platformConnectionId?: SortOrder
+  }
+
+  export type PostingScheduleMaxOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    timezone?: SortOrder
+    platformConnectionId?: SortOrder
+  }
+
+  export type PostingScheduleMinOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    timezone?: SortOrder
+    platformConnectionId?: SortOrder
+  }
+  export type JsonWithAggregatesFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedJsonFilter<$PrismaModel>
+    _max?: NestedJsonFilter<$PrismaModel>
   }
 
   export type PublishJobScalarRelationFilter = {
@@ -14217,11 +15625,23 @@ export namespace Prisma {
     connect?: PublishJobWhereUniqueInput | PublishJobWhereUniqueInput[]
   }
 
+  export type PostingScheduleCreateNestedOneWithoutPlatformConnectionInput = {
+    create?: XOR<PostingScheduleCreateWithoutPlatformConnectionInput, PostingScheduleUncheckedCreateWithoutPlatformConnectionInput>
+    connectOrCreate?: PostingScheduleCreateOrConnectWithoutPlatformConnectionInput
+    connect?: PostingScheduleWhereUniqueInput
+  }
+
   export type PublishJobUncheckedCreateNestedManyWithoutPlatformConnectionInput = {
     create?: XOR<PublishJobCreateWithoutPlatformConnectionInput, PublishJobUncheckedCreateWithoutPlatformConnectionInput> | PublishJobCreateWithoutPlatformConnectionInput[] | PublishJobUncheckedCreateWithoutPlatformConnectionInput[]
     connectOrCreate?: PublishJobCreateOrConnectWithoutPlatformConnectionInput | PublishJobCreateOrConnectWithoutPlatformConnectionInput[]
     createMany?: PublishJobCreateManyPlatformConnectionInputEnvelope
     connect?: PublishJobWhereUniqueInput | PublishJobWhereUniqueInput[]
+  }
+
+  export type PostingScheduleUncheckedCreateNestedOneWithoutPlatformConnectionInput = {
+    create?: XOR<PostingScheduleCreateWithoutPlatformConnectionInput, PostingScheduleUncheckedCreateWithoutPlatformConnectionInput>
+    connectOrCreate?: PostingScheduleCreateOrConnectWithoutPlatformConnectionInput
+    connect?: PostingScheduleWhereUniqueInput
   }
 
   export type EnumPlatformFieldUpdateOperationsInput = {
@@ -14254,6 +15674,16 @@ export namespace Prisma {
     deleteMany?: PublishJobScalarWhereInput | PublishJobScalarWhereInput[]
   }
 
+  export type PostingScheduleUpdateOneWithoutPlatformConnectionNestedInput = {
+    create?: XOR<PostingScheduleCreateWithoutPlatformConnectionInput, PostingScheduleUncheckedCreateWithoutPlatformConnectionInput>
+    connectOrCreate?: PostingScheduleCreateOrConnectWithoutPlatformConnectionInput
+    upsert?: PostingScheduleUpsertWithoutPlatformConnectionInput
+    disconnect?: PostingScheduleWhereInput | boolean
+    delete?: PostingScheduleWhereInput | boolean
+    connect?: PostingScheduleWhereUniqueInput
+    update?: XOR<XOR<PostingScheduleUpdateToOneWithWhereWithoutPlatformConnectionInput, PostingScheduleUpdateWithoutPlatformConnectionInput>, PostingScheduleUncheckedUpdateWithoutPlatformConnectionInput>
+  }
+
   export type PublishJobUncheckedUpdateManyWithoutPlatformConnectionNestedInput = {
     create?: XOR<PublishJobCreateWithoutPlatformConnectionInput, PublishJobUncheckedCreateWithoutPlatformConnectionInput> | PublishJobCreateWithoutPlatformConnectionInput[] | PublishJobUncheckedCreateWithoutPlatformConnectionInput[]
     connectOrCreate?: PublishJobCreateOrConnectWithoutPlatformConnectionInput | PublishJobCreateOrConnectWithoutPlatformConnectionInput[]
@@ -14266,6 +15696,16 @@ export namespace Prisma {
     update?: PublishJobUpdateWithWhereUniqueWithoutPlatformConnectionInput | PublishJobUpdateWithWhereUniqueWithoutPlatformConnectionInput[]
     updateMany?: PublishJobUpdateManyWithWhereWithoutPlatformConnectionInput | PublishJobUpdateManyWithWhereWithoutPlatformConnectionInput[]
     deleteMany?: PublishJobScalarWhereInput | PublishJobScalarWhereInput[]
+  }
+
+  export type PostingScheduleUncheckedUpdateOneWithoutPlatformConnectionNestedInput = {
+    create?: XOR<PostingScheduleCreateWithoutPlatformConnectionInput, PostingScheduleUncheckedCreateWithoutPlatformConnectionInput>
+    connectOrCreate?: PostingScheduleCreateOrConnectWithoutPlatformConnectionInput
+    upsert?: PostingScheduleUpsertWithoutPlatformConnectionInput
+    disconnect?: PostingScheduleWhereInput | boolean
+    delete?: PostingScheduleWhereInput | boolean
+    connect?: PostingScheduleWhereUniqueInput
+    update?: XOR<XOR<PostingScheduleUpdateToOneWithWhereWithoutPlatformConnectionInput, PostingScheduleUpdateWithoutPlatformConnectionInput>, PostingScheduleUncheckedUpdateWithoutPlatformConnectionInput>
   }
 
   export type MetricSnapshotCreateNestedManyWithoutPublishJobInput = {
@@ -14366,6 +15806,20 @@ export namespace Prisma {
     update?: MetricSnapshotUpdateWithWhereUniqueWithoutPublishJobInput | MetricSnapshotUpdateWithWhereUniqueWithoutPublishJobInput[]
     updateMany?: MetricSnapshotUpdateManyWithWhereWithoutPublishJobInput | MetricSnapshotUpdateManyWithWhereWithoutPublishJobInput[]
     deleteMany?: MetricSnapshotScalarWhereInput | MetricSnapshotScalarWhereInput[]
+  }
+
+  export type PlatformConnectionCreateNestedOneWithoutPostingScheduleInput = {
+    create?: XOR<PlatformConnectionCreateWithoutPostingScheduleInput, PlatformConnectionUncheckedCreateWithoutPostingScheduleInput>
+    connectOrCreate?: PlatformConnectionCreateOrConnectWithoutPostingScheduleInput
+    connect?: PlatformConnectionWhereUniqueInput
+  }
+
+  export type PlatformConnectionUpdateOneRequiredWithoutPostingScheduleNestedInput = {
+    create?: XOR<PlatformConnectionCreateWithoutPostingScheduleInput, PlatformConnectionUncheckedCreateWithoutPostingScheduleInput>
+    connectOrCreate?: PlatformConnectionCreateOrConnectWithoutPostingScheduleInput
+    upsert?: PlatformConnectionUpsertWithoutPostingScheduleInput
+    connect?: PlatformConnectionWhereUniqueInput
+    update?: XOR<XOR<PlatformConnectionUpdateToOneWithWhereWithoutPostingScheduleInput, PlatformConnectionUpdateWithoutPostingScheduleInput>, PlatformConnectionUncheckedUpdateWithoutPostingScheduleInput>
   }
 
   export type PublishJobCreateNestedOneWithoutMetricSnapshotsInput = {
@@ -14730,6 +16184,29 @@ export namespace Prisma {
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatFilter<$PrismaModel> | number
   }
+  export type NestedJsonFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<NestedJsonFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
 
   export type UserCreateWithoutAccountsInput = {
     id?: string
@@ -15008,6 +16485,7 @@ export namespace Prisma {
     metadata?: NullableJsonNullValueInput | InputJsonValue
     isActive?: boolean
     publishJobs?: PublishJobCreateNestedManyWithoutPlatformConnectionInput
+    postingSchedule?: PostingScheduleCreateNestedOneWithoutPlatformConnectionInput
   }
 
   export type PlatformConnectionUncheckedCreateWithoutUserInput = {
@@ -15023,6 +16501,7 @@ export namespace Prisma {
     metadata?: NullableJsonNullValueInput | InputJsonValue
     isActive?: boolean
     publishJobs?: PublishJobUncheckedCreateNestedManyWithoutPlatformConnectionInput
+    postingSchedule?: PostingScheduleUncheckedCreateNestedOneWithoutPlatformConnectionInput
   }
 
   export type PlatformConnectionCreateOrConnectWithoutUserInput = {
@@ -15511,6 +16990,27 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type PostingScheduleCreateWithoutPlatformConnectionInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    timezone: string
+    slots: JsonNullValueInput | InputJsonValue
+  }
+
+  export type PostingScheduleUncheckedCreateWithoutPlatformConnectionInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    timezone: string
+    slots: JsonNullValueInput | InputJsonValue
+  }
+
+  export type PostingScheduleCreateOrConnectWithoutPlatformConnectionInput = {
+    where: PostingScheduleWhereUniqueInput
+    create: XOR<PostingScheduleCreateWithoutPlatformConnectionInput, PostingScheduleUncheckedCreateWithoutPlatformConnectionInput>
+  }
+
   export type UserUpsertWithoutPlatformConnectionsInput = {
     update: XOR<UserUpdateWithoutPlatformConnectionsInput, UserUncheckedUpdateWithoutPlatformConnectionsInput>
     create: XOR<UserCreateWithoutPlatformConnectionsInput, UserUncheckedCreateWithoutPlatformConnectionsInput>
@@ -15564,6 +17064,33 @@ export namespace Prisma {
   export type PublishJobUpdateManyWithWhereWithoutPlatformConnectionInput = {
     where: PublishJobScalarWhereInput
     data: XOR<PublishJobUpdateManyMutationInput, PublishJobUncheckedUpdateManyWithoutPlatformConnectionInput>
+  }
+
+  export type PostingScheduleUpsertWithoutPlatformConnectionInput = {
+    update: XOR<PostingScheduleUpdateWithoutPlatformConnectionInput, PostingScheduleUncheckedUpdateWithoutPlatformConnectionInput>
+    create: XOR<PostingScheduleCreateWithoutPlatformConnectionInput, PostingScheduleUncheckedCreateWithoutPlatformConnectionInput>
+    where?: PostingScheduleWhereInput
+  }
+
+  export type PostingScheduleUpdateToOneWithWhereWithoutPlatformConnectionInput = {
+    where?: PostingScheduleWhereInput
+    data: XOR<PostingScheduleUpdateWithoutPlatformConnectionInput, PostingScheduleUncheckedUpdateWithoutPlatformConnectionInput>
+  }
+
+  export type PostingScheduleUpdateWithoutPlatformConnectionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    slots?: JsonNullValueInput | InputJsonValue
+  }
+
+  export type PostingScheduleUncheckedUpdateWithoutPlatformConnectionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    timezone?: StringFieldUpdateOperationsInput | string
+    slots?: JsonNullValueInput | InputJsonValue
   }
 
   export type MetricSnapshotCreateWithoutPublishJobInput = {
@@ -15652,6 +17179,7 @@ export namespace Prisma {
     metadata?: NullableJsonNullValueInput | InputJsonValue
     isActive?: boolean
     user: UserCreateNestedOneWithoutPlatformConnectionsInput
+    postingSchedule?: PostingScheduleCreateNestedOneWithoutPlatformConnectionInput
   }
 
   export type PlatformConnectionUncheckedCreateWithoutPublishJobsInput = {
@@ -15667,6 +17195,7 @@ export namespace Prisma {
     metadata?: NullableJsonNullValueInput | InputJsonValue
     isActive?: boolean
     userId: string
+    postingSchedule?: PostingScheduleUncheckedCreateNestedOneWithoutPlatformConnectionInput
   }
 
   export type PlatformConnectionCreateOrConnectWithoutPublishJobsInput = {
@@ -15811,6 +17340,7 @@ export namespace Prisma {
     metadata?: NullableJsonNullValueInput | InputJsonValue
     isActive?: BoolFieldUpdateOperationsInput | boolean
     user?: UserUpdateOneRequiredWithoutPlatformConnectionsNestedInput
+    postingSchedule?: PostingScheduleUpdateOneWithoutPlatformConnectionNestedInput
   }
 
   export type PlatformConnectionUncheckedUpdateWithoutPublishJobsInput = {
@@ -15826,6 +17356,7 @@ export namespace Prisma {
     metadata?: NullableJsonNullValueInput | InputJsonValue
     isActive?: BoolFieldUpdateOperationsInput | boolean
     userId?: StringFieldUpdateOperationsInput | string
+    postingSchedule?: PostingScheduleUncheckedUpdateOneWithoutPlatformConnectionNestedInput
   }
 
   export type UserUpsertWithoutPublishJobsInput = {
@@ -15865,6 +17396,86 @@ export namespace Prisma {
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     posts?: PostUncheckedUpdateManyWithoutCreatedByNestedInput
     platformConnections?: PlatformConnectionUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type PlatformConnectionCreateWithoutPostingScheduleInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    platform: $Enums.Platform
+    platformUserId: string
+    platformUsername?: string | null
+    accessToken: string
+    refreshToken?: string | null
+    tokenExpiry?: Date | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    isActive?: boolean
+    user: UserCreateNestedOneWithoutPlatformConnectionsInput
+    publishJobs?: PublishJobCreateNestedManyWithoutPlatformConnectionInput
+  }
+
+  export type PlatformConnectionUncheckedCreateWithoutPostingScheduleInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    platform: $Enums.Platform
+    platformUserId: string
+    platformUsername?: string | null
+    accessToken: string
+    refreshToken?: string | null
+    tokenExpiry?: Date | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    isActive?: boolean
+    userId: string
+    publishJobs?: PublishJobUncheckedCreateNestedManyWithoutPlatformConnectionInput
+  }
+
+  export type PlatformConnectionCreateOrConnectWithoutPostingScheduleInput = {
+    where: PlatformConnectionWhereUniqueInput
+    create: XOR<PlatformConnectionCreateWithoutPostingScheduleInput, PlatformConnectionUncheckedCreateWithoutPostingScheduleInput>
+  }
+
+  export type PlatformConnectionUpsertWithoutPostingScheduleInput = {
+    update: XOR<PlatformConnectionUpdateWithoutPostingScheduleInput, PlatformConnectionUncheckedUpdateWithoutPostingScheduleInput>
+    create: XOR<PlatformConnectionCreateWithoutPostingScheduleInput, PlatformConnectionUncheckedCreateWithoutPostingScheduleInput>
+    where?: PlatformConnectionWhereInput
+  }
+
+  export type PlatformConnectionUpdateToOneWithWhereWithoutPostingScheduleInput = {
+    where?: PlatformConnectionWhereInput
+    data: XOR<PlatformConnectionUpdateWithoutPostingScheduleInput, PlatformConnectionUncheckedUpdateWithoutPostingScheduleInput>
+  }
+
+  export type PlatformConnectionUpdateWithoutPostingScheduleInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    platform?: EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
+    platformUserId?: StringFieldUpdateOperationsInput | string
+    platformUsername?: NullableStringFieldUpdateOperationsInput | string | null
+    accessToken?: StringFieldUpdateOperationsInput | string
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    user?: UserUpdateOneRequiredWithoutPlatformConnectionsNestedInput
+    publishJobs?: PublishJobUpdateManyWithoutPlatformConnectionNestedInput
+  }
+
+  export type PlatformConnectionUncheckedUpdateWithoutPostingScheduleInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    platform?: EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
+    platformUserId?: StringFieldUpdateOperationsInput | string
+    platformUsername?: NullableStringFieldUpdateOperationsInput | string | null
+    accessToken?: StringFieldUpdateOperationsInput | string
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    userId?: StringFieldUpdateOperationsInput | string
+    publishJobs?: PublishJobUncheckedUpdateManyWithoutPlatformConnectionNestedInput
   }
 
   export type PublishJobCreateWithoutMetricSnapshotsInput = {
@@ -16207,6 +17818,7 @@ export namespace Prisma {
     metadata?: NullableJsonNullValueInput | InputJsonValue
     isActive?: BoolFieldUpdateOperationsInput | boolean
     publishJobs?: PublishJobUpdateManyWithoutPlatformConnectionNestedInput
+    postingSchedule?: PostingScheduleUpdateOneWithoutPlatformConnectionNestedInput
   }
 
   export type PlatformConnectionUncheckedUpdateWithoutUserInput = {
@@ -16222,6 +17834,7 @@ export namespace Prisma {
     metadata?: NullableJsonNullValueInput | InputJsonValue
     isActive?: BoolFieldUpdateOperationsInput | boolean
     publishJobs?: PublishJobUncheckedUpdateManyWithoutPlatformConnectionNestedInput
+    postingSchedule?: PostingScheduleUncheckedUpdateOneWithoutPlatformConnectionNestedInput
   }
 
   export type PlatformConnectionUncheckedUpdateManyWithoutUserInput = {

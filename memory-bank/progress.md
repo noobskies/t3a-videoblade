@@ -63,8 +63,15 @@
   - [x] Database Schema Refactor (Video -> Post, MediaType)
   - [x] Backend Logic (Multi-format uploads)
   - [x] UI Updates (BatchMediaUpload, PostCard)
-- [ ] **Step 2**: Visual Calendar
-- [ ] **Step 3**: Queue System
+- [x] **Step 2**: Visual Calendar (2025-11-20)
+  - [x] Calendar UI (`react-big-calendar`)
+  - [x] Drag-and-drop Rescheduling
+  - [x] Post Integration (Fixed legacy video refs)
+- [x] **Step 3**: Queue System (2025-11-20)
+  - [x] `PostingSchedule` Database Model
+  - [x] Schedule Settings Page (`/platforms/[id]/schedule`)
+  - [x] Smart Queue Logic (`QueueService`)
+  - [x] "Add to Queue" Workflow
 - [ ] **Step 4**: Ideas/Drafts
 
 ### 🔄 Phase 5: Platform Expansion (Pending)
@@ -79,6 +86,6 @@
 
 ## Current Status
 
-**Status**: Phase 4 In Progress. Step 1 Complete.
+**Status**: Phase 4 In Progress. Step 3 Complete.
 **Product**: MediaBlade (Buffer Clone)
-**Next Action**: Phase 4, Step 2: Visual Calendar.
+**Next Action**: Phase 4, Step 4: Ideas/Drafts.

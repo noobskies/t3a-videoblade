@@ -20,6 +20,8 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import Link from "next/link";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 
 /**
  * Type guard to ensure we have valid platform connection data
@@ -166,6 +168,14 @@ export function PlatformsPage() {
                   />
                   <Button
                     variant="outlined"
+                    startIcon={<CalendarMonthIcon />}
+                    component={Link}
+                    href={`/platforms/${youtubeConnection.id}/schedule`}
+                  >
+                    Schedule Settings
+                  </Button>
+                  <Button
+                    variant="outlined"
                     color="error"
                     onClick={() => handleDisconnect(youtubeConnection.id)}
                     disabled={disconnect.isPending}
@@ -225,6 +235,14 @@ export function PlatformsPage() {
                     color="success"
                     variant="outlined"
                   />
+                  <Button
+                    variant="outlined"
+                    startIcon={<CalendarMonthIcon />}
+                    component={Link}
+                    href={`/platforms/${tiktokConnection.id}/schedule`}
+                  >
+                    Schedule Settings
+                  </Button>
                   <Button
                     variant="outlined"
                     color="error"
@@ -287,6 +305,14 @@ export function PlatformsPage() {
                     color="success"
                     variant="outlined"
                   />
+                  <Button
+                    variant="outlined"
+                    startIcon={<CalendarMonthIcon />}
+                    component={Link}
+                    href={`/platforms/${vimeoConnection.id}/schedule`}
+                  >
+                    Schedule Settings
+                  </Button>
                   <Button
                     variant="outlined"
                     color="error"

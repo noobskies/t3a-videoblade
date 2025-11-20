@@ -3,39 +3,40 @@
 ## Current Focus
 
 **Phase 4: Core Buffer Experience**
-We have successfully completed **Phase 4, Step 1: Multi-Format Infrastructure**. The application now supports both Videos and Images (and foundation for Text) as generic `Post` entities.
+We have successfully completed **Phase 4, Step 3: Queue System**. The application now supports defining posting schedules and "Add to Queue" functionality.
 
 ## Recent Changes
 
-- **Multi-Format Pivot**:
-  - **Database Refactor**: Renamed `Video` model to `Post`. Added `MediaType` enum (VIDEO, IMAGE, TEXT).
-  - **Backend Update**: Rewrote `videoRouter` as `postRouter`. Updated all Inngest functions to use `db.post`.
-  - **Frontend Update**: Renamed `BatchVideoUpload` to `BatchMediaUpload` (supports images). Renamed `VideoCard` to `PostCard`.
-  - **Cleanup**: Removed `src/server/api/routers/video.ts` and updated all references.
+- **Queue System Implementation**:
+  - **Schema**: Added `PostingSchedule` model linked to `PlatformConnection`.
+  - **Backend**: Created `scheduleRouter` and `QueueService` for schedule management and slot calculation.
+  - **UI**: Created Schedule Settings page (`/platforms/[id]/schedule`) and integrated "Smart Queue" into the Publish workflow.
+  - **Scheduling Logic**: Updated `checkScheduledJobs` to support `SCHEDULED` status jobs.
 
-- **Strategic Pivot**: Updated core documentation (`projectbrief.md`, `productContext.md`) to reflect the shift from "Video Tool" to "Comprehensive Media Manager".
-- **Roadmap Restructuring**: Defined Phase 4 (Buffer Core) and Phase 5 (Expansion).
-- **Production Hardening**: Sentry and Rate Limiting implemented.
+- **Visual Calendar Implementation (Previous Step)**:
+  - **Frontend**: Built with `react-big-calendar` and `react-dnd`.
+  - **Backend**: Updated `calendarRouter`.
 
 ## Active Decisions
 
-- **Codebase Terminology**: We have shifted from `Video` to `Post` as the primary entity name in the codebase to reflect the multi-format nature.
-- **Breaking Changes**: We opted for a clean break (resetting DB migrations) to ensure a robust `Post` schema rather than maintaining backward compatibility for the prototype `Video` model.
-- **Web-Only**: We are prioritizing the web application over a mobile app for now.
-- **Buffer Features**: Prioritizing **Visual Calendar** and **Queue System** as the core differentiators for Phase 4.
+- **Smart Queue Logic**:
+  - Uses a "First Available Slot" algorithm.
+  - Looks ahead 60 days for open slots.
+  - Assigns `SCHEDULED` status with a calculated `scheduledFor` timestamp.
+  - Relies on `check-scheduled-jobs` cron to pick up jobs when their time comes.
+
+- **Terminology**: "Post" is now the ubiquitous term for content items. "Video" is only used when referring specifically to video media type or platform constraints.
 
 ## Next Steps
 
-1.  **Phase 4, Step 2: Visual Calendar**
-    - Install calendar library (`react-big-calendar`).
-    - Build the calendar view to display Posts by `scheduledFor` date.
-    - Enable drag-and-drop rescheduling.
+1.  **Phase 4, Step 4: Ideas/Drafts**
+    - Create a space for content ideas that aren't yet scheduled or fully formed.
+    - Allow "Quick Draft" creation without media.
 
-2.  **Phase 4, Step 3: Queue System**
-    - Implement "Posting Slots" logic.
-    - Build "Add to Queue" functionality.
+2.  **Phase 5: Platform Expansion**
+    - Begin adding LinkedIn integration.
 
 ## Current Project State
 
 - **Phase**: 4 (Buffer Core)
-- **Status**: Multi-Format Infrastructure Complete. Ready for Calendar.
+- **Status**: Queue System Complete. Ready for Ideas/Drafts.

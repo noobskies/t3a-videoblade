@@ -66,7 +66,9 @@ export function PublishPage({ id }: { id: string }) {
   const [publishSuccess, setPublishSuccess] = useState(false);
 
   // Scheduling state
-  const [isScheduled, setIsScheduled] = useState(false);
+  const [schedulingMode, setSchedulingMode] = useState<
+    "now" | "schedule" | "queue"
+  >("now");
   const [scheduledDate, setScheduledDate] = useState<Dayjs | null>(
     dayjs().add(1, "day"),
   );
@@ -160,7 +162,10 @@ export function PublishPage({ id }: { id: string }) {
         platforms: selectedPlatforms,
         metadata: metadataPayload,
         scheduledPublishAt:
-          isScheduled && scheduledDate ? scheduledDate.toDate() : undefined,
+          schedulingMode === "schedule" && scheduledDate
+            ? scheduledDate.toDate()
+            : undefined,
+        smartQueue: schedulingMode === "queue",
       });
 
       setPublishSuccess(true);
@@ -475,30 +480,114 @@ export function PublishPage({ id }: { id: string }) {
           </Box>
         )}
 
-        {/* Scheduling */}
+        {/* Scheduling Options */}
         {selectedPlatforms.length > 0 && (
           <Card variant="outlined">
             <CardContent>
               <Stack spacing={2}>
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={isScheduled}
-                      onChange={(e) => setIsScheduled(e.target.checked)}
-                    />
-                  }
-                  label="Schedule for later"
-                />
-                {isScheduled && (
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DateTimePicker
-                      label="Publish Date & Time"
-                      value={scheduledDate}
-                      onChange={(newValue) => setScheduledDate(newValue)}
-                      disablePast
-                    />
-                  </LocalizationProvider>
-                )}
+                <Typography variant="h6">Publishing Options</Typography>
+                <FormControl>
+                  {/* <FormLabel>When to publish?</FormLabel> */}
+                  <Stack spacing={1}>
+                    <Card
+                      variant={
+                        schedulingMode === "now" ? "outlined" : "elevation"
+                      }
+                      sx={{
+                        p: 1,
+                        border:
+                          schedulingMode === "now"
+                            ? `2px solid ${theme.palette.primary.main}`
+                            : "1px solid #e0e0e0",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => setSchedulingMode("now")}
+                    >
+                      <FormControlLabel
+                        value="now"
+                        control={<Switch checked={schedulingMode === "now"} />}
+                        label="Publish Now"
+                        sx={{ pointerEvents: "none" }} // Let card handle click
+                      />
+                    </Card>
+
+                    <Card
+                      variant={
+                        schedulingMode === "schedule" ? "outlined" : "elevation"
+                      }
+                      sx={{
+                        p: 1,
+                        border:
+                          schedulingMode === "schedule"
+                            ? `2px solid ${theme.palette.primary.main}`
+                            : "1px solid #e0e0e0",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => setSchedulingMode("schedule")}
+                    >
+                      <FormControlLabel
+                        value="schedule"
+                        control={
+                          <Switch checked={schedulingMode === "schedule"} />
+                        }
+                        label="Schedule for specific time"
+                        sx={{ pointerEvents: "none" }}
+                      />
+                      {schedulingMode === "schedule" && (
+                        <Box
+                          sx={{ mt: 2, ml: 4 }}
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <DateTimePicker
+                              label="Publish Date & Time"
+                              value={scheduledDate}
+                              onChange={(newValue) =>
+                                setScheduledDate(newValue)
+                              }
+                              disablePast
+                              slotProps={{ textField: { fullWidth: true } }}
+                            />
+                          </LocalizationProvider>
+                        </Box>
+                      )}
+                    </Card>
+
+                    <Card
+                      variant={
+                        schedulingMode === "queue" ? "outlined" : "elevation"
+                      }
+                      sx={{
+                        p: 1,
+                        border:
+                          schedulingMode === "queue"
+                            ? `2px solid ${theme.palette.primary.main}`
+                            : "1px solid #e0e0e0",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => setSchedulingMode("queue")}
+                    >
+                      <FormControlLabel
+                        value="queue"
+                        control={
+                          <Switch checked={schedulingMode === "queue"} />
+                        }
+                        label="Add to Smart Queue (Auto-Schedule)"
+                        sx={{ pointerEvents: "none" }}
+                      />
+                      {schedulingMode === "queue" && (
+                        <Typography
+                          variant="caption"
+                          color="text.secondary"
+                          sx={{ ml: 4, display: "block" }}
+                        >
+                          Automatically schedules for the next available slot
+                          defined in your settings.
+                        </Typography>
+                      )}
+                    </Card>
+                  </Stack>
+                </FormControl>
               </Stack>
             </CardContent>
           </Card>
@@ -523,8 +612,12 @@ export function PublishPage({ id }: { id: string }) {
             }
           >
             {isPublishing
-              ? "Publishing..."
-              : `Publish to ${selectedPlatforms.length} Platform${selectedPlatforms.length !== 1 ? "s" : ""}`}
+              ? "Processing..."
+              : schedulingMode === "queue"
+                ? "Add to Queue"
+                : schedulingMode === "schedule"
+                  ? "Schedule Publish"
+                  : `Publish Now`}
           </Button>
           <Typography
             variant="caption"
@@ -533,9 +626,9 @@ export function PublishPage({ id }: { id: string }) {
             display="block"
             sx={{ mt: 1 }}
           >
-            {selectedPlatforms.length === 0
-              ? "Select at least one platform to publish"
-              : "Videos will be queued for background publishing"}
+            {schedulingMode === "queue"
+              ? "Content will be added to your posting queue."
+              : "Content will be published according to your selection."}
           </Typography>
         </Box>
       </Stack>

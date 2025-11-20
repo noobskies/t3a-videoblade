@@ -168,7 +168,8 @@ model PlatformConnection {
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
 
-  publishJobs PublishJob[]
+  publishJobs     PublishJob[]
+  postingSchedule PostingSchedule?
 
   // One connection per platform per user
   @@unique([userId, platform])
@@ -223,6 +224,24 @@ model PublishJob {
   @@index([createdById])
   @@index([status])
   @@index([scheduledFor])
+}
+
+model PostingSchedule {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Configuration
+  timezone String // e.g., "America/Chicago"
+
+  // Slots: Array of { day: number (0-6), times: string[] ("HH:MM") }
+  slots Json
+
+  // Relationship
+  platformConnection   PlatformConnection @relation(fields: [platformConnectionId], references: [id], onDelete: Cascade)
+  platformConnectionId String             @unique
+
+  @@index([platformConnectionId])
 }
 
 model MetricSnapshot {
