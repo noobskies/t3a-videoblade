@@ -2,6 +2,7 @@ import { inngest } from "@/lib/inngest";
 import { db } from "@/server/db";
 import { getYouTubeVideoStats } from "@/lib/youtube";
 import { getTikTokVideoStats } from "@/lib/tiktok";
+import { getVimeoVideoStats } from "@/lib/vimeo";
 
 export const snapshotAnalyticsFunction = inngest.createFunction(
   { id: "snapshot-analytics", name: "Snapshot Analytics Daily" },
@@ -69,6 +70,11 @@ export const snapshotAnalyticsFunction = inngest.createFunction(
               });
             } else if (connection.platform === "TIKTOK") {
               stats = await getTikTokVideoStats({
+                accessToken: connection.accessToken,
+                videoIds,
+              });
+            } else if (connection.platform === "VIMEO") {
+              stats = await getVimeoVideoStats({
                 accessToken: connection.accessToken,
                 videoIds,
               });

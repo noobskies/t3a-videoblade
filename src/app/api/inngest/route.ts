@@ -3,6 +3,7 @@ import { inngest } from "@/lib/inngest";
 import { publishToYouTubeFunction } from "@/inngest/publish-to-youtube";
 import { updateYouTubeVideoFunction } from "@/inngest/update-youtube-video";
 import { publishToTikTokFunction } from "@/inngest/publish-to-tiktok";
+import { publishToVimeo } from "@/inngest/publish-to-vimeo";
 import { snapshotAnalyticsFunction } from "@/inngest/snapshot-analytics";
 
 /**
@@ -17,6 +18,7 @@ export const { GET, POST, PUT } = serve({
     publishToYouTubeFunction,
     updateYouTubeVideoFunction,
     publishToTikTokFunction,
+    publishToVimeo,
     snapshotAnalyticsFunction,
     // Add more functions here as needed (e.g., Rumble publishing in Phase 2)
   ],

@@ -12,6 +12,7 @@ import {
   MusicNote as MusicNoteIcon,
   Send as SendIcon,
   YouTube as YouTubeIcon,
+  OndemandVideo as VimeoIcon,
 } from "@mui/icons-material";
 import {
   Alert,
@@ -42,7 +43,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { use, useState } from "react";
 
-type Platform = "YOUTUBE" | "TIKTOK";
+type Platform = "YOUTUBE" | "TIKTOK" | "VIMEO";
 type Privacy = "PUBLIC" | "UNLISTED" | "PRIVATE" | "MUTUAL_FOLLOW_FRIENDS";
 
 interface PlatformMetadata {
@@ -88,6 +89,7 @@ export default function PublishPage({
 
   const youtubeConnected = platforms.some((c) => c.platform === "YOUTUBE");
   const tiktokConnected = platforms.some((c) => c.platform === "TIKTOK");
+  const vimeoConnected = platforms.some((c) => c.platform === "VIMEO");
 
   // Toggle platform selection
   const togglePlatform = (platform: Platform) => {
@@ -331,8 +333,39 @@ export default function PublishPage({
                 </Stack>
               </CardContent>
             </Card>
+
+            {/* Vimeo Card */}
+            <Card
+              onClick={() =>
+                vimeoConnected && !isPublishing && togglePlatform("VIMEO")
+              }
+              sx={{
+                flex: 1,
+                cursor: vimeoConnected ? "pointer" : "not-allowed",
+                border: selectedPlatforms.includes("VIMEO")
+                  ? `2px solid ${theme.palette.info.main}`
+                  : undefined,
+                opacity: vimeoConnected ? 1 : 0.7,
+                position: "relative",
+              }}
+            >
+              <CardContent>
+                <Stack direction="row" spacing={2} alignItems="center">
+                  <VimeoIcon sx={{ fontSize: 40, color: "info.main" }} />
+                  <Box flex={1}>
+                    <Typography variant="h6">Vimeo</Typography>
+                    <Typography variant="caption" color="text.secondary">
+                      {vimeoConnected ? "Connected" : "Not connected"}
+                    </Typography>
+                  </Box>
+                  {selectedPlatforms.includes("VIMEO") && (
+                    <CheckCircleIcon color="info" />
+                  )}
+                </Stack>
+              </CardContent>
+            </Card>
           </Stack>
-          {!youtubeConnected && !tiktokConnected && (
+          {!youtubeConnected && !tiktokConnected && !vimeoConnected && (
             <Button
               component={Link}
               href="/platforms"
@@ -357,11 +390,13 @@ export default function PublishPage({
                     avatar={
                       platform === "YOUTUBE" ? (
                         <YouTubeIcon color="error" />
-                      ) : (
+                      ) : platform === "TIKTOK" ? (
                         <MusicNoteIcon color="secondary" />
+                      ) : (
+                        <VimeoIcon color="info" />
                       )
                     }
-                    title={`${platform === "YOUTUBE" ? "YouTube" : "TikTok"} Settings`}
+                    title={`${platform === "YOUTUBE" ? "YouTube" : platform === "TIKTOK" ? "TikTok" : "Vimeo"} Settings`}
                   />
                   <CardContent>
                     <Stack spacing={2}>

@@ -108,7 +108,8 @@ export const platformRouter = createTRPCRouter({
     if (!tiktokAccount) {
       throw new TRPCError({
         code: "NOT_FOUND",
-        message: "TikTok account not connected. Please link your TikTok account.",
+        message:
+          "TikTok account not connected. Please link your TikTok account.",
       });
     }
 
@@ -158,6 +159,73 @@ export const platformRouter = createTRPCRouter({
     });
 
     return { id: connection.id, platform: "TIKTOK" as const, new: true };
+  }),
+
+  /**
+   * Create platform connection from Vimeo account
+   */
+  connectVimeo: protectedProcedure.mutation(async ({ ctx }) => {
+    // Get user's Vimeo account from Better Auth
+    const vimeoAccount = await ctx.db.account.findFirst({
+      where: {
+        userId: ctx.session.user.id,
+        providerId: "vimeo",
+      },
+    });
+
+    if (!vimeoAccount) {
+      throw new TRPCError({
+        code: "NOT_FOUND",
+        message: "Vimeo account not connected. Please link your Vimeo account.",
+      });
+    }
+
+    if (!vimeoAccount.accessToken) {
+      throw new TRPCError({
+        code: "BAD_REQUEST",
+        message: "No access token found. Please reconnect your Vimeo account.",
+      });
+    }
+
+    // Check if already connected
+    const existing = await ctx.db.platformConnection.findUnique({
+      where: {
+        userId_platform: {
+          userId: ctx.session.user.id,
+          platform: "VIMEO",
+        },
+      },
+    });
+
+    if (existing) {
+      // Update existing connection
+      const updated = await ctx.db.platformConnection.update({
+        where: { id: existing.id },
+        data: {
+          accessToken: vimeoAccount.accessToken,
+          refreshToken: vimeoAccount.refreshToken ?? null,
+          tokenExpiry: vimeoAccount.accessTokenExpiresAt ?? null,
+          isActive: true,
+        },
+      });
+
+      return { id: updated.id, platform: "VIMEO" as const, new: false };
+    }
+
+    // Create new connection
+    const connection = await ctx.db.platformConnection.create({
+      data: {
+        platform: "VIMEO",
+        platformUserId: vimeoAccount.accountId, // Vimeo user ID (URI)
+        platformUsername: "Vimeo User", // Will be updated via analytics/sync later
+        accessToken: vimeoAccount.accessToken,
+        refreshToken: vimeoAccount.refreshToken ?? null,
+        tokenExpiry: vimeoAccount.accessTokenExpiresAt ?? null,
+        userId: ctx.session.user.id,
+      },
+    });
+
+    return { id: connection.id, platform: "VIMEO" as const, new: true };
   }),
 
   /**

@@ -54,7 +54,7 @@ VideoBlade provides **upload once, publish everywhere** functionality:
 #### Authentication Flow
 
 1. User visits the homepage (Landing Page)
-2. Can sign in via OAuth
+2. Can sign in via OAuth (Google, TikTok, Vimeo)
 3. **Authenticated users are redirected to the Dashboard**
 4. Session persists across page loads
 
@@ -78,7 +78,7 @@ VideoBlade provides **upload once, publish everywhere** functionality:
 
 1. User signs in to VideoBlade
 2. Navigates to "Connect Platforms" page
-3. Clicks "Connect YouTube" (or other platform)
+3. Clicks "Connect" for YouTube, TikTok, or Vimeo
 4. OAuth redirect to platform authorization
 5. Platform redirects back with auth token
 6. VideoBlade stores connection and displays as "Connected"
@@ -96,7 +96,7 @@ VideoBlade provides **upload once, publish everywhere** functionality:
 
 1. User selects video from library
 2. Clicks "Publish to Platforms"
-3. Selects target platforms (YouTube, Vimeo, etc.)
+3. Selects target platforms (YouTube, Vimeo, TikTok)
 4. Configures metadata for each platform:
    - Title (can be same or platform-specific)
    - Description
@@ -125,7 +125,7 @@ VideoBlade provides **upload once, publish everywhere** functionality:
 2. Sees high-level performance metrics:
    - Total Views, Engagement, and Content Volume
    - Trend charts showing growth over time
-   - Platform breakdown (YouTube vs TikTok)
+   - Platform breakdown (YouTube vs TikTok vs Vimeo)
 3. Can switch to "Library" or "Platforms" via sidebar for management
 4. Can refresh data manually to get latest stats
 

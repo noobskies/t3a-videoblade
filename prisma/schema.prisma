@@ -17,6 +17,7 @@ enum Platform {
     YOUTUBE
     RUMBLE
     TIKTOK
+    VIMEO
 }
 
 enum PublishStatus {

@@ -2,47 +2,35 @@
 
 ## Current Focus
 
-**Phase 3: Analytics & Expansion**
+**Phase 3: Expansion - Batch Uploads**
 
-We have successfully implemented the Analytics Dashboard and improved the navigation flow.
+We have successfully implemented Vimeo integration and are now ready to move to the next major feature: Batch Uploads.
 
-- **Analytics**: Implemented full-stack analytics with historical trending.
-- **UX**: Made Dashboard the default landing page for logged-in users.
-- **Status**: Analytics Dashboard complete. Ready for Vimeo integration.
+- **Goal**: Enable uploading multiple videos at once.
+- **Roadmap**: `memory-bank/roadmap/phase3/03-batch-ops.md` (To be created)
 
 ## Recent Changes
 
-- **UX Improvements (2025-11-20)**
-  - **Sidebar Navigation**: Updated "Dashboard" link to point to `/dashboard`.
-  - **Default Redirect**: Configured root (`/`) to auto-redirect authenticated users to `/dashboard`.
+- **Vimeo Integration (2025-11-20)**
+  - **Database**: Added `VIMEO` to `Platform` enum.
+  - **Auth**: Configured Vimeo provider using Better Auth `genericOAuth` plugin.
+  - **Library**: Implemented `src/lib/vimeo.ts` with "Pull Upload" approach.
+  - **Backend**: Added `connectVimeo` and `publishToVimeo` Inngest function.
+  - **Frontend**: Updated connection and publishing UI to support Vimeo.
+  - **Analytics**: Integrated Vimeo stats into daily snapshot.
 
 - **Analytics Dashboard (2025-11-20)**
-  - **Database**: Added `MetricSnapshot` model to store daily video performance.
-  - **Backend**: Created `analyticsRouter` with `getDashboardStats` and `getTrends`.
-  - **Data Collection**: Implemented Inngest function `snapshot-analytics` to fetch stats from YouTube/TikTok daily.
-  - **Frontend**: Built `DashboardPage` with Recharts visualization (Trend Line, Platform Pie, Summary Cards).
-  - **Libraries**: Enhanced `youtube.ts` and `tiktok.ts` to fetch video statistics.
-
-- **Performance: Lazy Loading & Skeletons (2025-11-20)**
-  - **Skeleton System**: Created reusable MUI skeletons.
-  - **Route Loading**: Added `loading.tsx` for all key routes.
-  - **Suspense Integration**: Standardized on `useSuspenseQuery`.
+  - Completed analytics dashboard with Recharts.
+  - Implemented daily snapshotting with Inngest.
 
 ## Active Decisions
 
-- **Analytics Architecture**: We use a "snapshot" approach where we fetch and store metrics daily. This allows historical trending without relying on expensive/limited historical API queries from platforms.
-- **Visualization**: Adopted `recharts` for data visualization as it provides flexible, composable chart components that work well with React.
-- **Inngest for Data**: Using Inngest cron jobs for reliable background data fetching ensures the dashboard doesn't hang on load.
+- **Vimeo API Strategy**: Use "Pull Upload" to transfer videos directly from S3 to Vimeo, avoiding server bottleneck.
+- **Auth Strategy**: Use Better Auth `genericOAuth` plugin for providers not natively supported in the simplified config.
+- **Library Strategy**: Use direct `fetch` calls for Vimeo API instead of adding a new dependency, consistent with TikTok implementation.
 
 ## Next Steps
 
-1.  **Phase 3 Implementation**
-    - **Vimeo Integration**: Add 3rd platform (Next Priority).
-    - **Batch Uploads**: Multi-file upload.
-    - **Production Hardening**: Sentry, rate limiting.
-
-## Current Context
-
-- **Project**: VideoBlade (Multi-Platform Video Publisher)
-- **Phase**: Phase 3 (Analytics Complete)
-- **Status**: Ready for Vimeo Integration.
+1.  **Plan Batch Uploads**: detailed roadmap.
+2.  **Frontend**: Multi-file upload UI.
+3.  **Backend**: Handle multiple file uploads and create video records.

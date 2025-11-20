@@ -80,6 +80,7 @@
 - OAuth provider support with flexible scope configuration
 - Session management with Prisma adapter
 - Plugin ecosystem (2FA, passkeys, magic links)
+- **Generic OAuth Plugin**: Used for Vimeo integration
 - Configuration: `src/server/auth.ts`
 - Client hooks: `src/lib/auth-client.ts`
 
@@ -87,6 +88,11 @@
 
 - **Scope**: `https://www.googleapis.com/auth/youtube` (full access)
 - **Required for**: Smart Publish feature (update existing video metadata)
+
+**Vimeo OAuth Configuration**:
+
+- **Provider**: Custom Generic OAuth
+- **Scopes**: `public`, `private`, `upload`, `edit`, `delete`, `stats`
 
 ### Database
 
@@ -200,6 +206,14 @@ BETTER_AUTH_URL="http://localhost:3000"
 GOOGLE_CLIENT_ID="your-google-client-id"
 GOOGLE_CLIENT_SECRET="your-google-client-secret"
 
+# TikTok OAuth
+TIKTOK_CLIENT_KEY="your-tiktok-client-key"
+TIKTOK_CLIENT_SECRET="your-tiktok-client-secret"
+
+# Vimeo OAuth
+VIMEO_CLIENT_ID="your-vimeo-client-id"
+VIMEO_CLIENT_SECRET="your-vimeo-client-secret"
+
 # Optional: Public Better Auth URL (for client-side)
 # NEXT_PUBLIC_BETTER_AUTH_URL="http://localhost:3000"
 ```
@@ -296,7 +310,7 @@ t3a-videoblade/
 │   │   └── query-client.ts     # React Query config
 │   ├── lib/
 │   │   ├── utils.ts            # Utility functions
-│   │   └── auth-client.ts      # Better Auth client
+│   │   ├── auth-client.ts      # Better Auth client
 │   ├── styles/
 │   │   └── globals.css         # Global styles
 │   └── env.js                  # Environment validation

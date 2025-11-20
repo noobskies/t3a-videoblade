@@ -7,6 +7,7 @@ import {
   Check as CheckIcon,
   YouTube as YouTubeIcon,
   MusicNote as TikTokIcon,
+  OndemandVideo as VimeoIcon,
 } from "@mui/icons-material";
 import {
   Alert,
@@ -33,6 +34,7 @@ export default function PlatformsPage() {
   const [connections, queryUtils] = api.platform.list.useSuspenseQuery();
   const connectYouTube = api.platform.connectYouTube.useMutation();
   const connectTikTok = api.platform.connectTikTok.useMutation();
+  const connectVimeo = api.platform.connectVimeo.useMutation();
   const disconnect = api.platform.disconnect.useMutation();
 
   const handleConnectYouTube = async () => {
@@ -73,6 +75,32 @@ export default function PlatformsPage() {
     }
   };
 
+  const handleConnectVimeo = async () => {
+    try {
+      // Try to connect using existing link first
+      await connectVimeo.mutateAsync();
+      await queryUtils.refetch();
+      alert("Vimeo connected successfully!");
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Failed to connect Vimeo";
+
+      // If account not found, redirect to link it
+      if (
+        errorMessage.includes("not connected") ||
+        errorMessage.includes("link your Vimeo")
+      ) {
+        await authClient.signIn.social({
+          provider: "vimeo",
+          callbackURL: "/platforms",
+        });
+        return;
+      }
+
+      alert(errorMessage);
+    }
+  };
+
   const handleDisconnect = async (id: string) => {
     if (
       !confirm(
@@ -100,6 +128,7 @@ export default function PlatformsPage() {
 
   const youtubeConnection = connections.find((c) => c.platform === "YOUTUBE");
   const tiktokConnection = connections.find((c) => c.platform === "TIKTOK");
+  const vimeoConnection = connections.find((c) => c.platform === "VIMEO");
 
   return (
     <Container maxWidth="md" sx={{ py: 3 }}>
@@ -225,6 +254,68 @@ export default function PlatformsPage() {
                 <Typography variant="body2" color="text.secondary">
                   Connected:{" "}
                   {new Date(tiktokConnection.createdAt).toLocaleDateString()}
+                </Typography>
+              </Box>
+            )}
+          </CardContent>
+        </Card>
+
+        {/* Vimeo Card */}
+        <Card>
+          <CardContent>
+            <Stack
+              direction={{ xs: "column", sm: "row" }}
+              justifyContent="space-between"
+              alignItems={{ xs: "flex-start", sm: "center" }}
+              spacing={2}
+            >
+              <Stack direction="row" spacing={2} alignItems="center">
+                <VimeoIcon sx={{ fontSize: 40, color: "info.main" }} />
+                <Box>
+                  <Typography variant="h6">Vimeo</Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    High-quality video hosting and distribution
+                  </Typography>
+                </Box>
+              </Stack>
+
+              {vimeoConnection ? (
+                <Stack direction="row" spacing={2} alignItems="center">
+                  <Chip
+                    icon={<CheckIcon />}
+                    label="Connected"
+                    color="success"
+                    variant="outlined"
+                  />
+                  <Button
+                    variant="outlined"
+                    color="error"
+                    onClick={() => handleDisconnect(vimeoConnection.id)}
+                    disabled={disconnect.isPending}
+                  >
+                    {disconnect.isPending ? "Disconnecting..." : "Disconnect"}
+                  </Button>
+                </Stack>
+              ) : (
+                <Button
+                  variant="contained"
+                  color="info"
+                  onClick={handleConnectVimeo}
+                  disabled={connectVimeo.isPending}
+                >
+                  {connectVimeo.isPending ? "Connecting..." : "Connect"}
+                </Button>
+              )}
+            </Stack>
+
+            {vimeoConnection && (
+              <Box mt={2} pt={2} borderTop={1} borderColor="divider">
+                <Typography variant="body2" color="text.secondary">
+                  User: {vimeoConnection.platformUsername}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  Connected:{" "}
+                  {new Date(vimeoConnection.createdAt).toLocaleDateString()}
                 </Typography>
               </Box>
             )}

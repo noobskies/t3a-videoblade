@@ -22,7 +22,10 @@ export const videoRouter = createTRPCRouter({
         fileName: z.string(),
         fileSize: z.number().positive(),
         mimeType: z.string().regex(/^video\//),
-        thumbnailType: z.string().regex(/^image\//).optional(),
+        thumbnailType: z
+          .string()
+          .regex(/^image\//)
+          .optional(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -422,9 +425,14 @@ export const videoRouter = createTRPCRouter({
           name: "video/publish.tiktok",
           data: { jobId: job.id },
         });
+      } else if (platformConnection.platform === "VIMEO") {
+        // Vimeo doesn't support update yet via this flow
+        await inngest.send({
+          name: "video/publish.vimeo",
+          data: { jobId: job.id },
+        });
       } else {
         // Fallback or error for unsupported platforms
-        // Currently we only have YouTube and TikTok implemented
       }
 
       return {
@@ -441,7 +449,7 @@ export const videoRouter = createTRPCRouter({
     .input(
       z.object({
         videoId: z.string().cuid(),
-        platforms: z.array(z.enum(["YOUTUBE", "TIKTOK"])),
+        platforms: z.array(z.enum(["YOUTUBE", "TIKTOK", "VIMEO"])),
         scheduledPublishAt: z.date().optional(),
         metadata: z.record(
           z.object({
@@ -515,7 +523,9 @@ export const videoRouter = createTRPCRouter({
         const eventName =
           platform === "TIKTOK"
             ? "video/publish.tiktok"
-            : "video/publish.youtube";
+            : platform === "VIMEO"
+              ? "video/publish.vimeo"
+              : "video/publish.youtube";
 
         await inngest.send({
           name: eventName,
@@ -565,6 +575,11 @@ export const videoRouter = createTRPCRouter({
       } else if (job.platform === "TIKTOK") {
         await inngest.send({
           name: "video/publish.tiktok",
+          data: { jobId: input.jobId },
+        });
+      } else if (job.platform === "VIMEO") {
+        await inngest.send({
+          name: "video/publish.vimeo",
           data: { jobId: input.jobId },
         });
       }

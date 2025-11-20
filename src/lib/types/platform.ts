@@ -51,6 +51,30 @@ export interface TikTokInitResponse {
   };
 }
 
+/**
+ * Vimeo API Response Types
+ */
+export interface VimeoUploadResponse {
+  uri: string; // "/videos/123456"
+  link: string; // "https://vimeo.com/123456"
+  name: string;
+  description: string;
+  upload: {
+    status: "complete" | "error" | "in_progress";
+    upload_link?: string;
+  };
+}
+
+export interface VimeoVideoStats {
+  uri: string;
+  name: string;
+  stats: {
+    plays: number;
+    likes: number;
+    comments: number;
+  };
+}
+
 export interface TikTokStatusResponse {
   data: {
     status: string;

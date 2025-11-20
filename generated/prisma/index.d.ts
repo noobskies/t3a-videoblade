@@ -66,7 +66,8 @@ export namespace $Enums {
   export const Platform: {
   YOUTUBE: 'YOUTUBE',
   RUMBLE: 'RUMBLE',
-  TIKTOK: 'TIKTOK'
+  TIKTOK: 'TIKTOK',
+  VIMEO: 'VIMEO'
 };
 
 export type Platform = (typeof Platform)[keyof typeof Platform]

@@ -115,7 +115,14 @@
 
 ### 🔲 Phase 3 Remaining Steps
 
-- [ ] **Step 2**: Vimeo Integration
+- [x] **Step 2**: Vimeo Integration (Completed 2025-11-20)
+  - [x] `Platform` enum updated
+  - [x] Vimeo OAuth with Better Auth
+  - [x] `uploadVideoToVimeo` (Pull Upload)
+  - [x] `getVimeoVideoStats`
+  - [x] Inngest job `publish-to-vimeo`
+  - [x] Analytics integration
+  - [x] UI updates (Connect & Publish)
 - [ ] **Step 3**: Batch Uploads
 - [ ] **Step 4**: Production Hardening (Sentry, Rate Limiting)
 
@@ -131,6 +138,6 @@
 
 ### Phase 5: Multi-Platform (Phase 2) ✅ COMPLETE
 
-**Status**: Phase 3 (Analytics) Complete.
+**Status**: Phase 3 (Vimeo Integration) Complete.
 **Product**: VideoBlade - Multi-Platform Video Publishing Tool
-**Next Action**: Vimeo Integration.
+**Next Action**: Batch Uploads.
