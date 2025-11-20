@@ -2,68 +2,49 @@
 
 ## Current Focus
 
-**UI/UX Refactoring & Phase 3 Planning**
+**Phase 3 Planning**
 
-We have completed Phase 2 and recently refactored the application layout to be more app-like.
+We have completed Phase 2 and the UI/Layout refactoring. The application now has a robust layout system that correctly handles authenticated vs. unauthenticated states.
 
-- **Refactor: Full Width Layout**: Switched to a responsive `AppShell` with sidebar navigation.
-- **Status**: Layout refactor complete. Ready for Phase 3 planning.
+- **Refactor: Auth & Layouts**: Secured routes with middleware and implemented conditional layout rendering.
+- **Status**: Layouts verified. Ready for Phase 3 (Expansion & Analytics).
 
 ## Recent Changes
 
+- **Refactor: Auth & Layouts (2025-11-20)**
+  - **Middleware**: Created `src/middleware.ts` to protect private routes (`/library`, `/upload`, etc.) and redirect unauthenticated users to home.
+  - **AppShell Update**: Modified `AppShell` to conditionally render the Sidebar/AppBar based on session state.
+    - **Unauthenticated**: Shows "Public Header" (Logo + Sign In) + Full width content.
+    - **Authenticated**: Shows "Dashboard Layout" (Sidebar + User Menu) + Content.
+    - **Loading**: Shows Skeleton loader to prevent layout shift.
+  - **User Menu**: Added Avatar + Sign Out menu in the authenticated AppBar.
+
 - **Refactor: App Layout (2025-11-20)**
-  - Created `src/app/_components/layout/app-shell.tsx`: A responsive wrapper with Drawer navigation (Desktop permanent, Mobile temporary).
-  - Updated `RootLayout` to use `AppShell` and removed the restrictive global `Container`.
-  - **Layout Strategy**: Removed global padding (`p: 0` in `AppShell`) to allow full-width designs (like Dashboard).
-  - **Page Constraints**: Updated `Upload`, `Platforms`, `Publish`, `Edit` pages to use `Container maxWidth="md/lg"` with internal padding (`py: 3`).
-  - **Library Page**: Updated to use `Container maxWidth={false}` (full width) with internal padding (`py: 3`) for a dashboard grid feel.
+  - Created `src/app/_components/layout/app-shell.tsx`: A responsive wrapper with Drawer navigation.
+  - Updated `RootLayout` to use `AppShell`.
+  - **Layout Strategy**: Removed global padding (`p: 0` in `AppShell`) to allow full-width designs.
 
 - **Feature: Scheduling** (2025-11-19)
   - Added `SCHEDULED` status to `PublishStatus` enum.
   - Updated `PublishPage` with MUI `DateTimePicker` for scheduling.
-  - Updated `videoRouter.publishMulti` to handle `scheduledPublishAt`.
-  - Updated Inngest workflows (`publish-to-youtube`, `publish-to-tiktok`) to support `step.sleepUntil`.
-  - Updated `EditVideoPage` to support `MUTUAL_FOLLOW_FRIENDS`.
-
-- **Feature: Delete Videos** (2025-11-19)
-  - Updated `VideoCard` with MUI Dialog for safer deletion confirmation.
-  - Added backend support for deleting published videos from platforms (YouTube).
-  - Updated `videoRouter.delete` to cascade delete jobs and optionally call platform APIs.
-  - Updated `src/lib/youtube.ts` with deletion support.
-
-- **Feature: Multi-Platform UI** (2025-11-19)
-  - Implemented `publishMulti` procedure to handle simultaneous publishing.
-  - Updated `VideoPrivacy` enum to support `MUTUAL_FOLLOW_FRIENDS` for TikTok.
-  - Created new `PublishPage` allowing selection of multiple platforms (YouTube/TikTok).
-  - Added platform-specific metadata configuration forms.
-
-- **Feature: TikTok Publisher** (2025-11-19)
-  - Created `src/lib/tiktok.ts` for API interaction.
-  - Implemented `publishToTikTokFunction` Inngest job.
-  - Updated `videoRouter` to dispatch `video/publish.tiktok` events.
-  - Refactored types in `src/lib/types/video.ts` and `platform.ts`.
-
-- **Feature: TikTok OAuth** (2025-11-19)
-  - Added `TIKTOK` to `Platform` enum in Prisma schema.
-  - Configured `better-auth` with TikTok provider.
-  - Added `connectTikTok` mutation.
+  - Updated Inngest workflows to support `step.sleepUntil`.
 
 ## Active Decisions
 
-- **Layout Strategy**: We moved away from a simple top-bar website layout to a persistent sidebar dashboard layout. This required removing global constraints from `layout.tsx` and pushing layout responsibility (max-width, padding) down to individual pages.
-- **Padding Management**: To avoid "floating box" looks on full-screen pages (like the gradient home page), the `AppShell` provides zero padding. Content pages apply their own standard padding (`py: 3`) via `Container`.
-- **Privacy Mapping**: TikTok's "Friends" privacy setting is mapped to a new `MUTUAL_FOLLOW_FRIENDS` enum value in `VideoPrivacy`. This required a schema migration (via `db push` for dev speed).
-- **Multi-Platform Publishing**: We iterate through selected platforms in the backend and create separate `PublishJob` records for each, triggering their respective Inngest events. This allows for independent status tracking and retries.
+- **Auth-Driven Layouts**: We decided to control the entire application layout structure (`AppShell`) based on authentication status on the client side. This ensures a smooth transition from "Landing Page" mode to "Dashboard" mode without full page reloads or layout flickering (mitigated by loading skeletons).
+- **Middleware Protection**: While tRPC handles API protection, we added Next.js Middleware to prevent unauthenticated access to protected _pages_, providing a better UX (immediate redirect) than loading a broken page.
 
 ## Next Steps
 
 1.  **Phase 3 Planning**
-    - Review roadmap for Phase 3 (if defined) or identify next major feature set (e.g., Analytics, more platforms, etc.).
-    - Consider: Vimeo integration, Batch Uploads, Analytics Dashboard.
+    - **Analytics Dashboard**: Aggregated views, success rates.
+    - **Vimeo Integration**: Add 3rd platform.
+    - **Batch Uploads**: Multi-file upload.
+    - **Production Hardening**: Sentry, rate limiting refinement.
 
 ## Current Context
 
 - **Project**: VideoBlade (Multi-Platform Video Publisher)
 - **Phase**: Transition to Phase 3
-- **Status**: Layout Refactor Complete.
-- **Current Task**: Memory Bank Update.
+- **Status**: Layouts & Auth Flow Complete.
+- **Current Task**: Phase 3 Scoping.

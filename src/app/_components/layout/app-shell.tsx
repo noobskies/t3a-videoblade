@@ -19,6 +19,12 @@ import {
   Typography,
   useTheme,
   useMediaQuery,
+  Avatar,
+  Menu,
+  MenuItem,
+  Skeleton,
+  Stack,
+  Button,
 } from "@mui/material";
 import {
   Menu as MenuIcon,
@@ -26,7 +32,10 @@ import {
   VideoLibrary as LibraryIcon,
   CloudUpload as UploadIcon,
   SettingsInputComponent as PlatformsIcon,
+  Logout as LogoutIcon,
 } from "@mui/icons-material";
+import { useSession, signOut } from "@/lib/auth-client";
+import { AuthButton } from "@/app/_components/auth-button";
 
 const drawerWidth = 240;
 
@@ -48,7 +57,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const pathname = usePathname();
+
+  const { data: session, isPending } = useSession();
 
   const handleDrawerClose = () => {
     setIsClosing(true);
@@ -65,6 +77,26 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     }
   };
 
+  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleSignOut = async () => {
+    handleMenuClose();
+    await signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          window.location.href = "/";
+        },
+      },
+    });
+  };
+
+  // Drawer content (Sidebar)
   const drawerContent = (
     <div>
       <Toolbar>
@@ -117,9 +149,75 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     </div>
   );
 
+  // Loading State
+  if (isPending) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          height: "100vh",
+          width: "100vw",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <CssBaseline />
+        <Stack spacing={2} alignItems="center">
+          <Typography variant="h6">VideoBlade</Typography>
+          <Skeleton variant="circular" width={40} height={40} />
+          <Skeleton variant="rectangular" width={200} height={40} />
+        </Stack>
+      </Box>
+    );
+  }
+
+  // Unauthenticated State (Public Header + Content)
+  if (!session) {
+    return (
+      <Box
+        sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
+      >
+        <CssBaseline />
+        <AppBar
+          position="fixed"
+          sx={{
+            bgcolor: "background.paper",
+            color: "text.primary",
+            boxShadow: "none",
+            borderBottom: 1,
+            borderColor: "divider",
+          }}
+        >
+          <Toolbar>
+            <Typography
+              variant="h6"
+              component={Link}
+              href="/"
+              sx={{
+                flexGrow: 1,
+                textDecoration: "none",
+                color: "inherit",
+                fontWeight: "bold",
+              }}
+            >
+              VideoBlade
+            </Typography>
+            <AuthButton />
+          </Toolbar>
+        </AppBar>
+        <Box component="main" sx={{ flexGrow: 1, mt: 8 }}>
+          {children}
+        </Box>
+      </Box>
+    );
+  }
+
+  // Authenticated State (Sidebar + Dashboard Layout)
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
+
+      {/* Authenticated AppBar */}
       <AppBar
         position="fixed"
         sx={{
@@ -142,16 +240,54 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           >
             <MenuIcon />
           </IconButton>
-          {/* You can add more header content here (e.g., User Profile, Theme Toggle) */}
+
           <Box sx={{ flexGrow: 1 }} />
+
+          {/* User Menu */}
+          <IconButton onClick={handleMenuOpen} sx={{ p: 0 }}>
+            <Avatar
+              src={session.user?.image ?? undefined}
+              alt={session.user?.name ?? "User"}
+            />
+          </IconButton>
+          <Menu
+            sx={{ mt: "45px" }}
+            id="menu-appbar"
+            anchorEl={anchorEl}
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            keepMounted
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            open={Boolean(anchorEl)}
+            onClose={handleMenuClose}
+          >
+            <MenuItem disabled>
+              <Typography variant="body2" color="text.secondary">
+                {session.user?.email}
+              </Typography>
+            </MenuItem>
+            <Divider />
+            <MenuItem onClick={handleSignOut}>
+              <ListItemIcon>
+                <LogoutIcon fontSize="small" />
+              </ListItemIcon>
+              Sign out
+            </MenuItem>
+          </Menu>
         </Toolbar>
       </AppBar>
+
+      {/* Sidebar Navigation */}
       <Box
         component="nav"
         sx={{ width: { md: drawerWidth }, flexShrink: { md: 0 } }}
         aria-label="mailbox folders"
       >
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Drawer
           variant="temporary"
           open={mobileOpen}
@@ -184,6 +320,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           {drawerContent}
         </Drawer>
       </Box>
+
+      {/* Main Content */}
       <Box
         component="main"
         sx={{
