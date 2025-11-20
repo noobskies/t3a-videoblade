@@ -15,6 +15,8 @@
 
 - App Router architecture
 - React Server Components
+- **Loading & Suspense**: Leveraging `loading.tsx` and `Suspense` boundaries.
+- **Lazy Loading**: Using `next/dynamic` for component-level splitting.
 - Turbopack for development (via `--turbo` flag)
 - Built-in optimization and code splitting
 - Configuration: `next.config.js`
@@ -53,6 +55,7 @@
 
 - Type-safe API layer
 - Client, server, and React Query integration
+- **Suspense Mode**: Standardized on `useSuspenseQuery` for data fetching.
 - SuperJSON transformer for advanced serialization
 - Setup: `src/server/api/trpc.ts`
 
