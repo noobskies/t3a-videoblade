@@ -78,24 +78,20 @@ export default function PublishPage({
   );
 
   // Get video details
-  const videoQuery = api.video.get.useQuery({ id });
+  const [video] = api.video.get.useSuspenseQuery({ id });
 
   // Get platform connections
-  const platformsQuery = api.platform.list.useQuery();
+  const [platforms] = api.platform.list.useSuspenseQuery();
 
   // Publish mutation
   const publishMultiMutation = api.video.publishMulti.useMutation();
 
-  const youtubeConnected = platformsQuery.data?.some(
-    (c) => c.platform === "YOUTUBE",
-  );
-  const tiktokConnected = platformsQuery.data?.some(
-    (c) => c.platform === "TIKTOK",
-  );
+  const youtubeConnected = platforms.some((c) => c.platform === "YOUTUBE");
+  const tiktokConnected = platforms.some((c) => c.platform === "TIKTOK");
 
   // Toggle platform selection
   const togglePlatform = (platform: Platform) => {
-    if (!videoQuery.data) return;
+    if (!video) return;
 
     if (selectedPlatforms.includes(platform)) {
       setSelectedPlatforms(selectedPlatforms.filter((p) => p !== platform));
@@ -108,11 +104,11 @@ export default function PublishPage({
       setMetadata({
         ...metadata,
         [platform]: {
-          title: videoQuery.data.title,
-          description: videoQuery.data.description ?? "",
+          title: video.title,
+          description: video.description ?? "",
           // Default privacy
-          privacy: videoQuery.data.privacy as Privacy,
-          tags: videoQuery.data.tags ?? "",
+          privacy: video.privacy as Privacy,
+          tags: video.tags ?? "",
         },
       });
     }
@@ -188,30 +184,6 @@ export default function PublishPage({
       setIsPublishing(false);
     }
   };
-
-  // Loading state
-  if (videoQuery.isLoading || platformsQuery.isLoading) {
-    return (
-      <Container maxWidth="md" sx={{ py: 3 }}>
-        <Box display="flex" justifyContent="center">
-          <CircularProgress />
-        </Box>
-      </Container>
-    );
-  }
-
-  // Error state
-  if (videoQuery.error || platformsQuery.error) {
-    return (
-      <Container maxWidth="md" sx={{ py: 3 }}>
-        <Alert severity="error">
-          {videoQuery.error?.message ?? platformsQuery.error?.message}
-        </Alert>
-      </Container>
-    );
-  }
-
-  const video = videoQuery.data;
 
   if (!video) {
     return (

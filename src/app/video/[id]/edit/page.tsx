@@ -25,11 +25,7 @@ export default function EditVideoPage() {
   const videoId = params.id as string;
 
   // Fetch video data
-  const {
-    data: video,
-    isLoading,
-    error,
-  } = api.video.get.useQuery({ id: videoId });
+  const [video] = api.video.get.useSuspenseQuery({ id: videoId });
 
   // Update mutation
   const updateVideo = api.video.update.useMutation({
@@ -73,28 +69,6 @@ export default function EditVideoPage() {
   const handleCancel = () => {
     router.push("/library");
   };
-
-  // Loading state
-  if (isLoading) {
-    return (
-      <Box
-        sx={{
-          minHeight: "100vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          bgcolor: "background.default",
-        }}
-      >
-        <CircularProgress />
-      </Box>
-    );
-  }
-
-  // Error state
-  if (error) {
-    throw new Error(error.message);
-  }
 
   if (!video) {
     return (

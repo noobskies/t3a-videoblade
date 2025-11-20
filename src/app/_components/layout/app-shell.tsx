@@ -24,7 +24,6 @@ import {
   MenuItem,
   Skeleton,
   Stack,
-  Button,
 } from "@mui/material";
 import {
   Menu as MenuIcon,
@@ -149,8 +148,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     </div>
   );
 
-  // Loading State
-  if (isPending) {
+  // Loading State (only on initial load when session is undefined)
+  if (isPending && session === undefined) {
     return (
       <Box
         sx={{

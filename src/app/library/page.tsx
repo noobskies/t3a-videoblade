@@ -24,30 +24,22 @@ function isValidVideoList(data: unknown): data is VideoList {
 }
 
 export default function LibraryPage() {
-  const query = api.video.list.useQuery();
-
-  // Handle loading state - Next.js loading.tsx will display
-  if (query.isLoading || !query.data) {
-    return null;
-  }
-
-  // Handle error state - Next.js error.tsx will catch this
-  if (query.error) {
-    throw new Error(query.error.message);
-  }
+  // Use Suspense query to leverage loading.tsx automatically
+  const [videoList, queryUtils] = api.video.list.useSuspenseQuery();
 
   // Validate data shape - this is an actual error if it fails
-  if (!isValidVideoList(query.data)) {
+  if (!isValidVideoList(videoList)) {
     throw new Error("Invalid video data format received from API");
   }
-
-  const videoList: VideoList = query.data;
 
   return (
     <Container maxWidth={false} sx={{ py: 3 }}>
       <Header videoCount={videoList.length} />
       {videoList.length > 0 ? (
-        <VideoGrid videos={videoList} onRefresh={() => void query.refetch()} />
+        <VideoGrid
+          videos={videoList}
+          onRefresh={() => void queryUtils.refetch()}
+        />
       ) : (
         <EmptyState />
       )}

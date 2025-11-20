@@ -29,7 +29,8 @@ function isValidPlatformList(data: unknown): data is PlatformConnectionList {
 }
 
 export default function PlatformsPage() {
-  const query = api.platform.list.useQuery();
+  // Use Suspense query to leverage loading.tsx automatically
+  const [connections, queryUtils] = api.platform.list.useSuspenseQuery();
   const connectYouTube = api.platform.connectYouTube.useMutation();
   const connectTikTok = api.platform.connectTikTok.useMutation();
   const disconnect = api.platform.disconnect.useMutation();
@@ -37,7 +38,7 @@ export default function PlatformsPage() {
   const handleConnectYouTube = async () => {
     try {
       await connectYouTube.mutateAsync();
-      await query.refetch();
+      await queryUtils.refetch();
       alert("YouTube connected successfully!");
     } catch (error: unknown) {
       const errorMessage =
@@ -50,7 +51,7 @@ export default function PlatformsPage() {
     try {
       // Try to connect using existing link first
       await connectTikTok.mutateAsync();
-      await query.refetch();
+      await queryUtils.refetch();
       alert("TikTok connected successfully!");
     } catch (error: unknown) {
       const errorMessage =
@@ -82,7 +83,7 @@ export default function PlatformsPage() {
 
     try {
       await disconnect.mutateAsync({ id });
-      await query.refetch();
+      await queryUtils.refetch();
     } catch (error: unknown) {
       const errorMessage =
         error instanceof Error ? error.message : "Failed to disconnect";
@@ -90,24 +91,13 @@ export default function PlatformsPage() {
     }
   };
 
-  // Handle loading state
-  if (query.isLoading || !query.data) {
-    return null;
-  }
-
-  // Handle error state - Next.js error.tsx will catch this
-  if (query.error) {
-    throw new Error(query.error.message);
-  }
-
   // Validate data shape - this is an actual error if it fails
-  if (!isValidPlatformList(query.data)) {
+  if (!isValidPlatformList(connections)) {
     throw new Error(
       "Invalid platform connection data format received from API",
     );
   }
 
-  const connections: PlatformConnectionList = query.data;
   const youtubeConnection = connections.find((c) => c.platform === "YOUTUBE");
   const tiktokConnection = connections.find((c) => c.platform === "TIKTOK");
 
