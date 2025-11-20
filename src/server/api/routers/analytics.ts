@@ -35,6 +35,7 @@ export const analyticsRouter = createTRPCRouter({
       const platformBreakdown = {
         youtube: 0,
         tiktok: 0,
+        vimeo: 0,
       };
 
       for (const job of jobs) {
@@ -47,6 +48,7 @@ export const analyticsRouter = createTRPCRouter({
 
           if (job.platform === "YOUTUBE") platformBreakdown.youtube += views;
           if (job.platform === "TIKTOK") platformBreakdown.tiktok += views;
+          if (job.platform === "VIMEO") platformBreakdown.vimeo += views;
         }
       }
 
@@ -98,7 +100,7 @@ export const analyticsRouter = createTRPCRouter({
       // Map/Reduce to group by Date (YYYY-MM-DD)
       const dailyMap = new Map<
         string,
-        { views: number; youtube: number; tiktok: number }
+        { views: number; youtube: number; tiktok: number; vimeo: number }
       >();
 
       // Initialize map with 0s for all days
@@ -106,7 +108,12 @@ export const analyticsRouter = createTRPCRouter({
         const dateStr = dayjs()
           .subtract(30 - i, "days")
           .format("YYYY-MM-DD");
-        dailyMap.set(dateStr, { views: 0, youtube: 0, tiktok: 0 });
+        dailyMap.set(dateStr, {
+          views: 0,
+          youtube: 0,
+          tiktok: 0,
+          vimeo: 0,
+        });
       }
 
       // Aggregate
@@ -149,18 +156,21 @@ export const analyticsRouter = createTRPCRouter({
         let dailyTotal = 0;
         let dailyYoutube = 0;
         let dailyTiktok = 0;
+        let dailyVimeo = 0;
 
         for (const snap of jobMap.values()) {
           dailyTotal += snap.views;
           if (snap.publishJob.platform === "YOUTUBE")
             dailyYoutube += snap.views;
           if (snap.publishJob.platform === "TIKTOK") dailyTiktok += snap.views;
+          if (snap.publishJob.platform === "VIMEO") dailyVimeo += snap.views;
         }
 
         dailyMap.set(dateStr, {
           views: dailyTotal,
           youtube: dailyYoutube,
           tiktok: dailyTiktok,
+          vimeo: dailyVimeo,
         });
       }
 

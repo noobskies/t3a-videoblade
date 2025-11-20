@@ -112,8 +112,7 @@
   - [x] Inngest daily snapshot job
   - [x] YouTube/TikTok stats fetchers
   - [x] Dashboard UI with Recharts
-
-### 🔲 Phase 3 Remaining Steps
+  - [x] **UI/UX Overhaul**: Setup Mode & Empty State
 
 - [x] **Step 2**: Vimeo Integration (Completed 2025-11-20)
   - [x] `Platform` enum updated
@@ -123,6 +122,9 @@
   - [x] Inngest job `publish-to-vimeo`
   - [x] Analytics integration
   - [x] UI updates (Connect & Publish)
+
+### 🔲 Phase 3 Remaining Steps
+
 - [ ] **Step 3**: Batch Uploads
 - [ ] **Step 4**: Production Hardening (Sentry, Rate Limiting)
 
@@ -138,6 +140,6 @@
 
 ### Phase 5: Multi-Platform (Phase 2) ✅ COMPLETE
 
-**Status**: Phase 3 (Vimeo Integration) Complete.
+**Status**: Phase 3 (Dashboard UX & Vimeo) Complete.
 **Product**: VideoBlade - Multi-Platform Video Publishing Tool
 **Next Action**: Batch Uploads.

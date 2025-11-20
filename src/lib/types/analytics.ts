@@ -16,6 +16,7 @@ export interface DashboardStats {
   platformBreakdown: {
     youtube: number;
     tiktok: number;
+    vimeo: number;
   };
 }
 
@@ -24,4 +25,5 @@ export interface TrendDataPoint {
   views: number;
   youtube: number;
   tiktok: number;
+  vimeo: number;
 }

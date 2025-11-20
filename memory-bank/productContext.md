@@ -77,12 +77,12 @@ VideoBlade provides **upload once, publish everywhere** functionality:
 #### 1. Platform Connection Flow
 
 1. User signs in to VideoBlade
-2. Navigates to "Connect Platforms" page
-3. Clicks "Connect" for YouTube, TikTok, or Vimeo
+2. **Setup Mode**: If no platforms are connected, user is presented with a "Connect Your Platforms" onboarding screen on the dashboard.
+3. **Direct Connection**: User clicks "Connect" for YouTube, TikTok, or Vimeo directly from the setup cards.
 4. OAuth redirect to platform authorization
-5. Platform redirects back with auth token
-6. VideoBlade stores connection and displays as "Connected"
-7. User can manage/disconnect platforms anytime
+5. Platform redirects back to **Setup Mode** (`/dashboard?setup=true`) to allow connecting subsequent platforms easily.
+6. User clicks "Continue to Dashboard" when finished connecting accounts.
+7. User can manage/disconnect platforms anytime via the "Manage Connections" button.
 
 #### 2. Video Upload Flow
 
@@ -125,7 +125,7 @@ VideoBlade provides **upload once, publish everywhere** functionality:
 2. Sees high-level performance metrics:
    - Total Views, Engagement, and Content Volume
    - Trend charts showing growth over time
-   - Platform breakdown (YouTube vs TikTok vs Vimeo)
+   - **Smart Filtering**: Platform breakdown chart only shows connected platforms.
 3. Can switch to "Library" or "Platforms" via sidebar for management
 4. Can refresh data manually to get latest stats
 
