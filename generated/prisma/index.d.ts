@@ -69,6 +69,7 @@ export type Platform = (typeof Platform)[keyof typeof Platform]
 
 export const PublishStatus: {
   PENDING: 'PENDING',
+  SCHEDULED: 'SCHEDULED',
   PROCESSING: 'PROCESSING',
   COMPLETED: 'COMPLETED',
   FAILED: 'FAILED',
@@ -81,7 +82,8 @@ export type PublishStatus = (typeof PublishStatus)[keyof typeof PublishStatus]
 export const VideoPrivacy: {
   PUBLIC: 'PUBLIC',
   UNLISTED: 'UNLISTED',
-  PRIVATE: 'PRIVATE'
+  PRIVATE: 'PRIVATE',
+  MUTUAL_FOLLOW_FRIENDS: 'MUTUAL_FOLLOW_FRIENDS'
 };
 
 export type VideoPrivacy = (typeof VideoPrivacy)[keyof typeof VideoPrivacy]

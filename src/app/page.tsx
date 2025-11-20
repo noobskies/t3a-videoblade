@@ -15,7 +15,10 @@ import {
   VideoLibrary as LibraryIcon,
   CloudUpload as UploadIcon,
   Settings as SettingsIcon,
+  YouTube as YouTubeIcon,
+  MusicNote as TikTokIcon,
 } from "@mui/icons-material";
+import { Chip } from "@mui/material";
 
 export default async function Home() {
   const session = await auth.api.getSession({
@@ -56,8 +59,26 @@ export default async function Home() {
               </Typography>
               <Typography variant="body1" color="text.secondary" sx={{ mt: 2 }}>
                 Upload once, publish everywhere. Manage your video content across
-                YouTube and more from a single dashboard.
+                YouTube, TikTok, and more from a single dashboard.
               </Typography>
+
+              <Stack
+                direction="row"
+                spacing={2}
+                justifyContent="center"
+                sx={{ mt: 3 }}
+              >
+                <Chip
+                  icon={<YouTubeIcon sx={{ color: "#ff0000 !important" }} />}
+                  label="YouTube"
+                  variant="outlined"
+                />
+                <Chip
+                  icon={<TikTokIcon sx={{ color: "#00f2ea !important" }} />}
+                  label="TikTok"
+                  variant="outlined"
+                />
+              </Stack>
             </Box>
 
             {/* Actions */}

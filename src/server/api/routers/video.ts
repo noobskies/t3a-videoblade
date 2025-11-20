@@ -7,6 +7,7 @@ import {
   getS3Url,
   getDownloadPresignedUrl,
 } from "@/lib/s3";
+import { deleteVideoFromYouTube } from "@/lib/youtube";
 import { TRPCError } from "@trpc/server";
 import { env } from "@/env";
 import { inngest } from "@/lib/inngest";
@@ -77,7 +78,9 @@ export const videoRouter = createTRPCRouter({
         title: z.string().min(1).max(100),
         description: z.string().max(5000).optional(),
         tags: z.string().max(500).optional(),
-        privacy: z.enum(["PUBLIC", "UNLISTED", "PRIVATE"]).default("UNLISTED"),
+        privacy: z
+          .enum(["PUBLIC", "UNLISTED", "PRIVATE", "MUTUAL_FOLLOW_FRIENDS"])
+          .default("UNLISTED"),
         thumbnailS3Key: z.string().optional(),
       }),
     )
@@ -221,7 +224,9 @@ export const videoRouter = createTRPCRouter({
         title: z.string().min(1).max(100).optional(),
         description: z.string().max(5000).optional(),
         tags: z.string().max(500).optional(),
-        privacy: z.enum(["PUBLIC", "UNLISTED", "PRIVATE"]).optional(),
+        privacy: z
+          .enum(["PUBLIC", "UNLISTED", "PRIVATE", "MUTUAL_FOLLOW_FRIENDS"])
+          .optional(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -256,14 +261,21 @@ export const videoRouter = createTRPCRouter({
    * Delete video
    */
   delete: protectedProcedure
-    .input(z.object({ id: z.string().cuid() }))
+    .input(
+      z.object({
+        id: z.string().cuid(),
+        deleteFromPlatforms: z.boolean().default(false),
+      }),
+    )
     .mutation(async ({ ctx, input }) => {
-      // Get video
+      // Get video with publish jobs
       const video = await ctx.db.video.findUnique({
         where: { id: input.id },
-        select: {
-          s3Key: true,
-          createdById: true,
+        include: {
+          publishJobs: {
+            where: { status: "COMPLETED" },
+            include: { platformConnection: true },
+          },
         },
       });
 
@@ -280,6 +292,29 @@ export const videoRouter = createTRPCRouter({
           code: "FORBIDDEN",
           message: "You don't own this video",
         });
+      }
+
+      // Delete from platforms if requested
+      if (input.deleteFromPlatforms) {
+        for (const job of video.publishJobs) {
+          try {
+            if (
+              job.platform === "YOUTUBE" &&
+              job.platformVideoId &&
+              job.platformConnection.accessToken
+            ) {
+              await deleteVideoFromYouTube({
+                accessToken: job.platformConnection.accessToken,
+                refreshToken: job.platformConnection.refreshToken,
+                videoId: job.platformVideoId,
+              });
+            }
+            // TikTok doesn't support deletion via API easily
+          } catch (error) {
+            console.error(`Failed to delete from ${job.platform}:`, error);
+            // Continue anyway to delete local record
+          }
+        }
       }
 
       // Delete from S3
@@ -310,7 +345,9 @@ export const videoRouter = createTRPCRouter({
         title: z.string().min(1).max(100).optional(),
         description: z.string().max(5000).optional(),
         tags: z.string().max(500).optional(),
-        privacy: z.enum(["PUBLIC", "UNLISTED", "PRIVATE"]).optional(),
+        privacy: z
+          .enum(["PUBLIC", "UNLISTED", "PRIVATE", "MUTUAL_FOLLOW_FRIENDS"])
+          .optional(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -395,6 +432,98 @@ export const videoRouter = createTRPCRouter({
         status: job.status,
         isUpdate,
       };
+    }),
+
+  /**
+   * Publish to multiple platforms
+   */
+  publishMulti: protectedProcedure
+    .input(
+      z.object({
+        videoId: z.string().cuid(),
+        platforms: z.array(z.enum(["YOUTUBE", "TIKTOK"])),
+        scheduledPublishAt: z.date().optional(),
+        metadata: z.record(
+          z.object({
+            title: z.string().optional(),
+            description: z.string().optional(),
+            tags: z.string().optional(),
+            privacy: z
+              .enum(["PUBLIC", "UNLISTED", "PRIVATE", "MUTUAL_FOLLOW_FRIENDS"])
+              .optional(),
+          }),
+        ),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const jobIds: string[] = [];
+
+      // Verify user owns the video
+      const video = await ctx.db.video.findUnique({
+        where: { id: input.videoId },
+        select: { createdById: true },
+      });
+
+      if (!video || video.createdById !== ctx.session.user.id) {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: "You don't own this video",
+        });
+      }
+
+      // Create job for each platform
+      for (const platform of input.platforms) {
+        // Get platform connection
+        const connection = await ctx.db.platformConnection.findUnique({
+          where: {
+            userId_platform: {
+              userId: ctx.session.user.id,
+              platform,
+            },
+          },
+        });
+
+        if (!connection) {
+          throw new TRPCError({
+            code: "NOT_FOUND",
+            message: `${platform} not connected`,
+          });
+        }
+
+        // Get platform specific metadata
+        const meta = input.metadata[platform] ?? {};
+
+        // Create job
+        const job = await ctx.db.publishJob.create({
+          data: {
+            platform,
+            status: input.scheduledPublishAt ? "SCHEDULED" : "PENDING",
+            scheduledFor: input.scheduledPublishAt,
+            videoId: input.videoId,
+            platformConnectionId: connection.id,
+            createdById: ctx.session.user.id,
+            title: meta.title,
+            description: meta.description,
+            tags: meta.tags,
+            privacy: meta.privacy,
+          },
+        });
+
+        jobIds.push(job.id);
+
+        // Trigger Inngest
+        const eventName =
+          platform === "TIKTOK"
+            ? "video/publish.tiktok"
+            : "video/publish.youtube";
+
+        await inngest.send({
+          name: eventName,
+          data: { jobId: job.id },
+        });
+      }
+
+      return { jobIds };
     }),
 
   /**

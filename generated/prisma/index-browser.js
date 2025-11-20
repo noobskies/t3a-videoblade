@@ -260,7 +260,8 @@ exports.Prisma.JsonNullValueFilter = {
 exports.VideoPrivacy = exports.$Enums.VideoPrivacy = {
   PUBLIC: 'PUBLIC',
   UNLISTED: 'UNLISTED',
-  PRIVATE: 'PRIVATE'
+  PRIVATE: 'PRIVATE',
+  MUTUAL_FOLLOW_FRIENDS: 'MUTUAL_FOLLOW_FRIENDS'
 };
 
 exports.Platform = exports.$Enums.Platform = {
@@ -271,6 +272,7 @@ exports.Platform = exports.$Enums.Platform = {
 
 exports.PublishStatus = exports.$Enums.PublishStatus = {
   PENDING: 'PENDING',
+  SCHEDULED: 'SCHEDULED',
   PROCESSING: 'PROCESSING',
   COMPLETED: 'COMPLETED',
   FAILED: 'FAILED',

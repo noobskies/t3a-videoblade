@@ -21,6 +21,7 @@ enum Platform {
 
 enum PublishStatus {
   PENDING
+  SCHEDULED
   PROCESSING
   COMPLETED
   FAILED
@@ -31,6 +32,7 @@ enum VideoPrivacy {
   PUBLIC
   UNLISTED
   PRIVATE
+  MUTUAL_FOLLOW_FRIENDS
 }
 
 model Post {

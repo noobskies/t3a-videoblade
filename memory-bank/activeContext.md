@@ -4,13 +4,35 @@
 
 **Phase 2: Multi-Platform Integration (TikTok)**
 
-We have started Phase 2 implementation.
+We are currently working on Phase 2.
 
 - **Step 1: TikTok OAuth**: Completed.
 - **Step 2: TikTok Publisher**: Completed.
-- **Next Step**: Step 3: Multi-Platform UI.
+- **Step 3: Multi-Platform UI**: Completed.
+- **Step 4: Delete Videos**: Completed.
+- **Step 5: Scheduling**: Completed.
+- **Phase 2 Status**: Complete.
 
 ## Recent Changes
+
+- **Feature: Scheduling** (2025-11-19)
+  - Added `SCHEDULED` status to `PublishStatus` enum.
+  - Updated `PublishPage` with MUI `DateTimePicker` for scheduling.
+  - Updated `videoRouter.publishMulti` to handle `scheduledPublishAt`.
+  - Updated Inngest workflows (`publish-to-youtube`, `publish-to-tiktok`) to support `step.sleepUntil`.
+  - Updated `EditVideoPage` to support `MUTUAL_FOLLOW_FRIENDS`.
+
+- **Feature: Delete Videos** (2025-11-19)
+  - Updated `VideoCard` with MUI Dialog for safer deletion confirmation.
+  - Added backend support for deleting published videos from platforms (YouTube).
+  - Updated `videoRouter.delete` to cascade delete jobs and optionally call platform APIs.
+  - Updated `src/lib/youtube.ts` with deletion support.
+
+- **Feature: Multi-Platform UI** (2025-11-19)
+  - Implemented `publishMulti` procedure to handle simultaneous publishing.
+  - Updated `VideoPrivacy` enum to support `MUTUAL_FOLLOW_FRIENDS` for TikTok.
+  - Created new `PublishPage` allowing selection of multiple platforms (YouTube/TikTok).
+  - Added platform-specific metadata configuration forms.
 
 - **Feature: TikTok Publisher** (2025-11-19)
   - Created `src/lib/tiktok.ts` for API interaction.
@@ -20,37 +42,22 @@ We have started Phase 2 implementation.
 
 - **Feature: TikTok OAuth** (2025-11-19)
   - Added `TIKTOK` to `Platform` enum in Prisma schema.
-  - Configured `better-auth` with TikTok provider using `TIKTOK_CLIENT_KEY` and `TIKTOK_CLIENT_SECRET`.
-  - Added `connectTikTok` mutation to `platformRouter`.
-  - Updated `src/app/platforms/page.tsx` with TikTok connection card.
-  - Added environment variable validation for TikTok credentials.
-
-- **Feature: Retry Logic** (2025-11-19)
-  - Added `retryPublish` mutation.
-  - Updated UI to show retry button for failed jobs.
-
-- **Feature: Video Thumbnails** (2025-11-19)
-  - Client-side thumbnail generation during upload.
-  - Thumbnails visible immediately in Library/Edit.
-
-- **Homepage Update** (2025-11-19)
-  - Modern MUI layout for homepage.
+  - Configured `better-auth` with TikTok provider.
+  - Added `connectTikTok` mutation.
 
 ## Active Decisions
 
-- **TikTok Auth Flow**: We use Better Auth's `signIn.social` to link the TikTok account. The `connectTikTok` mutation then syncs the tokens to our `PlatformConnection` table.
-- **MUI Icons**: Used `MusicNote` as placeholder for TikTok icon since `@mui/icons-material` doesn't have a dedicated TikTok icon.
+- **Privacy Mapping**: TikTok's "Friends" privacy setting is mapped to a new `MUTUAL_FOLLOW_FRIENDS` enum value in `VideoPrivacy`. This required a schema migration (via `db push` for dev speed).
+- **Multi-Platform Publishing**: We iterate through selected platforms in the backend and create separate `PublishJob` records for each, triggering their respective Inngest events. This allows for independent status tracking and retries.
 
 ## Next Steps
 
-1.  **Implement Multi-Platform UI** (Phase 2 - Step 3)
-    - Update publish page to allow selecting multiple platforms.
-    - Update library to show status per platform.
-    - Handle platform-specific metadata fields if needed.
+1.  **Phase 3 Planning**
+    - Review roadmap for Phase 3 (if defined) or identify next major feature set (e.g., Analytics, more platforms, etc.).
 
 ## Current Context
 
 - **Project**: VideoBlade (Multi-Platform Video Publisher)
 - **Phase**: Phase 2 (Multi-Platform - TikTok)
-- **Status**: Phase 2 Step 2 Complete.
-- **Current Task**: Proceeding to Step 3 (Multi-Platform UI).
+- **Status**: Phase 2 Complete.
+- **Current Task**: Phase 2 Complete.

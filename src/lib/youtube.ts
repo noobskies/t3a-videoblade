@@ -34,6 +34,32 @@ export interface UpdateVideoResult {
 }
 
 /**
+ * Delete a video from YouTube
+ */
+export async function deleteVideoFromYouTube(params: {
+  accessToken: string;
+  refreshToken: string | null;
+  videoId: string;
+}): Promise<void> {
+  const oauth2Client = new google.auth.OAuth2(
+    env.GOOGLE_CLIENT_ID,
+    env.GOOGLE_CLIENT_SECRET,
+    "https://t3a-videoblade.vercel.app/api/auth/callback/google",
+  );
+
+  oauth2Client.setCredentials({
+    access_token: params.accessToken,
+    refresh_token: params.refreshToken,
+  });
+
+  const youtube = google.youtube({ version: "v3", auth: oauth2Client });
+
+  await youtube.videos.delete({
+    id: params.videoId,
+  });
+}
+
+/**
  * Update an existing YouTube video's metadata
  * Does NOT re-upload the video file
  */

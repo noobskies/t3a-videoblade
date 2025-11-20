@@ -25,7 +25,7 @@ export const publishToYouTubeFunction = inngest.createFunction(
   async ({ event, step }) => {
     const { jobId } = event.data;
 
-    // Step 1: Get job details and update status to PROCESSING
+    // Step 1: Get job details
     const job = await step.run("get-job", async () => {
       const job = await db.publishJob.findUnique({
         where: { id: jobId },
@@ -38,8 +38,23 @@ export const publishToYouTubeFunction = inngest.createFunction(
       if (!job) {
         throw new Error(`Job not found: ${jobId}`);
       }
+      return job;
+    });
 
-      // Update status to PROCESSING
+    // Step 2: Handle scheduling
+    if (job.scheduledFor && new Date(job.scheduledFor) > new Date()) {
+      await step.run("mark-scheduled", async () => {
+        await db.publishJob.update({
+          where: { id: jobId },
+          data: { status: "SCHEDULED" },
+        });
+      });
+
+      await step.sleepUntil("wait-for-schedule", job.scheduledFor);
+    }
+
+    // Step 3: Start processing
+    await step.run("start-processing", async () => {
       await db.publishJob.update({
         where: { id: jobId },
         data: {
@@ -48,11 +63,9 @@ export const publishToYouTubeFunction = inngest.createFunction(
           retryCount: { increment: 1 },
         },
       });
-
-      return job;
     });
 
-    // Step 2: Upload video to YouTube
+    // Step 4: Upload video to YouTube
     const result = await step.run("upload-video", async () => {
       try {
         const result = await uploadVideoToYouTube({
@@ -91,7 +104,7 @@ export const publishToYouTubeFunction = inngest.createFunction(
       }
     });
 
-    // Step 3: Update job with success
+    // Step 5: Update job with success
     await step.run("update-job", async () => {
       await db.publishJob.update({
         where: { id: jobId },
@@ -104,7 +117,7 @@ export const publishToYouTubeFunction = inngest.createFunction(
       });
     });
 
-    // Step 4: Update video with thumbnail (if successful)
+    // Step 6: Update video with thumbnail (if successful)
     if (result.success && result.videoId) {
       await step.run("update-thumbnail", async () => {
         const thumbnailUrl = `https://img.youtube.com/vi/${result.videoId}/mqdefault.jpg`;

@@ -23,7 +23,23 @@ export const publishToTikTokFunction = inngest.createFunction(
       });
 
       if (!job) throw new Error("Job not found");
+      return job;
+    });
 
+    // Step 2: Handle scheduling
+    if (job.scheduledFor && new Date(job.scheduledFor) > new Date()) {
+      await step.run("mark-scheduled", async () => {
+        await db.publishJob.update({
+          where: { id: jobId },
+          data: { status: "SCHEDULED" },
+        });
+      });
+
+      await step.sleepUntil("wait-for-schedule", job.scheduledFor);
+    }
+
+    // Step 3: Start processing
+    await step.run("start-processing", async () => {
       await db.publishJob.update({
         where: { id: jobId },
         data: {
@@ -32,18 +48,17 @@ export const publishToTikTokFunction = inngest.createFunction(
           retryCount: { increment: 1 },
         },
       });
-
-      return job;
     });
 
-    // Step 2: Upload to TikTok
+    // Step 4: Upload to TikTok
     const { publishId } = await step.run("upload-video", async () => {
       try {
         // Map privacy settings
         let privacy = "SELF_ONLY";
         if (job.privacy === "PUBLIC") privacy = "PUBLIC_TO_EVERYONE";
-        // TikTok doesn't have "UNLISTED" exactly, so we map to SELF_ONLY or MUTUAL_FOLLOW_FRIENDS
-        // For safety/default, we'll use SELF_ONLY (Private) for non-public
+        else if (job.privacy === "MUTUAL_FOLLOW_FRIENDS") privacy = "MUTUAL_FOLLOW_FRIENDS";
+        
+        // TikTok doesn't have "UNLISTED", map to SELF_ONLY (Private)
         
         return await publishToTikTok({
           accessToken: job.platformConnection.accessToken,
@@ -66,7 +81,7 @@ export const publishToTikTokFunction = inngest.createFunction(
       }
     });
 
-    // Step 3: Update job with publish ID
+    // Step 5: Update job with publish ID
     await step.run("save-publish-id", async () => {
       await db.publishJob.update({
         where: { id: jobId },
@@ -76,7 +91,7 @@ export const publishToTikTokFunction = inngest.createFunction(
       });
     });
 
-    // Step 4: Poll for status (TikTok processing takes time)
+    // Step 6: Poll for status (TikTok processing takes time)
     // This might need a separate delayed function or loop with sleep
     // For MVP, we mark as "PROCESSING" and wait
     

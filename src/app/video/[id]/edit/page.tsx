@@ -42,9 +42,9 @@ export default function EditVideoPage() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [tags, setTags] = useState("");
-  const [privacy, setPrivacy] = useState<"PUBLIC" | "UNLISTED" | "PRIVATE">(
-    "UNLISTED",
-  );
+  const [privacy, setPrivacy] = useState<
+    "PUBLIC" | "UNLISTED" | "PRIVATE" | "MUTUAL_FOLLOW_FRIENDS"
+  >("UNLISTED");
 
   // Initialize form when video loads
   useEffect(() => {
@@ -223,7 +223,13 @@ export default function EditVideoPage() {
               label="Privacy"
               value={privacy}
               onChange={(e) =>
-                setPrivacy(e.target.value as "PUBLIC" | "UNLISTED" | "PRIVATE")
+                setPrivacy(
+                  e.target.value as
+                    | "PUBLIC"
+                    | "UNLISTED"
+                    | "PRIVATE"
+                    | "MUTUAL_FOLLOW_FRIENDS",
+                )
               }
               fullWidth
               helperText={
@@ -231,12 +237,17 @@ export default function EditVideoPage() {
                   ? "Anyone can find and view"
                   : privacy === "UNLISTED"
                     ? "Only people with the link can view"
-                    : "Only you can view"
+                    : privacy === "MUTUAL_FOLLOW_FRIENDS"
+                      ? "Only friends can view"
+                      : "Only you can view"
               }
             >
               <MenuItem value="PUBLIC">Public</MenuItem>
               <MenuItem value="UNLISTED">Unlisted</MenuItem>
               <MenuItem value="PRIVATE">Private</MenuItem>
+              <MenuItem value="MUTUAL_FOLLOW_FRIENDS">
+                Mutual Follow Friends
+              </MenuItem>
             </TextField>
 
             {/* Actions */}

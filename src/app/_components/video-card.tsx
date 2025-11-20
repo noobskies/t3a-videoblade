@@ -21,6 +21,13 @@ import {
   Chip,
   Stack,
   Alert,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  FormControlLabel,
+  Checkbox,
 } from "@mui/material";
 import type { VideoListItem } from "@/lib/types";
 
@@ -31,8 +38,15 @@ type VideoCardProps = {
 
 export function VideoCard({ video, onDelete }: VideoCardProps) {
   const [isDeleting, setIsDeleting] = useState(false);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [deleteFromPlatforms, setDeleteFromPlatforms] = useState(false);
+
   const deleteVideo = api.video.delete.useMutation();
   const retryPublish = api.video.retryPublish.useMutation();
+
+  const hasPublishedJobs = video.publishJobs.some(
+    (job) => job.status === "COMPLETED",
+  );
 
   const formatFileSize = (bytes: string) => {
     const size = parseInt(bytes);
@@ -51,12 +65,23 @@ export function VideoCard({ video, onDelete }: VideoCardProps) {
     });
   };
 
-  const handleDelete = async () => {
-    if (!confirm(`Delete "${video.title}"?`)) return;
+  const handleOpenDeleteDialog = () => {
+    setDeleteDialogOpen(true);
+    setDeleteFromPlatforms(false);
+  };
 
+  const handleCloseDeleteDialog = () => {
+    setDeleteDialogOpen(false);
+  };
+
+  const handleConfirmDelete = async () => {
+    setDeleteDialogOpen(false);
     setIsDeleting(true);
     try {
-      await deleteVideo.mutateAsync({ id: video.id });
+      await deleteVideo.mutateAsync({
+        id: video.id,
+        deleteFromPlatforms: deleteFromPlatforms,
+      });
       onDelete();
     } catch (error) {
       console.error("Delete failed:", error);
@@ -260,7 +285,7 @@ export function VideoCard({ video, onDelete }: VideoCardProps) {
         </IconButton>
         <IconButton
           aria-label="delete"
-          onClick={handleDelete}
+          onClick={handleOpenDeleteDialog}
           disabled={isDeleting}
           size="small"
           color="error"
@@ -268,6 +293,70 @@ export function VideoCard({ video, onDelete }: VideoCardProps) {
           <Trash2 fontSize="small" />
         </IconButton>
       </CardActions>
+
+      {/* Delete Confirmation Dialog */}
+      <Dialog
+        open={deleteDialogOpen}
+        onClose={handleCloseDeleteDialog}
+        aria-labelledby="delete-dialog-title"
+        aria-describedby="delete-dialog-description"
+      >
+        <DialogTitle id="delete-dialog-title">
+          {`Delete "${video.title}"?`}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="delete-dialog-description" gutterBottom>
+            This action cannot be undone. This will permanently delete:
+          </DialogContentText>
+          <Box component="ul" sx={{ pl: 2, mt: 0 }}>
+            <li>
+              <Typography variant="body2">
+                The video file from cloud storage
+              </Typography>
+            </li>
+            <li>
+              <Typography variant="body2">
+                All metadata and history from VideoBlade
+              </Typography>
+            </li>
+          </Box>
+
+          {hasPublishedJobs && (
+            <Box sx={{ mt: 2 }}>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={deleteFromPlatforms}
+                    onChange={(e) => setDeleteFromPlatforms(e.target.checked)}
+                    color="error"
+                  />
+                }
+                label="Also delete from connected platforms (YouTube, etc.)"
+              />
+              <Typography
+                variant="caption"
+                color="text.secondary"
+                display="block"
+              >
+                Note: Only supported on platforms that allow API deletion (e.g.
+                YouTube). TikTok videos may need to be deleted manually.
+              </Typography>
+            </Box>
+          )}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDeleteDialog} autoFocus>
+            Cancel
+          </Button>
+          <Button
+            onClick={handleConfirmDelete}
+            color="error"
+            variant="contained"
+          >
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Card>
   );
 }
