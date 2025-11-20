@@ -13,6 +13,7 @@ import { ZodError } from "zod";
 
 import { auth } from "@/server/auth";
 import { db } from "@/server/db";
+import { ratelimit } from "@/lib/ratelimit";
 
 /**
  * 1. CONTEXT
@@ -104,13 +105,37 @@ const timingMiddleware = t.middleware(async ({ next, path }) => {
 });
 
 /**
+ * Rate limiting middleware
+ */
+const rateLimitMiddleware = t.middleware(async ({ ctx, next }) => {
+  if (!ratelimit) return next();
+
+  // Use user ID if authenticated, otherwise fallback to IP (if available in headers)
+  // Note: In a real app, getting IP reliably depends on your hosting (e.g. Vercel uses x-forwarded-for)
+  const identifier = ctx.session?.user?.id ?? "anonymous";
+
+  const { success } = await ratelimit.limit(identifier);
+
+  if (!success) {
+    throw new TRPCError({
+      code: "TOO_MANY_REQUESTS",
+      message: "Rate limit exceeded",
+    });
+  }
+
+  return next();
+});
+
+/**
  * Public (unauthenticated) procedure
  *
  * This is the base piece you use to build new queries and mutations on your tRPC API. It does not
  * guarantee that a user querying is authorized, but you can still access user session data if they
  * are logged in.
  */
-export const publicProcedure = t.procedure.use(timingMiddleware);
+export const publicProcedure = t.procedure
+  .use(timingMiddleware)
+  .use(rateLimitMiddleware);
 
 /**
  * Protected (authenticated) procedure

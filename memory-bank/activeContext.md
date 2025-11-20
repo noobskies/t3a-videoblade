@@ -2,39 +2,36 @@
 
 ## Current Focus
 
-Phase 3: Expansion & Analytics.
-We have just completed **Step 3: Batch Uploads** and fixed a critical issue in the Analytics Dashboard.
+**Major Pivot**: Transforming into "MediaBlade" (Buffer Clone).
+We have just completed **Phase 3, Step 4: Production Hardening** and realigned the entire roadmap to support the new vision.
 
 ## Recent Changes
 
-- **Dashboard Fix**:
-  - Fixed `TrendChart` showing all platforms regardless of connection status.
-  - Added **Vimeo** support to the trend chart.
-  - Updated `PlatformConnection` type to allow nullable `platformUsername`.
-- **Batch Operations**:
-  - Created `BatchVideoUpload` component replacing the single-file upload.
-  - Supports multi-file drag-and-drop.
-  - Queue management (remove, edit title/desc).
-  - Sequential upload processing with individual progress bars.
-  - Refactored `/upload` page to use the new batch component.
+- **Strategic Pivot**: Updated core documentation (`projectbrief.md`, `productContext.md`) to reflect the shift from "Video Tool" to "Comprehensive Media Manager".
+- **Roadmap Restructuring**: Defined Phase 4 (Buffer Core) and Phase 5 (Expansion).
+- **Production Hardening**:
+  - **Sentry Integration**: Configured client/server/edge error tracking.
+  - **Rate Limiting**: Implemented Upstash Redis rate limiter on all tRPC procedures.
+  - **Upload Hardening**: Refactored upload limits to shared constants (`src/lib/constants.ts`).
 
 ## Active Decisions
 
-- **Batch Upload Strategy**: We opted for sequential uploads (one at a time) within the batch for the MVP to ensure reliability and progress visibility, though the architecture supports concurrency.
-- **State Management**: `UploadQueueItem` interface manages the complex state of each file (status, progress, preview, etc.).
-- **Cleanup**: Removed the legacy `video-upload.tsx` component.
+- **Web-Only**: We are prioritizing the web application over a mobile app for now.
+- **Buffer Features**: Prioritizing **Visual Calendar** and **Queue System** as the core differentiators for Phase 4.
+- **Rate Limiting**: Applied globally to `publicProcedure` to prevent abuse, with user-based limits for `protectedProcedure`.
 
 ## Next Steps
 
-1.  **Phase 3, Step 4: Production Hardening**
-    - Sentry integration for error tracking.
-    - Rate limiting for API routes.
-    - Upload size limits/validation refinement.
+1.  **Phase 4, Step 1: Multi-Format Infrastructure**
+    - Update Prisma schema for `Post` type (VIDEO, IMAGE, TEXT).
+    - Update Upload UI to handle images.
+    - Update S3 logic for image optimization (optional/future).
 
-2.  **Testing**: Verify batch upload with large files and mixed success/fail scenarios.
+2.  **Phase 4, Step 2: Visual Calendar**
+    - Install calendar library (`react-big-calendar`).
+    - Build the calendar view.
 
 ## Current Project State
 
-- **Phase**: 3 (Expansion)
-- **Step**: 4 (Hardening)
-- **Status**: Functional Batch Uploads & Accurate Analytics.
+- **Phase**: 3 (Hardening Complete) -> Transitioning to 4
+- **Status**: Foundation Hardened, Ready for Feature Expansion.

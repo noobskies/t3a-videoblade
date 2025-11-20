@@ -84,6 +84,16 @@
 - Configuration: `src/server/auth.ts`
 - Client hooks: `src/lib/auth-client.ts`
 
+**Sentry Configuration**:
+
+- **SDK**: `@sentry/nextjs`
+- **Features**:
+  - **Error Tracking**: Client, Server, and Edge.
+  - **Performance Tracing**: Automatic instrumentation.
+  - **Session Replay**: Sampled at 10% (100% on error).
+  - **Logs**: `enableLogs: true` and `consoleLoggingIntegration` enabled for deeper debugging.
+- **Setup**: `sentry.*.config.ts` files and `next.config.js` wrapper.
+
 **YouTube OAuth Scope Configuration**:
 
 - **Scope**: `https://www.googleapis.com/auth/youtube` (full access)
@@ -332,10 +342,11 @@ t3a-videoblade/
 
 **Core Framework**: Next.js, React, TypeScript
 **UI Framework**: **Material-UI v6** (Core, Icons, Emotion)
-**API & Data**: tRPC, TanStack Query, Prisma, Better Auth, Google APIs
+**API & Data**: tRPC, TanStack Query, Prisma, Better Auth, Google APIs, **Upstash Ratelimit**
 **Storage**: AWS SDK (S3)
 **Background Jobs**: Inngest
 **Validation**: Zod, SuperJSON
+**Observability**: **Sentry** (Error Tracking & Performance)
 
 ### Legacy Dependencies (To Be Removed)
 

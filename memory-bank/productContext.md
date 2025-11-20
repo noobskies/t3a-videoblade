@@ -2,379 +2,145 @@
 
 ## Why This Project Exists
 
-**VideoBlade** exists to solve a critical pain point for content creators: **the tedious, time-consuming process of manually uploading the same video to multiple platforms.**
+**VideoBlade** (evolving to MediaBlade) exists to solve the chaos of managing a modern social media presence. Creators and brands are expected to be everywhere—YouTube, TikTok, LinkedIn, X, Instagram—but managing these channels individually is disjointed and inefficient.
 
 ### The Problem
 
-Content creators today need to be present on multiple video platforms to maximize reach and audience engagement. A typical workflow looks like this:
-
-1. Upload video to YouTube (10-15 minutes)
-2. Re-upload same video to Vimeo (10-15 minutes)
-3. Re-upload to TikTok (10-15 minutes)
-4. Re-upload to other platforms (10-15 minutes each)
-5. Manually configure metadata for each platform
-6. Track which platforms succeeded/failed
-7. Retry failed uploads manually
-
-**Total time**: 1-2 hours for a single video across 4-5 platforms.
+1.  **Fragmented Workflows**: Video goes to YouTube, text to LinkedIn, images to Instagram. Each platform has its own interface.
+2.  **Planning Chaos**: Spreadsheets and disconnected calendars make it hard to visualize the overall content strategy.
+3.  **Posting Fatigue**: Manually logging in to post at specific times breaks focus.
+4.  **Engagement Silos**: Comments are scattered across 5+ inboxes.
 
 ### The Solution
 
-VideoBlade provides **upload once, publish everywhere** functionality:
+A **Unified Media Command Center** (Buffer Clone):
 
-1. Upload video once to VideoBlade (5 minutes)
-2. Select target platforms and configure settings
-3. Click "Publish" - VideoBlade handles the rest
-4. Monitor all platforms from unified dashboard
-
-**Total time**: 10-15 minutes, with automation handling the distribution.
+1.  **Centralized Planning**: Visual calendar for all content types (Video, Image, Text).
+2.  **Smart Scheduling**: "Queue" system where you define slots, and content fills them automatically.
+3.  **Unified Engagement**: One inbox for all comments and replies.
+4.  **Multi-Format**: First-class support for video, images, and text posts.
 
 ## Problems It Solves
 
 ### Content Creator Workflow Problems
 
-- **Time Waste**: Eliminates repetitive manual uploads to each platform
-- **Human Error**: Reduces mistakes in metadata entry across platforms
-- **Inconsistency**: Ensures video is published consistently everywhere
-- **Tracking Overhead**: Centralizes publish status monitoring
-- **Scheduling Complexity**: Simplifies coordinated release timing
-
-### Technical Foundation (Inherited from T3 Stack)
-
-- **Type Safety**: End-to-end type safety from database to frontend eliminates runtime type errors
-- **API Complexity**: tRPC removes the need for REST/GraphQL boilerplate while maintaining type safety
-- **Authentication**: Pre-configured NextAuth.js handles user management and session handling
-- **Database Integration**: Prisma provides a type-safe database layer with migrations
-- **Developer Experience**: Rapid development with modern tooling and hot reload
+- **Time Waste**: Eliminates repetitive manual uploads.
+- **Context Switching**: managing 5 platforms = 5 different mindsets/UI.
+- **Inconsistency**: "Set and forget" queue ensures consistent posting cadence.
+- **Missed Engagement**: Unified inbox ensures no comment goes unanswered.
 
 ## How It Should Work
 
-### Current Functionality
+### 1. Connect & Setup (Onboarding)
 
-#### Authentication Flow
+1.  User connects accounts: YouTube, TikTok, Vimeo (Video), LinkedIn, X, Instagram (Social).
+2.  **Queue Setup**: User defines "Posting Slots" (e.g., "LinkedIn: Mon/Wed/Fri at 9 AM", "TikTok: Daily at 6 PM").
+3.  User sets time zone and default preferences.
 
-1. User visits the homepage (Landing Page)
-2. Can sign in via OAuth (Google, TikTok, Vimeo)
-3. **Authenticated users are redirected to the Dashboard**
-4. Session persists across page loads
+### 2. Visual Planning (Calendar)
 
-#### Post Management
+1.  User opens **Calendar View**.
+2.  Sees a drag-and-drop interface of the month/week.
+3.  Can drag a "Draft" from the sidebar onto a date.
+4.  Can drag an existing scheduled post to a new date/time.
+5.  Visual indicators for platform icons (YouTube red, LinkedIn blue, etc.).
 
-1. Logged-in users see their latest post
-2. Posts are stored in SQLite database
-3. Posts have name, timestamps, and author relationship
-4. tRPC handles all API communication type-safely
+### 3. The Queue Workflow (Buffer Style)
 
-#### UI/UX
+1.  User creates a post (Video, Image, or Text).
+2.  Selects platforms (e.g., LinkedIn + X).
+3.  Clicks **"Add to Queue"**.
+4.  System automatically schedules it for the _next available slot_ for each platform.
+    - _Example_: LinkedIn slot is tomorrow at 9 AM. X slot is today at 5 PM.
+5.  User doesn't need to pick dates manually unless they want to ("Schedule for Specific Time").
 
-- Clean, modern interface with gradient backgrounds
-- Responsive design works on mobile and desktop
-- Smooth transitions and hover effects
-- Links to T3 documentation for learning
+### 4. Unified Inbox (Engagement)
 
-### Planned Functionality - VideoBlade Core Flows
-
-#### 1. Platform Connection Flow
-
-1. User signs in to VideoBlade
-2. **Setup Mode**: If no platforms are connected, user is presented with a "Connect Your Platforms" onboarding screen on the dashboard.
-3. **Direct Connection**: User clicks "Connect" for YouTube, TikTok, or Vimeo directly from the setup cards.
-4. OAuth redirect to platform authorization
-5. Platform redirects back to **Setup Mode** (`/dashboard?setup=true`) to allow connecting subsequent platforms easily.
-6. User clicks "Continue to Dashboard" when finished connecting accounts.
-7. User can manage/disconnect platforms anytime via the "Manage Connections" button.
-
-#### 2. Video Upload Flow
-
-1. User navigates to "Upload Video" page
-2. Selects video file from computer (drag & drop or file picker)
-3. Upload progress bar shows status
-4. Video uploads to cloud storage (S3/R2)
-5. Video appears in user's library with "Ready to Publish" status
-
-#### 3. Batch Publishing Flow
-
-1. User selects video from library
-2. Clicks "Publish to Platforms"
-3. Selects target platforms (YouTube, Vimeo, TikTok)
-4. Configures metadata for each platform:
-   - Title (can be same or platform-specific)
-   - Description
-   - Tags/keywords
-   - Category
-   - Visibility (public, unlisted, private)
-   - Thumbnail (optional)
-5. Clicks "Publish Now" or "Schedule"
-6. Jobs are queued for each platform
-7. Background workers process publish jobs
-8. Dashboard updates with publish status per platform
-
-#### 4. Scheduling Flow
-
-1. User follows publish flow above
-2. Instead of "Publish Now", selects "Schedule"
-3. Sets publish date/time
-4. Optionally sets different times per platform
-5. Jobs are scheduled in queue
-6. Automated workers execute at scheduled time
-7. User receives notification when complete
-
-#### 5. Analytics Dashboard Flow
-
-1. User views unified **Analytics Dashboard** (default view)
-2. Sees high-level performance metrics:
-   - Total Views, Engagement, and Content Volume
-   - Trend charts showing growth over time
-   - **Smart Filtering**: Platform breakdown chart only shows connected platforms.
-3. Can switch to "Library" or "Platforms" via sidebar for management
-4. Can refresh data manually to get latest stats
+1.  User opens **Inbox**.
+2.  See a stream of unread comments from all connected platforms.
+3.  Click a comment to see context.
+4.  Type reply and hit "Send".
+5.  Mark as "Done/Resolved" to clear from view.
 
 ## User Experience Goals
 
-### MVP (Phase 1)
+### MVP (Phase 1-3 - Foundation)
 
-- **Simple**: One-click platform connection via OAuth
-- **Fast**: Video upload with clear progress indication
-- **Clear**: Status visibility for each platform publish
-- **Reliable**: Error messages that explain what went wrong and how to fix
-- **Guided**: Clear onboarding for first-time users
+- **Robust**: Reliable video uploading and publishing.
+- **Connected**: YouTube, TikTok, Vimeo integration.
+- **Insightful**: Basic analytics dashboard.
 
-### Feature Complete (Phase 2)
+### Core Buffer Experience (Phase 4)
 
-- **Efficient**: Batch operations for multiple videos
-- **Flexible**: Platform-specific metadata customization
-- **Smart**: Remember preferences and suggest defaults
-- **Organized**: Filter and search video library
-- **Informative**: Publish history and analytics
+- **Visual**: "What you see is what you get" calendar planning.
+- **Effortless**: "Add to Queue" should feel magical—no date picking required.
+- **Flexible**: Handle a 4K video for YouTube and a text thread for X in the same flow.
 
-### Production (Phase 3)
+### Expansion & Engagement (Phase 5-6)
 
-- **Robust**: Handle rate limits and retries gracefully
-- **Fast**: Optimize for large video files and multiple platforms
-- **Beautiful**: Polished, professional UI/UX
-- **Accessible**: Mobile-responsive, keyboard navigation, ARIA labels
-- **Helpful**: Contextual help and documentation
+- **Comprehensive**: Support for all major social networks.
+- **Responsive**: Real-time comment syncing.
+- **Collaborative**: Teams can draft and approve content.
 
 ## Target Users
 
-### Primary Persona: Multi-Platform Content Creator
+### Primary Persona: The Social Media Manager
 
-**Name**: Sarah, Educational Content Creator
+**Name**: Alex, Agency SMM
 
 **Background**:
 
-- Creates educational videos about web development
-- Publishes to YouTube (main), Vimeo (backup), LinkedIn (professional)
-- Posts 2-3 videos per week
-- Spends 30-45 minutes per video just uploading to platforms
+- Manages social for 3 small brands.
+- Needs to post 15-20 times a week across various platforms.
+- Uses spreadsheets to plan, but hates the disconnect from actual posting.
 
 **Pain Points**:
 
-- Manual uploads are tedious and time-consuming
-- Sometimes forgets to upload to one platform
-- Different metadata requirements per platform cause confusion
-- Hard to track which videos are live on which platforms
+- Approval delays from clients.
+- Manually posting at "best times" (evenings/weekends).
+- Missing comments on posts from last week.
 
 **How VideoBlade Helps**:
 
-- Reduces upload time from 45 minutes to 10 minutes
-- Never misses a platform - selects all targets in one step
-- Stores platform-specific templates for metadata
-- Dashboard shows exactly what's published where
+- **Calendar**: Shows clients exactly what's planned visually.
+- **Queue**: Batches work on Monday, system handles posting all week.
+- **Inbox**: Never misses a client's customer interaction.
 
-### Secondary Personas
+### Secondary Persona: The Video-First Creator
 
-**Marketing Team Manager**:
+**Name**: Sarah, Educational YouTuber
 
-- Needs to distribute brand videos across multiple platforms
-- Requires consistent branding and messaging
-- Values time savings and process efficiency
+**Background**:
 
-**Indie Filmmaker**:
+- Makes deep-dive videos on YouTube.
+- Needs to promote them on LinkedIn (text), X (clips), and TikTok (cuts).
 
-- Wants maximum distribution for films
-- Publishes to YouTube, Vimeo, Dailymotion
-- Limited time to manage multiple platforms
+**How VideoBlade Helps**:
 
-**Podcaster with Video**:
-
-- Records video podcasts
-- Distributes to YouTube, Spotify Video, TikTok clips
-- Needs scheduling to coordinate with audio release
-
-## Core User Stories
-
-### Implemented (T3 Stack Foundation)
-
-- As a user, I can sign in to access protected features
-- As a user, I can create posts associated with my account
-- As a user, I can view my latest post
-- As a user, I can sign out to end my session
-
-### MVP - Phase 1 (YouTube Only)
-
-**Platform Connection**:
-
-- As a content creator, I want to connect my YouTube account so I can publish videos to it
-- As a user, I want to see which platforms I've connected so I know where I can publish
-- As a user, I want to disconnect a platform so I can revoke access if needed
-
-**Video Management**:
-
-- As a content creator, I want to upload a video to VideoBlade so I can publish it to platforms
-- As a user, I want to see upload progress so I know when my video is ready
-- As a user, I want to view my video library so I can manage my content
-
-**Publishing**:
-
-- As a content creator, I want to publish a video to YouTube so it appears on my channel
-- As a user, I want to configure video metadata (title, description) so my video has the right information
-- As a user, I want to see publish status so I know if it succeeded or failed
-
-### Phase 2 - Multi-Platform
-
-**Batch Publishing**:
-
-- As a content creator, I want to publish one video to multiple platforms simultaneously so I save time
-- As a user, I want to customize metadata per platform so each has appropriate information
-- As a user, I want to retry failed publishes so I don't lose my work
-
-**Platform Support**:
-
-- As a content creator, I want to connect Vimeo so I can have a backup platform
-- As a content creator, I want to connect TikTok so I can reach mobile audiences
-- As a user, I want platform-specific settings preserved so I don't re-enter them each time
-
-### Phase 3 - Advanced Features
-
-**Scheduling**:
-
-- As a content creator, I want to schedule video publishes so they go live at optimal times
-- As a user, I want different publish times per platform so I can stagger releases
-- As a user, I want to see my scheduled publishes so I can track upcoming releases
-
-**Organization**:
-
-- As a content creator, I want to organize videos into collections so I can manage series
-- As a user, I want to search my video library so I can find specific content quickly
-- As a user, I want to tag videos so I can categorize them
+- Uploads main video once.
+- Schedules the "promotion ecosystem" (tweets, LinkedIn posts) to fire after the video goes live.
 
 ## Success Metrics
 
 ### User Success Metrics
 
-**Time Savings** (Primary Goal):
-
-- Average time to publish to 3 platforms: < 15 minutes (vs 45-60 minutes manual)
-- % reduction in publishing time: > 70%
-- User-reported time savings per video
-
-**Adoption & Engagement**:
-
-- Number of platforms connected per user: Target average 3+
-- Videos published per week per user: Tracking growth
-- Publish success rate: > 95%
-- User retention after 30 days: > 60%
-
-**Publish Quality**:
-
-- Failed publish rate: < 5%
-- Time to detect failures: < 5 minutes
-- Retry success rate: > 85%
-- Average time to complete publish (all platforms): < 30 minutes
+- **Posts per Week**: Increase in posting frequency due to easier tools.
+- **Queue Depth**: Average number of items in queue (shows trust in system).
+- **Time Saved**: Reduction in scheduling time vs. manual posting.
 
 ### Technical Success Metrics
 
-**Performance**:
-
-- Page load time: < 2 seconds
-- Video upload speed: Limited by user bandwidth, progress updates every second
-- API response time (p95): < 500ms
-- Background job processing time: < 10 minutes per platform
-
-**Reliability**:
-
-- Uptime: > 99.5%
-- Data loss rate: 0% (video uploads must be reliable)
-- API error rate: < 1%
-- Queue processing success rate: > 98%
-
-**Code Quality**:
-
-- TypeScript errors: 0
-- ESLint warnings: 0
-- Test coverage: > 80% (when tests implemented)
-- Build success rate: 100%
-
-### Business Metrics (Future)
-
-- Monthly Active Users (MAU)
-- Videos published per month
-- Platform distribution (which platforms most popular)
-- Conversion rate (free to paid, if applicable)
-- Customer Lifetime Value
-
-## Known Limitations
-
-### Technical
-
-- SQLite is development-only; production requires PostgreSQL
-- NextAuth.js 5.0 is in beta (may have breaking changes)
-- No video functionality implemented yet (foundation only)
-- Large video files require chunked upload implementation
-- Rate limits vary by platform and user tier
-
-### Platform-Specific
-
-**YouTube**:
-
-- Daily quota limits (10,000 units per day default)
-- Maximum file size varies by account verification status
-- Some features require channel verification
-
-**Vimeo**:
-
-- Upload quota depends on account tier (free, Plus, Pro)
-- Weekly upload limits on free/basic tiers
-- Video quality options tier-dependent
-
-**TikTok**:
-
-- Maximum video length restrictions (varies by account)
-- Different requirements for business vs creator accounts
-- Limited API access (requires approval)
-
-### Current State
-
-- Video transcoding not implemented (users must upload ready-to-publish videos)
-- No video preview/playback in VideoBlade (users see filename/metadata only)
-- Platform analytics not integrated (users check platforms directly)
-- No team/multi-user features
+- **Queue Reliability**: 99.9% of queued posts fire within 1 minute of slot time.
+- **Media Processing**: Images resized/optimized correctly for each platform.
+- **API Quota Management**: Smart handling of daily limits across platforms.
 
 ## Future Considerations
 
-### Near-Term (Next 6 months)
+### Mobile App
 
-- Additional platform integrations (Dailymotion, Facebook Video)
-- Video thumbnail customization per platform
-- Bulk upload (multiple videos at once)
-- Template system for common metadata patterns
-- Improved error messaging with fix suggestions
+- While web-only for now, a mobile app is often requested for "on the go" photo posting (Instagram style).
 
-### Long-Term (6-12 months)
+### AI Assistance
 
-- Video transcoding for format compatibility
-- In-app video preview and trimming
-- Analytics dashboard (view counts across platforms)
-- Team collaboration features
-- API for programmatic access
-- Mobile apps (iOS, Android)
-- Browser extension for quick publishing
-
-### Infrastructure Evolution
-
-- Migrate to Cloudflare R2 for cost-effective storage
-- Implement CDN for faster video delivery
-- Scale background workers for high volume
-- Add caching layer (Redis) for improved performance
-- Multi-region deployment for global users
+- "Remix" feature: Turn a video caption into a LinkedIn post automatically.
+- "Best Time" suggestions based on engagement data.

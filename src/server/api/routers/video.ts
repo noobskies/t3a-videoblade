@@ -11,6 +11,7 @@ import { deleteVideoFromYouTube } from "@/lib/youtube";
 import { TRPCError } from "@trpc/server";
 import { env } from "@/env";
 import { inngest } from "@/lib/inngest";
+import { UPLOAD_LIMITS } from "@/lib/constants";
 
 export const videoRouter = createTRPCRouter({
   /**
@@ -30,8 +31,7 @@ export const videoRouter = createTRPCRouter({
     )
     .mutation(async ({ ctx, input }) => {
       // Validate file size (max 5GB)
-      const maxSize = 5 * 1024 * 1024 * 1024; // 5GB
-      if (input.fileSize > maxSize) {
+      if (input.fileSize > UPLOAD_LIMITS.VIDEO.MAX_SIZE) {
         throw new TRPCError({
           code: "BAD_REQUEST",
           message: "File size exceeds 5GB limit",
