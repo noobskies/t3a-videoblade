@@ -90,8 +90,7 @@ export default function CalendarPage() {
     return {
       style: {
         backgroundColor: event.color,
-        borderRadius: "4px",
-        opacity: 0.8,
+        opacity: 1,
         color: "white",
         border: "0px",
         display: "block",
@@ -153,23 +152,22 @@ export default function CalendarPage() {
           <Chip
             label="Native Scheduled"
             size="small"
-            sx={{ bgcolor: "#17a2b8", color: "white" }}
+            color="info"
+            variant="filled"
           />
           <Chip
             label="Internal Scheduled"
             size="small"
-            sx={{ bgcolor: "#ffc107", color: "black" }}
+            color="warning"
+            variant="filled"
           />
           <Chip
             label="Published"
             size="small"
-            sx={{ bgcolor: "#28a745", color: "white" }}
+            color="success"
+            variant="filled"
           />
-          <Chip
-            label="Failed"
-            size="small"
-            sx={{ bgcolor: "#dc3545", color: "white" }}
-          />
+          <Chip label="Failed" size="small" color="error" variant="filled" />
         </Stack>
       </Paper>
 

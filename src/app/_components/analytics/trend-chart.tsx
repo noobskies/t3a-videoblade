@@ -82,8 +82,8 @@ export function TrendChart({ data, connectedPlatforms }: TrendChartProps) {
                 dataKey="tiktok"
                 name="TikTok"
                 stackId="1"
-                stroke={theme.palette.common.black}
-                fill={theme.palette.common.black}
+                stroke={theme.palette.text.primary}
+                fill={theme.palette.text.primary}
                 fillOpacity={0.3}
               />
             )}
