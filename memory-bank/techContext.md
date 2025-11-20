@@ -113,6 +113,7 @@
 - Location: `db.prisma.io:5432`
 - Configured with connection pooling for serverless environments
 - Migrated from SQLite: 2025-11-17
+- **Core Models**: `Post` (Multi-format), `PlatformConnection`, `PublishJob`
 
 ### Data Validation
 

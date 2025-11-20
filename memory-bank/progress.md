@@ -26,7 +26,7 @@
 - [x] Production PostgreSQL database (Prisma Accelerate)
 - [x] Database schema defined
 - [x] Migration system ready
-- [x] Models: User, Account, Session, Post, Video, PlatformConnection, PublishJob, MetricSnapshot
+- [x] Models: User, Account, Session, Post (renamed from Video), PlatformConnection, PublishJob, MetricSnapshot
 
 **API Layer**
 
@@ -57,9 +57,12 @@
   - [x] Batch Uploads
   - [x] Production Hardening (Sentry + Rate Limit)
 
-### 🔄 Phase 4: Core Buffer Experience (Pending)
+### 🔄 Phase 4: Core Buffer Experience (In Progress)
 
-- [ ] **Step 1**: Multi-Format Infrastructure (Image/Text)
+- [x] **Step 1**: Multi-Format Infrastructure (Image/Text) (2025-11-20)
+  - [x] Database Schema Refactor (Video -> Post, MediaType)
+  - [x] Backend Logic (Multi-format uploads)
+  - [x] UI Updates (BatchMediaUpload, PostCard)
 - [ ] **Step 2**: Visual Calendar
 - [ ] **Step 3**: Queue System
 - [ ] **Step 4**: Ideas/Drafts
@@ -76,6 +79,6 @@
 
 ## Current Status
 
-**Status**: Phase 3 Complete. Pivoting to Phase 4 (Buffer Core).
+**Status**: Phase 4 In Progress. Step 1 Complete.
 **Product**: MediaBlade (Buffer Clone)
-**Next Action**: Phase 4, Step 1: Multi-Format Infrastructure (Database Schema Update).
+**Next Action**: Phase 4, Step 2: Visual Calendar.

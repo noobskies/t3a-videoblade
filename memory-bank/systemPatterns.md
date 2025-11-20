@@ -186,6 +186,22 @@ It's **acceptable and encouraged** to break backwards compatibility when:
 
 **Production Consideration**: Will need PostgreSQL or MySQL
 
+### 5. Multi-Format Content Support (Phase 4)
+
+**Decision**: Use generic `Post` model with `MediaType` enum
+
+**Rationale**:
+
+- Enables support for Video, Image, and Text in a single unified schema
+- Simplifies relationships (User -> Post, Post -> PublishJob)
+- Avoids duplicating logic for different content types
+
+**Implementation**:
+
+- `Post` model replaces `Video`
+- `MediaType` enum: `VIDEO`, `IMAGE`, `TEXT`
+- Conditional fields in UI and backend logic based on type
+
 ## Design Patterns in Use
 
 ### MUI Styling Pattern (Active)
