@@ -76,6 +76,7 @@ export type Platform = (typeof Platform)[keyof typeof Platform]
 export const PublishStatus: {
   PENDING: 'PENDING',
   SCHEDULED: 'SCHEDULED',
+  PLATFORM_SCHEDULED: 'PLATFORM_SCHEDULED',
   PROCESSING: 'PROCESSING',
   COMPLETED: 'COMPLETED',
   FAILED: 'FAILED',

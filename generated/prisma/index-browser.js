@@ -284,6 +284,7 @@ exports.Platform = exports.$Enums.Platform = {
 exports.PublishStatus = exports.$Enums.PublishStatus = {
   PENDING: 'PENDING',
   SCHEDULED: 'SCHEDULED',
+  PLATFORM_SCHEDULED: 'PLATFORM_SCHEDULED',
   PROCESSING: 'PROCESSING',
   COMPLETED: 'COMPLETED',
   FAILED: 'FAILED',

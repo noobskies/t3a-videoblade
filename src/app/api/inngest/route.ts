@@ -5,6 +5,7 @@ import { updateYouTubeVideoFunction } from "@/inngest/update-youtube-video";
 import { publishToTikTokFunction } from "@/inngest/publish-to-tiktok";
 import { publishToVimeo } from "@/inngest/publish-to-vimeo";
 import { snapshotAnalyticsFunction } from "@/inngest/snapshot-analytics";
+import { checkScheduledJobsFunction } from "@/inngest/check-scheduled-jobs";
 
 /**
  * Inngest API endpoint for handling background jobs
@@ -20,6 +21,7 @@ export const { GET, POST, PUT } = serve({
     publishToTikTokFunction,
     publishToVimeo,
     snapshotAnalyticsFunction,
+    checkScheduledJobsFunction,
     // Add more functions here as needed (e.g., Rumble publishing in Phase 2)
   ],
 });

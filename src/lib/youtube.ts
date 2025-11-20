@@ -11,6 +11,7 @@ export interface UploadVideoParams {
   description?: string | null;
   tags?: string | null;
   privacy: "public" | "unlisted" | "private";
+  scheduledPublishAt?: Date | null;
 }
 
 export interface UploadVideoResult {
@@ -26,6 +27,7 @@ export interface UpdateVideoParams {
   description?: string | null;
   tags?: string | null;
   privacy: "public" | "unlisted" | "private";
+  scheduledPublishAt?: Date | null;
 }
 
 export interface UpdateVideoResult {
@@ -145,6 +147,22 @@ export async function updateVideoOnYouTube(
   // Prepare tags
   const tags = params.tags ? params.tags.split(",").map((t) => t.trim()) : [];
 
+  // Prepare status object
+  const status: {
+    privacyStatus: string;
+    publishAt?: string;
+    selfDeclaredMadeForKids?: boolean;
+  } = {
+    privacyStatus: params.privacy,
+  };
+
+  // Handle Native Scheduling
+  if (params.scheduledPublishAt) {
+    status.privacyStatus = "private"; // Must be private to be scheduled
+    status.publishAt = params.scheduledPublishAt.toISOString();
+    status.selfDeclaredMadeForKids = false; // Required for scheduled posts if not set elsewhere
+  }
+
   // Update video metadata on YouTube
   const response = await youtube.videos.update({
     part: ["snippet", "status"],
@@ -156,9 +174,7 @@ export async function updateVideoOnYouTube(
         tags,
         categoryId: "22", // People & Blogs (default)
       },
-      status: {
-        privacyStatus: params.privacy,
-      },
+      status,
     },
   });
 
@@ -206,6 +222,22 @@ export async function uploadVideoToYouTube(
   // Prepare tags
   const tags = params.tags ? params.tags.split(",").map((t) => t.trim()) : [];
 
+  // Prepare status object
+  const status: {
+    privacyStatus: string;
+    publishAt?: string;
+    selfDeclaredMadeForKids?: boolean;
+  } = {
+    privacyStatus: params.privacy,
+  };
+
+  // Handle Native Scheduling
+  if (params.scheduledPublishAt) {
+    status.privacyStatus = "private"; // Must be private to be scheduled
+    status.publishAt = params.scheduledPublishAt.toISOString();
+    status.selfDeclaredMadeForKids = false; // Required for scheduled posts
+  }
+
   // Upload to YouTube
   const response = await youtube.videos.insert({
     part: ["snippet", "status"],
@@ -216,9 +248,7 @@ export async function uploadVideoToYouTube(
         tags,
         categoryId: "22", // People & Blogs (default)
       },
-      status: {
-        privacyStatus: params.privacy,
-      },
+      status,
     },
     media: {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment

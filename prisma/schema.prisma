@@ -23,6 +23,7 @@ enum Platform {
 enum PublishStatus {
     PENDING
     SCHEDULED
+    PLATFORM_SCHEDULED // Natively scheduled on the platform
     PROCESSING
     COMPLETED
     FAILED

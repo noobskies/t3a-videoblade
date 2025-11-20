@@ -62,6 +62,7 @@ export async function uploadVideoToVimeo(params: {
   title: string;
   description?: string | null;
   privacy: "public" | "unlisted" | "private" | "disable"; // Vimeo privacy options
+  scheduledPublishAt?: Date | null;
 }) {
   // 1. Generate Signed S3 URL
   const command = new GetObjectCommand({
@@ -72,6 +73,27 @@ export async function uploadVideoToVimeo(params: {
   // URL valid for 1 hour (Vimeo needs time to start download)
   const signedUrl = await getSignedUrl(s3Client, command, { expiresIn: 3600 });
 
+  // Prepare request body
+  const body: Record<string, unknown> = {
+    upload: {
+      approach: "pull",
+      link: signedUrl,
+    },
+    name: params.title,
+    description: params.description ?? "",
+    privacy: {
+      view: params.privacy === "private" ? "nobody" : params.privacy,
+    },
+  };
+
+  // Handle Scheduling
+  if (params.scheduledPublishAt) {
+    // Vimeo accepts ISO 8601
+    body.publish = {
+      time: params.scheduledPublishAt.toISOString(),
+    };
+  }
+
   // 2. Initiate Pull Upload
   const response = await fetch(`${VIMEO_API_BASE}/me/videos`, {
     method: "POST",
@@ -80,17 +102,7 @@ export async function uploadVideoToVimeo(params: {
       "Content-Type": "application/json",
       Accept: "application/vnd.vimeo.*+json;version=3.4",
     },
-    body: JSON.stringify({
-      upload: {
-        approach: "pull",
-        link: signedUrl,
-      },
-      name: params.title,
-      description: params.description ?? "",
-      privacy: {
-        view: params.privacy === "private" ? "nobody" : params.privacy,
-      },
-    }),
+    body: JSON.stringify(body),
   });
 
   if (!response.ok) {
@@ -118,6 +130,7 @@ export async function updateVideoOnVimeo(params: {
   title?: string;
   description?: string | null;
   privacy?: "public" | "unlisted" | "private" | "disable";
+  scheduledPublishAt?: Date | null;
 }) {
   const body: Record<string, unknown> = {};
   if (params.title) body.name = params.title;
@@ -126,6 +139,11 @@ export async function updateVideoOnVimeo(params: {
   if (params.privacy) {
     body.privacy = {
       view: params.privacy === "private" ? "nobody" : params.privacy,
+    };
+  }
+  if (params.scheduledPublishAt) {
+    body.publish = {
+      time: params.scheduledPublishAt.toISOString(),
     };
   }
 

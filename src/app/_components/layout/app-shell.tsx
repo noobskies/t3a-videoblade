@@ -32,6 +32,7 @@ import {
   CloudUpload as UploadIcon,
   SettingsInputComponent as PlatformsIcon,
   Logout as LogoutIcon,
+  CalendarMonth as CalendarMonthIcon,
 } from "@mui/icons-material";
 import { useSession, signOut } from "@/lib/auth-client";
 import { AuthButton } from "@/app/_components/auth-button";
@@ -48,6 +49,7 @@ const NAV_ITEMS: NavItem[] = [
   { label: "Dashboard", path: "/dashboard", icon: <DashboardIcon /> },
   { label: "Library", path: "/library", icon: <LibraryIcon /> },
   { label: "Upload", path: "/upload", icon: <UploadIcon /> },
+  { label: "Calendar", path: "/calendar", icon: <CalendarMonthIcon /> },
   { label: "Platforms", path: "/platforms", icon: <PlatformsIcon /> },
 ];
 
