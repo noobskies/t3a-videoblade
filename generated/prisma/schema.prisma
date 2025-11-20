@@ -205,8 +205,9 @@ model PublishJob {
   updateTargetVideoId String?
 
   // Relationships
-  video   Video  @relation(fields: [videoId], references: [id], onDelete: Cascade)
-  videoId String
+  metricSnapshots MetricSnapshot[]
+  video           Video            @relation(fields: [videoId], references: [id], onDelete: Cascade)
+  videoId         String
 
   platformConnection   PlatformConnection @relation(fields: [platformConnectionId], references: [id], onDelete: Cascade)
   platformConnectionId String
@@ -219,4 +220,22 @@ model PublishJob {
   @@index([createdById])
   @@index([status])
   @@index([scheduledFor])
+}
+
+model MetricSnapshot {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+
+  // The specific publication this snapshot tracks
+  publishJob   PublishJob @relation(fields: [publishJobId], references: [id], onDelete: Cascade)
+  publishJobId String
+
+  // Metrics (Snapshot at this point in time)
+  views    Int @default(0)
+  likes    Int @default(0)
+  comments Int @default(0)
+  shares   Int @default(0)
+
+  @@index([publishJobId])
+  @@index([createdAt])
 }

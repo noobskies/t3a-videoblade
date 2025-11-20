@@ -36,6 +36,12 @@
 - **Font**: `@fontsource/roboto` / `next/font/google` (Roboto)
 - **Status**: **Primary Framework (Phase 1 Installed)**
 
+**Data Visualization**
+
+- **Recharts 3.4.1**
+- Interactive charts for analytics dashboard
+- Responsive and composable
+
 **Tailwind CSS 4.0.15** [DEPRECATED - MIGRATING TO MUI]
 
 - Utility-first styling

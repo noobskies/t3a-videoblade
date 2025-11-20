@@ -232,6 +232,16 @@ exports.Prisma.PublishJobScalarFieldEnum = {
   createdById: 'createdById'
 };
 
+exports.Prisma.MetricSnapshotScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  publishJobId: 'publishJobId',
+  views: 'views',
+  likes: 'likes',
+  comments: 'comments',
+  shares: 'shares'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -287,7 +297,8 @@ exports.Prisma.ModelName = {
   Verification: 'Verification',
   Video: 'Video',
   PlatformConnection: 'PlatformConnection',
-  PublishJob: 'PublishJob'
+  PublishJob: 'PublishJob',
+  MetricSnapshot: 'MetricSnapshot'
 };
 
 /**

@@ -32,7 +32,7 @@
 - [x] Migration system ready
 - [x] Prisma Studio available for inspection
 - [x] User, Account, Session, Post, Video, PlatformConnection, PublishJob models
-- [x] **Updated VideoPrivacy enum for TikTok support** (2025-11-19)
+- [x] **MetricSnapshot model for analytics** (2025-11-20)
 
 **API Layer**
 
@@ -46,7 +46,7 @@
 - [x] SuperJSON for advanced serialization
 - [x] Error handling with TRPCError
 - [x] Input validation with Zod
-- [x] **Multi-platform publish procedures** (2025-11-19)
+- [x] **Analytics procedures** (2025-11-20)
 
 **UI/Styling (MUI Migration Complete)**
 
@@ -57,28 +57,12 @@
 - [x] Material Icons installed (Lucide removed)
 - [x] **Core Layout migration (Navbar/Footer)** (2025-11-19)
 - [x] **Generic Component migration** (2025-11-19)
-  - [x] AuthButton, ErrorAlert, LoadingSkeleton
 - [x] **Feature - Library migration** (2025-11-19)
-  - [x] VideoCard (MUI Card)
-  - [x] Library Page (MUI Grid v7/Grid2, Container)
-  - [x] Loading/Error states
 - [x] **Feature - Upload migration** (2025-11-19)
-  - [x] VideoUpload (Paper, Box dropzone, LinearProgress)
-  - [x] Upload Page (Container, Stack)
 - [x] **Feature - Edit migration** (2025-11-19)
-  - [x] Edit Page (Stack/Paper, TextField, Alert, CircularProgress)
 - [x] **Feature - Publish/Platforms migration** (2025-11-19)
-  - [x] Publish Page (Stack/Container, Card, Alert)
-  - [x] Platforms Page (Stack/Container, Card, Chip)
-  - [x] **Multi-Platform UI implemented** (2025-11-19)
 - [x] **Cleanup & Polish (Complete)** (2025-11-19)
-  - [x] Removed shadcn/ui components
-  - [x] Removed Tailwind CSS & configuration
-  - [x] Full build verification passed
 - [x] **Layout Refactor (2025-11-20)**
-  - [x] Implemented responsive `AppShell` with sidebar navigation
-  - [x] Removed global container constraints
-  - [x] Optimized individual page layouts for dashboard experience
 
 **Code Quality**
 
@@ -111,60 +95,27 @@
 - [x] Master roadmap overview created
 - [x] Phase 1 roadmap (MVP - YouTube Only)
 - [x] Phase 2 roadmap (Multi-Platform - TikTok)
-- [x] Phase 3 marked as TBD
-- [x] **MUI Migration Plan completed**
-
-**Location**: `memory-bank/roadmap/` and `MUI_MIGRATION_PLAN.md`
-
-**Status**: **MUI MIGRATION COMPLETE** - Ready to resume feature work.
+- [x] Phase 3 roadmap (Expansion)
 
 ### ✅ Phase 1: MVP Features - Complete
 
-- [x] Step 1: Database Schema
-- [x] Step 2: S3 Upload
-- [x] Step 3: Video Library
-- [x] Step 4: YouTube OAuth
-- [x] Step 5: Platform Management
-- [x] Step 6: Metadata Editing
-- [x] Step 7: Inngest Setup
-- [x] Step 8: YouTube Publisher
-- [x] Step 9: Thumbnails (Completed 2025-11-19)
-- [x] Step 10: Retry Logic (Completed 2025-11-19)
-
-### ✅ UI Overhaul: MUI Migration (Complete) - Finished 2025-11-19
-
-**Goal**: Complete replacement of shadcn/ui + Tailwind with Material-UI v7.
-
-**Status**: Complete.
-
-### ✅ Layout Refactor (Complete) - Finished 2025-11-20
-
-**Goal**: Switch to full-width, mobile-friendly dashboard layout.
-
-**Status**: Complete.
+- [x] Steps 1-10 (See previous progress)
 
 ### ✅ Phase 2: Multi-Platform (Complete) - Finished 2025-11-19
 
-- [x] **Step 1**: TikTok OAuth (Completed 2025-11-19)
-- [x] **Step 2**: TikTok Publisher (Completed 2025-11-19)
-- [x] **Step 3**: Multi-Platform UI (Completed 2025-11-19)
-- [x] **Step 4**: Delete Videos (Cleanup) (Completed 2025-11-19)
-- [x] **Step 5**: Scheduling (Completed 2025-11-19)
+- [x] Steps 1-5 (See previous progress)
 
-### ✅ Performance & Optimization (Complete) - Finished 2025-11-20
+### ✅ Phase 3: Expansion & Analytics (In Progress)
 
-- [x] **Lazy Loading System**: Skeleton components implemented for all routes.
-- [x] **Route Loading**: `loading.tsx` added for `/library`, `/platforms`, `/edit`, `/publish`.
-- [x] **Suspense Integration**: Switched to `useSuspenseQuery` for seamless loading states.
-- [x] **Landing Page Optimization**: `next/dynamic` for below-the-fold content.
-- [x] **AppShell Fix**: Prevented full-shell reloads during navigation.
+- [x] **Step 1**: Analytics Dashboard (Completed 2025-11-20)
+  - [x] `MetricSnapshot` schema
+  - [x] Inngest daily snapshot job
+  - [x] YouTube/TikTok stats fetchers
+  - [x] Dashboard UI with Recharts
 
-## What's Left to Build - VideoBlade Features
+### 🔲 Phase 3 Remaining Steps
 
-### 🔲 Phase 3: Expansion & Analytics (Upcoming)
-
-- [ ] **Step 1**: Vimeo Integration
-- [ ] **Step 2**: Analytics Dashboard
+- [ ] **Step 2**: Vimeo Integration
 - [ ] **Step 3**: Batch Uploads
 - [ ] **Step 4**: Production Hardening (Sentry, Rate Limiting)
 
@@ -180,6 +131,6 @@
 
 ### Phase 5: Multi-Platform (Phase 2) ✅ COMPLETE
 
-**Status**: Phase 2 Complete. Performance Optimized.
+**Status**: Phase 3 (Analytics) Complete.
 **Product**: VideoBlade - Multi-Platform Video Publishing Tool
-**Next Action**: Begin Phase 3 (Expansion).
+**Next Action**: Vimeo Integration.

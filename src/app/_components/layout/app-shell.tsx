@@ -45,7 +45,7 @@ interface NavItem {
 }
 
 const NAV_ITEMS: NavItem[] = [
-  { label: "Dashboard", path: "/", icon: <DashboardIcon /> },
+  { label: "Dashboard", path: "/dashboard", icon: <DashboardIcon /> },
   { label: "Library", path: "/library", icon: <LibraryIcon /> },
   { label: "Upload", path: "/upload", icon: <UploadIcon /> },
   { label: "Platforms", path: "/platforms", icon: <PlatformsIcon /> },

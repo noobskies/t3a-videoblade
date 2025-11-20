@@ -53,9 +53,9 @@ VideoBlade provides **upload once, publish everywhere** functionality:
 
 #### Authentication Flow
 
-1. User visits the homepage
-2. Can sign in/out using NextAuth.js
-3. Authenticated users can create posts
+1. User visits the homepage (Landing Page)
+2. Can sign in via OAuth
+3. **Authenticated users are redirected to the Dashboard**
 4. Session persists across page loads
 
 #### Post Management
@@ -119,17 +119,15 @@ VideoBlade provides **upload once, publish everywhere** functionality:
 6. Automated workers execute at scheduled time
 7. User receives notification when complete
 
-#### 5. Monitoring Flow
+#### 5. Analytics Dashboard Flow
 
-1. User views unified dashboard
-2. Sees all videos with their multi-platform status:
-   - ✅ Published successfully
-   - ⏳ Publishing in progress
-   - ⏰ Scheduled for future
-   - ❌ Failed (with error details)
-3. Can retry failed publishes
-4. Can view platform-specific video URLs
-5. Can see publish history and timestamps
+1. User views unified **Analytics Dashboard** (default view)
+2. Sees high-level performance metrics:
+   - Total Views, Engagement, and Content Volume
+   - Trend charts showing growth over time
+   - Platform breakdown (YouTube vs TikTok)
+3. Can switch to "Library" or "Platforms" via sidebar for management
+4. Can refresh data manually to get latest stats
 
 ## User Experience Goals
 

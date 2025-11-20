@@ -33,6 +33,69 @@ export interface UpdateVideoResult {
   url: string;
 }
 
+export interface VideoStats {
+  videoId: string;
+  views: number;
+  likes: number;
+  comments: number;
+  shares: number;
+}
+
+/**
+ * Get video statistics from YouTube
+ */
+export async function getYouTubeVideoStats(params: {
+  accessToken: string;
+  refreshToken: string | null;
+  videoIds: string[];
+}): Promise<VideoStats[]> {
+  if (params.videoIds.length === 0) return [];
+
+  const oauth2Client = new google.auth.OAuth2(
+    env.GOOGLE_CLIENT_ID,
+    env.GOOGLE_CLIENT_SECRET,
+    "https://t3a-videoblade.vercel.app/api/auth/callback/google",
+  );
+
+  oauth2Client.setCredentials({
+    access_token: params.accessToken,
+    refresh_token: params.refreshToken,
+  });
+
+  const youtube = google.youtube({ version: "v3", auth: oauth2Client });
+
+  // YouTube API limit for 'id' parameter is 50
+  const chunkedIds = [];
+  for (let i = 0; i < params.videoIds.length; i += 50) {
+    chunkedIds.push(params.videoIds.slice(i, i + 50));
+  }
+
+  const allStats: VideoStats[] = [];
+
+  for (const chunk of chunkedIds) {
+    const response = await youtube.videos.list({
+      part: ["statistics"],
+      id: chunk,
+    });
+
+    if (response.data.items) {
+      response.data.items.forEach((item) => {
+        if (item.id && item.statistics) {
+          allStats.push({
+            videoId: item.id,
+            views: parseInt(item.statistics.viewCount ?? "0"),
+            likes: parseInt(item.statistics.likeCount ?? "0"),
+            comments: parseInt(item.statistics.commentCount ?? "0"),
+            shares: 0, // Not available via API publicly
+          });
+        }
+      });
+    }
+  }
+
+  return allStats;
+}
+
 /**
  * Delete a video from YouTube
  */

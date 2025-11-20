@@ -53,6 +53,11 @@ export type PlatformConnection = $Result.DefaultSelection<Prisma.$PlatformConnec
  * 
  */
 export type PublishJob = $Result.DefaultSelection<Prisma.$PublishJobPayload>
+/**
+ * Model MetricSnapshot
+ * 
+ */
+export type MetricSnapshot = $Result.DefaultSelection<Prisma.$MetricSnapshotPayload>
 
 /**
  * Enums
@@ -299,6 +304,16 @@ export class PrismaClient<
     * ```
     */
   get publishJob(): Prisma.PublishJobDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.metricSnapshot`: Exposes CRUD operations for the **MetricSnapshot** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more MetricSnapshots
+    * const metricSnapshots = await prisma.metricSnapshot.findMany()
+    * ```
+    */
+  get metricSnapshot(): Prisma.MetricSnapshotDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -747,7 +762,8 @@ export namespace Prisma {
     Verification: 'Verification',
     Video: 'Video',
     PlatformConnection: 'PlatformConnection',
-    PublishJob: 'PublishJob'
+    PublishJob: 'PublishJob',
+    MetricSnapshot: 'MetricSnapshot'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -766,7 +782,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "post" | "account" | "session" | "user" | "verification" | "video" | "platformConnection" | "publishJob"
+      modelProps: "post" | "account" | "session" | "user" | "verification" | "video" | "platformConnection" | "publishJob" | "metricSnapshot"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1362,6 +1378,80 @@ export namespace Prisma {
           }
         }
       }
+      MetricSnapshot: {
+        payload: Prisma.$MetricSnapshotPayload<ExtArgs>
+        fields: Prisma.MetricSnapshotFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.MetricSnapshotFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MetricSnapshotPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.MetricSnapshotFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MetricSnapshotPayload>
+          }
+          findFirst: {
+            args: Prisma.MetricSnapshotFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MetricSnapshotPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.MetricSnapshotFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MetricSnapshotPayload>
+          }
+          findMany: {
+            args: Prisma.MetricSnapshotFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MetricSnapshotPayload>[]
+          }
+          create: {
+            args: Prisma.MetricSnapshotCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MetricSnapshotPayload>
+          }
+          createMany: {
+            args: Prisma.MetricSnapshotCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.MetricSnapshotCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MetricSnapshotPayload>[]
+          }
+          delete: {
+            args: Prisma.MetricSnapshotDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MetricSnapshotPayload>
+          }
+          update: {
+            args: Prisma.MetricSnapshotUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MetricSnapshotPayload>
+          }
+          deleteMany: {
+            args: Prisma.MetricSnapshotDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.MetricSnapshotUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.MetricSnapshotUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MetricSnapshotPayload>[]
+          }
+          upsert: {
+            args: Prisma.MetricSnapshotUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MetricSnapshotPayload>
+          }
+          aggregate: {
+            args: Prisma.MetricSnapshotAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMetricSnapshot>
+          }
+          groupBy: {
+            args: Prisma.MetricSnapshotGroupByArgs<ExtArgs>
+            result: $Utils.Optional<MetricSnapshotGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.MetricSnapshotCountArgs<ExtArgs>
+            result: $Utils.Optional<MetricSnapshotCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1466,6 +1556,7 @@ export namespace Prisma {
     video?: VideoOmit
     platformConnection?: PlatformConnectionOmit
     publishJob?: PublishJobOmit
+    metricSnapshot?: MetricSnapshotOmit
   }
 
   /* Types for Logging */
@@ -1676,6 +1767,37 @@ export namespace Prisma {
    */
   export type PlatformConnectionCountOutputTypeCountPublishJobsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: PublishJobWhereInput
+  }
+
+
+  /**
+   * Count Type PublishJobCountOutputType
+   */
+
+  export type PublishJobCountOutputType = {
+    metricSnapshots: number
+  }
+
+  export type PublishJobCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    metricSnapshots?: boolean | PublishJobCountOutputTypeCountMetricSnapshotsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * PublishJobCountOutputType without action
+   */
+  export type PublishJobCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PublishJobCountOutputType
+     */
+    select?: PublishJobCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * PublishJobCountOutputType without action
+   */
+  export type PublishJobCountOutputTypeCountMetricSnapshotsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MetricSnapshotWhereInput
   }
 
 
@@ -10035,9 +10157,11 @@ export namespace Prisma {
     videoId?: boolean
     platformConnectionId?: boolean
     createdById?: boolean
+    metricSnapshots?: boolean | PublishJob$metricSnapshotsArgs<ExtArgs>
     video?: boolean | VideoDefaultArgs<ExtArgs>
     platformConnection?: boolean | PlatformConnectionDefaultArgs<ExtArgs>
     createdBy?: boolean | UserDefaultArgs<ExtArgs>
+    _count?: boolean | PublishJobCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["publishJob"]>
 
   export type PublishJobSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -10120,9 +10244,11 @@ export namespace Prisma {
 
   export type PublishJobOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "platform" | "status" | "title" | "description" | "tags" | "privacy" | "scheduledFor" | "startedAt" | "completedAt" | "platformVideoId" | "platformVideoUrl" | "errorMessage" | "retryCount" | "isUpdate" | "updateTargetVideoId" | "videoId" | "platformConnectionId" | "createdById", ExtArgs["result"]["publishJob"]>
   export type PublishJobInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    metricSnapshots?: boolean | PublishJob$metricSnapshotsArgs<ExtArgs>
     video?: boolean | VideoDefaultArgs<ExtArgs>
     platformConnection?: boolean | PlatformConnectionDefaultArgs<ExtArgs>
     createdBy?: boolean | UserDefaultArgs<ExtArgs>
+    _count?: boolean | PublishJobCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type PublishJobIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     video?: boolean | VideoDefaultArgs<ExtArgs>
@@ -10138,6 +10264,7 @@ export namespace Prisma {
   export type $PublishJobPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "PublishJob"
     objects: {
+      metricSnapshots: Prisma.$MetricSnapshotPayload<ExtArgs>[]
       video: Prisma.$VideoPayload<ExtArgs>
       platformConnection: Prisma.$PlatformConnectionPayload<ExtArgs>
       createdBy: Prisma.$UserPayload<ExtArgs>
@@ -10558,6 +10685,7 @@ export namespace Prisma {
    */
   export interface Prisma__PublishJobClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    metricSnapshots<T extends PublishJob$metricSnapshotsArgs<ExtArgs> = {}>(args?: Subset<T, PublishJob$metricSnapshotsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MetricSnapshotPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     video<T extends VideoDefaultArgs<ExtArgs> = {}>(args?: Subset<T, VideoDefaultArgs<ExtArgs>>): Prisma__VideoClient<$Result.GetResult<Prisma.$VideoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     platformConnection<T extends PlatformConnectionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PlatformConnectionDefaultArgs<ExtArgs>>): Prisma__PlatformConnectionClient<$Result.GetResult<Prisma.$PlatformConnectionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     createdBy<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
@@ -11007,6 +11135,30 @@ export namespace Prisma {
   }
 
   /**
+   * PublishJob.metricSnapshots
+   */
+  export type PublishJob$metricSnapshotsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MetricSnapshot
+     */
+    select?: MetricSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MetricSnapshot
+     */
+    omit?: MetricSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MetricSnapshotInclude<ExtArgs> | null
+    where?: MetricSnapshotWhereInput
+    orderBy?: MetricSnapshotOrderByWithRelationInput | MetricSnapshotOrderByWithRelationInput[]
+    cursor?: MetricSnapshotWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MetricSnapshotScalarFieldEnum | MetricSnapshotScalarFieldEnum[]
+  }
+
+  /**
    * PublishJob without action
    */
   export type PublishJobDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -11022,6 +11174,1136 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: PublishJobInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model MetricSnapshot
+   */
+
+  export type AggregateMetricSnapshot = {
+    _count: MetricSnapshotCountAggregateOutputType | null
+    _avg: MetricSnapshotAvgAggregateOutputType | null
+    _sum: MetricSnapshotSumAggregateOutputType | null
+    _min: MetricSnapshotMinAggregateOutputType | null
+    _max: MetricSnapshotMaxAggregateOutputType | null
+  }
+
+  export type MetricSnapshotAvgAggregateOutputType = {
+    views: number | null
+    likes: number | null
+    comments: number | null
+    shares: number | null
+  }
+
+  export type MetricSnapshotSumAggregateOutputType = {
+    views: number | null
+    likes: number | null
+    comments: number | null
+    shares: number | null
+  }
+
+  export type MetricSnapshotMinAggregateOutputType = {
+    id: string | null
+    createdAt: Date | null
+    publishJobId: string | null
+    views: number | null
+    likes: number | null
+    comments: number | null
+    shares: number | null
+  }
+
+  export type MetricSnapshotMaxAggregateOutputType = {
+    id: string | null
+    createdAt: Date | null
+    publishJobId: string | null
+    views: number | null
+    likes: number | null
+    comments: number | null
+    shares: number | null
+  }
+
+  export type MetricSnapshotCountAggregateOutputType = {
+    id: number
+    createdAt: number
+    publishJobId: number
+    views: number
+    likes: number
+    comments: number
+    shares: number
+    _all: number
+  }
+
+
+  export type MetricSnapshotAvgAggregateInputType = {
+    views?: true
+    likes?: true
+    comments?: true
+    shares?: true
+  }
+
+  export type MetricSnapshotSumAggregateInputType = {
+    views?: true
+    likes?: true
+    comments?: true
+    shares?: true
+  }
+
+  export type MetricSnapshotMinAggregateInputType = {
+    id?: true
+    createdAt?: true
+    publishJobId?: true
+    views?: true
+    likes?: true
+    comments?: true
+    shares?: true
+  }
+
+  export type MetricSnapshotMaxAggregateInputType = {
+    id?: true
+    createdAt?: true
+    publishJobId?: true
+    views?: true
+    likes?: true
+    comments?: true
+    shares?: true
+  }
+
+  export type MetricSnapshotCountAggregateInputType = {
+    id?: true
+    createdAt?: true
+    publishJobId?: true
+    views?: true
+    likes?: true
+    comments?: true
+    shares?: true
+    _all?: true
+  }
+
+  export type MetricSnapshotAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MetricSnapshot to aggregate.
+     */
+    where?: MetricSnapshotWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MetricSnapshots to fetch.
+     */
+    orderBy?: MetricSnapshotOrderByWithRelationInput | MetricSnapshotOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: MetricSnapshotWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MetricSnapshots from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MetricSnapshots.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned MetricSnapshots
+    **/
+    _count?: true | MetricSnapshotCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: MetricSnapshotAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: MetricSnapshotSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: MetricSnapshotMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: MetricSnapshotMaxAggregateInputType
+  }
+
+  export type GetMetricSnapshotAggregateType<T extends MetricSnapshotAggregateArgs> = {
+        [P in keyof T & keyof AggregateMetricSnapshot]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMetricSnapshot[P]>
+      : GetScalarType<T[P], AggregateMetricSnapshot[P]>
+  }
+
+
+
+
+  export type MetricSnapshotGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MetricSnapshotWhereInput
+    orderBy?: MetricSnapshotOrderByWithAggregationInput | MetricSnapshotOrderByWithAggregationInput[]
+    by: MetricSnapshotScalarFieldEnum[] | MetricSnapshotScalarFieldEnum
+    having?: MetricSnapshotScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: MetricSnapshotCountAggregateInputType | true
+    _avg?: MetricSnapshotAvgAggregateInputType
+    _sum?: MetricSnapshotSumAggregateInputType
+    _min?: MetricSnapshotMinAggregateInputType
+    _max?: MetricSnapshotMaxAggregateInputType
+  }
+
+  export type MetricSnapshotGroupByOutputType = {
+    id: string
+    createdAt: Date
+    publishJobId: string
+    views: number
+    likes: number
+    comments: number
+    shares: number
+    _count: MetricSnapshotCountAggregateOutputType | null
+    _avg: MetricSnapshotAvgAggregateOutputType | null
+    _sum: MetricSnapshotSumAggregateOutputType | null
+    _min: MetricSnapshotMinAggregateOutputType | null
+    _max: MetricSnapshotMaxAggregateOutputType | null
+  }
+
+  type GetMetricSnapshotGroupByPayload<T extends MetricSnapshotGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<MetricSnapshotGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof MetricSnapshotGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], MetricSnapshotGroupByOutputType[P]>
+            : GetScalarType<T[P], MetricSnapshotGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type MetricSnapshotSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    publishJobId?: boolean
+    views?: boolean
+    likes?: boolean
+    comments?: boolean
+    shares?: boolean
+    publishJob?: boolean | PublishJobDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["metricSnapshot"]>
+
+  export type MetricSnapshotSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    publishJobId?: boolean
+    views?: boolean
+    likes?: boolean
+    comments?: boolean
+    shares?: boolean
+    publishJob?: boolean | PublishJobDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["metricSnapshot"]>
+
+  export type MetricSnapshotSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    publishJobId?: boolean
+    views?: boolean
+    likes?: boolean
+    comments?: boolean
+    shares?: boolean
+    publishJob?: boolean | PublishJobDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["metricSnapshot"]>
+
+  export type MetricSnapshotSelectScalar = {
+    id?: boolean
+    createdAt?: boolean
+    publishJobId?: boolean
+    views?: boolean
+    likes?: boolean
+    comments?: boolean
+    shares?: boolean
+  }
+
+  export type MetricSnapshotOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "createdAt" | "publishJobId" | "views" | "likes" | "comments" | "shares", ExtArgs["result"]["metricSnapshot"]>
+  export type MetricSnapshotInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    publishJob?: boolean | PublishJobDefaultArgs<ExtArgs>
+  }
+  export type MetricSnapshotIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    publishJob?: boolean | PublishJobDefaultArgs<ExtArgs>
+  }
+  export type MetricSnapshotIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    publishJob?: boolean | PublishJobDefaultArgs<ExtArgs>
+  }
+
+  export type $MetricSnapshotPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "MetricSnapshot"
+    objects: {
+      publishJob: Prisma.$PublishJobPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      createdAt: Date
+      publishJobId: string
+      views: number
+      likes: number
+      comments: number
+      shares: number
+    }, ExtArgs["result"]["metricSnapshot"]>
+    composites: {}
+  }
+
+  type MetricSnapshotGetPayload<S extends boolean | null | undefined | MetricSnapshotDefaultArgs> = $Result.GetResult<Prisma.$MetricSnapshotPayload, S>
+
+  type MetricSnapshotCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<MetricSnapshotFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: MetricSnapshotCountAggregateInputType | true
+    }
+
+  export interface MetricSnapshotDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['MetricSnapshot'], meta: { name: 'MetricSnapshot' } }
+    /**
+     * Find zero or one MetricSnapshot that matches the filter.
+     * @param {MetricSnapshotFindUniqueArgs} args - Arguments to find a MetricSnapshot
+     * @example
+     * // Get one MetricSnapshot
+     * const metricSnapshot = await prisma.metricSnapshot.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends MetricSnapshotFindUniqueArgs>(args: SelectSubset<T, MetricSnapshotFindUniqueArgs<ExtArgs>>): Prisma__MetricSnapshotClient<$Result.GetResult<Prisma.$MetricSnapshotPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one MetricSnapshot that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {MetricSnapshotFindUniqueOrThrowArgs} args - Arguments to find a MetricSnapshot
+     * @example
+     * // Get one MetricSnapshot
+     * const metricSnapshot = await prisma.metricSnapshot.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends MetricSnapshotFindUniqueOrThrowArgs>(args: SelectSubset<T, MetricSnapshotFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MetricSnapshotClient<$Result.GetResult<Prisma.$MetricSnapshotPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first MetricSnapshot that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MetricSnapshotFindFirstArgs} args - Arguments to find a MetricSnapshot
+     * @example
+     * // Get one MetricSnapshot
+     * const metricSnapshot = await prisma.metricSnapshot.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends MetricSnapshotFindFirstArgs>(args?: SelectSubset<T, MetricSnapshotFindFirstArgs<ExtArgs>>): Prisma__MetricSnapshotClient<$Result.GetResult<Prisma.$MetricSnapshotPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first MetricSnapshot that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MetricSnapshotFindFirstOrThrowArgs} args - Arguments to find a MetricSnapshot
+     * @example
+     * // Get one MetricSnapshot
+     * const metricSnapshot = await prisma.metricSnapshot.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends MetricSnapshotFindFirstOrThrowArgs>(args?: SelectSubset<T, MetricSnapshotFindFirstOrThrowArgs<ExtArgs>>): Prisma__MetricSnapshotClient<$Result.GetResult<Prisma.$MetricSnapshotPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more MetricSnapshots that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MetricSnapshotFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all MetricSnapshots
+     * const metricSnapshots = await prisma.metricSnapshot.findMany()
+     * 
+     * // Get first 10 MetricSnapshots
+     * const metricSnapshots = await prisma.metricSnapshot.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const metricSnapshotWithIdOnly = await prisma.metricSnapshot.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends MetricSnapshotFindManyArgs>(args?: SelectSubset<T, MetricSnapshotFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MetricSnapshotPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a MetricSnapshot.
+     * @param {MetricSnapshotCreateArgs} args - Arguments to create a MetricSnapshot.
+     * @example
+     * // Create one MetricSnapshot
+     * const MetricSnapshot = await prisma.metricSnapshot.create({
+     *   data: {
+     *     // ... data to create a MetricSnapshot
+     *   }
+     * })
+     * 
+     */
+    create<T extends MetricSnapshotCreateArgs>(args: SelectSubset<T, MetricSnapshotCreateArgs<ExtArgs>>): Prisma__MetricSnapshotClient<$Result.GetResult<Prisma.$MetricSnapshotPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many MetricSnapshots.
+     * @param {MetricSnapshotCreateManyArgs} args - Arguments to create many MetricSnapshots.
+     * @example
+     * // Create many MetricSnapshots
+     * const metricSnapshot = await prisma.metricSnapshot.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends MetricSnapshotCreateManyArgs>(args?: SelectSubset<T, MetricSnapshotCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many MetricSnapshots and returns the data saved in the database.
+     * @param {MetricSnapshotCreateManyAndReturnArgs} args - Arguments to create many MetricSnapshots.
+     * @example
+     * // Create many MetricSnapshots
+     * const metricSnapshot = await prisma.metricSnapshot.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many MetricSnapshots and only return the `id`
+     * const metricSnapshotWithIdOnly = await prisma.metricSnapshot.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends MetricSnapshotCreateManyAndReturnArgs>(args?: SelectSubset<T, MetricSnapshotCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MetricSnapshotPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a MetricSnapshot.
+     * @param {MetricSnapshotDeleteArgs} args - Arguments to delete one MetricSnapshot.
+     * @example
+     * // Delete one MetricSnapshot
+     * const MetricSnapshot = await prisma.metricSnapshot.delete({
+     *   where: {
+     *     // ... filter to delete one MetricSnapshot
+     *   }
+     * })
+     * 
+     */
+    delete<T extends MetricSnapshotDeleteArgs>(args: SelectSubset<T, MetricSnapshotDeleteArgs<ExtArgs>>): Prisma__MetricSnapshotClient<$Result.GetResult<Prisma.$MetricSnapshotPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one MetricSnapshot.
+     * @param {MetricSnapshotUpdateArgs} args - Arguments to update one MetricSnapshot.
+     * @example
+     * // Update one MetricSnapshot
+     * const metricSnapshot = await prisma.metricSnapshot.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends MetricSnapshotUpdateArgs>(args: SelectSubset<T, MetricSnapshotUpdateArgs<ExtArgs>>): Prisma__MetricSnapshotClient<$Result.GetResult<Prisma.$MetricSnapshotPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more MetricSnapshots.
+     * @param {MetricSnapshotDeleteManyArgs} args - Arguments to filter MetricSnapshots to delete.
+     * @example
+     * // Delete a few MetricSnapshots
+     * const { count } = await prisma.metricSnapshot.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends MetricSnapshotDeleteManyArgs>(args?: SelectSubset<T, MetricSnapshotDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MetricSnapshots.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MetricSnapshotUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many MetricSnapshots
+     * const metricSnapshot = await prisma.metricSnapshot.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends MetricSnapshotUpdateManyArgs>(args: SelectSubset<T, MetricSnapshotUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MetricSnapshots and returns the data updated in the database.
+     * @param {MetricSnapshotUpdateManyAndReturnArgs} args - Arguments to update many MetricSnapshots.
+     * @example
+     * // Update many MetricSnapshots
+     * const metricSnapshot = await prisma.metricSnapshot.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more MetricSnapshots and only return the `id`
+     * const metricSnapshotWithIdOnly = await prisma.metricSnapshot.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends MetricSnapshotUpdateManyAndReturnArgs>(args: SelectSubset<T, MetricSnapshotUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MetricSnapshotPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one MetricSnapshot.
+     * @param {MetricSnapshotUpsertArgs} args - Arguments to update or create a MetricSnapshot.
+     * @example
+     * // Update or create a MetricSnapshot
+     * const metricSnapshot = await prisma.metricSnapshot.upsert({
+     *   create: {
+     *     // ... data to create a MetricSnapshot
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the MetricSnapshot we want to update
+     *   }
+     * })
+     */
+    upsert<T extends MetricSnapshotUpsertArgs>(args: SelectSubset<T, MetricSnapshotUpsertArgs<ExtArgs>>): Prisma__MetricSnapshotClient<$Result.GetResult<Prisma.$MetricSnapshotPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of MetricSnapshots.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MetricSnapshotCountArgs} args - Arguments to filter MetricSnapshots to count.
+     * @example
+     * // Count the number of MetricSnapshots
+     * const count = await prisma.metricSnapshot.count({
+     *   where: {
+     *     // ... the filter for the MetricSnapshots we want to count
+     *   }
+     * })
+    **/
+    count<T extends MetricSnapshotCountArgs>(
+      args?: Subset<T, MetricSnapshotCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], MetricSnapshotCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a MetricSnapshot.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MetricSnapshotAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MetricSnapshotAggregateArgs>(args: Subset<T, MetricSnapshotAggregateArgs>): Prisma.PrismaPromise<GetMetricSnapshotAggregateType<T>>
+
+    /**
+     * Group by MetricSnapshot.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MetricSnapshotGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends MetricSnapshotGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: MetricSnapshotGroupByArgs['orderBy'] }
+        : { orderBy?: MetricSnapshotGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, MetricSnapshotGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMetricSnapshotGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the MetricSnapshot model
+   */
+  readonly fields: MetricSnapshotFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for MetricSnapshot.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__MetricSnapshotClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    publishJob<T extends PublishJobDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PublishJobDefaultArgs<ExtArgs>>): Prisma__PublishJobClient<$Result.GetResult<Prisma.$PublishJobPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the MetricSnapshot model
+   */
+  interface MetricSnapshotFieldRefs {
+    readonly id: FieldRef<"MetricSnapshot", 'String'>
+    readonly createdAt: FieldRef<"MetricSnapshot", 'DateTime'>
+    readonly publishJobId: FieldRef<"MetricSnapshot", 'String'>
+    readonly views: FieldRef<"MetricSnapshot", 'Int'>
+    readonly likes: FieldRef<"MetricSnapshot", 'Int'>
+    readonly comments: FieldRef<"MetricSnapshot", 'Int'>
+    readonly shares: FieldRef<"MetricSnapshot", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * MetricSnapshot findUnique
+   */
+  export type MetricSnapshotFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MetricSnapshot
+     */
+    select?: MetricSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MetricSnapshot
+     */
+    omit?: MetricSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MetricSnapshotInclude<ExtArgs> | null
+    /**
+     * Filter, which MetricSnapshot to fetch.
+     */
+    where: MetricSnapshotWhereUniqueInput
+  }
+
+  /**
+   * MetricSnapshot findUniqueOrThrow
+   */
+  export type MetricSnapshotFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MetricSnapshot
+     */
+    select?: MetricSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MetricSnapshot
+     */
+    omit?: MetricSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MetricSnapshotInclude<ExtArgs> | null
+    /**
+     * Filter, which MetricSnapshot to fetch.
+     */
+    where: MetricSnapshotWhereUniqueInput
+  }
+
+  /**
+   * MetricSnapshot findFirst
+   */
+  export type MetricSnapshotFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MetricSnapshot
+     */
+    select?: MetricSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MetricSnapshot
+     */
+    omit?: MetricSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MetricSnapshotInclude<ExtArgs> | null
+    /**
+     * Filter, which MetricSnapshot to fetch.
+     */
+    where?: MetricSnapshotWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MetricSnapshots to fetch.
+     */
+    orderBy?: MetricSnapshotOrderByWithRelationInput | MetricSnapshotOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MetricSnapshots.
+     */
+    cursor?: MetricSnapshotWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MetricSnapshots from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MetricSnapshots.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MetricSnapshots.
+     */
+    distinct?: MetricSnapshotScalarFieldEnum | MetricSnapshotScalarFieldEnum[]
+  }
+
+  /**
+   * MetricSnapshot findFirstOrThrow
+   */
+  export type MetricSnapshotFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MetricSnapshot
+     */
+    select?: MetricSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MetricSnapshot
+     */
+    omit?: MetricSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MetricSnapshotInclude<ExtArgs> | null
+    /**
+     * Filter, which MetricSnapshot to fetch.
+     */
+    where?: MetricSnapshotWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MetricSnapshots to fetch.
+     */
+    orderBy?: MetricSnapshotOrderByWithRelationInput | MetricSnapshotOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MetricSnapshots.
+     */
+    cursor?: MetricSnapshotWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MetricSnapshots from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MetricSnapshots.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MetricSnapshots.
+     */
+    distinct?: MetricSnapshotScalarFieldEnum | MetricSnapshotScalarFieldEnum[]
+  }
+
+  /**
+   * MetricSnapshot findMany
+   */
+  export type MetricSnapshotFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MetricSnapshot
+     */
+    select?: MetricSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MetricSnapshot
+     */
+    omit?: MetricSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MetricSnapshotInclude<ExtArgs> | null
+    /**
+     * Filter, which MetricSnapshots to fetch.
+     */
+    where?: MetricSnapshotWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MetricSnapshots to fetch.
+     */
+    orderBy?: MetricSnapshotOrderByWithRelationInput | MetricSnapshotOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing MetricSnapshots.
+     */
+    cursor?: MetricSnapshotWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MetricSnapshots from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MetricSnapshots.
+     */
+    skip?: number
+    distinct?: MetricSnapshotScalarFieldEnum | MetricSnapshotScalarFieldEnum[]
+  }
+
+  /**
+   * MetricSnapshot create
+   */
+  export type MetricSnapshotCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MetricSnapshot
+     */
+    select?: MetricSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MetricSnapshot
+     */
+    omit?: MetricSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MetricSnapshotInclude<ExtArgs> | null
+    /**
+     * The data needed to create a MetricSnapshot.
+     */
+    data: XOR<MetricSnapshotCreateInput, MetricSnapshotUncheckedCreateInput>
+  }
+
+  /**
+   * MetricSnapshot createMany
+   */
+  export type MetricSnapshotCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many MetricSnapshots.
+     */
+    data: MetricSnapshotCreateManyInput | MetricSnapshotCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * MetricSnapshot createManyAndReturn
+   */
+  export type MetricSnapshotCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MetricSnapshot
+     */
+    select?: MetricSnapshotSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MetricSnapshot
+     */
+    omit?: MetricSnapshotOmit<ExtArgs> | null
+    /**
+     * The data used to create many MetricSnapshots.
+     */
+    data: MetricSnapshotCreateManyInput | MetricSnapshotCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MetricSnapshotIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * MetricSnapshot update
+   */
+  export type MetricSnapshotUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MetricSnapshot
+     */
+    select?: MetricSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MetricSnapshot
+     */
+    omit?: MetricSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MetricSnapshotInclude<ExtArgs> | null
+    /**
+     * The data needed to update a MetricSnapshot.
+     */
+    data: XOR<MetricSnapshotUpdateInput, MetricSnapshotUncheckedUpdateInput>
+    /**
+     * Choose, which MetricSnapshot to update.
+     */
+    where: MetricSnapshotWhereUniqueInput
+  }
+
+  /**
+   * MetricSnapshot updateMany
+   */
+  export type MetricSnapshotUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update MetricSnapshots.
+     */
+    data: XOR<MetricSnapshotUpdateManyMutationInput, MetricSnapshotUncheckedUpdateManyInput>
+    /**
+     * Filter which MetricSnapshots to update
+     */
+    where?: MetricSnapshotWhereInput
+    /**
+     * Limit how many MetricSnapshots to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * MetricSnapshot updateManyAndReturn
+   */
+  export type MetricSnapshotUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MetricSnapshot
+     */
+    select?: MetricSnapshotSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MetricSnapshot
+     */
+    omit?: MetricSnapshotOmit<ExtArgs> | null
+    /**
+     * The data used to update MetricSnapshots.
+     */
+    data: XOR<MetricSnapshotUpdateManyMutationInput, MetricSnapshotUncheckedUpdateManyInput>
+    /**
+     * Filter which MetricSnapshots to update
+     */
+    where?: MetricSnapshotWhereInput
+    /**
+     * Limit how many MetricSnapshots to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MetricSnapshotIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * MetricSnapshot upsert
+   */
+  export type MetricSnapshotUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MetricSnapshot
+     */
+    select?: MetricSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MetricSnapshot
+     */
+    omit?: MetricSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MetricSnapshotInclude<ExtArgs> | null
+    /**
+     * The filter to search for the MetricSnapshot to update in case it exists.
+     */
+    where: MetricSnapshotWhereUniqueInput
+    /**
+     * In case the MetricSnapshot found by the `where` argument doesn't exist, create a new MetricSnapshot with this data.
+     */
+    create: XOR<MetricSnapshotCreateInput, MetricSnapshotUncheckedCreateInput>
+    /**
+     * In case the MetricSnapshot was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<MetricSnapshotUpdateInput, MetricSnapshotUncheckedUpdateInput>
+  }
+
+  /**
+   * MetricSnapshot delete
+   */
+  export type MetricSnapshotDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MetricSnapshot
+     */
+    select?: MetricSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MetricSnapshot
+     */
+    omit?: MetricSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MetricSnapshotInclude<ExtArgs> | null
+    /**
+     * Filter which MetricSnapshot to delete.
+     */
+    where: MetricSnapshotWhereUniqueInput
+  }
+
+  /**
+   * MetricSnapshot deleteMany
+   */
+  export type MetricSnapshotDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MetricSnapshots to delete
+     */
+    where?: MetricSnapshotWhereInput
+    /**
+     * Limit how many MetricSnapshots to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * MetricSnapshot without action
+   */
+  export type MetricSnapshotDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MetricSnapshot
+     */
+    select?: MetricSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MetricSnapshot
+     */
+    omit?: MetricSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MetricSnapshotInclude<ExtArgs> | null
   }
 
 
@@ -11172,6 +12454,19 @@ export namespace Prisma {
   };
 
   export type PublishJobScalarFieldEnum = (typeof PublishJobScalarFieldEnum)[keyof typeof PublishJobScalarFieldEnum]
+
+
+  export const MetricSnapshotScalarFieldEnum: {
+    id: 'id',
+    createdAt: 'createdAt',
+    publishJobId: 'publishJobId',
+    views: 'views',
+    likes: 'likes',
+    comments: 'comments',
+    shares: 'shares'
+  };
+
+  export type MetricSnapshotScalarFieldEnum = (typeof MetricSnapshotScalarFieldEnum)[keyof typeof MetricSnapshotScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -11946,6 +13241,7 @@ export namespace Prisma {
     videoId?: StringFilter<"PublishJob"> | string
     platformConnectionId?: StringFilter<"PublishJob"> | string
     createdById?: StringFilter<"PublishJob"> | string
+    metricSnapshots?: MetricSnapshotListRelationFilter
     video?: XOR<VideoScalarRelationFilter, VideoWhereInput>
     platformConnection?: XOR<PlatformConnectionScalarRelationFilter, PlatformConnectionWhereInput>
     createdBy?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -11973,6 +13269,7 @@ export namespace Prisma {
     videoId?: SortOrder
     platformConnectionId?: SortOrder
     createdById?: SortOrder
+    metricSnapshots?: MetricSnapshotOrderByRelationAggregateInput
     video?: VideoOrderByWithRelationInput
     platformConnection?: PlatformConnectionOrderByWithRelationInput
     createdBy?: UserOrderByWithRelationInput
@@ -12003,6 +13300,7 @@ export namespace Prisma {
     videoId?: StringFilter<"PublishJob"> | string
     platformConnectionId?: StringFilter<"PublishJob"> | string
     createdById?: StringFilter<"PublishJob"> | string
+    metricSnapshots?: MetricSnapshotListRelationFilter
     video?: XOR<VideoScalarRelationFilter, VideoWhereInput>
     platformConnection?: XOR<PlatformConnectionScalarRelationFilter, PlatformConnectionWhereInput>
     createdBy?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -12062,6 +13360,73 @@ export namespace Prisma {
     videoId?: StringWithAggregatesFilter<"PublishJob"> | string
     platformConnectionId?: StringWithAggregatesFilter<"PublishJob"> | string
     createdById?: StringWithAggregatesFilter<"PublishJob"> | string
+  }
+
+  export type MetricSnapshotWhereInput = {
+    AND?: MetricSnapshotWhereInput | MetricSnapshotWhereInput[]
+    OR?: MetricSnapshotWhereInput[]
+    NOT?: MetricSnapshotWhereInput | MetricSnapshotWhereInput[]
+    id?: StringFilter<"MetricSnapshot"> | string
+    createdAt?: DateTimeFilter<"MetricSnapshot"> | Date | string
+    publishJobId?: StringFilter<"MetricSnapshot"> | string
+    views?: IntFilter<"MetricSnapshot"> | number
+    likes?: IntFilter<"MetricSnapshot"> | number
+    comments?: IntFilter<"MetricSnapshot"> | number
+    shares?: IntFilter<"MetricSnapshot"> | number
+    publishJob?: XOR<PublishJobScalarRelationFilter, PublishJobWhereInput>
+  }
+
+  export type MetricSnapshotOrderByWithRelationInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    publishJobId?: SortOrder
+    views?: SortOrder
+    likes?: SortOrder
+    comments?: SortOrder
+    shares?: SortOrder
+    publishJob?: PublishJobOrderByWithRelationInput
+  }
+
+  export type MetricSnapshotWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: MetricSnapshotWhereInput | MetricSnapshotWhereInput[]
+    OR?: MetricSnapshotWhereInput[]
+    NOT?: MetricSnapshotWhereInput | MetricSnapshotWhereInput[]
+    createdAt?: DateTimeFilter<"MetricSnapshot"> | Date | string
+    publishJobId?: StringFilter<"MetricSnapshot"> | string
+    views?: IntFilter<"MetricSnapshot"> | number
+    likes?: IntFilter<"MetricSnapshot"> | number
+    comments?: IntFilter<"MetricSnapshot"> | number
+    shares?: IntFilter<"MetricSnapshot"> | number
+    publishJob?: XOR<PublishJobScalarRelationFilter, PublishJobWhereInput>
+  }, "id">
+
+  export type MetricSnapshotOrderByWithAggregationInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    publishJobId?: SortOrder
+    views?: SortOrder
+    likes?: SortOrder
+    comments?: SortOrder
+    shares?: SortOrder
+    _count?: MetricSnapshotCountOrderByAggregateInput
+    _avg?: MetricSnapshotAvgOrderByAggregateInput
+    _max?: MetricSnapshotMaxOrderByAggregateInput
+    _min?: MetricSnapshotMinOrderByAggregateInput
+    _sum?: MetricSnapshotSumOrderByAggregateInput
+  }
+
+  export type MetricSnapshotScalarWhereWithAggregatesInput = {
+    AND?: MetricSnapshotScalarWhereWithAggregatesInput | MetricSnapshotScalarWhereWithAggregatesInput[]
+    OR?: MetricSnapshotScalarWhereWithAggregatesInput[]
+    NOT?: MetricSnapshotScalarWhereWithAggregatesInput | MetricSnapshotScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"MetricSnapshot"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"MetricSnapshot"> | Date | string
+    publishJobId?: StringWithAggregatesFilter<"MetricSnapshot"> | string
+    views?: IntWithAggregatesFilter<"MetricSnapshot"> | number
+    likes?: IntWithAggregatesFilter<"MetricSnapshot"> | number
+    comments?: IntWithAggregatesFilter<"MetricSnapshot"> | number
+    shares?: IntWithAggregatesFilter<"MetricSnapshot"> | number
   }
 
   export type PostCreateInput = {
@@ -12716,6 +14081,7 @@ export namespace Prisma {
     retryCount?: number
     isUpdate?: boolean
     updateTargetVideoId?: string | null
+    metricSnapshots?: MetricSnapshotCreateNestedManyWithoutPublishJobInput
     video: VideoCreateNestedOneWithoutPublishJobsInput
     platformConnection: PlatformConnectionCreateNestedOneWithoutPublishJobsInput
     createdBy: UserCreateNestedOneWithoutPublishJobsInput
@@ -12743,6 +14109,7 @@ export namespace Prisma {
     videoId: string
     platformConnectionId: string
     createdById: string
+    metricSnapshots?: MetricSnapshotUncheckedCreateNestedManyWithoutPublishJobInput
   }
 
   export type PublishJobUpdateInput = {
@@ -12764,6 +14131,7 @@ export namespace Prisma {
     retryCount?: IntFieldUpdateOperationsInput | number
     isUpdate?: BoolFieldUpdateOperationsInput | boolean
     updateTargetVideoId?: NullableStringFieldUpdateOperationsInput | string | null
+    metricSnapshots?: MetricSnapshotUpdateManyWithoutPublishJobNestedInput
     video?: VideoUpdateOneRequiredWithoutPublishJobsNestedInput
     platformConnection?: PlatformConnectionUpdateOneRequiredWithoutPublishJobsNestedInput
     createdBy?: UserUpdateOneRequiredWithoutPublishJobsNestedInput
@@ -12791,6 +14159,7 @@ export namespace Prisma {
     videoId?: StringFieldUpdateOperationsInput | string
     platformConnectionId?: StringFieldUpdateOperationsInput | string
     createdById?: StringFieldUpdateOperationsInput | string
+    metricSnapshots?: MetricSnapshotUncheckedUpdateManyWithoutPublishJobNestedInput
   }
 
   export type PublishJobCreateManyInput = {
@@ -12860,6 +14229,75 @@ export namespace Prisma {
     videoId?: StringFieldUpdateOperationsInput | string
     platformConnectionId?: StringFieldUpdateOperationsInput | string
     createdById?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type MetricSnapshotCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    views?: number
+    likes?: number
+    comments?: number
+    shares?: number
+    publishJob: PublishJobCreateNestedOneWithoutMetricSnapshotsInput
+  }
+
+  export type MetricSnapshotUncheckedCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    publishJobId: string
+    views?: number
+    likes?: number
+    comments?: number
+    shares?: number
+  }
+
+  export type MetricSnapshotUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    views?: IntFieldUpdateOperationsInput | number
+    likes?: IntFieldUpdateOperationsInput | number
+    comments?: IntFieldUpdateOperationsInput | number
+    shares?: IntFieldUpdateOperationsInput | number
+    publishJob?: PublishJobUpdateOneRequiredWithoutMetricSnapshotsNestedInput
+  }
+
+  export type MetricSnapshotUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    publishJobId?: StringFieldUpdateOperationsInput | string
+    views?: IntFieldUpdateOperationsInput | number
+    likes?: IntFieldUpdateOperationsInput | number
+    comments?: IntFieldUpdateOperationsInput | number
+    shares?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type MetricSnapshotCreateManyInput = {
+    id?: string
+    createdAt?: Date | string
+    publishJobId: string
+    views?: number
+    likes?: number
+    comments?: number
+    shares?: number
+  }
+
+  export type MetricSnapshotUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    views?: IntFieldUpdateOperationsInput | number
+    likes?: IntFieldUpdateOperationsInput | number
+    comments?: IntFieldUpdateOperationsInput | number
+    shares?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type MetricSnapshotUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    publishJobId?: StringFieldUpdateOperationsInput | string
+    views?: IntFieldUpdateOperationsInput | number
+    likes?: IntFieldUpdateOperationsInput | number
+    comments?: IntFieldUpdateOperationsInput | number
+    shares?: IntFieldUpdateOperationsInput | number
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -13544,6 +14982,12 @@ export namespace Prisma {
     not?: NestedEnumVideoPrivacyNullableFilter<$PrismaModel> | $Enums.VideoPrivacy | null
   }
 
+  export type MetricSnapshotListRelationFilter = {
+    every?: MetricSnapshotWhereInput
+    some?: MetricSnapshotWhereInput
+    none?: MetricSnapshotWhereInput
+  }
+
   export type VideoScalarRelationFilter = {
     is?: VideoWhereInput
     isNot?: VideoWhereInput
@@ -13552,6 +14996,10 @@ export namespace Prisma {
   export type PlatformConnectionScalarRelationFilter = {
     is?: PlatformConnectionWhereInput
     isNot?: PlatformConnectionWhereInput
+  }
+
+  export type MetricSnapshotOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type PublishJobCountOrderByAggregateInput = {
@@ -13652,6 +15100,55 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedEnumVideoPrivacyNullableFilter<$PrismaModel>
     _max?: NestedEnumVideoPrivacyNullableFilter<$PrismaModel>
+  }
+
+  export type PublishJobScalarRelationFilter = {
+    is?: PublishJobWhereInput
+    isNot?: PublishJobWhereInput
+  }
+
+  export type MetricSnapshotCountOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    publishJobId?: SortOrder
+    views?: SortOrder
+    likes?: SortOrder
+    comments?: SortOrder
+    shares?: SortOrder
+  }
+
+  export type MetricSnapshotAvgOrderByAggregateInput = {
+    views?: SortOrder
+    likes?: SortOrder
+    comments?: SortOrder
+    shares?: SortOrder
+  }
+
+  export type MetricSnapshotMaxOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    publishJobId?: SortOrder
+    views?: SortOrder
+    likes?: SortOrder
+    comments?: SortOrder
+    shares?: SortOrder
+  }
+
+  export type MetricSnapshotMinOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    publishJobId?: SortOrder
+    views?: SortOrder
+    likes?: SortOrder
+    comments?: SortOrder
+    shares?: SortOrder
+  }
+
+  export type MetricSnapshotSumOrderByAggregateInput = {
+    views?: SortOrder
+    likes?: SortOrder
+    comments?: SortOrder
+    shares?: SortOrder
   }
 
   export type UserCreateNestedOneWithoutPostsInput = {
@@ -14116,6 +15613,13 @@ export namespace Prisma {
     deleteMany?: PublishJobScalarWhereInput | PublishJobScalarWhereInput[]
   }
 
+  export type MetricSnapshotCreateNestedManyWithoutPublishJobInput = {
+    create?: XOR<MetricSnapshotCreateWithoutPublishJobInput, MetricSnapshotUncheckedCreateWithoutPublishJobInput> | MetricSnapshotCreateWithoutPublishJobInput[] | MetricSnapshotUncheckedCreateWithoutPublishJobInput[]
+    connectOrCreate?: MetricSnapshotCreateOrConnectWithoutPublishJobInput | MetricSnapshotCreateOrConnectWithoutPublishJobInput[]
+    createMany?: MetricSnapshotCreateManyPublishJobInputEnvelope
+    connect?: MetricSnapshotWhereUniqueInput | MetricSnapshotWhereUniqueInput[]
+  }
+
   export type VideoCreateNestedOneWithoutPublishJobsInput = {
     create?: XOR<VideoCreateWithoutPublishJobsInput, VideoUncheckedCreateWithoutPublishJobsInput>
     connectOrCreate?: VideoCreateOrConnectWithoutPublishJobsInput
@@ -14134,12 +15638,33 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
+  export type MetricSnapshotUncheckedCreateNestedManyWithoutPublishJobInput = {
+    create?: XOR<MetricSnapshotCreateWithoutPublishJobInput, MetricSnapshotUncheckedCreateWithoutPublishJobInput> | MetricSnapshotCreateWithoutPublishJobInput[] | MetricSnapshotUncheckedCreateWithoutPublishJobInput[]
+    connectOrCreate?: MetricSnapshotCreateOrConnectWithoutPublishJobInput | MetricSnapshotCreateOrConnectWithoutPublishJobInput[]
+    createMany?: MetricSnapshotCreateManyPublishJobInputEnvelope
+    connect?: MetricSnapshotWhereUniqueInput | MetricSnapshotWhereUniqueInput[]
+  }
+
   export type EnumPublishStatusFieldUpdateOperationsInput = {
     set?: $Enums.PublishStatus
   }
 
   export type NullableEnumVideoPrivacyFieldUpdateOperationsInput = {
     set?: $Enums.VideoPrivacy | null
+  }
+
+  export type MetricSnapshotUpdateManyWithoutPublishJobNestedInput = {
+    create?: XOR<MetricSnapshotCreateWithoutPublishJobInput, MetricSnapshotUncheckedCreateWithoutPublishJobInput> | MetricSnapshotCreateWithoutPublishJobInput[] | MetricSnapshotUncheckedCreateWithoutPublishJobInput[]
+    connectOrCreate?: MetricSnapshotCreateOrConnectWithoutPublishJobInput | MetricSnapshotCreateOrConnectWithoutPublishJobInput[]
+    upsert?: MetricSnapshotUpsertWithWhereUniqueWithoutPublishJobInput | MetricSnapshotUpsertWithWhereUniqueWithoutPublishJobInput[]
+    createMany?: MetricSnapshotCreateManyPublishJobInputEnvelope
+    set?: MetricSnapshotWhereUniqueInput | MetricSnapshotWhereUniqueInput[]
+    disconnect?: MetricSnapshotWhereUniqueInput | MetricSnapshotWhereUniqueInput[]
+    delete?: MetricSnapshotWhereUniqueInput | MetricSnapshotWhereUniqueInput[]
+    connect?: MetricSnapshotWhereUniqueInput | MetricSnapshotWhereUniqueInput[]
+    update?: MetricSnapshotUpdateWithWhereUniqueWithoutPublishJobInput | MetricSnapshotUpdateWithWhereUniqueWithoutPublishJobInput[]
+    updateMany?: MetricSnapshotUpdateManyWithWhereWithoutPublishJobInput | MetricSnapshotUpdateManyWithWhereWithoutPublishJobInput[]
+    deleteMany?: MetricSnapshotScalarWhereInput | MetricSnapshotScalarWhereInput[]
   }
 
   export type VideoUpdateOneRequiredWithoutPublishJobsNestedInput = {
@@ -14164,6 +15689,34 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutPublishJobsInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutPublishJobsInput, UserUpdateWithoutPublishJobsInput>, UserUncheckedUpdateWithoutPublishJobsInput>
+  }
+
+  export type MetricSnapshotUncheckedUpdateManyWithoutPublishJobNestedInput = {
+    create?: XOR<MetricSnapshotCreateWithoutPublishJobInput, MetricSnapshotUncheckedCreateWithoutPublishJobInput> | MetricSnapshotCreateWithoutPublishJobInput[] | MetricSnapshotUncheckedCreateWithoutPublishJobInput[]
+    connectOrCreate?: MetricSnapshotCreateOrConnectWithoutPublishJobInput | MetricSnapshotCreateOrConnectWithoutPublishJobInput[]
+    upsert?: MetricSnapshotUpsertWithWhereUniqueWithoutPublishJobInput | MetricSnapshotUpsertWithWhereUniqueWithoutPublishJobInput[]
+    createMany?: MetricSnapshotCreateManyPublishJobInputEnvelope
+    set?: MetricSnapshotWhereUniqueInput | MetricSnapshotWhereUniqueInput[]
+    disconnect?: MetricSnapshotWhereUniqueInput | MetricSnapshotWhereUniqueInput[]
+    delete?: MetricSnapshotWhereUniqueInput | MetricSnapshotWhereUniqueInput[]
+    connect?: MetricSnapshotWhereUniqueInput | MetricSnapshotWhereUniqueInput[]
+    update?: MetricSnapshotUpdateWithWhereUniqueWithoutPublishJobInput | MetricSnapshotUpdateWithWhereUniqueWithoutPublishJobInput[]
+    updateMany?: MetricSnapshotUpdateManyWithWhereWithoutPublishJobInput | MetricSnapshotUpdateManyWithWhereWithoutPublishJobInput[]
+    deleteMany?: MetricSnapshotScalarWhereInput | MetricSnapshotScalarWhereInput[]
+  }
+
+  export type PublishJobCreateNestedOneWithoutMetricSnapshotsInput = {
+    create?: XOR<PublishJobCreateWithoutMetricSnapshotsInput, PublishJobUncheckedCreateWithoutMetricSnapshotsInput>
+    connectOrCreate?: PublishJobCreateOrConnectWithoutMetricSnapshotsInput
+    connect?: PublishJobWhereUniqueInput
+  }
+
+  export type PublishJobUpdateOneRequiredWithoutMetricSnapshotsNestedInput = {
+    create?: XOR<PublishJobCreateWithoutMetricSnapshotsInput, PublishJobUncheckedCreateWithoutMetricSnapshotsInput>
+    connectOrCreate?: PublishJobCreateOrConnectWithoutMetricSnapshotsInput
+    upsert?: PublishJobUpsertWithoutMetricSnapshotsInput
+    connect?: PublishJobWhereUniqueInput
+    update?: XOR<XOR<PublishJobUpdateToOneWithWhereWithoutMetricSnapshotsInput, PublishJobUpdateWithoutMetricSnapshotsInput>, PublishJobUncheckedUpdateWithoutMetricSnapshotsInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -14924,6 +16477,7 @@ export namespace Prisma {
     retryCount?: number
     isUpdate?: boolean
     updateTargetVideoId?: string | null
+    metricSnapshots?: MetricSnapshotCreateNestedManyWithoutPublishJobInput
     video: VideoCreateNestedOneWithoutPublishJobsInput
     platformConnection: PlatformConnectionCreateNestedOneWithoutPublishJobsInput
   }
@@ -14949,6 +16503,7 @@ export namespace Prisma {
     updateTargetVideoId?: string | null
     videoId: string
     platformConnectionId: string
+    metricSnapshots?: MetricSnapshotUncheckedCreateNestedManyWithoutPublishJobInput
   }
 
   export type PublishJobCreateOrConnectWithoutCreatedByInput = {
@@ -15221,6 +16776,7 @@ export namespace Prisma {
     retryCount?: number
     isUpdate?: boolean
     updateTargetVideoId?: string | null
+    metricSnapshots?: MetricSnapshotCreateNestedManyWithoutPublishJobInput
     platformConnection: PlatformConnectionCreateNestedOneWithoutPublishJobsInput
     createdBy: UserCreateNestedOneWithoutPublishJobsInput
   }
@@ -15246,6 +16802,7 @@ export namespace Prisma {
     updateTargetVideoId?: string | null
     platformConnectionId: string
     createdById: string
+    metricSnapshots?: MetricSnapshotUncheckedCreateNestedManyWithoutPublishJobInput
   }
 
   export type PublishJobCreateOrConnectWithoutVideoInput = {
@@ -15369,6 +16926,7 @@ export namespace Prisma {
     retryCount?: number
     isUpdate?: boolean
     updateTargetVideoId?: string | null
+    metricSnapshots?: MetricSnapshotCreateNestedManyWithoutPublishJobInput
     video: VideoCreateNestedOneWithoutPublishJobsInput
     createdBy: UserCreateNestedOneWithoutPublishJobsInput
   }
@@ -15394,6 +16952,7 @@ export namespace Prisma {
     updateTargetVideoId?: string | null
     videoId: string
     createdById: string
+    metricSnapshots?: MetricSnapshotUncheckedCreateNestedManyWithoutPublishJobInput
   }
 
   export type PublishJobCreateOrConnectWithoutPlatformConnectionInput = {
@@ -15461,6 +17020,34 @@ export namespace Prisma {
   export type PublishJobUpdateManyWithWhereWithoutPlatformConnectionInput = {
     where: PublishJobScalarWhereInput
     data: XOR<PublishJobUpdateManyMutationInput, PublishJobUncheckedUpdateManyWithoutPlatformConnectionInput>
+  }
+
+  export type MetricSnapshotCreateWithoutPublishJobInput = {
+    id?: string
+    createdAt?: Date | string
+    views?: number
+    likes?: number
+    comments?: number
+    shares?: number
+  }
+
+  export type MetricSnapshotUncheckedCreateWithoutPublishJobInput = {
+    id?: string
+    createdAt?: Date | string
+    views?: number
+    likes?: number
+    comments?: number
+    shares?: number
+  }
+
+  export type MetricSnapshotCreateOrConnectWithoutPublishJobInput = {
+    where: MetricSnapshotWhereUniqueInput
+    create: XOR<MetricSnapshotCreateWithoutPublishJobInput, MetricSnapshotUncheckedCreateWithoutPublishJobInput>
+  }
+
+  export type MetricSnapshotCreateManyPublishJobInputEnvelope = {
+    data: MetricSnapshotCreateManyPublishJobInput | MetricSnapshotCreateManyPublishJobInput[]
+    skipDuplicates?: boolean
   }
 
   export type VideoCreateWithoutPublishJobsInput = {
@@ -15572,6 +17159,35 @@ export namespace Prisma {
   export type UserCreateOrConnectWithoutPublishJobsInput = {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutPublishJobsInput, UserUncheckedCreateWithoutPublishJobsInput>
+  }
+
+  export type MetricSnapshotUpsertWithWhereUniqueWithoutPublishJobInput = {
+    where: MetricSnapshotWhereUniqueInput
+    update: XOR<MetricSnapshotUpdateWithoutPublishJobInput, MetricSnapshotUncheckedUpdateWithoutPublishJobInput>
+    create: XOR<MetricSnapshotCreateWithoutPublishJobInput, MetricSnapshotUncheckedCreateWithoutPublishJobInput>
+  }
+
+  export type MetricSnapshotUpdateWithWhereUniqueWithoutPublishJobInput = {
+    where: MetricSnapshotWhereUniqueInput
+    data: XOR<MetricSnapshotUpdateWithoutPublishJobInput, MetricSnapshotUncheckedUpdateWithoutPublishJobInput>
+  }
+
+  export type MetricSnapshotUpdateManyWithWhereWithoutPublishJobInput = {
+    where: MetricSnapshotScalarWhereInput
+    data: XOR<MetricSnapshotUpdateManyMutationInput, MetricSnapshotUncheckedUpdateManyWithoutPublishJobInput>
+  }
+
+  export type MetricSnapshotScalarWhereInput = {
+    AND?: MetricSnapshotScalarWhereInput | MetricSnapshotScalarWhereInput[]
+    OR?: MetricSnapshotScalarWhereInput[]
+    NOT?: MetricSnapshotScalarWhereInput | MetricSnapshotScalarWhereInput[]
+    id?: StringFilter<"MetricSnapshot"> | string
+    createdAt?: DateTimeFilter<"MetricSnapshot"> | Date | string
+    publishJobId?: StringFilter<"MetricSnapshot"> | string
+    views?: IntFilter<"MetricSnapshot"> | number
+    likes?: IntFilter<"MetricSnapshot"> | number
+    comments?: IntFilter<"MetricSnapshot"> | number
+    shares?: IntFilter<"MetricSnapshot"> | number
   }
 
   export type VideoUpsertWithoutPublishJobsInput = {
@@ -15701,6 +17317,118 @@ export namespace Prisma {
     posts?: PostUncheckedUpdateManyWithoutCreatedByNestedInput
     videos?: VideoUncheckedUpdateManyWithoutCreatedByNestedInput
     platformConnections?: PlatformConnectionUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type PublishJobCreateWithoutMetricSnapshotsInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    platform: $Enums.Platform
+    status?: $Enums.PublishStatus
+    title?: string | null
+    description?: string | null
+    tags?: string | null
+    privacy?: $Enums.VideoPrivacy | null
+    scheduledFor?: Date | string | null
+    startedAt?: Date | string | null
+    completedAt?: Date | string | null
+    platformVideoId?: string | null
+    platformVideoUrl?: string | null
+    errorMessage?: string | null
+    retryCount?: number
+    isUpdate?: boolean
+    updateTargetVideoId?: string | null
+    video: VideoCreateNestedOneWithoutPublishJobsInput
+    platformConnection: PlatformConnectionCreateNestedOneWithoutPublishJobsInput
+    createdBy: UserCreateNestedOneWithoutPublishJobsInput
+  }
+
+  export type PublishJobUncheckedCreateWithoutMetricSnapshotsInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    platform: $Enums.Platform
+    status?: $Enums.PublishStatus
+    title?: string | null
+    description?: string | null
+    tags?: string | null
+    privacy?: $Enums.VideoPrivacy | null
+    scheduledFor?: Date | string | null
+    startedAt?: Date | string | null
+    completedAt?: Date | string | null
+    platformVideoId?: string | null
+    platformVideoUrl?: string | null
+    errorMessage?: string | null
+    retryCount?: number
+    isUpdate?: boolean
+    updateTargetVideoId?: string | null
+    videoId: string
+    platformConnectionId: string
+    createdById: string
+  }
+
+  export type PublishJobCreateOrConnectWithoutMetricSnapshotsInput = {
+    where: PublishJobWhereUniqueInput
+    create: XOR<PublishJobCreateWithoutMetricSnapshotsInput, PublishJobUncheckedCreateWithoutMetricSnapshotsInput>
+  }
+
+  export type PublishJobUpsertWithoutMetricSnapshotsInput = {
+    update: XOR<PublishJobUpdateWithoutMetricSnapshotsInput, PublishJobUncheckedUpdateWithoutMetricSnapshotsInput>
+    create: XOR<PublishJobCreateWithoutMetricSnapshotsInput, PublishJobUncheckedCreateWithoutMetricSnapshotsInput>
+    where?: PublishJobWhereInput
+  }
+
+  export type PublishJobUpdateToOneWithWhereWithoutMetricSnapshotsInput = {
+    where?: PublishJobWhereInput
+    data: XOR<PublishJobUpdateWithoutMetricSnapshotsInput, PublishJobUncheckedUpdateWithoutMetricSnapshotsInput>
+  }
+
+  export type PublishJobUpdateWithoutMetricSnapshotsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    platform?: EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
+    status?: EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: NullableStringFieldUpdateOperationsInput | string | null
+    privacy?: NullableEnumVideoPrivacyFieldUpdateOperationsInput | $Enums.VideoPrivacy | null
+    scheduledFor?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    platformVideoId?: NullableStringFieldUpdateOperationsInput | string | null
+    platformVideoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    retryCount?: IntFieldUpdateOperationsInput | number
+    isUpdate?: BoolFieldUpdateOperationsInput | boolean
+    updateTargetVideoId?: NullableStringFieldUpdateOperationsInput | string | null
+    video?: VideoUpdateOneRequiredWithoutPublishJobsNestedInput
+    platformConnection?: PlatformConnectionUpdateOneRequiredWithoutPublishJobsNestedInput
+    createdBy?: UserUpdateOneRequiredWithoutPublishJobsNestedInput
+  }
+
+  export type PublishJobUncheckedUpdateWithoutMetricSnapshotsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    platform?: EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
+    status?: EnumPublishStatusFieldUpdateOperationsInput | $Enums.PublishStatus
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: NullableStringFieldUpdateOperationsInput | string | null
+    privacy?: NullableEnumVideoPrivacyFieldUpdateOperationsInput | $Enums.VideoPrivacy | null
+    scheduledFor?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    startedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    platformVideoId?: NullableStringFieldUpdateOperationsInput | string | null
+    platformVideoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    retryCount?: IntFieldUpdateOperationsInput | number
+    isUpdate?: BoolFieldUpdateOperationsInput | boolean
+    updateTargetVideoId?: NullableStringFieldUpdateOperationsInput | string | null
+    videoId?: StringFieldUpdateOperationsInput | string
+    platformConnectionId?: StringFieldUpdateOperationsInput | string
+    createdById?: StringFieldUpdateOperationsInput | string
   }
 
   export type AccountCreateManyUserInput = {
@@ -16000,6 +17728,7 @@ export namespace Prisma {
     retryCount?: IntFieldUpdateOperationsInput | number
     isUpdate?: BoolFieldUpdateOperationsInput | boolean
     updateTargetVideoId?: NullableStringFieldUpdateOperationsInput | string | null
+    metricSnapshots?: MetricSnapshotUpdateManyWithoutPublishJobNestedInput
     video?: VideoUpdateOneRequiredWithoutPublishJobsNestedInput
     platformConnection?: PlatformConnectionUpdateOneRequiredWithoutPublishJobsNestedInput
   }
@@ -16025,6 +17754,7 @@ export namespace Prisma {
     updateTargetVideoId?: NullableStringFieldUpdateOperationsInput | string | null
     videoId?: StringFieldUpdateOperationsInput | string
     platformConnectionId?: StringFieldUpdateOperationsInput | string
+    metricSnapshots?: MetricSnapshotUncheckedUpdateManyWithoutPublishJobNestedInput
   }
 
   export type PublishJobUncheckedUpdateManyWithoutCreatedByInput = {
@@ -16092,6 +17822,7 @@ export namespace Prisma {
     retryCount?: IntFieldUpdateOperationsInput | number
     isUpdate?: BoolFieldUpdateOperationsInput | boolean
     updateTargetVideoId?: NullableStringFieldUpdateOperationsInput | string | null
+    metricSnapshots?: MetricSnapshotUpdateManyWithoutPublishJobNestedInput
     platformConnection?: PlatformConnectionUpdateOneRequiredWithoutPublishJobsNestedInput
     createdBy?: UserUpdateOneRequiredWithoutPublishJobsNestedInput
   }
@@ -16117,6 +17848,7 @@ export namespace Prisma {
     updateTargetVideoId?: NullableStringFieldUpdateOperationsInput | string | null
     platformConnectionId?: StringFieldUpdateOperationsInput | string
     createdById?: StringFieldUpdateOperationsInput | string
+    metricSnapshots?: MetricSnapshotUncheckedUpdateManyWithoutPublishJobNestedInput
   }
 
   export type PublishJobUncheckedUpdateManyWithoutVideoInput = {
@@ -16184,6 +17916,7 @@ export namespace Prisma {
     retryCount?: IntFieldUpdateOperationsInput | number
     isUpdate?: BoolFieldUpdateOperationsInput | boolean
     updateTargetVideoId?: NullableStringFieldUpdateOperationsInput | string | null
+    metricSnapshots?: MetricSnapshotUpdateManyWithoutPublishJobNestedInput
     video?: VideoUpdateOneRequiredWithoutPublishJobsNestedInput
     createdBy?: UserUpdateOneRequiredWithoutPublishJobsNestedInput
   }
@@ -16209,6 +17942,7 @@ export namespace Prisma {
     updateTargetVideoId?: NullableStringFieldUpdateOperationsInput | string | null
     videoId?: StringFieldUpdateOperationsInput | string
     createdById?: StringFieldUpdateOperationsInput | string
+    metricSnapshots?: MetricSnapshotUncheckedUpdateManyWithoutPublishJobNestedInput
   }
 
   export type PublishJobUncheckedUpdateManyWithoutPlatformConnectionInput = {
@@ -16232,6 +17966,42 @@ export namespace Prisma {
     updateTargetVideoId?: NullableStringFieldUpdateOperationsInput | string | null
     videoId?: StringFieldUpdateOperationsInput | string
     createdById?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type MetricSnapshotCreateManyPublishJobInput = {
+    id?: string
+    createdAt?: Date | string
+    views?: number
+    likes?: number
+    comments?: number
+    shares?: number
+  }
+
+  export type MetricSnapshotUpdateWithoutPublishJobInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    views?: IntFieldUpdateOperationsInput | number
+    likes?: IntFieldUpdateOperationsInput | number
+    comments?: IntFieldUpdateOperationsInput | number
+    shares?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type MetricSnapshotUncheckedUpdateWithoutPublishJobInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    views?: IntFieldUpdateOperationsInput | number
+    likes?: IntFieldUpdateOperationsInput | number
+    comments?: IntFieldUpdateOperationsInput | number
+    shares?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type MetricSnapshotUncheckedUpdateManyWithoutPublishJobInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    views?: IntFieldUpdateOperationsInput | number
+    likes?: IntFieldUpdateOperationsInput | number
+    comments?: IntFieldUpdateOperationsInput | number
+    shares?: IntFieldUpdateOperationsInput | number
   }
 
 
