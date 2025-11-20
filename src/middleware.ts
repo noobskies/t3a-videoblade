@@ -13,8 +13,10 @@ export async function middleware(request: NextRequest) {
     path.startsWith("/video");
 
   // Check for session token in cookies
-  // Better Auth uses "better-auth.session_token" by default
-  const sessionToken = request.cookies.get("better-auth.session_token");
+  // Better Auth uses "better-auth.session_token" by default, or "__Secure-better-auth.session_token" in production
+  const sessionToken =
+    request.cookies.get("better-auth.session_token") ??
+    request.cookies.get("__Secure-better-auth.session_token");
 
   // Redirect to login if accessing protected route without session
   if (isProtectedRoute && !sessionToken) {
