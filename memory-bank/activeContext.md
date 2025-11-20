@@ -2,42 +2,39 @@
 
 ## Current Focus
 
-**Phase 3: Expansion - Batch Uploads**
-
-We have successfully implemented Vimeo integration and Dashboard UI/UX improvements. We are now ready to move to the next major feature: Batch Uploads.
-
-- **Goal**: Enable uploading multiple videos at once.
-- **Roadmap**: `memory-bank/roadmap/phase3/03-batch-ops.md` (To be created)
+Phase 3: Expansion & Analytics.
+We have just completed **Step 3: Batch Uploads** and fixed a critical issue in the Analytics Dashboard.
 
 ## Recent Changes
 
-- **Dashboard UI/UX Overhaul (2025-11-20)**
-  - **Setup Mode**: Implemented a dedicated onboarding flow on the dashboard for new users.
-  - **Direct Connections**: Users can connect YouTube, TikTok, and Vimeo directly from the dashboard "Empty State" without navigation.
-  - **Persistent Setup**: Added `?setup=true` flow to allow connecting multiple platforms in sequence.
-  - **Smart Analytics**: Dashboard charts now dynamically filter to show only connected platforms.
-  - **Theming**: Fixed contrast issues in Empty State for both Light and Dark modes.
-
-- **Vimeo Integration (2025-11-20)**
-  - **Database**: Added `VIMEO` to `Platform` enum.
-  - **Auth**: Configured Vimeo provider using Better Auth `genericOAuth` plugin.
-  - **Library**: Implemented `src/lib/vimeo.ts` with "Pull Upload" approach.
-  - **Backend**: Added `connectVimeo` and `publishToVimeo` Inngest function.
-  - **Frontend**: Updated connection and publishing UI to support Vimeo.
-  - **Analytics**: Integrated Vimeo stats into daily snapshot.
-
-- **Analytics Dashboard (2025-11-20)**
-  - Completed analytics dashboard with Recharts.
-  - Implemented daily snapshotting with Inngest.
+- **Dashboard Fix**:
+  - Fixed `TrendChart` showing all platforms regardless of connection status.
+  - Added **Vimeo** support to the trend chart.
+  - Updated `PlatformConnection` type to allow nullable `platformUsername`.
+- **Batch Operations**:
+  - Created `BatchVideoUpload` component replacing the single-file upload.
+  - Supports multi-file drag-and-drop.
+  - Queue management (remove, edit title/desc).
+  - Sequential upload processing with individual progress bars.
+  - Refactored `/upload` page to use the new batch component.
 
 ## Active Decisions
 
-- **Onboarding Strategy**: Keep users on the Dashboard ("Setup Mode") until they explicitly choose to "Continue to Dashboard" or connect at least one platform. This reduces friction and encourages multi-platform setup.
-- **Vimeo API Strategy**: Use "Pull Upload" to transfer videos directly from S3 to Vimeo, avoiding server bottleneck.
-- **Auth Strategy**: Use Better Auth `genericOAuth` plugin for providers not natively supported in the simplified config.
+- **Batch Upload Strategy**: We opted for sequential uploads (one at a time) within the batch for the MVP to ensure reliability and progress visibility, though the architecture supports concurrency.
+- **State Management**: `UploadQueueItem` interface manages the complex state of each file (status, progress, preview, etc.).
+- **Cleanup**: Removed the legacy `video-upload.tsx` component.
 
 ## Next Steps
 
-1.  **Plan Batch Uploads**: detailed roadmap.
-2.  **Frontend**: Multi-file upload UI.
-3.  **Backend**: Handle multiple file uploads and create video records.
+1.  **Phase 3, Step 4: Production Hardening**
+    - Sentry integration for error tracking.
+    - Rate limiting for API routes.
+    - Upload size limits/validation refinement.
+
+2.  **Testing**: Verify batch upload with large files and mixed success/fail scenarios.
+
+## Current Project State
+
+- **Phase**: 3 (Expansion)
+- **Step**: 4 (Hardening)
+- **Status**: Functional Batch Uploads & Accurate Analytics.

@@ -343,7 +343,7 @@ export default function DashboardPage() {
 
       <Grid container spacing={3}>
         <Grid size={{ xs: 12, md: 8, lg: 9 }}>
-          <TrendChart data={trends} />
+          <TrendChart data={trends} connectedPlatforms={platforms} />
         </Grid>
         <Grid size={{ xs: 12, md: 4, lg: 3 }}>
           <PlatformBreakdown

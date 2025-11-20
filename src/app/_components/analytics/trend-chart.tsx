@@ -13,13 +13,19 @@ import {
   Legend,
 } from "recharts";
 import type { TrendDataPoint } from "@/lib/types/analytics";
+import type { PlatformConnection } from "@/lib/types/platform";
 
 interface TrendChartProps {
   data: TrendDataPoint[];
+  connectedPlatforms: PlatformConnection[];
 }
 
-export function TrendChart({ data }: TrendChartProps) {
+export function TrendChart({ data, connectedPlatforms }: TrendChartProps) {
   const theme = useTheme();
+
+  const hasYouTube = connectedPlatforms.some((p) => p.platform === "YOUTUBE");
+  const hasTikTok = connectedPlatforms.some((p) => p.platform === "TIKTOK");
+  const hasVimeo = connectedPlatforms.some((p) => p.platform === "VIMEO");
 
   return (
     <Paper sx={{ p: 3, height: "100%" }}>
@@ -59,25 +65,39 @@ export function TrendChart({ data }: TrendChartProps) {
               }}
             />
             <Legend />
-            <Area
-              type="monotone"
-              dataKey="youtube"
-              name="YouTube"
-              stackId="1"
-              stroke={theme.palette.error.main}
-              fill={theme.palette.error.main}
-              fillOpacity={0.3}
-            />
-            <Area
-              type="monotone"
-              dataKey="tiktok"
-              name="TikTok"
-              stackId="1"
-              stroke={theme.palette.common.black} // TikTok is black/white, or we can use another color
-              fill={theme.palette.common.black}
-              fillOpacity={0.3}
-            />
-            {/* We can also just show 'views' as total if we don't stack */}
+            {hasYouTube && (
+              <Area
+                type="monotone"
+                dataKey="youtube"
+                name="YouTube"
+                stackId="1"
+                stroke={theme.palette.error.main}
+                fill={theme.palette.error.main}
+                fillOpacity={0.3}
+              />
+            )}
+            {hasTikTok && (
+              <Area
+                type="monotone"
+                dataKey="tiktok"
+                name="TikTok"
+                stackId="1"
+                stroke={theme.palette.common.black}
+                fill={theme.palette.common.black}
+                fillOpacity={0.3}
+              />
+            )}
+            {hasVimeo && (
+              <Area
+                type="monotone"
+                dataKey="vimeo"
+                name="Vimeo"
+                stackId="1"
+                stroke="#1AB7EA"
+                fill="#1AB7EA"
+                fillOpacity={0.3}
+              />
+            )}
           </AreaChart>
         </ResponsiveContainer>
       </Box>

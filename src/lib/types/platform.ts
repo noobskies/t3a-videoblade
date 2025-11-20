@@ -12,7 +12,7 @@ import type { RouterOutputs } from "@/trpc/react";
 export interface PlatformConnection {
   id: string;
   platform: string;
-  platformUsername: string;
+  platformUsername: string | null;
   isActive: boolean;
   createdAt: Date;
 }
