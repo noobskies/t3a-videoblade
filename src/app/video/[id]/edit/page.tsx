@@ -113,7 +113,7 @@ export default function EditVideoPage() {
   }
 
   return (
-    <Box sx={{ minHeight: "100vh", bgcolor: "background.default", py: 4 }}>
+    <Box sx={{ minHeight: "100vh", bgcolor: "background.default", py: 3 }}>
       <Container maxWidth="md">
         {/* Header */}
         <Stack direction="row" spacing={2} alignItems="center" sx={{ mb: 4 }}>

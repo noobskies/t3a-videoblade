@@ -75,6 +75,10 @@
   - [x] Removed shadcn/ui components
   - [x] Removed Tailwind CSS & configuration
   - [x] Full build verification passed
+- [x] **Layout Refactor (2025-11-20)**
+  - [x] Implemented responsive `AppShell` with sidebar navigation
+  - [x] Removed global container constraints
+  - [x] Optimized individual page layouts for dashboard experience
 
 **Code Quality**
 
@@ -130,6 +134,12 @@
 ### ✅ UI Overhaul: MUI Migration (Complete) - Finished 2025-11-19
 
 **Goal**: Complete replacement of shadcn/ui + Tailwind with Material-UI v7.
+
+**Status**: Complete.
+
+### ✅ Layout Refactor (Complete) - Finished 2025-11-20
+
+**Goal**: Switch to full-width, mobile-friendly dashboard layout.
 
 **Status**: Complete.
 

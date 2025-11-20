@@ -44,7 +44,7 @@ export default function LibraryPage() {
   const videoList: VideoList = query.data;
 
   return (
-    <Container maxWidth="xl" sx={{ py: 4 }}>
+    <Container maxWidth={false} sx={{ py: 3 }}>
       <Header videoCount={videoList.length} />
       {videoList.length > 0 ? (
         <VideoGrid videos={videoList} onRefresh={() => void query.refetch()} />

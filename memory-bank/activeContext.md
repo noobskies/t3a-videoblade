@@ -2,18 +2,21 @@
 
 ## Current Focus
 
-**Phase 2: Multi-Platform Integration (TikTok)**
+**UI/UX Refactoring & Phase 3 Planning**
 
-We are currently working on Phase 2.
+We have completed Phase 2 and recently refactored the application layout to be more app-like.
 
-- **Step 1: TikTok OAuth**: Completed.
-- **Step 2: TikTok Publisher**: Completed.
-- **Step 3: Multi-Platform UI**: Completed.
-- **Step 4: Delete Videos**: Completed.
-- **Step 5: Scheduling**: Completed.
-- **Phase 2 Status**: Complete.
+- **Refactor: Full Width Layout**: Switched to a responsive `AppShell` with sidebar navigation.
+- **Status**: Layout refactor complete. Ready for Phase 3 planning.
 
 ## Recent Changes
+
+- **Refactor: App Layout (2025-11-20)**
+  - Created `src/app/_components/layout/app-shell.tsx`: A responsive wrapper with Drawer navigation (Desktop permanent, Mobile temporary).
+  - Updated `RootLayout` to use `AppShell` and removed the restrictive global `Container`.
+  - **Layout Strategy**: Removed global padding (`p: 0` in `AppShell`) to allow full-width designs (like Dashboard).
+  - **Page Constraints**: Updated `Upload`, `Platforms`, `Publish`, `Edit` pages to use `Container maxWidth="md/lg"` with internal padding (`py: 3`).
+  - **Library Page**: Updated to use `Container maxWidth={false}` (full width) with internal padding (`py: 3`) for a dashboard grid feel.
 
 - **Feature: Scheduling** (2025-11-19)
   - Added `SCHEDULED` status to `PublishStatus` enum.
@@ -47,6 +50,8 @@ We are currently working on Phase 2.
 
 ## Active Decisions
 
+- **Layout Strategy**: We moved away from a simple top-bar website layout to a persistent sidebar dashboard layout. This required removing global constraints from `layout.tsx` and pushing layout responsibility (max-width, padding) down to individual pages.
+- **Padding Management**: To avoid "floating box" looks on full-screen pages (like the gradient home page), the `AppShell` provides zero padding. Content pages apply their own standard padding (`py: 3`) via `Container`.
 - **Privacy Mapping**: TikTok's "Friends" privacy setting is mapped to a new `MUTUAL_FOLLOW_FRIENDS` enum value in `VideoPrivacy`. This required a schema migration (via `db push` for dev speed).
 - **Multi-Platform Publishing**: We iterate through selected platforms in the backend and create separate `PublishJob` records for each, triggering their respective Inngest events. This allows for independent status tracking and retries.
 
@@ -54,10 +59,11 @@ We are currently working on Phase 2.
 
 1.  **Phase 3 Planning**
     - Review roadmap for Phase 3 (if defined) or identify next major feature set (e.g., Analytics, more platforms, etc.).
+    - Consider: Vimeo integration, Batch Uploads, Analytics Dashboard.
 
 ## Current Context
 
 - **Project**: VideoBlade (Multi-Platform Video Publisher)
-- **Phase**: Phase 2 (Multi-Platform - TikTok)
-- **Status**: Phase 2 Complete.
-- **Current Task**: Phase 2 Complete.
+- **Phase**: Transition to Phase 3
+- **Status**: Layout Refactor Complete.
+- **Current Task**: Memory Bank Update.

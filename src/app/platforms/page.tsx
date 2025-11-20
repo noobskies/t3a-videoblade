@@ -112,7 +112,7 @@ export default function PlatformsPage() {
   const tiktokConnection = connections.find((c) => c.platform === "TIKTOK");
 
   return (
-    <Container maxWidth="md" sx={{ py: 8 }}>
+    <Container maxWidth="md" sx={{ py: 3 }}>
       <Typography variant="h4" component="h1" gutterBottom fontWeight="bold">
         Platform Connections
       </Typography>

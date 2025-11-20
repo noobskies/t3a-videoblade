@@ -3,7 +3,7 @@ import { Container, Stack } from "@mui/material";
 
 export default function UploadPage() {
   return (
-    <Container maxWidth="lg" sx={{ py: 4 }}>
+    <Container maxWidth="lg" sx={{ py: 3 }}>
       <Stack
         alignItems="center"
         spacing={4}

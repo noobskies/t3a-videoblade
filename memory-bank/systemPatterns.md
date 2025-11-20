@@ -213,7 +213,8 @@ It's **acceptable and encouraged** to break backwards compatibility when:
 
 - `Grid` (v2) for complex layouts
 - `Stack` for linear layouts (flex column/row)
-- `Container` for page constraints
+- `Container` for page constraints (page-level)
+- **AppShell Pattern**: Responsive Drawer + AppBar wrapping `children` (root-level)
 
 ### tRPC Router Pattern
 

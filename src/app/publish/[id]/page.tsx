@@ -192,7 +192,7 @@ export default function PublishPage({
   // Loading state
   if (videoQuery.isLoading || platformsQuery.isLoading) {
     return (
-      <Container maxWidth="md" sx={{ py: 8 }}>
+      <Container maxWidth="md" sx={{ py: 3 }}>
         <Box display="flex" justifyContent="center">
           <CircularProgress />
         </Box>
@@ -203,7 +203,7 @@ export default function PublishPage({
   // Error state
   if (videoQuery.error || platformsQuery.error) {
     return (
-      <Container maxWidth="md" sx={{ py: 8 }}>
+      <Container maxWidth="md" sx={{ py: 3 }}>
         <Alert severity="error">
           {videoQuery.error?.message ?? platformsQuery.error?.message}
         </Alert>
@@ -215,14 +215,14 @@ export default function PublishPage({
 
   if (!video) {
     return (
-      <Container maxWidth="md" sx={{ py: 8 }}>
+      <Container maxWidth="md" sx={{ py: 3 }}>
         <Alert severity="error">Video not found</Alert>
       </Container>
     );
   }
 
   return (
-    <Container maxWidth="md" sx={{ py: 8 }}>
+    <Container maxWidth="md" sx={{ py: 3 }}>
       {/* Header */}
       <Box mb={4}>
         <Button
