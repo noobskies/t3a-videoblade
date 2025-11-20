@@ -14,11 +14,6 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
 
 
 /**
- * Model Post
- * 
- */
-export type Post = $Result.DefaultSelection<Prisma.$PostPayload>
-/**
  * Model Account
  * 
  */
@@ -39,10 +34,10 @@ export type User = $Result.DefaultSelection<Prisma.$UserPayload>
  */
 export type Verification = $Result.DefaultSelection<Prisma.$VerificationPayload>
 /**
- * Model Video
+ * Model Post
  * 
  */
-export type Video = $Result.DefaultSelection<Prisma.$VideoPayload>
+export type Post = $Result.DefaultSelection<Prisma.$PostPayload>
 /**
  * Model PlatformConnection
  * 
@@ -95,6 +90,15 @@ export const VideoPrivacy: {
 
 export type VideoPrivacy = (typeof VideoPrivacy)[keyof typeof VideoPrivacy]
 
+
+export const MediaType: {
+  VIDEO: 'VIDEO',
+  IMAGE: 'IMAGE',
+  TEXT: 'TEXT'
+};
+
+export type MediaType = (typeof MediaType)[keyof typeof MediaType]
+
 }
 
 export type Platform = $Enums.Platform
@@ -109,6 +113,10 @@ export type VideoPrivacy = $Enums.VideoPrivacy
 
 export const VideoPrivacy: typeof $Enums.VideoPrivacy
 
+export type MediaType = $Enums.MediaType
+
+export const MediaType: typeof $Enums.MediaType
+
 /**
  * ##  Prisma Client ʲˢ
  *
@@ -116,8 +124,8 @@ export const VideoPrivacy: typeof $Enums.VideoPrivacy
  * @example
  * ```
  * const prisma = new PrismaClient()
- * // Fetch zero or more Posts
- * const posts = await prisma.post.findMany()
+ * // Fetch zero or more Accounts
+ * const accounts = await prisma.account.findMany()
  * ```
  *
  *
@@ -137,8 +145,8 @@ export class PrismaClient<
    * @example
    * ```
    * const prisma = new PrismaClient()
-   * // Fetch zero or more Posts
-   * const posts = await prisma.post.findMany()
+   * // Fetch zero or more Accounts
+   * const accounts = await prisma.account.findMany()
    * ```
    *
    *
@@ -228,16 +236,6 @@ export class PrismaClient<
   }>>
 
       /**
-   * `prisma.post`: Exposes CRUD operations for the **Post** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Posts
-    * const posts = await prisma.post.findMany()
-    * ```
-    */
-  get post(): Prisma.PostDelegate<ExtArgs, ClientOptions>;
-
-  /**
    * `prisma.account`: Exposes CRUD operations for the **Account** model.
     * Example usage:
     * ```ts
@@ -278,14 +276,14 @@ export class PrismaClient<
   get verification(): Prisma.VerificationDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.video`: Exposes CRUD operations for the **Video** model.
+   * `prisma.post`: Exposes CRUD operations for the **Post** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Videos
-    * const videos = await prisma.video.findMany()
+    * // Fetch zero or more Posts
+    * const posts = await prisma.post.findMany()
     * ```
     */
-  get video(): Prisma.VideoDelegate<ExtArgs, ClientOptions>;
+  get post(): Prisma.PostDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.platformConnection`: Exposes CRUD operations for the **PlatformConnection** model.
@@ -757,12 +755,11 @@ export namespace Prisma {
 
 
   export const ModelName: {
-    Post: 'Post',
     Account: 'Account',
     Session: 'Session',
     User: 'User',
     Verification: 'Verification',
-    Video: 'Video',
+    Post: 'Post',
     PlatformConnection: 'PlatformConnection',
     PublishJob: 'PublishJob',
     MetricSnapshot: 'MetricSnapshot'
@@ -784,84 +781,10 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "post" | "account" | "session" | "user" | "verification" | "video" | "platformConnection" | "publishJob" | "metricSnapshot"
+      modelProps: "account" | "session" | "user" | "verification" | "post" | "platformConnection" | "publishJob" | "metricSnapshot"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
-      Post: {
-        payload: Prisma.$PostPayload<ExtArgs>
-        fields: Prisma.PostFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.PostFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PostPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.PostFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PostPayload>
-          }
-          findFirst: {
-            args: Prisma.PostFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PostPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.PostFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PostPayload>
-          }
-          findMany: {
-            args: Prisma.PostFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PostPayload>[]
-          }
-          create: {
-            args: Prisma.PostCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PostPayload>
-          }
-          createMany: {
-            args: Prisma.PostCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.PostCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PostPayload>[]
-          }
-          delete: {
-            args: Prisma.PostDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PostPayload>
-          }
-          update: {
-            args: Prisma.PostUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PostPayload>
-          }
-          deleteMany: {
-            args: Prisma.PostDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.PostUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.PostUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PostPayload>[]
-          }
-          upsert: {
-            args: Prisma.PostUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PostPayload>
-          }
-          aggregate: {
-            args: Prisma.PostAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregatePost>
-          }
-          groupBy: {
-            args: Prisma.PostGroupByArgs<ExtArgs>
-            result: $Utils.Optional<PostGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.PostCountArgs<ExtArgs>
-            result: $Utils.Optional<PostCountAggregateOutputType> | number
-          }
-        }
-      }
       Account: {
         payload: Prisma.$AccountPayload<ExtArgs>
         fields: Prisma.AccountFieldRefs
@@ -1158,77 +1081,77 @@ export namespace Prisma {
           }
         }
       }
-      Video: {
-        payload: Prisma.$VideoPayload<ExtArgs>
-        fields: Prisma.VideoFieldRefs
+      Post: {
+        payload: Prisma.$PostPayload<ExtArgs>
+        fields: Prisma.PostFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.VideoFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$VideoPayload> | null
+            args: Prisma.PostFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PostPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.VideoFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$VideoPayload>
+            args: Prisma.PostFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PostPayload>
           }
           findFirst: {
-            args: Prisma.VideoFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$VideoPayload> | null
+            args: Prisma.PostFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PostPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.VideoFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$VideoPayload>
+            args: Prisma.PostFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PostPayload>
           }
           findMany: {
-            args: Prisma.VideoFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$VideoPayload>[]
+            args: Prisma.PostFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PostPayload>[]
           }
           create: {
-            args: Prisma.VideoCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$VideoPayload>
+            args: Prisma.PostCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PostPayload>
           }
           createMany: {
-            args: Prisma.VideoCreateManyArgs<ExtArgs>
+            args: Prisma.PostCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.VideoCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$VideoPayload>[]
+            args: Prisma.PostCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PostPayload>[]
           }
           delete: {
-            args: Prisma.VideoDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$VideoPayload>
+            args: Prisma.PostDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PostPayload>
           }
           update: {
-            args: Prisma.VideoUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$VideoPayload>
+            args: Prisma.PostUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PostPayload>
           }
           deleteMany: {
-            args: Prisma.VideoDeleteManyArgs<ExtArgs>
+            args: Prisma.PostDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.VideoUpdateManyArgs<ExtArgs>
+            args: Prisma.PostUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.VideoUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$VideoPayload>[]
+            args: Prisma.PostUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PostPayload>[]
           }
           upsert: {
-            args: Prisma.VideoUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$VideoPayload>
+            args: Prisma.PostUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PostPayload>
           }
           aggregate: {
-            args: Prisma.VideoAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateVideo>
+            args: Prisma.PostAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePost>
           }
           groupBy: {
-            args: Prisma.VideoGroupByArgs<ExtArgs>
-            result: $Utils.Optional<VideoGroupByOutputType>[]
+            args: Prisma.PostGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PostGroupByOutputType>[]
           }
           count: {
-            args: Prisma.VideoCountArgs<ExtArgs>
-            result: $Utils.Optional<VideoCountAggregateOutputType> | number
+            args: Prisma.PostCountArgs<ExtArgs>
+            result: $Utils.Optional<PostCountAggregateOutputType> | number
           }
         }
       }
@@ -1550,12 +1473,11 @@ export namespace Prisma {
     omit?: Prisma.GlobalOmitConfig
   }
   export type GlobalOmitConfig = {
-    post?: PostOmit
     account?: AccountOmit
     session?: SessionOmit
     user?: UserOmit
     verification?: VerificationOmit
-    video?: VideoOmit
+    post?: PostOmit
     platformConnection?: PlatformConnectionOmit
     publishJob?: PublishJobOmit
     metricSnapshot?: MetricSnapshotOmit
@@ -1642,7 +1564,6 @@ export namespace Prisma {
     accounts: number
     sessions: number
     posts: number
-    videos: number
     platformConnections: number
     publishJobs: number
   }
@@ -1651,7 +1572,6 @@ export namespace Prisma {
     accounts?: boolean | UserCountOutputTypeCountAccountsArgs
     sessions?: boolean | UserCountOutputTypeCountSessionsArgs
     posts?: boolean | UserCountOutputTypeCountPostsArgs
-    videos?: boolean | UserCountOutputTypeCountVideosArgs
     platformConnections?: boolean | UserCountOutputTypeCountPlatformConnectionsArgs
     publishJobs?: boolean | UserCountOutputTypeCountPublishJobsArgs
   }
@@ -1691,13 +1611,6 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountVideosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: VideoWhereInput
-  }
-
-  /**
-   * UserCountOutputType without action
-   */
   export type UserCountOutputTypeCountPlatformConnectionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: PlatformConnectionWhereInput
   }
@@ -1711,32 +1624,32 @@ export namespace Prisma {
 
 
   /**
-   * Count Type VideoCountOutputType
+   * Count Type PostCountOutputType
    */
 
-  export type VideoCountOutputType = {
+  export type PostCountOutputType = {
     publishJobs: number
   }
 
-  export type VideoCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    publishJobs?: boolean | VideoCountOutputTypeCountPublishJobsArgs
+  export type PostCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    publishJobs?: boolean | PostCountOutputTypeCountPublishJobsArgs
   }
 
   // Custom InputTypes
   /**
-   * VideoCountOutputType without action
+   * PostCountOutputType without action
    */
-  export type VideoCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PostCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the VideoCountOutputType
+     * Select specific fields to fetch from the PostCountOutputType
      */
-    select?: VideoCountOutputTypeSelect<ExtArgs> | null
+    select?: PostCountOutputTypeSelect<ExtArgs> | null
   }
 
   /**
-   * VideoCountOutputType without action
+   * PostCountOutputType without action
    */
-  export type VideoCountOutputTypeCountPublishJobsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PostCountOutputTypeCountPublishJobsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: PublishJobWhereInput
   }
 
@@ -1806,1098 +1719,6 @@ export namespace Prisma {
   /**
    * Models
    */
-
-  /**
-   * Model Post
-   */
-
-  export type AggregatePost = {
-    _count: PostCountAggregateOutputType | null
-    _avg: PostAvgAggregateOutputType | null
-    _sum: PostSumAggregateOutputType | null
-    _min: PostMinAggregateOutputType | null
-    _max: PostMaxAggregateOutputType | null
-  }
-
-  export type PostAvgAggregateOutputType = {
-    id: number | null
-  }
-
-  export type PostSumAggregateOutputType = {
-    id: number | null
-  }
-
-  export type PostMinAggregateOutputType = {
-    id: number | null
-    name: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
-    createdById: string | null
-  }
-
-  export type PostMaxAggregateOutputType = {
-    id: number | null
-    name: string | null
-    createdAt: Date | null
-    updatedAt: Date | null
-    createdById: string | null
-  }
-
-  export type PostCountAggregateOutputType = {
-    id: number
-    name: number
-    createdAt: number
-    updatedAt: number
-    createdById: number
-    _all: number
-  }
-
-
-  export type PostAvgAggregateInputType = {
-    id?: true
-  }
-
-  export type PostSumAggregateInputType = {
-    id?: true
-  }
-
-  export type PostMinAggregateInputType = {
-    id?: true
-    name?: true
-    createdAt?: true
-    updatedAt?: true
-    createdById?: true
-  }
-
-  export type PostMaxAggregateInputType = {
-    id?: true
-    name?: true
-    createdAt?: true
-    updatedAt?: true
-    createdById?: true
-  }
-
-  export type PostCountAggregateInputType = {
-    id?: true
-    name?: true
-    createdAt?: true
-    updatedAt?: true
-    createdById?: true
-    _all?: true
-  }
-
-  export type PostAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Post to aggregate.
-     */
-    where?: PostWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Posts to fetch.
-     */
-    orderBy?: PostOrderByWithRelationInput | PostOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: PostWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Posts from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Posts.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned Posts
-    **/
-    _count?: true | PostCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: PostAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: PostSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: PostMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: PostMaxAggregateInputType
-  }
-
-  export type GetPostAggregateType<T extends PostAggregateArgs> = {
-        [P in keyof T & keyof AggregatePost]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregatePost[P]>
-      : GetScalarType<T[P], AggregatePost[P]>
-  }
-
-
-
-
-  export type PostGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: PostWhereInput
-    orderBy?: PostOrderByWithAggregationInput | PostOrderByWithAggregationInput[]
-    by: PostScalarFieldEnum[] | PostScalarFieldEnum
-    having?: PostScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: PostCountAggregateInputType | true
-    _avg?: PostAvgAggregateInputType
-    _sum?: PostSumAggregateInputType
-    _min?: PostMinAggregateInputType
-    _max?: PostMaxAggregateInputType
-  }
-
-  export type PostGroupByOutputType = {
-    id: number
-    name: string
-    createdAt: Date
-    updatedAt: Date
-    createdById: string
-    _count: PostCountAggregateOutputType | null
-    _avg: PostAvgAggregateOutputType | null
-    _sum: PostSumAggregateOutputType | null
-    _min: PostMinAggregateOutputType | null
-    _max: PostMaxAggregateOutputType | null
-  }
-
-  type GetPostGroupByPayload<T extends PostGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<PostGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof PostGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], PostGroupByOutputType[P]>
-            : GetScalarType<T[P], PostGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type PostSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    name?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    createdById?: boolean
-    createdBy?: boolean | UserDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["post"]>
-
-  export type PostSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    name?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    createdById?: boolean
-    createdBy?: boolean | UserDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["post"]>
-
-  export type PostSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    name?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    createdById?: boolean
-    createdBy?: boolean | UserDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["post"]>
-
-  export type PostSelectScalar = {
-    id?: boolean
-    name?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    createdById?: boolean
-  }
-
-  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "createdAt" | "updatedAt" | "createdById", ExtArgs["result"]["post"]>
-  export type PostInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    createdBy?: boolean | UserDefaultArgs<ExtArgs>
-  }
-  export type PostIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    createdBy?: boolean | UserDefaultArgs<ExtArgs>
-  }
-  export type PostIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    createdBy?: boolean | UserDefaultArgs<ExtArgs>
-  }
-
-  export type $PostPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Post"
-    objects: {
-      createdBy: Prisma.$UserPayload<ExtArgs>
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: number
-      name: string
-      createdAt: Date
-      updatedAt: Date
-      createdById: string
-    }, ExtArgs["result"]["post"]>
-    composites: {}
-  }
-
-  type PostGetPayload<S extends boolean | null | undefined | PostDefaultArgs> = $Result.GetResult<Prisma.$PostPayload, S>
-
-  type PostCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<PostFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: PostCountAggregateInputType | true
-    }
-
-  export interface PostDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Post'], meta: { name: 'Post' } }
-    /**
-     * Find zero or one Post that matches the filter.
-     * @param {PostFindUniqueArgs} args - Arguments to find a Post
-     * @example
-     * // Get one Post
-     * const post = await prisma.post.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends PostFindUniqueArgs>(args: SelectSubset<T, PostFindUniqueArgs<ExtArgs>>): Prisma__PostClient<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one Post that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {PostFindUniqueOrThrowArgs} args - Arguments to find a Post
-     * @example
-     * // Get one Post
-     * const post = await prisma.post.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends PostFindUniqueOrThrowArgs>(args: SelectSubset<T, PostFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PostClient<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Post that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PostFindFirstArgs} args - Arguments to find a Post
-     * @example
-     * // Get one Post
-     * const post = await prisma.post.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends PostFindFirstArgs>(args?: SelectSubset<T, PostFindFirstArgs<ExtArgs>>): Prisma__PostClient<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Post that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PostFindFirstOrThrowArgs} args - Arguments to find a Post
-     * @example
-     * // Get one Post
-     * const post = await prisma.post.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends PostFindFirstOrThrowArgs>(args?: SelectSubset<T, PostFindFirstOrThrowArgs<ExtArgs>>): Prisma__PostClient<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more Posts that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PostFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Posts
-     * const posts = await prisma.post.findMany()
-     * 
-     * // Get first 10 Posts
-     * const posts = await prisma.post.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const postWithIdOnly = await prisma.post.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends PostFindManyArgs>(args?: SelectSubset<T, PostFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a Post.
-     * @param {PostCreateArgs} args - Arguments to create a Post.
-     * @example
-     * // Create one Post
-     * const Post = await prisma.post.create({
-     *   data: {
-     *     // ... data to create a Post
-     *   }
-     * })
-     * 
-     */
-    create<T extends PostCreateArgs>(args: SelectSubset<T, PostCreateArgs<ExtArgs>>): Prisma__PostClient<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many Posts.
-     * @param {PostCreateManyArgs} args - Arguments to create many Posts.
-     * @example
-     * // Create many Posts
-     * const post = await prisma.post.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends PostCreateManyArgs>(args?: SelectSubset<T, PostCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many Posts and returns the data saved in the database.
-     * @param {PostCreateManyAndReturnArgs} args - Arguments to create many Posts.
-     * @example
-     * // Create many Posts
-     * const post = await prisma.post.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many Posts and only return the `id`
-     * const postWithIdOnly = await prisma.post.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends PostCreateManyAndReturnArgs>(args?: SelectSubset<T, PostCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a Post.
-     * @param {PostDeleteArgs} args - Arguments to delete one Post.
-     * @example
-     * // Delete one Post
-     * const Post = await prisma.post.delete({
-     *   where: {
-     *     // ... filter to delete one Post
-     *   }
-     * })
-     * 
-     */
-    delete<T extends PostDeleteArgs>(args: SelectSubset<T, PostDeleteArgs<ExtArgs>>): Prisma__PostClient<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one Post.
-     * @param {PostUpdateArgs} args - Arguments to update one Post.
-     * @example
-     * // Update one Post
-     * const post = await prisma.post.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends PostUpdateArgs>(args: SelectSubset<T, PostUpdateArgs<ExtArgs>>): Prisma__PostClient<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more Posts.
-     * @param {PostDeleteManyArgs} args - Arguments to filter Posts to delete.
-     * @example
-     * // Delete a few Posts
-     * const { count } = await prisma.post.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends PostDeleteManyArgs>(args?: SelectSubset<T, PostDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Posts.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PostUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Posts
-     * const post = await prisma.post.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends PostUpdateManyArgs>(args: SelectSubset<T, PostUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Posts and returns the data updated in the database.
-     * @param {PostUpdateManyAndReturnArgs} args - Arguments to update many Posts.
-     * @example
-     * // Update many Posts
-     * const post = await prisma.post.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Posts and only return the `id`
-     * const postWithIdOnly = await prisma.post.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends PostUpdateManyAndReturnArgs>(args: SelectSubset<T, PostUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one Post.
-     * @param {PostUpsertArgs} args - Arguments to update or create a Post.
-     * @example
-     * // Update or create a Post
-     * const post = await prisma.post.upsert({
-     *   create: {
-     *     // ... data to create a Post
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Post we want to update
-     *   }
-     * })
-     */
-    upsert<T extends PostUpsertArgs>(args: SelectSubset<T, PostUpsertArgs<ExtArgs>>): Prisma__PostClient<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of Posts.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PostCountArgs} args - Arguments to filter Posts to count.
-     * @example
-     * // Count the number of Posts
-     * const count = await prisma.post.count({
-     *   where: {
-     *     // ... the filter for the Posts we want to count
-     *   }
-     * })
-    **/
-    count<T extends PostCountArgs>(
-      args?: Subset<T, PostCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], PostCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Post.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PostAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends PostAggregateArgs>(args: Subset<T, PostAggregateArgs>): Prisma.PrismaPromise<GetPostAggregateType<T>>
-
-    /**
-     * Group by Post.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PostGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends PostGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: PostGroupByArgs['orderBy'] }
-        : { orderBy?: PostGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, PostGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPostGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the Post model
-   */
-  readonly fields: PostFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for Post.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__PostClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    createdBy<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the Post model
-   */
-  interface PostFieldRefs {
-    readonly id: FieldRef<"Post", 'Int'>
-    readonly name: FieldRef<"Post", 'String'>
-    readonly createdAt: FieldRef<"Post", 'DateTime'>
-    readonly updatedAt: FieldRef<"Post", 'DateTime'>
-    readonly createdById: FieldRef<"Post", 'String'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * Post findUnique
-   */
-  export type PostFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Post
-     */
-    select?: PostSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Post
-     */
-    omit?: PostOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PostInclude<ExtArgs> | null
-    /**
-     * Filter, which Post to fetch.
-     */
-    where: PostWhereUniqueInput
-  }
-
-  /**
-   * Post findUniqueOrThrow
-   */
-  export type PostFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Post
-     */
-    select?: PostSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Post
-     */
-    omit?: PostOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PostInclude<ExtArgs> | null
-    /**
-     * Filter, which Post to fetch.
-     */
-    where: PostWhereUniqueInput
-  }
-
-  /**
-   * Post findFirst
-   */
-  export type PostFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Post
-     */
-    select?: PostSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Post
-     */
-    omit?: PostOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PostInclude<ExtArgs> | null
-    /**
-     * Filter, which Post to fetch.
-     */
-    where?: PostWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Posts to fetch.
-     */
-    orderBy?: PostOrderByWithRelationInput | PostOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Posts.
-     */
-    cursor?: PostWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Posts from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Posts.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Posts.
-     */
-    distinct?: PostScalarFieldEnum | PostScalarFieldEnum[]
-  }
-
-  /**
-   * Post findFirstOrThrow
-   */
-  export type PostFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Post
-     */
-    select?: PostSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Post
-     */
-    omit?: PostOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PostInclude<ExtArgs> | null
-    /**
-     * Filter, which Post to fetch.
-     */
-    where?: PostWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Posts to fetch.
-     */
-    orderBy?: PostOrderByWithRelationInput | PostOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Posts.
-     */
-    cursor?: PostWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Posts from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Posts.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Posts.
-     */
-    distinct?: PostScalarFieldEnum | PostScalarFieldEnum[]
-  }
-
-  /**
-   * Post findMany
-   */
-  export type PostFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Post
-     */
-    select?: PostSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Post
-     */
-    omit?: PostOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PostInclude<ExtArgs> | null
-    /**
-     * Filter, which Posts to fetch.
-     */
-    where?: PostWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Posts to fetch.
-     */
-    orderBy?: PostOrderByWithRelationInput | PostOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing Posts.
-     */
-    cursor?: PostWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Posts from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Posts.
-     */
-    skip?: number
-    distinct?: PostScalarFieldEnum | PostScalarFieldEnum[]
-  }
-
-  /**
-   * Post create
-   */
-  export type PostCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Post
-     */
-    select?: PostSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Post
-     */
-    omit?: PostOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PostInclude<ExtArgs> | null
-    /**
-     * The data needed to create a Post.
-     */
-    data: XOR<PostCreateInput, PostUncheckedCreateInput>
-  }
-
-  /**
-   * Post createMany
-   */
-  export type PostCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many Posts.
-     */
-    data: PostCreateManyInput | PostCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * Post createManyAndReturn
-   */
-  export type PostCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Post
-     */
-    select?: PostSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Post
-     */
-    omit?: PostOmit<ExtArgs> | null
-    /**
-     * The data used to create many Posts.
-     */
-    data: PostCreateManyInput | PostCreateManyInput[]
-    skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PostIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * Post update
-   */
-  export type PostUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Post
-     */
-    select?: PostSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Post
-     */
-    omit?: PostOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PostInclude<ExtArgs> | null
-    /**
-     * The data needed to update a Post.
-     */
-    data: XOR<PostUpdateInput, PostUncheckedUpdateInput>
-    /**
-     * Choose, which Post to update.
-     */
-    where: PostWhereUniqueInput
-  }
-
-  /**
-   * Post updateMany
-   */
-  export type PostUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update Posts.
-     */
-    data: XOR<PostUpdateManyMutationInput, PostUncheckedUpdateManyInput>
-    /**
-     * Filter which Posts to update
-     */
-    where?: PostWhereInput
-    /**
-     * Limit how many Posts to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * Post updateManyAndReturn
-   */
-  export type PostUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Post
-     */
-    select?: PostSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Post
-     */
-    omit?: PostOmit<ExtArgs> | null
-    /**
-     * The data used to update Posts.
-     */
-    data: XOR<PostUpdateManyMutationInput, PostUncheckedUpdateManyInput>
-    /**
-     * Filter which Posts to update
-     */
-    where?: PostWhereInput
-    /**
-     * Limit how many Posts to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PostIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * Post upsert
-   */
-  export type PostUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Post
-     */
-    select?: PostSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Post
-     */
-    omit?: PostOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PostInclude<ExtArgs> | null
-    /**
-     * The filter to search for the Post to update in case it exists.
-     */
-    where: PostWhereUniqueInput
-    /**
-     * In case the Post found by the `where` argument doesn't exist, create a new Post with this data.
-     */
-    create: XOR<PostCreateInput, PostUncheckedCreateInput>
-    /**
-     * In case the Post was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<PostUpdateInput, PostUncheckedUpdateInput>
-  }
-
-  /**
-   * Post delete
-   */
-  export type PostDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Post
-     */
-    select?: PostSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Post
-     */
-    omit?: PostOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PostInclude<ExtArgs> | null
-    /**
-     * Filter which Post to delete.
-     */
-    where: PostWhereUniqueInput
-  }
-
-  /**
-   * Post deleteMany
-   */
-  export type PostDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Posts to delete
-     */
-    where?: PostWhereInput
-    /**
-     * Limit how many Posts to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * Post without action
-   */
-  export type PostDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Post
-     */
-    select?: PostSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Post
-     */
-    omit?: PostOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PostInclude<ExtArgs> | null
-  }
-
 
   /**
    * Model Account
@@ -5341,7 +4162,6 @@ export namespace Prisma {
     accounts?: boolean | User$accountsArgs<ExtArgs>
     sessions?: boolean | User$sessionsArgs<ExtArgs>
     posts?: boolean | User$postsArgs<ExtArgs>
-    videos?: boolean | User$videosArgs<ExtArgs>
     platformConnections?: boolean | User$platformConnectionsArgs<ExtArgs>
     publishJobs?: boolean | User$publishJobsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -5382,7 +4202,6 @@ export namespace Prisma {
     accounts?: boolean | User$accountsArgs<ExtArgs>
     sessions?: boolean | User$sessionsArgs<ExtArgs>
     posts?: boolean | User$postsArgs<ExtArgs>
-    videos?: boolean | User$videosArgs<ExtArgs>
     platformConnections?: boolean | User$platformConnectionsArgs<ExtArgs>
     publishJobs?: boolean | User$publishJobsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -5396,7 +4215,6 @@ export namespace Prisma {
       accounts: Prisma.$AccountPayload<ExtArgs>[]
       sessions: Prisma.$SessionPayload<ExtArgs>[]
       posts: Prisma.$PostPayload<ExtArgs>[]
-      videos: Prisma.$VideoPayload<ExtArgs>[]
       platformConnections: Prisma.$PlatformConnectionPayload<ExtArgs>[]
       publishJobs: Prisma.$PublishJobPayload<ExtArgs>[]
     }
@@ -5805,7 +4623,6 @@ export namespace Prisma {
     accounts<T extends User$accountsArgs<ExtArgs> = {}>(args?: Subset<T, User$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     sessions<T extends User$sessionsArgs<ExtArgs> = {}>(args?: Subset<T, User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     posts<T extends User$postsArgs<ExtArgs> = {}>(args?: Subset<T, User$postsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    videos<T extends User$videosArgs<ExtArgs> = {}>(args?: Subset<T, User$videosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VideoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     platformConnections<T extends User$platformConnectionsArgs<ExtArgs> = {}>(args?: Subset<T, User$platformConnectionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlatformConnectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     publishJobs<T extends User$publishJobsArgs<ExtArgs> = {}>(args?: Subset<T, User$publishJobsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PublishJobPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
@@ -6301,30 +5118,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: PostScalarFieldEnum | PostScalarFieldEnum[]
-  }
-
-  /**
-   * User.videos
-   */
-  export type User$videosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Video
-     */
-    select?: VideoSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Video
-     */
-    omit?: VideoOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: VideoInclude<ExtArgs> | null
-    where?: VideoWhereInput
-    orderBy?: VideoOrderByWithRelationInput | VideoOrderByWithRelationInput[]
-    cursor?: VideoWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: VideoScalarFieldEnum | VideoScalarFieldEnum[]
   }
 
   /**
@@ -7403,31 +6196,33 @@ export namespace Prisma {
 
 
   /**
-   * Model Video
+   * Model Post
    */
 
-  export type AggregateVideo = {
-    _count: VideoCountAggregateOutputType | null
-    _avg: VideoAvgAggregateOutputType | null
-    _sum: VideoSumAggregateOutputType | null
-    _min: VideoMinAggregateOutputType | null
-    _max: VideoMaxAggregateOutputType | null
+  export type AggregatePost = {
+    _count: PostCountAggregateOutputType | null
+    _avg: PostAvgAggregateOutputType | null
+    _sum: PostSumAggregateOutputType | null
+    _min: PostMinAggregateOutputType | null
+    _max: PostMaxAggregateOutputType | null
   }
 
-  export type VideoAvgAggregateOutputType = {
+  export type PostAvgAggregateOutputType = {
     fileSize: number | null
     duration: number | null
   }
 
-  export type VideoSumAggregateOutputType = {
+  export type PostSumAggregateOutputType = {
     fileSize: bigint | null
     duration: number | null
   }
 
-  export type VideoMinAggregateOutputType = {
+  export type PostMinAggregateOutputType = {
     id: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    type: $Enums.MediaType | null
+    content: string | null
     s3Key: string | null
     s3Bucket: string | null
     fileName: string | null
@@ -7442,10 +6237,12 @@ export namespace Prisma {
     createdById: string | null
   }
 
-  export type VideoMaxAggregateOutputType = {
+  export type PostMaxAggregateOutputType = {
     id: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    type: $Enums.MediaType | null
+    content: string | null
     s3Key: string | null
     s3Bucket: string | null
     fileName: string | null
@@ -7460,10 +6257,12 @@ export namespace Prisma {
     createdById: string | null
   }
 
-  export type VideoCountAggregateOutputType = {
+  export type PostCountAggregateOutputType = {
     id: number
     createdAt: number
     updatedAt: number
+    type: number
+    content: number
     s3Key: number
     s3Bucket: number
     fileName: number
@@ -7480,20 +6279,22 @@ export namespace Prisma {
   }
 
 
-  export type VideoAvgAggregateInputType = {
+  export type PostAvgAggregateInputType = {
     fileSize?: true
     duration?: true
   }
 
-  export type VideoSumAggregateInputType = {
+  export type PostSumAggregateInputType = {
     fileSize?: true
     duration?: true
   }
 
-  export type VideoMinAggregateInputType = {
+  export type PostMinAggregateInputType = {
     id?: true
     createdAt?: true
     updatedAt?: true
+    type?: true
+    content?: true
     s3Key?: true
     s3Bucket?: true
     fileName?: true
@@ -7508,10 +6309,12 @@ export namespace Prisma {
     createdById?: true
   }
 
-  export type VideoMaxAggregateInputType = {
+  export type PostMaxAggregateInputType = {
     id?: true
     createdAt?: true
     updatedAt?: true
+    type?: true
+    content?: true
     s3Key?: true
     s3Bucket?: true
     fileName?: true
@@ -7526,10 +6329,12 @@ export namespace Prisma {
     createdById?: true
   }
 
-  export type VideoCountAggregateInputType = {
+  export type PostCountAggregateInputType = {
     id?: true
     createdAt?: true
     updatedAt?: true
+    type?: true
+    content?: true
     s3Key?: true
     s3Bucket?: true
     fileName?: true
@@ -7545,101 +6350,103 @@ export namespace Prisma {
     _all?: true
   }
 
-  export type VideoAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PostAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Video to aggregate.
+     * Filter which Post to aggregate.
      */
-    where?: VideoWhereInput
+    where?: PostWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Videos to fetch.
+     * Determine the order of Posts to fetch.
      */
-    orderBy?: VideoOrderByWithRelationInput | VideoOrderByWithRelationInput[]
+    orderBy?: PostOrderByWithRelationInput | PostOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: VideoWhereUniqueInput
+    cursor?: PostWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Videos from the position of the cursor.
+     * Take `±n` Posts from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Videos.
+     * Skip the first `n` Posts.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned Videos
+     * Count returned Posts
     **/
-    _count?: true | VideoCountAggregateInputType
+    _count?: true | PostCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: VideoAvgAggregateInputType
+    _avg?: PostAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: VideoSumAggregateInputType
+    _sum?: PostSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: VideoMinAggregateInputType
+    _min?: PostMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: VideoMaxAggregateInputType
+    _max?: PostMaxAggregateInputType
   }
 
-  export type GetVideoAggregateType<T extends VideoAggregateArgs> = {
-        [P in keyof T & keyof AggregateVideo]: P extends '_count' | 'count'
+  export type GetPostAggregateType<T extends PostAggregateArgs> = {
+        [P in keyof T & keyof AggregatePost]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateVideo[P]>
-      : GetScalarType<T[P], AggregateVideo[P]>
+        : GetScalarType<T[P], AggregatePost[P]>
+      : GetScalarType<T[P], AggregatePost[P]>
   }
 
 
 
 
-  export type VideoGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: VideoWhereInput
-    orderBy?: VideoOrderByWithAggregationInput | VideoOrderByWithAggregationInput[]
-    by: VideoScalarFieldEnum[] | VideoScalarFieldEnum
-    having?: VideoScalarWhereWithAggregatesInput
+  export type PostGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PostWhereInput
+    orderBy?: PostOrderByWithAggregationInput | PostOrderByWithAggregationInput[]
+    by: PostScalarFieldEnum[] | PostScalarFieldEnum
+    having?: PostScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: VideoCountAggregateInputType | true
-    _avg?: VideoAvgAggregateInputType
-    _sum?: VideoSumAggregateInputType
-    _min?: VideoMinAggregateInputType
-    _max?: VideoMaxAggregateInputType
+    _count?: PostCountAggregateInputType | true
+    _avg?: PostAvgAggregateInputType
+    _sum?: PostSumAggregateInputType
+    _min?: PostMinAggregateInputType
+    _max?: PostMaxAggregateInputType
   }
 
-  export type VideoGroupByOutputType = {
+  export type PostGroupByOutputType = {
     id: string
     createdAt: Date
     updatedAt: Date
-    s3Key: string
-    s3Bucket: string
-    fileName: string
-    fileSize: bigint
-    mimeType: string
+    type: $Enums.MediaType
+    content: string | null
+    s3Key: string | null
+    s3Bucket: string | null
+    fileName: string | null
+    fileSize: bigint | null
+    mimeType: string | null
     duration: number | null
     title: string
     description: string | null
@@ -7647,31 +6454,33 @@ export namespace Prisma {
     thumbnailUrl: string | null
     privacy: $Enums.VideoPrivacy
     createdById: string
-    _count: VideoCountAggregateOutputType | null
-    _avg: VideoAvgAggregateOutputType | null
-    _sum: VideoSumAggregateOutputType | null
-    _min: VideoMinAggregateOutputType | null
-    _max: VideoMaxAggregateOutputType | null
+    _count: PostCountAggregateOutputType | null
+    _avg: PostAvgAggregateOutputType | null
+    _sum: PostSumAggregateOutputType | null
+    _min: PostMinAggregateOutputType | null
+    _max: PostMaxAggregateOutputType | null
   }
 
-  type GetVideoGroupByPayload<T extends VideoGroupByArgs> = Prisma.PrismaPromise<
+  type GetPostGroupByPayload<T extends PostGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<VideoGroupByOutputType, T['by']> &
+      PickEnumerable<PostGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof VideoGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof PostGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], VideoGroupByOutputType[P]>
-            : GetScalarType<T[P], VideoGroupByOutputType[P]>
+              : GetScalarType<T[P], PostGroupByOutputType[P]>
+            : GetScalarType<T[P], PostGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type VideoSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type PostSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    type?: boolean
+    content?: boolean
     s3Key?: boolean
     s3Bucket?: boolean
     fileName?: boolean
@@ -7685,14 +6494,16 @@ export namespace Prisma {
     privacy?: boolean
     createdById?: boolean
     createdBy?: boolean | UserDefaultArgs<ExtArgs>
-    publishJobs?: boolean | Video$publishJobsArgs<ExtArgs>
-    _count?: boolean | VideoCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["video"]>
+    publishJobs?: boolean | Post$publishJobsArgs<ExtArgs>
+    _count?: boolean | PostCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["post"]>
 
-  export type VideoSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type PostSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    type?: boolean
+    content?: boolean
     s3Key?: boolean
     s3Bucket?: boolean
     fileName?: boolean
@@ -7706,12 +6517,14 @@ export namespace Prisma {
     privacy?: boolean
     createdById?: boolean
     createdBy?: boolean | UserDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["video"]>
+  }, ExtArgs["result"]["post"]>
 
-  export type VideoSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type PostSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    type?: boolean
+    content?: boolean
     s3Key?: boolean
     s3Bucket?: boolean
     fileName?: boolean
@@ -7725,12 +6538,14 @@ export namespace Prisma {
     privacy?: boolean
     createdById?: boolean
     createdBy?: boolean | UserDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["video"]>
+  }, ExtArgs["result"]["post"]>
 
-  export type VideoSelectScalar = {
+  export type PostSelectScalar = {
     id?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    type?: boolean
+    content?: boolean
     s3Key?: boolean
     s3Bucket?: boolean
     fileName?: boolean
@@ -7745,21 +6560,21 @@ export namespace Prisma {
     createdById?: boolean
   }
 
-  export type VideoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "s3Key" | "s3Bucket" | "fileName" | "fileSize" | "mimeType" | "duration" | "title" | "description" | "tags" | "thumbnailUrl" | "privacy" | "createdById", ExtArgs["result"]["video"]>
-  export type VideoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "type" | "content" | "s3Key" | "s3Bucket" | "fileName" | "fileSize" | "mimeType" | "duration" | "title" | "description" | "tags" | "thumbnailUrl" | "privacy" | "createdById", ExtArgs["result"]["post"]>
+  export type PostInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     createdBy?: boolean | UserDefaultArgs<ExtArgs>
-    publishJobs?: boolean | Video$publishJobsArgs<ExtArgs>
-    _count?: boolean | VideoCountOutputTypeDefaultArgs<ExtArgs>
+    publishJobs?: boolean | Post$publishJobsArgs<ExtArgs>
+    _count?: boolean | PostCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type VideoIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PostIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     createdBy?: boolean | UserDefaultArgs<ExtArgs>
   }
-  export type VideoIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PostIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     createdBy?: boolean | UserDefaultArgs<ExtArgs>
   }
 
-  export type $VideoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Video"
+  export type $PostPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Post"
     objects: {
       createdBy: Prisma.$UserPayload<ExtArgs>
       publishJobs: Prisma.$PublishJobPayload<ExtArgs>[]
@@ -7768,11 +6583,13 @@ export namespace Prisma {
       id: string
       createdAt: Date
       updatedAt: Date
-      s3Key: string
-      s3Bucket: string
-      fileName: string
-      fileSize: bigint
-      mimeType: string
+      type: $Enums.MediaType
+      content: string | null
+      s3Key: string | null
+      s3Bucket: string | null
+      fileName: string | null
+      fileSize: bigint | null
+      mimeType: string | null
       duration: number | null
       title: string
       description: string | null
@@ -7780,136 +6597,136 @@ export namespace Prisma {
       thumbnailUrl: string | null
       privacy: $Enums.VideoPrivacy
       createdById: string
-    }, ExtArgs["result"]["video"]>
+    }, ExtArgs["result"]["post"]>
     composites: {}
   }
 
-  type VideoGetPayload<S extends boolean | null | undefined | VideoDefaultArgs> = $Result.GetResult<Prisma.$VideoPayload, S>
+  type PostGetPayload<S extends boolean | null | undefined | PostDefaultArgs> = $Result.GetResult<Prisma.$PostPayload, S>
 
-  type VideoCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<VideoFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: VideoCountAggregateInputType | true
+  type PostCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<PostFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: PostCountAggregateInputType | true
     }
 
-  export interface VideoDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Video'], meta: { name: 'Video' } }
+  export interface PostDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Post'], meta: { name: 'Post' } }
     /**
-     * Find zero or one Video that matches the filter.
-     * @param {VideoFindUniqueArgs} args - Arguments to find a Video
+     * Find zero or one Post that matches the filter.
+     * @param {PostFindUniqueArgs} args - Arguments to find a Post
      * @example
-     * // Get one Video
-     * const video = await prisma.video.findUnique({
+     * // Get one Post
+     * const post = await prisma.post.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends VideoFindUniqueArgs>(args: SelectSubset<T, VideoFindUniqueArgs<ExtArgs>>): Prisma__VideoClient<$Result.GetResult<Prisma.$VideoPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends PostFindUniqueArgs>(args: SelectSubset<T, PostFindUniqueArgs<ExtArgs>>): Prisma__PostClient<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Video that matches the filter or throw an error with `error.code='P2025'`
+     * Find one Post that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {VideoFindUniqueOrThrowArgs} args - Arguments to find a Video
+     * @param {PostFindUniqueOrThrowArgs} args - Arguments to find a Post
      * @example
-     * // Get one Video
-     * const video = await prisma.video.findUniqueOrThrow({
+     * // Get one Post
+     * const post = await prisma.post.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends VideoFindUniqueOrThrowArgs>(args: SelectSubset<T, VideoFindUniqueOrThrowArgs<ExtArgs>>): Prisma__VideoClient<$Result.GetResult<Prisma.$VideoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends PostFindUniqueOrThrowArgs>(args: SelectSubset<T, PostFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PostClient<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Video that matches the filter.
+     * Find the first Post that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {VideoFindFirstArgs} args - Arguments to find a Video
+     * @param {PostFindFirstArgs} args - Arguments to find a Post
      * @example
-     * // Get one Video
-     * const video = await prisma.video.findFirst({
+     * // Get one Post
+     * const post = await prisma.post.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends VideoFindFirstArgs>(args?: SelectSubset<T, VideoFindFirstArgs<ExtArgs>>): Prisma__VideoClient<$Result.GetResult<Prisma.$VideoPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends PostFindFirstArgs>(args?: SelectSubset<T, PostFindFirstArgs<ExtArgs>>): Prisma__PostClient<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first Video that matches the filter or
+     * Find the first Post that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {VideoFindFirstOrThrowArgs} args - Arguments to find a Video
+     * @param {PostFindFirstOrThrowArgs} args - Arguments to find a Post
      * @example
-     * // Get one Video
-     * const video = await prisma.video.findFirstOrThrow({
+     * // Get one Post
+     * const post = await prisma.post.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends VideoFindFirstOrThrowArgs>(args?: SelectSubset<T, VideoFindFirstOrThrowArgs<ExtArgs>>): Prisma__VideoClient<$Result.GetResult<Prisma.$VideoPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends PostFindFirstOrThrowArgs>(args?: SelectSubset<T, PostFindFirstOrThrowArgs<ExtArgs>>): Prisma__PostClient<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more Videos that matches the filter.
+     * Find zero or more Posts that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {VideoFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {PostFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all Videos
-     * const videos = await prisma.video.findMany()
+     * // Get all Posts
+     * const posts = await prisma.post.findMany()
      * 
-     * // Get first 10 Videos
-     * const videos = await prisma.video.findMany({ take: 10 })
+     * // Get first 10 Posts
+     * const posts = await prisma.post.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const videoWithIdOnly = await prisma.video.findMany({ select: { id: true } })
+     * const postWithIdOnly = await prisma.post.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends VideoFindManyArgs>(args?: SelectSubset<T, VideoFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VideoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends PostFindManyArgs>(args?: SelectSubset<T, PostFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a Video.
-     * @param {VideoCreateArgs} args - Arguments to create a Video.
+     * Create a Post.
+     * @param {PostCreateArgs} args - Arguments to create a Post.
      * @example
-     * // Create one Video
-     * const Video = await prisma.video.create({
+     * // Create one Post
+     * const Post = await prisma.post.create({
      *   data: {
-     *     // ... data to create a Video
+     *     // ... data to create a Post
      *   }
      * })
      * 
      */
-    create<T extends VideoCreateArgs>(args: SelectSubset<T, VideoCreateArgs<ExtArgs>>): Prisma__VideoClient<$Result.GetResult<Prisma.$VideoPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends PostCreateArgs>(args: SelectSubset<T, PostCreateArgs<ExtArgs>>): Prisma__PostClient<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many Videos.
-     * @param {VideoCreateManyArgs} args - Arguments to create many Videos.
+     * Create many Posts.
+     * @param {PostCreateManyArgs} args - Arguments to create many Posts.
      * @example
-     * // Create many Videos
-     * const video = await prisma.video.createMany({
+     * // Create many Posts
+     * const post = await prisma.post.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends VideoCreateManyArgs>(args?: SelectSubset<T, VideoCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends PostCreateManyArgs>(args?: SelectSubset<T, PostCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many Videos and returns the data saved in the database.
-     * @param {VideoCreateManyAndReturnArgs} args - Arguments to create many Videos.
+     * Create many Posts and returns the data saved in the database.
+     * @param {PostCreateManyAndReturnArgs} args - Arguments to create many Posts.
      * @example
-     * // Create many Videos
-     * const video = await prisma.video.createManyAndReturn({
+     * // Create many Posts
+     * const post = await prisma.post.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many Videos and only return the `id`
-     * const videoWithIdOnly = await prisma.video.createManyAndReturn({
+     * // Create many Posts and only return the `id`
+     * const postWithIdOnly = await prisma.post.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -7919,28 +6736,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends VideoCreateManyAndReturnArgs>(args?: SelectSubset<T, VideoCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VideoPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends PostCreateManyAndReturnArgs>(args?: SelectSubset<T, PostCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a Video.
-     * @param {VideoDeleteArgs} args - Arguments to delete one Video.
+     * Delete a Post.
+     * @param {PostDeleteArgs} args - Arguments to delete one Post.
      * @example
-     * // Delete one Video
-     * const Video = await prisma.video.delete({
+     * // Delete one Post
+     * const Post = await prisma.post.delete({
      *   where: {
-     *     // ... filter to delete one Video
+     *     // ... filter to delete one Post
      *   }
      * })
      * 
      */
-    delete<T extends VideoDeleteArgs>(args: SelectSubset<T, VideoDeleteArgs<ExtArgs>>): Prisma__VideoClient<$Result.GetResult<Prisma.$VideoPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends PostDeleteArgs>(args: SelectSubset<T, PostDeleteArgs<ExtArgs>>): Prisma__PostClient<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one Video.
-     * @param {VideoUpdateArgs} args - Arguments to update one Video.
+     * Update one Post.
+     * @param {PostUpdateArgs} args - Arguments to update one Post.
      * @example
-     * // Update one Video
-     * const video = await prisma.video.update({
+     * // Update one Post
+     * const post = await prisma.post.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -7950,30 +6767,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends VideoUpdateArgs>(args: SelectSubset<T, VideoUpdateArgs<ExtArgs>>): Prisma__VideoClient<$Result.GetResult<Prisma.$VideoPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends PostUpdateArgs>(args: SelectSubset<T, PostUpdateArgs<ExtArgs>>): Prisma__PostClient<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more Videos.
-     * @param {VideoDeleteManyArgs} args - Arguments to filter Videos to delete.
+     * Delete zero or more Posts.
+     * @param {PostDeleteManyArgs} args - Arguments to filter Posts to delete.
      * @example
-     * // Delete a few Videos
-     * const { count } = await prisma.video.deleteMany({
+     * // Delete a few Posts
+     * const { count } = await prisma.post.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends VideoDeleteManyArgs>(args?: SelectSubset<T, VideoDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends PostDeleteManyArgs>(args?: SelectSubset<T, PostDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Videos.
+     * Update zero or more Posts.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {VideoUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {PostUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many Videos
-     * const video = await prisma.video.updateMany({
+     * // Update many Posts
+     * const post = await prisma.post.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -7983,14 +6800,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends VideoUpdateManyArgs>(args: SelectSubset<T, VideoUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends PostUpdateManyArgs>(args: SelectSubset<T, PostUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more Videos and returns the data updated in the database.
-     * @param {VideoUpdateManyAndReturnArgs} args - Arguments to update many Videos.
+     * Update zero or more Posts and returns the data updated in the database.
+     * @param {PostUpdateManyAndReturnArgs} args - Arguments to update many Posts.
      * @example
-     * // Update many Videos
-     * const video = await prisma.video.updateManyAndReturn({
+     * // Update many Posts
+     * const post = await prisma.post.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -7999,8 +6816,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more Videos and only return the `id`
-     * const videoWithIdOnly = await prisma.video.updateManyAndReturn({
+     * // Update zero or more Posts and only return the `id`
+     * const postWithIdOnly = await prisma.post.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -8013,56 +6830,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends VideoUpdateManyAndReturnArgs>(args: SelectSubset<T, VideoUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VideoPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends PostUpdateManyAndReturnArgs>(args: SelectSubset<T, PostUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one Video.
-     * @param {VideoUpsertArgs} args - Arguments to update or create a Video.
+     * Create or update one Post.
+     * @param {PostUpsertArgs} args - Arguments to update or create a Post.
      * @example
-     * // Update or create a Video
-     * const video = await prisma.video.upsert({
+     * // Update or create a Post
+     * const post = await prisma.post.upsert({
      *   create: {
-     *     // ... data to create a Video
+     *     // ... data to create a Post
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the Video we want to update
+     *     // ... the filter for the Post we want to update
      *   }
      * })
      */
-    upsert<T extends VideoUpsertArgs>(args: SelectSubset<T, VideoUpsertArgs<ExtArgs>>): Prisma__VideoClient<$Result.GetResult<Prisma.$VideoPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends PostUpsertArgs>(args: SelectSubset<T, PostUpsertArgs<ExtArgs>>): Prisma__PostClient<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of Videos.
+     * Count the number of Posts.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {VideoCountArgs} args - Arguments to filter Videos to count.
+     * @param {PostCountArgs} args - Arguments to filter Posts to count.
      * @example
-     * // Count the number of Videos
-     * const count = await prisma.video.count({
+     * // Count the number of Posts
+     * const count = await prisma.post.count({
      *   where: {
-     *     // ... the filter for the Videos we want to count
+     *     // ... the filter for the Posts we want to count
      *   }
      * })
     **/
-    count<T extends VideoCountArgs>(
-      args?: Subset<T, VideoCountArgs>,
+    count<T extends PostCountArgs>(
+      args?: Subset<T, PostCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], VideoCountAggregateOutputType>
+          : GetScalarType<T['select'], PostCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a Video.
+     * Allows you to perform aggregations operations on a Post.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {VideoAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {PostAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -8082,13 +6899,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends VideoAggregateArgs>(args: Subset<T, VideoAggregateArgs>): Prisma.PrismaPromise<GetVideoAggregateType<T>>
+    aggregate<T extends PostAggregateArgs>(args: Subset<T, PostAggregateArgs>): Prisma.PrismaPromise<GetPostAggregateType<T>>
 
     /**
-     * Group by Video.
+     * Group by Post.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {VideoGroupByArgs} args - Group by arguments.
+     * @param {PostGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -8103,14 +6920,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends VideoGroupByArgs,
+      T extends PostGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: VideoGroupByArgs['orderBy'] }
-        : { orderBy?: VideoGroupByArgs['orderBy'] },
+        ? { orderBy: PostGroupByArgs['orderBy'] }
+        : { orderBy?: PostGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -8159,23 +6976,23 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, VideoGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetVideoGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, PostGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPostGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the Video model
+   * Fields of the Post model
    */
-  readonly fields: VideoFieldRefs;
+  readonly fields: PostFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for Video.
+   * The delegate class that acts as a "Promise-like" for Post.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__VideoClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__PostClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     createdBy<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    publishJobs<T extends Video$publishJobsArgs<ExtArgs> = {}>(args?: Subset<T, Video$publishJobsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PublishJobPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    publishJobs<T extends Post$publishJobsArgs<ExtArgs> = {}>(args?: Subset<T, Post$publishJobsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PublishJobPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -8202,423 +7019,425 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the Video model
+   * Fields of the Post model
    */
-  interface VideoFieldRefs {
-    readonly id: FieldRef<"Video", 'String'>
-    readonly createdAt: FieldRef<"Video", 'DateTime'>
-    readonly updatedAt: FieldRef<"Video", 'DateTime'>
-    readonly s3Key: FieldRef<"Video", 'String'>
-    readonly s3Bucket: FieldRef<"Video", 'String'>
-    readonly fileName: FieldRef<"Video", 'String'>
-    readonly fileSize: FieldRef<"Video", 'BigInt'>
-    readonly mimeType: FieldRef<"Video", 'String'>
-    readonly duration: FieldRef<"Video", 'Int'>
-    readonly title: FieldRef<"Video", 'String'>
-    readonly description: FieldRef<"Video", 'String'>
-    readonly tags: FieldRef<"Video", 'String'>
-    readonly thumbnailUrl: FieldRef<"Video", 'String'>
-    readonly privacy: FieldRef<"Video", 'VideoPrivacy'>
-    readonly createdById: FieldRef<"Video", 'String'>
+  interface PostFieldRefs {
+    readonly id: FieldRef<"Post", 'String'>
+    readonly createdAt: FieldRef<"Post", 'DateTime'>
+    readonly updatedAt: FieldRef<"Post", 'DateTime'>
+    readonly type: FieldRef<"Post", 'MediaType'>
+    readonly content: FieldRef<"Post", 'String'>
+    readonly s3Key: FieldRef<"Post", 'String'>
+    readonly s3Bucket: FieldRef<"Post", 'String'>
+    readonly fileName: FieldRef<"Post", 'String'>
+    readonly fileSize: FieldRef<"Post", 'BigInt'>
+    readonly mimeType: FieldRef<"Post", 'String'>
+    readonly duration: FieldRef<"Post", 'Int'>
+    readonly title: FieldRef<"Post", 'String'>
+    readonly description: FieldRef<"Post", 'String'>
+    readonly tags: FieldRef<"Post", 'String'>
+    readonly thumbnailUrl: FieldRef<"Post", 'String'>
+    readonly privacy: FieldRef<"Post", 'VideoPrivacy'>
+    readonly createdById: FieldRef<"Post", 'String'>
   }
     
 
   // Custom InputTypes
   /**
-   * Video findUnique
+   * Post findUnique
    */
-  export type VideoFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PostFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Video
+     * Select specific fields to fetch from the Post
      */
-    select?: VideoSelect<ExtArgs> | null
+    select?: PostSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Video
+     * Omit specific fields from the Post
      */
-    omit?: VideoOmit<ExtArgs> | null
+    omit?: PostOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: VideoInclude<ExtArgs> | null
+    include?: PostInclude<ExtArgs> | null
     /**
-     * Filter, which Video to fetch.
+     * Filter, which Post to fetch.
      */
-    where: VideoWhereUniqueInput
+    where: PostWhereUniqueInput
   }
 
   /**
-   * Video findUniqueOrThrow
+   * Post findUniqueOrThrow
    */
-  export type VideoFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PostFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Video
+     * Select specific fields to fetch from the Post
      */
-    select?: VideoSelect<ExtArgs> | null
+    select?: PostSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Video
+     * Omit specific fields from the Post
      */
-    omit?: VideoOmit<ExtArgs> | null
+    omit?: PostOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: VideoInclude<ExtArgs> | null
+    include?: PostInclude<ExtArgs> | null
     /**
-     * Filter, which Video to fetch.
+     * Filter, which Post to fetch.
      */
-    where: VideoWhereUniqueInput
+    where: PostWhereUniqueInput
   }
 
   /**
-   * Video findFirst
+   * Post findFirst
    */
-  export type VideoFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PostFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Video
+     * Select specific fields to fetch from the Post
      */
-    select?: VideoSelect<ExtArgs> | null
+    select?: PostSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Video
+     * Omit specific fields from the Post
      */
-    omit?: VideoOmit<ExtArgs> | null
+    omit?: PostOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: VideoInclude<ExtArgs> | null
+    include?: PostInclude<ExtArgs> | null
     /**
-     * Filter, which Video to fetch.
+     * Filter, which Post to fetch.
      */
-    where?: VideoWhereInput
+    where?: PostWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Videos to fetch.
+     * Determine the order of Posts to fetch.
      */
-    orderBy?: VideoOrderByWithRelationInput | VideoOrderByWithRelationInput[]
+    orderBy?: PostOrderByWithRelationInput | PostOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Videos.
+     * Sets the position for searching for Posts.
      */
-    cursor?: VideoWhereUniqueInput
+    cursor?: PostWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Videos from the position of the cursor.
+     * Take `±n` Posts from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Videos.
+     * Skip the first `n` Posts.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Videos.
+     * Filter by unique combinations of Posts.
      */
-    distinct?: VideoScalarFieldEnum | VideoScalarFieldEnum[]
+    distinct?: PostScalarFieldEnum | PostScalarFieldEnum[]
   }
 
   /**
-   * Video findFirstOrThrow
+   * Post findFirstOrThrow
    */
-  export type VideoFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PostFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Video
+     * Select specific fields to fetch from the Post
      */
-    select?: VideoSelect<ExtArgs> | null
+    select?: PostSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Video
+     * Omit specific fields from the Post
      */
-    omit?: VideoOmit<ExtArgs> | null
+    omit?: PostOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: VideoInclude<ExtArgs> | null
+    include?: PostInclude<ExtArgs> | null
     /**
-     * Filter, which Video to fetch.
+     * Filter, which Post to fetch.
      */
-    where?: VideoWhereInput
+    where?: PostWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Videos to fetch.
+     * Determine the order of Posts to fetch.
      */
-    orderBy?: VideoOrderByWithRelationInput | VideoOrderByWithRelationInput[]
+    orderBy?: PostOrderByWithRelationInput | PostOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for Videos.
+     * Sets the position for searching for Posts.
      */
-    cursor?: VideoWhereUniqueInput
+    cursor?: PostWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Videos from the position of the cursor.
+     * Take `±n` Posts from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Videos.
+     * Skip the first `n` Posts.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of Videos.
+     * Filter by unique combinations of Posts.
      */
-    distinct?: VideoScalarFieldEnum | VideoScalarFieldEnum[]
+    distinct?: PostScalarFieldEnum | PostScalarFieldEnum[]
   }
 
   /**
-   * Video findMany
+   * Post findMany
    */
-  export type VideoFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PostFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Video
+     * Select specific fields to fetch from the Post
      */
-    select?: VideoSelect<ExtArgs> | null
+    select?: PostSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Video
+     * Omit specific fields from the Post
      */
-    omit?: VideoOmit<ExtArgs> | null
+    omit?: PostOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: VideoInclude<ExtArgs> | null
+    include?: PostInclude<ExtArgs> | null
     /**
-     * Filter, which Videos to fetch.
+     * Filter, which Posts to fetch.
      */
-    where?: VideoWhereInput
+    where?: PostWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of Videos to fetch.
+     * Determine the order of Posts to fetch.
      */
-    orderBy?: VideoOrderByWithRelationInput | VideoOrderByWithRelationInput[]
+    orderBy?: PostOrderByWithRelationInput | PostOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing Videos.
+     * Sets the position for listing Posts.
      */
-    cursor?: VideoWhereUniqueInput
+    cursor?: PostWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` Videos from the position of the cursor.
+     * Take `±n` Posts from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` Videos.
+     * Skip the first `n` Posts.
      */
     skip?: number
-    distinct?: VideoScalarFieldEnum | VideoScalarFieldEnum[]
+    distinct?: PostScalarFieldEnum | PostScalarFieldEnum[]
   }
 
   /**
-   * Video create
+   * Post create
    */
-  export type VideoCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PostCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Video
+     * Select specific fields to fetch from the Post
      */
-    select?: VideoSelect<ExtArgs> | null
+    select?: PostSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Video
+     * Omit specific fields from the Post
      */
-    omit?: VideoOmit<ExtArgs> | null
+    omit?: PostOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: VideoInclude<ExtArgs> | null
+    include?: PostInclude<ExtArgs> | null
     /**
-     * The data needed to create a Video.
+     * The data needed to create a Post.
      */
-    data: XOR<VideoCreateInput, VideoUncheckedCreateInput>
+    data: XOR<PostCreateInput, PostUncheckedCreateInput>
   }
 
   /**
-   * Video createMany
+   * Post createMany
    */
-  export type VideoCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PostCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many Videos.
+     * The data used to create many Posts.
      */
-    data: VideoCreateManyInput | VideoCreateManyInput[]
+    data: PostCreateManyInput | PostCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * Video createManyAndReturn
+   * Post createManyAndReturn
    */
-  export type VideoCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PostCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Video
+     * Select specific fields to fetch from the Post
      */
-    select?: VideoSelectCreateManyAndReturn<ExtArgs> | null
+    select?: PostSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Video
+     * Omit specific fields from the Post
      */
-    omit?: VideoOmit<ExtArgs> | null
+    omit?: PostOmit<ExtArgs> | null
     /**
-     * The data used to create many Videos.
+     * The data used to create many Posts.
      */
-    data: VideoCreateManyInput | VideoCreateManyInput[]
+    data: PostCreateManyInput | PostCreateManyInput[]
     skipDuplicates?: boolean
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: VideoIncludeCreateManyAndReturn<ExtArgs> | null
+    include?: PostIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * Video update
+   * Post update
    */
-  export type VideoUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PostUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Video
+     * Select specific fields to fetch from the Post
      */
-    select?: VideoSelect<ExtArgs> | null
+    select?: PostSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Video
+     * Omit specific fields from the Post
      */
-    omit?: VideoOmit<ExtArgs> | null
+    omit?: PostOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: VideoInclude<ExtArgs> | null
+    include?: PostInclude<ExtArgs> | null
     /**
-     * The data needed to update a Video.
+     * The data needed to update a Post.
      */
-    data: XOR<VideoUpdateInput, VideoUncheckedUpdateInput>
+    data: XOR<PostUpdateInput, PostUncheckedUpdateInput>
     /**
-     * Choose, which Video to update.
+     * Choose, which Post to update.
      */
-    where: VideoWhereUniqueInput
+    where: PostWhereUniqueInput
   }
 
   /**
-   * Video updateMany
+   * Post updateMany
    */
-  export type VideoUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PostUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update Videos.
+     * The data used to update Posts.
      */
-    data: XOR<VideoUpdateManyMutationInput, VideoUncheckedUpdateManyInput>
+    data: XOR<PostUpdateManyMutationInput, PostUncheckedUpdateManyInput>
     /**
-     * Filter which Videos to update
+     * Filter which Posts to update
      */
-    where?: VideoWhereInput
+    where?: PostWhereInput
     /**
-     * Limit how many Videos to update.
+     * Limit how many Posts to update.
      */
     limit?: number
   }
 
   /**
-   * Video updateManyAndReturn
+   * Post updateManyAndReturn
    */
-  export type VideoUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PostUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Video
+     * Select specific fields to fetch from the Post
      */
-    select?: VideoSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: PostSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the Video
+     * Omit specific fields from the Post
      */
-    omit?: VideoOmit<ExtArgs> | null
+    omit?: PostOmit<ExtArgs> | null
     /**
-     * The data used to update Videos.
+     * The data used to update Posts.
      */
-    data: XOR<VideoUpdateManyMutationInput, VideoUncheckedUpdateManyInput>
+    data: XOR<PostUpdateManyMutationInput, PostUncheckedUpdateManyInput>
     /**
-     * Filter which Videos to update
+     * Filter which Posts to update
      */
-    where?: VideoWhereInput
+    where?: PostWhereInput
     /**
-     * Limit how many Videos to update.
+     * Limit how many Posts to update.
      */
     limit?: number
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: VideoIncludeUpdateManyAndReturn<ExtArgs> | null
+    include?: PostIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * Video upsert
+   * Post upsert
    */
-  export type VideoUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PostUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Video
+     * Select specific fields to fetch from the Post
      */
-    select?: VideoSelect<ExtArgs> | null
+    select?: PostSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Video
+     * Omit specific fields from the Post
      */
-    omit?: VideoOmit<ExtArgs> | null
+    omit?: PostOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: VideoInclude<ExtArgs> | null
+    include?: PostInclude<ExtArgs> | null
     /**
-     * The filter to search for the Video to update in case it exists.
+     * The filter to search for the Post to update in case it exists.
      */
-    where: VideoWhereUniqueInput
+    where: PostWhereUniqueInput
     /**
-     * In case the Video found by the `where` argument doesn't exist, create a new Video with this data.
+     * In case the Post found by the `where` argument doesn't exist, create a new Post with this data.
      */
-    create: XOR<VideoCreateInput, VideoUncheckedCreateInput>
+    create: XOR<PostCreateInput, PostUncheckedCreateInput>
     /**
-     * In case the Video was found with the provided `where` argument, update it with this data.
+     * In case the Post was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<VideoUpdateInput, VideoUncheckedUpdateInput>
+    update: XOR<PostUpdateInput, PostUncheckedUpdateInput>
   }
 
   /**
-   * Video delete
+   * Post delete
    */
-  export type VideoDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PostDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Video
+     * Select specific fields to fetch from the Post
      */
-    select?: VideoSelect<ExtArgs> | null
+    select?: PostSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Video
+     * Omit specific fields from the Post
      */
-    omit?: VideoOmit<ExtArgs> | null
+    omit?: PostOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: VideoInclude<ExtArgs> | null
+    include?: PostInclude<ExtArgs> | null
     /**
-     * Filter which Video to delete.
+     * Filter which Post to delete.
      */
-    where: VideoWhereUniqueInput
+    where: PostWhereUniqueInput
   }
 
   /**
-   * Video deleteMany
+   * Post deleteMany
    */
-  export type VideoDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PostDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which Videos to delete
+     * Filter which Posts to delete
      */
-    where?: VideoWhereInput
+    where?: PostWhereInput
     /**
-     * Limit how many Videos to delete.
+     * Limit how many Posts to delete.
      */
     limit?: number
   }
 
   /**
-   * Video.publishJobs
+   * Post.publishJobs
    */
-  export type Video$publishJobsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Post$publishJobsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the PublishJob
      */
@@ -8640,21 +7459,21 @@ export namespace Prisma {
   }
 
   /**
-   * Video without action
+   * Post without action
    */
-  export type VideoDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PostDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Video
+     * Select specific fields to fetch from the Post
      */
-    select?: VideoSelect<ExtArgs> | null
+    select?: PostSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Video
+     * Omit specific fields from the Post
      */
-    omit?: VideoOmit<ExtArgs> | null
+    omit?: PostOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: VideoInclude<ExtArgs> | null
+    include?: PostInclude<ExtArgs> | null
   }
 
 
@@ -9872,7 +8691,7 @@ export namespace Prisma {
     retryCount: number | null
     isUpdate: boolean | null
     updateTargetVideoId: string | null
-    videoId: string | null
+    postId: string | null
     platformConnectionId: string | null
     createdById: string | null
   }
@@ -9896,7 +8715,7 @@ export namespace Prisma {
     retryCount: number | null
     isUpdate: boolean | null
     updateTargetVideoId: string | null
-    videoId: string | null
+    postId: string | null
     platformConnectionId: string | null
     createdById: string | null
   }
@@ -9920,7 +8739,7 @@ export namespace Prisma {
     retryCount: number
     isUpdate: number
     updateTargetVideoId: number
-    videoId: number
+    postId: number
     platformConnectionId: number
     createdById: number
     _all: number
@@ -9954,7 +8773,7 @@ export namespace Prisma {
     retryCount?: true
     isUpdate?: true
     updateTargetVideoId?: true
-    videoId?: true
+    postId?: true
     platformConnectionId?: true
     createdById?: true
   }
@@ -9978,7 +8797,7 @@ export namespace Prisma {
     retryCount?: true
     isUpdate?: true
     updateTargetVideoId?: true
-    videoId?: true
+    postId?: true
     platformConnectionId?: true
     createdById?: true
   }
@@ -10002,7 +8821,7 @@ export namespace Prisma {
     retryCount?: true
     isUpdate?: true
     updateTargetVideoId?: true
-    videoId?: true
+    postId?: true
     platformConnectionId?: true
     createdById?: true
     _all?: true
@@ -10113,7 +8932,7 @@ export namespace Prisma {
     retryCount: number
     isUpdate: boolean
     updateTargetVideoId: string | null
-    videoId: string
+    postId: string
     platformConnectionId: string
     createdById: string
     _count: PublishJobCountAggregateOutputType | null
@@ -10156,11 +8975,11 @@ export namespace Prisma {
     retryCount?: boolean
     isUpdate?: boolean
     updateTargetVideoId?: boolean
-    videoId?: boolean
+    postId?: boolean
     platformConnectionId?: boolean
     createdById?: boolean
     metricSnapshots?: boolean | PublishJob$metricSnapshotsArgs<ExtArgs>
-    video?: boolean | VideoDefaultArgs<ExtArgs>
+    post?: boolean | PostDefaultArgs<ExtArgs>
     platformConnection?: boolean | PlatformConnectionDefaultArgs<ExtArgs>
     createdBy?: boolean | UserDefaultArgs<ExtArgs>
     _count?: boolean | PublishJobCountOutputTypeDefaultArgs<ExtArgs>
@@ -10185,10 +9004,10 @@ export namespace Prisma {
     retryCount?: boolean
     isUpdate?: boolean
     updateTargetVideoId?: boolean
-    videoId?: boolean
+    postId?: boolean
     platformConnectionId?: boolean
     createdById?: boolean
-    video?: boolean | VideoDefaultArgs<ExtArgs>
+    post?: boolean | PostDefaultArgs<ExtArgs>
     platformConnection?: boolean | PlatformConnectionDefaultArgs<ExtArgs>
     createdBy?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["publishJob"]>
@@ -10212,10 +9031,10 @@ export namespace Prisma {
     retryCount?: boolean
     isUpdate?: boolean
     updateTargetVideoId?: boolean
-    videoId?: boolean
+    postId?: boolean
     platformConnectionId?: boolean
     createdById?: boolean
-    video?: boolean | VideoDefaultArgs<ExtArgs>
+    post?: boolean | PostDefaultArgs<ExtArgs>
     platformConnection?: boolean | PlatformConnectionDefaultArgs<ExtArgs>
     createdBy?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["publishJob"]>
@@ -10239,26 +9058,26 @@ export namespace Prisma {
     retryCount?: boolean
     isUpdate?: boolean
     updateTargetVideoId?: boolean
-    videoId?: boolean
+    postId?: boolean
     platformConnectionId?: boolean
     createdById?: boolean
   }
 
-  export type PublishJobOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "platform" | "status" | "title" | "description" | "tags" | "privacy" | "scheduledFor" | "startedAt" | "completedAt" | "platformVideoId" | "platformVideoUrl" | "errorMessage" | "retryCount" | "isUpdate" | "updateTargetVideoId" | "videoId" | "platformConnectionId" | "createdById", ExtArgs["result"]["publishJob"]>
+  export type PublishJobOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "platform" | "status" | "title" | "description" | "tags" | "privacy" | "scheduledFor" | "startedAt" | "completedAt" | "platformVideoId" | "platformVideoUrl" | "errorMessage" | "retryCount" | "isUpdate" | "updateTargetVideoId" | "postId" | "platformConnectionId" | "createdById", ExtArgs["result"]["publishJob"]>
   export type PublishJobInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     metricSnapshots?: boolean | PublishJob$metricSnapshotsArgs<ExtArgs>
-    video?: boolean | VideoDefaultArgs<ExtArgs>
+    post?: boolean | PostDefaultArgs<ExtArgs>
     platformConnection?: boolean | PlatformConnectionDefaultArgs<ExtArgs>
     createdBy?: boolean | UserDefaultArgs<ExtArgs>
     _count?: boolean | PublishJobCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type PublishJobIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    video?: boolean | VideoDefaultArgs<ExtArgs>
+    post?: boolean | PostDefaultArgs<ExtArgs>
     platformConnection?: boolean | PlatformConnectionDefaultArgs<ExtArgs>
     createdBy?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type PublishJobIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    video?: boolean | VideoDefaultArgs<ExtArgs>
+    post?: boolean | PostDefaultArgs<ExtArgs>
     platformConnection?: boolean | PlatformConnectionDefaultArgs<ExtArgs>
     createdBy?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -10267,7 +9086,7 @@ export namespace Prisma {
     name: "PublishJob"
     objects: {
       metricSnapshots: Prisma.$MetricSnapshotPayload<ExtArgs>[]
-      video: Prisma.$VideoPayload<ExtArgs>
+      post: Prisma.$PostPayload<ExtArgs>
       platformConnection: Prisma.$PlatformConnectionPayload<ExtArgs>
       createdBy: Prisma.$UserPayload<ExtArgs>
     }
@@ -10290,7 +9109,7 @@ export namespace Prisma {
       retryCount: number
       isUpdate: boolean
       updateTargetVideoId: string | null
-      videoId: string
+      postId: string
       platformConnectionId: string
       createdById: string
     }, ExtArgs["result"]["publishJob"]>
@@ -10688,7 +9507,7 @@ export namespace Prisma {
   export interface Prisma__PublishJobClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     metricSnapshots<T extends PublishJob$metricSnapshotsArgs<ExtArgs> = {}>(args?: Subset<T, PublishJob$metricSnapshotsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MetricSnapshotPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    video<T extends VideoDefaultArgs<ExtArgs> = {}>(args?: Subset<T, VideoDefaultArgs<ExtArgs>>): Prisma__VideoClient<$Result.GetResult<Prisma.$VideoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    post<T extends PostDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PostDefaultArgs<ExtArgs>>): Prisma__PostClient<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     platformConnection<T extends PlatformConnectionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PlatformConnectionDefaultArgs<ExtArgs>>): Prisma__PlatformConnectionClient<$Result.GetResult<Prisma.$PlatformConnectionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     createdBy<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
@@ -10738,7 +9557,7 @@ export namespace Prisma {
     readonly retryCount: FieldRef<"PublishJob", 'Int'>
     readonly isUpdate: FieldRef<"PublishJob", 'Boolean'>
     readonly updateTargetVideoId: FieldRef<"PublishJob", 'String'>
-    readonly videoId: FieldRef<"PublishJob", 'String'>
+    readonly postId: FieldRef<"PublishJob", 'String'>
     readonly platformConnectionId: FieldRef<"PublishJob", 'String'>
     readonly createdById: FieldRef<"PublishJob", 'String'>
   }
@@ -12323,17 +11142,6 @@ export namespace Prisma {
   export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
-  export const PostScalarFieldEnum: {
-    id: 'id',
-    name: 'name',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt',
-    createdById: 'createdById'
-  };
-
-  export type PostScalarFieldEnum = (typeof PostScalarFieldEnum)[keyof typeof PostScalarFieldEnum]
-
-
   export const AccountScalarFieldEnum: {
     id: 'id',
     userId: 'userId',
@@ -12392,10 +11200,12 @@ export namespace Prisma {
   export type VerificationScalarFieldEnum = (typeof VerificationScalarFieldEnum)[keyof typeof VerificationScalarFieldEnum]
 
 
-  export const VideoScalarFieldEnum: {
+  export const PostScalarFieldEnum: {
     id: 'id',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
+    type: 'type',
+    content: 'content',
     s3Key: 's3Key',
     s3Bucket: 's3Bucket',
     fileName: 'fileName',
@@ -12410,7 +11220,7 @@ export namespace Prisma {
     createdById: 'createdById'
   };
 
-  export type VideoScalarFieldEnum = (typeof VideoScalarFieldEnum)[keyof typeof VideoScalarFieldEnum]
+  export type PostScalarFieldEnum = (typeof PostScalarFieldEnum)[keyof typeof PostScalarFieldEnum]
 
 
   export const PlatformConnectionScalarFieldEnum: {
@@ -12450,7 +11260,7 @@ export namespace Prisma {
     retryCount: 'retryCount',
     isUpdate: 'isUpdate',
     updateTargetVideoId: 'updateTargetVideoId',
-    videoId: 'videoId',
+    postId: 'postId',
     platformConnectionId: 'platformConnectionId',
     createdById: 'createdById'
   };
@@ -12518,20 +11328,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Int'
-   */
-  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
-    
-
-
-  /**
-   * Reference to a field of type 'Int[]'
-   */
-  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
-    
-
-
-  /**
    * Reference to a field of type 'String'
    */
   export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String'>
@@ -12567,6 +11363,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'MediaType'
+   */
+  export type EnumMediaTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MediaType'>
+    
+
+
+  /**
+   * Reference to a field of type 'MediaType[]'
+   */
+  export type ListEnumMediaTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MediaType[]'>
+    
+
+
+  /**
    * Reference to a field of type 'BigInt'
    */
   export type BigIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BigInt'>
@@ -12577,6 +11387,20 @@ export namespace Prisma {
    * Reference to a field of type 'BigInt[]'
    */
   export type ListBigIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BigInt[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Int'
+   */
+  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+  /**
+   * Reference to a field of type 'Int[]'
+   */
+  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
 
 
@@ -12652,63 +11476,6 @@ export namespace Prisma {
    * Deep Input Types
    */
 
-
-  export type PostWhereInput = {
-    AND?: PostWhereInput | PostWhereInput[]
-    OR?: PostWhereInput[]
-    NOT?: PostWhereInput | PostWhereInput[]
-    id?: IntFilter<"Post"> | number
-    name?: StringFilter<"Post"> | string
-    createdAt?: DateTimeFilter<"Post"> | Date | string
-    updatedAt?: DateTimeFilter<"Post"> | Date | string
-    createdById?: StringFilter<"Post"> | string
-    createdBy?: XOR<UserScalarRelationFilter, UserWhereInput>
-  }
-
-  export type PostOrderByWithRelationInput = {
-    id?: SortOrder
-    name?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    createdById?: SortOrder
-    createdBy?: UserOrderByWithRelationInput
-  }
-
-  export type PostWhereUniqueInput = Prisma.AtLeast<{
-    id?: number
-    AND?: PostWhereInput | PostWhereInput[]
-    OR?: PostWhereInput[]
-    NOT?: PostWhereInput | PostWhereInput[]
-    name?: StringFilter<"Post"> | string
-    createdAt?: DateTimeFilter<"Post"> | Date | string
-    updatedAt?: DateTimeFilter<"Post"> | Date | string
-    createdById?: StringFilter<"Post"> | string
-    createdBy?: XOR<UserScalarRelationFilter, UserWhereInput>
-  }, "id">
-
-  export type PostOrderByWithAggregationInput = {
-    id?: SortOrder
-    name?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    createdById?: SortOrder
-    _count?: PostCountOrderByAggregateInput
-    _avg?: PostAvgOrderByAggregateInput
-    _max?: PostMaxOrderByAggregateInput
-    _min?: PostMinOrderByAggregateInput
-    _sum?: PostSumOrderByAggregateInput
-  }
-
-  export type PostScalarWhereWithAggregatesInput = {
-    AND?: PostScalarWhereWithAggregatesInput | PostScalarWhereWithAggregatesInput[]
-    OR?: PostScalarWhereWithAggregatesInput[]
-    NOT?: PostScalarWhereWithAggregatesInput | PostScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"Post"> | number
-    name?: StringWithAggregatesFilter<"Post"> | string
-    createdAt?: DateTimeWithAggregatesFilter<"Post"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"Post"> | Date | string
-    createdById?: StringWithAggregatesFilter<"Post"> | string
-  }
 
   export type AccountWhereInput = {
     AND?: AccountWhereInput | AccountWhereInput[]
@@ -12890,7 +11657,6 @@ export namespace Prisma {
     accounts?: AccountListRelationFilter
     sessions?: SessionListRelationFilter
     posts?: PostListRelationFilter
-    videos?: VideoListRelationFilter
     platformConnections?: PlatformConnectionListRelationFilter
     publishJobs?: PublishJobListRelationFilter
   }
@@ -12906,7 +11672,6 @@ export namespace Prisma {
     accounts?: AccountOrderByRelationAggregateInput
     sessions?: SessionOrderByRelationAggregateInput
     posts?: PostOrderByRelationAggregateInput
-    videos?: VideoOrderByRelationAggregateInput
     platformConnections?: PlatformConnectionOrderByRelationAggregateInput
     publishJobs?: PublishJobOrderByRelationAggregateInput
   }
@@ -12925,7 +11690,6 @@ export namespace Prisma {
     accounts?: AccountListRelationFilter
     sessions?: SessionListRelationFilter
     posts?: PostListRelationFilter
-    videos?: VideoListRelationFilter
     platformConnections?: PlatformConnectionListRelationFilter
     publishJobs?: PublishJobListRelationFilter
   }, "id" | "email">
@@ -13014,38 +11778,42 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Verification"> | Date | string
   }
 
-  export type VideoWhereInput = {
-    AND?: VideoWhereInput | VideoWhereInput[]
-    OR?: VideoWhereInput[]
-    NOT?: VideoWhereInput | VideoWhereInput[]
-    id?: StringFilter<"Video"> | string
-    createdAt?: DateTimeFilter<"Video"> | Date | string
-    updatedAt?: DateTimeFilter<"Video"> | Date | string
-    s3Key?: StringFilter<"Video"> | string
-    s3Bucket?: StringFilter<"Video"> | string
-    fileName?: StringFilter<"Video"> | string
-    fileSize?: BigIntFilter<"Video"> | bigint | number
-    mimeType?: StringFilter<"Video"> | string
-    duration?: IntNullableFilter<"Video"> | number | null
-    title?: StringFilter<"Video"> | string
-    description?: StringNullableFilter<"Video"> | string | null
-    tags?: StringNullableFilter<"Video"> | string | null
-    thumbnailUrl?: StringNullableFilter<"Video"> | string | null
-    privacy?: EnumVideoPrivacyFilter<"Video"> | $Enums.VideoPrivacy
-    createdById?: StringFilter<"Video"> | string
+  export type PostWhereInput = {
+    AND?: PostWhereInput | PostWhereInput[]
+    OR?: PostWhereInput[]
+    NOT?: PostWhereInput | PostWhereInput[]
+    id?: StringFilter<"Post"> | string
+    createdAt?: DateTimeFilter<"Post"> | Date | string
+    updatedAt?: DateTimeFilter<"Post"> | Date | string
+    type?: EnumMediaTypeFilter<"Post"> | $Enums.MediaType
+    content?: StringNullableFilter<"Post"> | string | null
+    s3Key?: StringNullableFilter<"Post"> | string | null
+    s3Bucket?: StringNullableFilter<"Post"> | string | null
+    fileName?: StringNullableFilter<"Post"> | string | null
+    fileSize?: BigIntNullableFilter<"Post"> | bigint | number | null
+    mimeType?: StringNullableFilter<"Post"> | string | null
+    duration?: IntNullableFilter<"Post"> | number | null
+    title?: StringFilter<"Post"> | string
+    description?: StringNullableFilter<"Post"> | string | null
+    tags?: StringNullableFilter<"Post"> | string | null
+    thumbnailUrl?: StringNullableFilter<"Post"> | string | null
+    privacy?: EnumVideoPrivacyFilter<"Post"> | $Enums.VideoPrivacy
+    createdById?: StringFilter<"Post"> | string
     createdBy?: XOR<UserScalarRelationFilter, UserWhereInput>
     publishJobs?: PublishJobListRelationFilter
   }
 
-  export type VideoOrderByWithRelationInput = {
+  export type PostOrderByWithRelationInput = {
     id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    s3Key?: SortOrder
-    s3Bucket?: SortOrder
-    fileName?: SortOrder
-    fileSize?: SortOrder
-    mimeType?: SortOrder
+    type?: SortOrder
+    content?: SortOrderInput | SortOrder
+    s3Key?: SortOrderInput | SortOrder
+    s3Bucket?: SortOrderInput | SortOrder
+    fileName?: SortOrderInput | SortOrder
+    fileSize?: SortOrderInput | SortOrder
+    mimeType?: SortOrderInput | SortOrder
     duration?: SortOrderInput | SortOrder
     title?: SortOrder
     description?: SortOrderInput | SortOrder
@@ -13057,38 +11825,42 @@ export namespace Prisma {
     publishJobs?: PublishJobOrderByRelationAggregateInput
   }
 
-  export type VideoWhereUniqueInput = Prisma.AtLeast<{
+  export type PostWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    AND?: VideoWhereInput | VideoWhereInput[]
-    OR?: VideoWhereInput[]
-    NOT?: VideoWhereInput | VideoWhereInput[]
-    createdAt?: DateTimeFilter<"Video"> | Date | string
-    updatedAt?: DateTimeFilter<"Video"> | Date | string
-    s3Key?: StringFilter<"Video"> | string
-    s3Bucket?: StringFilter<"Video"> | string
-    fileName?: StringFilter<"Video"> | string
-    fileSize?: BigIntFilter<"Video"> | bigint | number
-    mimeType?: StringFilter<"Video"> | string
-    duration?: IntNullableFilter<"Video"> | number | null
-    title?: StringFilter<"Video"> | string
-    description?: StringNullableFilter<"Video"> | string | null
-    tags?: StringNullableFilter<"Video"> | string | null
-    thumbnailUrl?: StringNullableFilter<"Video"> | string | null
-    privacy?: EnumVideoPrivacyFilter<"Video"> | $Enums.VideoPrivacy
-    createdById?: StringFilter<"Video"> | string
+    AND?: PostWhereInput | PostWhereInput[]
+    OR?: PostWhereInput[]
+    NOT?: PostWhereInput | PostWhereInput[]
+    createdAt?: DateTimeFilter<"Post"> | Date | string
+    updatedAt?: DateTimeFilter<"Post"> | Date | string
+    type?: EnumMediaTypeFilter<"Post"> | $Enums.MediaType
+    content?: StringNullableFilter<"Post"> | string | null
+    s3Key?: StringNullableFilter<"Post"> | string | null
+    s3Bucket?: StringNullableFilter<"Post"> | string | null
+    fileName?: StringNullableFilter<"Post"> | string | null
+    fileSize?: BigIntNullableFilter<"Post"> | bigint | number | null
+    mimeType?: StringNullableFilter<"Post"> | string | null
+    duration?: IntNullableFilter<"Post"> | number | null
+    title?: StringFilter<"Post"> | string
+    description?: StringNullableFilter<"Post"> | string | null
+    tags?: StringNullableFilter<"Post"> | string | null
+    thumbnailUrl?: StringNullableFilter<"Post"> | string | null
+    privacy?: EnumVideoPrivacyFilter<"Post"> | $Enums.VideoPrivacy
+    createdById?: StringFilter<"Post"> | string
     createdBy?: XOR<UserScalarRelationFilter, UserWhereInput>
     publishJobs?: PublishJobListRelationFilter
   }, "id">
 
-  export type VideoOrderByWithAggregationInput = {
+  export type PostOrderByWithAggregationInput = {
     id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    s3Key?: SortOrder
-    s3Bucket?: SortOrder
-    fileName?: SortOrder
-    fileSize?: SortOrder
-    mimeType?: SortOrder
+    type?: SortOrder
+    content?: SortOrderInput | SortOrder
+    s3Key?: SortOrderInput | SortOrder
+    s3Bucket?: SortOrderInput | SortOrder
+    fileName?: SortOrderInput | SortOrder
+    fileSize?: SortOrderInput | SortOrder
+    mimeType?: SortOrderInput | SortOrder
     duration?: SortOrderInput | SortOrder
     title?: SortOrder
     description?: SortOrderInput | SortOrder
@@ -13096,32 +11868,34 @@ export namespace Prisma {
     thumbnailUrl?: SortOrderInput | SortOrder
     privacy?: SortOrder
     createdById?: SortOrder
-    _count?: VideoCountOrderByAggregateInput
-    _avg?: VideoAvgOrderByAggregateInput
-    _max?: VideoMaxOrderByAggregateInput
-    _min?: VideoMinOrderByAggregateInput
-    _sum?: VideoSumOrderByAggregateInput
+    _count?: PostCountOrderByAggregateInput
+    _avg?: PostAvgOrderByAggregateInput
+    _max?: PostMaxOrderByAggregateInput
+    _min?: PostMinOrderByAggregateInput
+    _sum?: PostSumOrderByAggregateInput
   }
 
-  export type VideoScalarWhereWithAggregatesInput = {
-    AND?: VideoScalarWhereWithAggregatesInput | VideoScalarWhereWithAggregatesInput[]
-    OR?: VideoScalarWhereWithAggregatesInput[]
-    NOT?: VideoScalarWhereWithAggregatesInput | VideoScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"Video"> | string
-    createdAt?: DateTimeWithAggregatesFilter<"Video"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"Video"> | Date | string
-    s3Key?: StringWithAggregatesFilter<"Video"> | string
-    s3Bucket?: StringWithAggregatesFilter<"Video"> | string
-    fileName?: StringWithAggregatesFilter<"Video"> | string
-    fileSize?: BigIntWithAggregatesFilter<"Video"> | bigint | number
-    mimeType?: StringWithAggregatesFilter<"Video"> | string
-    duration?: IntNullableWithAggregatesFilter<"Video"> | number | null
-    title?: StringWithAggregatesFilter<"Video"> | string
-    description?: StringNullableWithAggregatesFilter<"Video"> | string | null
-    tags?: StringNullableWithAggregatesFilter<"Video"> | string | null
-    thumbnailUrl?: StringNullableWithAggregatesFilter<"Video"> | string | null
-    privacy?: EnumVideoPrivacyWithAggregatesFilter<"Video"> | $Enums.VideoPrivacy
-    createdById?: StringWithAggregatesFilter<"Video"> | string
+  export type PostScalarWhereWithAggregatesInput = {
+    AND?: PostScalarWhereWithAggregatesInput | PostScalarWhereWithAggregatesInput[]
+    OR?: PostScalarWhereWithAggregatesInput[]
+    NOT?: PostScalarWhereWithAggregatesInput | PostScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Post"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Post"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Post"> | Date | string
+    type?: EnumMediaTypeWithAggregatesFilter<"Post"> | $Enums.MediaType
+    content?: StringNullableWithAggregatesFilter<"Post"> | string | null
+    s3Key?: StringNullableWithAggregatesFilter<"Post"> | string | null
+    s3Bucket?: StringNullableWithAggregatesFilter<"Post"> | string | null
+    fileName?: StringNullableWithAggregatesFilter<"Post"> | string | null
+    fileSize?: BigIntNullableWithAggregatesFilter<"Post"> | bigint | number | null
+    mimeType?: StringNullableWithAggregatesFilter<"Post"> | string | null
+    duration?: IntNullableWithAggregatesFilter<"Post"> | number | null
+    title?: StringWithAggregatesFilter<"Post"> | string
+    description?: StringNullableWithAggregatesFilter<"Post"> | string | null
+    tags?: StringNullableWithAggregatesFilter<"Post"> | string | null
+    thumbnailUrl?: StringNullableWithAggregatesFilter<"Post"> | string | null
+    privacy?: EnumVideoPrivacyWithAggregatesFilter<"Post"> | $Enums.VideoPrivacy
+    createdById?: StringWithAggregatesFilter<"Post"> | string
   }
 
   export type PlatformConnectionWhereInput = {
@@ -13240,11 +12014,11 @@ export namespace Prisma {
     retryCount?: IntFilter<"PublishJob"> | number
     isUpdate?: BoolFilter<"PublishJob"> | boolean
     updateTargetVideoId?: StringNullableFilter<"PublishJob"> | string | null
-    videoId?: StringFilter<"PublishJob"> | string
+    postId?: StringFilter<"PublishJob"> | string
     platformConnectionId?: StringFilter<"PublishJob"> | string
     createdById?: StringFilter<"PublishJob"> | string
     metricSnapshots?: MetricSnapshotListRelationFilter
-    video?: XOR<VideoScalarRelationFilter, VideoWhereInput>
+    post?: XOR<PostScalarRelationFilter, PostWhereInput>
     platformConnection?: XOR<PlatformConnectionScalarRelationFilter, PlatformConnectionWhereInput>
     createdBy?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
@@ -13268,11 +12042,11 @@ export namespace Prisma {
     retryCount?: SortOrder
     isUpdate?: SortOrder
     updateTargetVideoId?: SortOrderInput | SortOrder
-    videoId?: SortOrder
+    postId?: SortOrder
     platformConnectionId?: SortOrder
     createdById?: SortOrder
     metricSnapshots?: MetricSnapshotOrderByRelationAggregateInput
-    video?: VideoOrderByWithRelationInput
+    post?: PostOrderByWithRelationInput
     platformConnection?: PlatformConnectionOrderByWithRelationInput
     createdBy?: UserOrderByWithRelationInput
   }
@@ -13299,11 +12073,11 @@ export namespace Prisma {
     retryCount?: IntFilter<"PublishJob"> | number
     isUpdate?: BoolFilter<"PublishJob"> | boolean
     updateTargetVideoId?: StringNullableFilter<"PublishJob"> | string | null
-    videoId?: StringFilter<"PublishJob"> | string
+    postId?: StringFilter<"PublishJob"> | string
     platformConnectionId?: StringFilter<"PublishJob"> | string
     createdById?: StringFilter<"PublishJob"> | string
     metricSnapshots?: MetricSnapshotListRelationFilter
-    video?: XOR<VideoScalarRelationFilter, VideoWhereInput>
+    post?: XOR<PostScalarRelationFilter, PostWhereInput>
     platformConnection?: XOR<PlatformConnectionScalarRelationFilter, PlatformConnectionWhereInput>
     createdBy?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id">
@@ -13327,7 +12101,7 @@ export namespace Prisma {
     retryCount?: SortOrder
     isUpdate?: SortOrder
     updateTargetVideoId?: SortOrderInput | SortOrder
-    videoId?: SortOrder
+    postId?: SortOrder
     platformConnectionId?: SortOrder
     createdById?: SortOrder
     _count?: PublishJobCountOrderByAggregateInput
@@ -13359,7 +12133,7 @@ export namespace Prisma {
     retryCount?: IntWithAggregatesFilter<"PublishJob"> | number
     isUpdate?: BoolWithAggregatesFilter<"PublishJob"> | boolean
     updateTargetVideoId?: StringNullableWithAggregatesFilter<"PublishJob"> | string | null
-    videoId?: StringWithAggregatesFilter<"PublishJob"> | string
+    postId?: StringWithAggregatesFilter<"PublishJob"> | string
     platformConnectionId?: StringWithAggregatesFilter<"PublishJob"> | string
     createdById?: StringWithAggregatesFilter<"PublishJob"> | string
   }
@@ -13429,58 +12203,6 @@ export namespace Prisma {
     likes?: IntWithAggregatesFilter<"MetricSnapshot"> | number
     comments?: IntWithAggregatesFilter<"MetricSnapshot"> | number
     shares?: IntWithAggregatesFilter<"MetricSnapshot"> | number
-  }
-
-  export type PostCreateInput = {
-    name: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    createdBy: UserCreateNestedOneWithoutPostsInput
-  }
-
-  export type PostUncheckedCreateInput = {
-    id?: number
-    name: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    createdById: string
-  }
-
-  export type PostUpdateInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdBy?: UserUpdateOneRequiredWithoutPostsNestedInput
-  }
-
-  export type PostUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdById?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type PostCreateManyInput = {
-    id?: number
-    name: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    createdById: string
-  }
-
-  export type PostUpdateManyMutationInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type PostUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdById?: StringFieldUpdateOperationsInput | string
   }
 
   export type AccountCreateInput = {
@@ -13681,7 +12403,6 @@ export namespace Prisma {
     accounts?: AccountCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     posts?: PostCreateNestedManyWithoutCreatedByInput
-    videos?: VideoCreateNestedManyWithoutCreatedByInput
     platformConnections?: PlatformConnectionCreateNestedManyWithoutUserInput
     publishJobs?: PublishJobCreateNestedManyWithoutCreatedByInput
   }
@@ -13697,7 +12418,6 @@ export namespace Prisma {
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     posts?: PostUncheckedCreateNestedManyWithoutCreatedByInput
-    videos?: VideoUncheckedCreateNestedManyWithoutCreatedByInput
     platformConnections?: PlatformConnectionUncheckedCreateNestedManyWithoutUserInput
     publishJobs?: PublishJobUncheckedCreateNestedManyWithoutCreatedByInput
   }
@@ -13713,7 +12433,6 @@ export namespace Prisma {
     accounts?: AccountUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     posts?: PostUpdateManyWithoutCreatedByNestedInput
-    videos?: VideoUpdateManyWithoutCreatedByNestedInput
     platformConnections?: PlatformConnectionUpdateManyWithoutUserNestedInput
     publishJobs?: PublishJobUpdateManyWithoutCreatedByNestedInput
   }
@@ -13729,7 +12448,6 @@ export namespace Prisma {
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     posts?: PostUncheckedUpdateManyWithoutCreatedByNestedInput
-    videos?: VideoUncheckedUpdateManyWithoutCreatedByNestedInput
     platformConnections?: PlatformConnectionUncheckedUpdateManyWithoutUserNestedInput
     publishJobs?: PublishJobUncheckedUpdateManyWithoutCreatedByNestedInput
   }
@@ -13827,34 +12545,38 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type VideoCreateInput = {
+  export type PostCreateInput = {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    s3Key: string
-    s3Bucket: string
-    fileName: string
-    fileSize: bigint | number
-    mimeType: string
+    type?: $Enums.MediaType
+    content?: string | null
+    s3Key?: string | null
+    s3Bucket?: string | null
+    fileName?: string | null
+    fileSize?: bigint | number | null
+    mimeType?: string | null
     duration?: number | null
     title: string
     description?: string | null
     tags?: string | null
     thumbnailUrl?: string | null
     privacy?: $Enums.VideoPrivacy
-    createdBy: UserCreateNestedOneWithoutVideosInput
-    publishJobs?: PublishJobCreateNestedManyWithoutVideoInput
+    createdBy: UserCreateNestedOneWithoutPostsInput
+    publishJobs?: PublishJobCreateNestedManyWithoutPostInput
   }
 
-  export type VideoUncheckedCreateInput = {
+  export type PostUncheckedCreateInput = {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    s3Key: string
-    s3Bucket: string
-    fileName: string
-    fileSize: bigint | number
-    mimeType: string
+    type?: $Enums.MediaType
+    content?: string | null
+    s3Key?: string | null
+    s3Bucket?: string | null
+    fileName?: string | null
+    fileSize?: bigint | number | null
+    mimeType?: string | null
     duration?: number | null
     title: string
     description?: string | null
@@ -13862,37 +12584,41 @@ export namespace Prisma {
     thumbnailUrl?: string | null
     privacy?: $Enums.VideoPrivacy
     createdById: string
-    publishJobs?: PublishJobUncheckedCreateNestedManyWithoutVideoInput
+    publishJobs?: PublishJobUncheckedCreateNestedManyWithoutPostInput
   }
 
-  export type VideoUpdateInput = {
+  export type PostUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    s3Key?: StringFieldUpdateOperationsInput | string
-    s3Bucket?: StringFieldUpdateOperationsInput | string
-    fileName?: StringFieldUpdateOperationsInput | string
-    fileSize?: BigIntFieldUpdateOperationsInput | bigint | number
-    mimeType?: StringFieldUpdateOperationsInput | string
+    type?: EnumMediaTypeFieldUpdateOperationsInput | $Enums.MediaType
+    content?: NullableStringFieldUpdateOperationsInput | string | null
+    s3Key?: NullableStringFieldUpdateOperationsInput | string | null
+    s3Bucket?: NullableStringFieldUpdateOperationsInput | string | null
+    fileName?: NullableStringFieldUpdateOperationsInput | string | null
+    fileSize?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    mimeType?: NullableStringFieldUpdateOperationsInput | string | null
     duration?: NullableIntFieldUpdateOperationsInput | number | null
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: NullableStringFieldUpdateOperationsInput | string | null
     thumbnailUrl?: NullableStringFieldUpdateOperationsInput | string | null
     privacy?: EnumVideoPrivacyFieldUpdateOperationsInput | $Enums.VideoPrivacy
-    createdBy?: UserUpdateOneRequiredWithoutVideosNestedInput
-    publishJobs?: PublishJobUpdateManyWithoutVideoNestedInput
+    createdBy?: UserUpdateOneRequiredWithoutPostsNestedInput
+    publishJobs?: PublishJobUpdateManyWithoutPostNestedInput
   }
 
-  export type VideoUncheckedUpdateInput = {
+  export type PostUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    s3Key?: StringFieldUpdateOperationsInput | string
-    s3Bucket?: StringFieldUpdateOperationsInput | string
-    fileName?: StringFieldUpdateOperationsInput | string
-    fileSize?: BigIntFieldUpdateOperationsInput | bigint | number
-    mimeType?: StringFieldUpdateOperationsInput | string
+    type?: EnumMediaTypeFieldUpdateOperationsInput | $Enums.MediaType
+    content?: NullableStringFieldUpdateOperationsInput | string | null
+    s3Key?: NullableStringFieldUpdateOperationsInput | string | null
+    s3Bucket?: NullableStringFieldUpdateOperationsInput | string | null
+    fileName?: NullableStringFieldUpdateOperationsInput | string | null
+    fileSize?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    mimeType?: NullableStringFieldUpdateOperationsInput | string | null
     duration?: NullableIntFieldUpdateOperationsInput | number | null
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -13900,18 +12626,20 @@ export namespace Prisma {
     thumbnailUrl?: NullableStringFieldUpdateOperationsInput | string | null
     privacy?: EnumVideoPrivacyFieldUpdateOperationsInput | $Enums.VideoPrivacy
     createdById?: StringFieldUpdateOperationsInput | string
-    publishJobs?: PublishJobUncheckedUpdateManyWithoutVideoNestedInput
+    publishJobs?: PublishJobUncheckedUpdateManyWithoutPostNestedInput
   }
 
-  export type VideoCreateManyInput = {
+  export type PostCreateManyInput = {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    s3Key: string
-    s3Bucket: string
-    fileName: string
-    fileSize: bigint | number
-    mimeType: string
+    type?: $Enums.MediaType
+    content?: string | null
+    s3Key?: string | null
+    s3Bucket?: string | null
+    fileName?: string | null
+    fileSize?: bigint | number | null
+    mimeType?: string | null
     duration?: number | null
     title: string
     description?: string | null
@@ -13921,15 +12649,17 @@ export namespace Prisma {
     createdById: string
   }
 
-  export type VideoUpdateManyMutationInput = {
+  export type PostUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    s3Key?: StringFieldUpdateOperationsInput | string
-    s3Bucket?: StringFieldUpdateOperationsInput | string
-    fileName?: StringFieldUpdateOperationsInput | string
-    fileSize?: BigIntFieldUpdateOperationsInput | bigint | number
-    mimeType?: StringFieldUpdateOperationsInput | string
+    type?: EnumMediaTypeFieldUpdateOperationsInput | $Enums.MediaType
+    content?: NullableStringFieldUpdateOperationsInput | string | null
+    s3Key?: NullableStringFieldUpdateOperationsInput | string | null
+    s3Bucket?: NullableStringFieldUpdateOperationsInput | string | null
+    fileName?: NullableStringFieldUpdateOperationsInput | string | null
+    fileSize?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    mimeType?: NullableStringFieldUpdateOperationsInput | string | null
     duration?: NullableIntFieldUpdateOperationsInput | number | null
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -13938,15 +12668,17 @@ export namespace Prisma {
     privacy?: EnumVideoPrivacyFieldUpdateOperationsInput | $Enums.VideoPrivacy
   }
 
-  export type VideoUncheckedUpdateManyInput = {
+  export type PostUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    s3Key?: StringFieldUpdateOperationsInput | string
-    s3Bucket?: StringFieldUpdateOperationsInput | string
-    fileName?: StringFieldUpdateOperationsInput | string
-    fileSize?: BigIntFieldUpdateOperationsInput | bigint | number
-    mimeType?: StringFieldUpdateOperationsInput | string
+    type?: EnumMediaTypeFieldUpdateOperationsInput | $Enums.MediaType
+    content?: NullableStringFieldUpdateOperationsInput | string | null
+    s3Key?: NullableStringFieldUpdateOperationsInput | string | null
+    s3Bucket?: NullableStringFieldUpdateOperationsInput | string | null
+    fileName?: NullableStringFieldUpdateOperationsInput | string | null
+    fileSize?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    mimeType?: NullableStringFieldUpdateOperationsInput | string | null
     duration?: NullableIntFieldUpdateOperationsInput | number | null
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -14084,7 +12816,7 @@ export namespace Prisma {
     isUpdate?: boolean
     updateTargetVideoId?: string | null
     metricSnapshots?: MetricSnapshotCreateNestedManyWithoutPublishJobInput
-    video: VideoCreateNestedOneWithoutPublishJobsInput
+    post: PostCreateNestedOneWithoutPublishJobsInput
     platformConnection: PlatformConnectionCreateNestedOneWithoutPublishJobsInput
     createdBy: UserCreateNestedOneWithoutPublishJobsInput
   }
@@ -14108,7 +12840,7 @@ export namespace Prisma {
     retryCount?: number
     isUpdate?: boolean
     updateTargetVideoId?: string | null
-    videoId: string
+    postId: string
     platformConnectionId: string
     createdById: string
     metricSnapshots?: MetricSnapshotUncheckedCreateNestedManyWithoutPublishJobInput
@@ -14134,7 +12866,7 @@ export namespace Prisma {
     isUpdate?: BoolFieldUpdateOperationsInput | boolean
     updateTargetVideoId?: NullableStringFieldUpdateOperationsInput | string | null
     metricSnapshots?: MetricSnapshotUpdateManyWithoutPublishJobNestedInput
-    video?: VideoUpdateOneRequiredWithoutPublishJobsNestedInput
+    post?: PostUpdateOneRequiredWithoutPublishJobsNestedInput
     platformConnection?: PlatformConnectionUpdateOneRequiredWithoutPublishJobsNestedInput
     createdBy?: UserUpdateOneRequiredWithoutPublishJobsNestedInput
   }
@@ -14158,7 +12890,7 @@ export namespace Prisma {
     retryCount?: IntFieldUpdateOperationsInput | number
     isUpdate?: BoolFieldUpdateOperationsInput | boolean
     updateTargetVideoId?: NullableStringFieldUpdateOperationsInput | string | null
-    videoId?: StringFieldUpdateOperationsInput | string
+    postId?: StringFieldUpdateOperationsInput | string
     platformConnectionId?: StringFieldUpdateOperationsInput | string
     createdById?: StringFieldUpdateOperationsInput | string
     metricSnapshots?: MetricSnapshotUncheckedUpdateManyWithoutPublishJobNestedInput
@@ -14183,7 +12915,7 @@ export namespace Prisma {
     retryCount?: number
     isUpdate?: boolean
     updateTargetVideoId?: string | null
-    videoId: string
+    postId: string
     platformConnectionId: string
     createdById: string
   }
@@ -14228,7 +12960,7 @@ export namespace Prisma {
     retryCount?: IntFieldUpdateOperationsInput | number
     isUpdate?: BoolFieldUpdateOperationsInput | boolean
     updateTargetVideoId?: NullableStringFieldUpdateOperationsInput | string | null
-    videoId?: StringFieldUpdateOperationsInput | string
+    postId?: StringFieldUpdateOperationsInput | string
     platformConnectionId?: StringFieldUpdateOperationsInput | string
     createdById?: StringFieldUpdateOperationsInput | string
   }
@@ -14302,17 +13034,6 @@ export namespace Prisma {
     shares?: IntFieldUpdateOperationsInput | number
   }
 
-  export type IntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
-  }
-
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -14326,102 +13047,6 @@ export namespace Prisma {
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     mode?: QueryMode
     not?: NestedStringFilter<$PrismaModel> | string
-  }
-
-  export type DateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
-  }
-
-  export type UserScalarRelationFilter = {
-    is?: UserWhereInput
-    isNot?: UserWhereInput
-  }
-
-  export type PostCountOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    createdById?: SortOrder
-  }
-
-  export type PostAvgOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type PostMaxOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    createdById?: SortOrder
-  }
-
-  export type PostMinOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    createdById?: SortOrder
-  }
-
-  export type PostSumOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type IntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
-  }
-
-  export type StringWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[] | ListStringFieldRefInput<$PrismaModel>
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedStringFilter<$PrismaModel>
-    _max?: NestedStringFilter<$PrismaModel>
-  }
-
-  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
   export type StringNullableFilter<$PrismaModel = never> = {
@@ -14448,6 +13073,22 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type DateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type UserScalarRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
   }
 
   export type SortOrderInput = {
@@ -14508,6 +13149,24 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
+  export type StringWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
+  }
+
   export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -14538,6 +13197,20 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
   export type SessionCountOrderByAggregateInput = {
@@ -14596,12 +13269,6 @@ export namespace Prisma {
     none?: PostWhereInput
   }
 
-  export type VideoListRelationFilter = {
-    every?: VideoWhereInput
-    some?: VideoWhereInput
-    none?: VideoWhereInput
-  }
-
   export type PlatformConnectionListRelationFilter = {
     every?: PlatformConnectionWhereInput
     some?: PlatformConnectionWhereInput
@@ -14623,10 +13290,6 @@ export namespace Prisma {
   }
 
   export type PostOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type VideoOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -14708,15 +13371,22 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
-  export type BigIntFilter<$PrismaModel = never> = {
-    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
-    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+  export type EnumMediaTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.MediaType | EnumMediaTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.MediaType[] | ListEnumMediaTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MediaType[] | ListEnumMediaTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumMediaTypeFilter<$PrismaModel> | $Enums.MediaType
+  }
+
+  export type BigIntNullableFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel> | null
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
     lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
     lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
     gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
     gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    not?: NestedBigIntFilter<$PrismaModel> | bigint | number
+    not?: NestedBigIntNullableFilter<$PrismaModel> | bigint | number | null
   }
 
   export type IntNullableFilter<$PrismaModel = never> = {
@@ -14737,10 +13407,12 @@ export namespace Prisma {
     not?: NestedEnumVideoPrivacyFilter<$PrismaModel> | $Enums.VideoPrivacy
   }
 
-  export type VideoCountOrderByAggregateInput = {
+  export type PostCountOrderByAggregateInput = {
     id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    type?: SortOrder
+    content?: SortOrder
     s3Key?: SortOrder
     s3Bucket?: SortOrder
     fileName?: SortOrder
@@ -14755,15 +13427,17 @@ export namespace Prisma {
     createdById?: SortOrder
   }
 
-  export type VideoAvgOrderByAggregateInput = {
+  export type PostAvgOrderByAggregateInput = {
     fileSize?: SortOrder
     duration?: SortOrder
   }
 
-  export type VideoMaxOrderByAggregateInput = {
+  export type PostMaxOrderByAggregateInput = {
     id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    type?: SortOrder
+    content?: SortOrder
     s3Key?: SortOrder
     s3Bucket?: SortOrder
     fileName?: SortOrder
@@ -14778,10 +13452,12 @@ export namespace Prisma {
     createdById?: SortOrder
   }
 
-  export type VideoMinOrderByAggregateInput = {
+  export type PostMinOrderByAggregateInput = {
     id?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    type?: SortOrder
+    content?: SortOrder
     s3Key?: SortOrder
     s3Bucket?: SortOrder
     fileName?: SortOrder
@@ -14796,25 +13472,35 @@ export namespace Prisma {
     createdById?: SortOrder
   }
 
-  export type VideoSumOrderByAggregateInput = {
+  export type PostSumOrderByAggregateInput = {
     fileSize?: SortOrder
     duration?: SortOrder
   }
 
-  export type BigIntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
-    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+  export type EnumMediaTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.MediaType | EnumMediaTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.MediaType[] | ListEnumMediaTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MediaType[] | ListEnumMediaTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumMediaTypeWithAggregatesFilter<$PrismaModel> | $Enums.MediaType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumMediaTypeFilter<$PrismaModel>
+    _max?: NestedEnumMediaTypeFilter<$PrismaModel>
+  }
+
+  export type BigIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel> | null
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
     lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
     lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
     gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
     gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    not?: NestedBigIntWithAggregatesFilter<$PrismaModel> | bigint | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedBigIntFilter<$PrismaModel>
-    _min?: NestedBigIntFilter<$PrismaModel>
-    _max?: NestedBigIntFilter<$PrismaModel>
+    not?: NestedBigIntNullableWithAggregatesFilter<$PrismaModel> | bigint | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedBigIntNullableFilter<$PrismaModel>
+    _min?: NestedBigIntNullableFilter<$PrismaModel>
+    _max?: NestedBigIntNullableFilter<$PrismaModel>
   }
 
   export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -14984,15 +13670,26 @@ export namespace Prisma {
     not?: NestedEnumVideoPrivacyNullableFilter<$PrismaModel> | $Enums.VideoPrivacy | null
   }
 
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
   export type MetricSnapshotListRelationFilter = {
     every?: MetricSnapshotWhereInput
     some?: MetricSnapshotWhereInput
     none?: MetricSnapshotWhereInput
   }
 
-  export type VideoScalarRelationFilter = {
-    is?: VideoWhereInput
-    isNot?: VideoWhereInput
+  export type PostScalarRelationFilter = {
+    is?: PostWhereInput
+    isNot?: PostWhereInput
   }
 
   export type PlatformConnectionScalarRelationFilter = {
@@ -15023,7 +13720,7 @@ export namespace Prisma {
     retryCount?: SortOrder
     isUpdate?: SortOrder
     updateTargetVideoId?: SortOrder
-    videoId?: SortOrder
+    postId?: SortOrder
     platformConnectionId?: SortOrder
     createdById?: SortOrder
   }
@@ -15051,7 +13748,7 @@ export namespace Prisma {
     retryCount?: SortOrder
     isUpdate?: SortOrder
     updateTargetVideoId?: SortOrder
-    videoId?: SortOrder
+    postId?: SortOrder
     platformConnectionId?: SortOrder
     createdById?: SortOrder
   }
@@ -15075,7 +13772,7 @@ export namespace Prisma {
     retryCount?: SortOrder
     isUpdate?: SortOrder
     updateTargetVideoId?: SortOrder
-    videoId?: SortOrder
+    postId?: SortOrder
     platformConnectionId?: SortOrder
     createdById?: SortOrder
   }
@@ -15102,6 +13799,22 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedEnumVideoPrivacyNullableFilter<$PrismaModel>
     _max?: NestedEnumVideoPrivacyNullableFilter<$PrismaModel>
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type PublishJobScalarRelationFilter = {
@@ -15153,40 +13866,14 @@ export namespace Prisma {
     shares?: SortOrder
   }
 
-  export type UserCreateNestedOneWithoutPostsInput = {
-    create?: XOR<UserCreateWithoutPostsInput, UserUncheckedCreateWithoutPostsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutPostsInput
+  export type UserCreateNestedOneWithoutAccountsInput = {
+    create?: XOR<UserCreateWithoutAccountsInput, UserUncheckedCreateWithoutAccountsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutAccountsInput
     connect?: UserWhereUniqueInput
   }
 
   export type StringFieldUpdateOperationsInput = {
     set?: string
-  }
-
-  export type DateTimeFieldUpdateOperationsInput = {
-    set?: Date | string
-  }
-
-  export type UserUpdateOneRequiredWithoutPostsNestedInput = {
-    create?: XOR<UserCreateWithoutPostsInput, UserUncheckedCreateWithoutPostsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutPostsInput
-    upsert?: UserUpsertWithoutPostsInput
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutPostsInput, UserUpdateWithoutPostsInput>, UserUncheckedUpdateWithoutPostsInput>
-  }
-
-  export type IntFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
-  }
-
-  export type UserCreateNestedOneWithoutAccountsInput = {
-    create?: XOR<UserCreateWithoutAccountsInput, UserUncheckedCreateWithoutAccountsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutAccountsInput
-    connect?: UserWhereUniqueInput
   }
 
   export type NullableStringFieldUpdateOperationsInput = {
@@ -15195,6 +13882,10 @@ export namespace Prisma {
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
     set?: Date | string | null
+  }
+
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
   }
 
   export type UserUpdateOneRequiredWithoutAccountsNestedInput = {
@@ -15240,13 +13931,6 @@ export namespace Prisma {
     connect?: PostWhereUniqueInput | PostWhereUniqueInput[]
   }
 
-  export type VideoCreateNestedManyWithoutCreatedByInput = {
-    create?: XOR<VideoCreateWithoutCreatedByInput, VideoUncheckedCreateWithoutCreatedByInput> | VideoCreateWithoutCreatedByInput[] | VideoUncheckedCreateWithoutCreatedByInput[]
-    connectOrCreate?: VideoCreateOrConnectWithoutCreatedByInput | VideoCreateOrConnectWithoutCreatedByInput[]
-    createMany?: VideoCreateManyCreatedByInputEnvelope
-    connect?: VideoWhereUniqueInput | VideoWhereUniqueInput[]
-  }
-
   export type PlatformConnectionCreateNestedManyWithoutUserInput = {
     create?: XOR<PlatformConnectionCreateWithoutUserInput, PlatformConnectionUncheckedCreateWithoutUserInput> | PlatformConnectionCreateWithoutUserInput[] | PlatformConnectionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: PlatformConnectionCreateOrConnectWithoutUserInput | PlatformConnectionCreateOrConnectWithoutUserInput[]
@@ -15280,13 +13964,6 @@ export namespace Prisma {
     connectOrCreate?: PostCreateOrConnectWithoutCreatedByInput | PostCreateOrConnectWithoutCreatedByInput[]
     createMany?: PostCreateManyCreatedByInputEnvelope
     connect?: PostWhereUniqueInput | PostWhereUniqueInput[]
-  }
-
-  export type VideoUncheckedCreateNestedManyWithoutCreatedByInput = {
-    create?: XOR<VideoCreateWithoutCreatedByInput, VideoUncheckedCreateWithoutCreatedByInput> | VideoCreateWithoutCreatedByInput[] | VideoUncheckedCreateWithoutCreatedByInput[]
-    connectOrCreate?: VideoCreateOrConnectWithoutCreatedByInput | VideoCreateOrConnectWithoutCreatedByInput[]
-    createMany?: VideoCreateManyCreatedByInputEnvelope
-    connect?: VideoWhereUniqueInput | VideoWhereUniqueInput[]
   }
 
   export type PlatformConnectionUncheckedCreateNestedManyWithoutUserInput = {
@@ -15347,20 +14024,6 @@ export namespace Prisma {
     update?: PostUpdateWithWhereUniqueWithoutCreatedByInput | PostUpdateWithWhereUniqueWithoutCreatedByInput[]
     updateMany?: PostUpdateManyWithWhereWithoutCreatedByInput | PostUpdateManyWithWhereWithoutCreatedByInput[]
     deleteMany?: PostScalarWhereInput | PostScalarWhereInput[]
-  }
-
-  export type VideoUpdateManyWithoutCreatedByNestedInput = {
-    create?: XOR<VideoCreateWithoutCreatedByInput, VideoUncheckedCreateWithoutCreatedByInput> | VideoCreateWithoutCreatedByInput[] | VideoUncheckedCreateWithoutCreatedByInput[]
-    connectOrCreate?: VideoCreateOrConnectWithoutCreatedByInput | VideoCreateOrConnectWithoutCreatedByInput[]
-    upsert?: VideoUpsertWithWhereUniqueWithoutCreatedByInput | VideoUpsertWithWhereUniqueWithoutCreatedByInput[]
-    createMany?: VideoCreateManyCreatedByInputEnvelope
-    set?: VideoWhereUniqueInput | VideoWhereUniqueInput[]
-    disconnect?: VideoWhereUniqueInput | VideoWhereUniqueInput[]
-    delete?: VideoWhereUniqueInput | VideoWhereUniqueInput[]
-    connect?: VideoWhereUniqueInput | VideoWhereUniqueInput[]
-    update?: VideoUpdateWithWhereUniqueWithoutCreatedByInput | VideoUpdateWithWhereUniqueWithoutCreatedByInput[]
-    updateMany?: VideoUpdateManyWithWhereWithoutCreatedByInput | VideoUpdateManyWithWhereWithoutCreatedByInput[]
-    deleteMany?: VideoScalarWhereInput | VideoScalarWhereInput[]
   }
 
   export type PlatformConnectionUpdateManyWithoutUserNestedInput = {
@@ -15433,20 +14096,6 @@ export namespace Prisma {
     deleteMany?: PostScalarWhereInput | PostScalarWhereInput[]
   }
 
-  export type VideoUncheckedUpdateManyWithoutCreatedByNestedInput = {
-    create?: XOR<VideoCreateWithoutCreatedByInput, VideoUncheckedCreateWithoutCreatedByInput> | VideoCreateWithoutCreatedByInput[] | VideoUncheckedCreateWithoutCreatedByInput[]
-    connectOrCreate?: VideoCreateOrConnectWithoutCreatedByInput | VideoCreateOrConnectWithoutCreatedByInput[]
-    upsert?: VideoUpsertWithWhereUniqueWithoutCreatedByInput | VideoUpsertWithWhereUniqueWithoutCreatedByInput[]
-    createMany?: VideoCreateManyCreatedByInputEnvelope
-    set?: VideoWhereUniqueInput | VideoWhereUniqueInput[]
-    disconnect?: VideoWhereUniqueInput | VideoWhereUniqueInput[]
-    delete?: VideoWhereUniqueInput | VideoWhereUniqueInput[]
-    connect?: VideoWhereUniqueInput | VideoWhereUniqueInput[]
-    update?: VideoUpdateWithWhereUniqueWithoutCreatedByInput | VideoUpdateWithWhereUniqueWithoutCreatedByInput[]
-    updateMany?: VideoUpdateManyWithWhereWithoutCreatedByInput | VideoUpdateManyWithWhereWithoutCreatedByInput[]
-    deleteMany?: VideoScalarWhereInput | VideoScalarWhereInput[]
-  }
-
   export type PlatformConnectionUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<PlatformConnectionCreateWithoutUserInput, PlatformConnectionUncheckedCreateWithoutUserInput> | PlatformConnectionCreateWithoutUserInput[] | PlatformConnectionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: PlatformConnectionCreateOrConnectWithoutUserInput | PlatformConnectionCreateOrConnectWithoutUserInput[]
@@ -15475,28 +14124,32 @@ export namespace Prisma {
     deleteMany?: PublishJobScalarWhereInput | PublishJobScalarWhereInput[]
   }
 
-  export type UserCreateNestedOneWithoutVideosInput = {
-    create?: XOR<UserCreateWithoutVideosInput, UserUncheckedCreateWithoutVideosInput>
-    connectOrCreate?: UserCreateOrConnectWithoutVideosInput
+  export type UserCreateNestedOneWithoutPostsInput = {
+    create?: XOR<UserCreateWithoutPostsInput, UserUncheckedCreateWithoutPostsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutPostsInput
     connect?: UserWhereUniqueInput
   }
 
-  export type PublishJobCreateNestedManyWithoutVideoInput = {
-    create?: XOR<PublishJobCreateWithoutVideoInput, PublishJobUncheckedCreateWithoutVideoInput> | PublishJobCreateWithoutVideoInput[] | PublishJobUncheckedCreateWithoutVideoInput[]
-    connectOrCreate?: PublishJobCreateOrConnectWithoutVideoInput | PublishJobCreateOrConnectWithoutVideoInput[]
-    createMany?: PublishJobCreateManyVideoInputEnvelope
+  export type PublishJobCreateNestedManyWithoutPostInput = {
+    create?: XOR<PublishJobCreateWithoutPostInput, PublishJobUncheckedCreateWithoutPostInput> | PublishJobCreateWithoutPostInput[] | PublishJobUncheckedCreateWithoutPostInput[]
+    connectOrCreate?: PublishJobCreateOrConnectWithoutPostInput | PublishJobCreateOrConnectWithoutPostInput[]
+    createMany?: PublishJobCreateManyPostInputEnvelope
     connect?: PublishJobWhereUniqueInput | PublishJobWhereUniqueInput[]
   }
 
-  export type PublishJobUncheckedCreateNestedManyWithoutVideoInput = {
-    create?: XOR<PublishJobCreateWithoutVideoInput, PublishJobUncheckedCreateWithoutVideoInput> | PublishJobCreateWithoutVideoInput[] | PublishJobUncheckedCreateWithoutVideoInput[]
-    connectOrCreate?: PublishJobCreateOrConnectWithoutVideoInput | PublishJobCreateOrConnectWithoutVideoInput[]
-    createMany?: PublishJobCreateManyVideoInputEnvelope
+  export type PublishJobUncheckedCreateNestedManyWithoutPostInput = {
+    create?: XOR<PublishJobCreateWithoutPostInput, PublishJobUncheckedCreateWithoutPostInput> | PublishJobCreateWithoutPostInput[] | PublishJobUncheckedCreateWithoutPostInput[]
+    connectOrCreate?: PublishJobCreateOrConnectWithoutPostInput | PublishJobCreateOrConnectWithoutPostInput[]
+    createMany?: PublishJobCreateManyPostInputEnvelope
     connect?: PublishJobWhereUniqueInput | PublishJobWhereUniqueInput[]
   }
 
-  export type BigIntFieldUpdateOperationsInput = {
-    set?: bigint | number
+  export type EnumMediaTypeFieldUpdateOperationsInput = {
+    set?: $Enums.MediaType
+  }
+
+  export type NullableBigIntFieldUpdateOperationsInput = {
+    set?: bigint | number | null
     increment?: bigint | number
     decrement?: bigint | number
     multiply?: bigint | number
@@ -15515,39 +14168,39 @@ export namespace Prisma {
     set?: $Enums.VideoPrivacy
   }
 
-  export type UserUpdateOneRequiredWithoutVideosNestedInput = {
-    create?: XOR<UserCreateWithoutVideosInput, UserUncheckedCreateWithoutVideosInput>
-    connectOrCreate?: UserCreateOrConnectWithoutVideosInput
-    upsert?: UserUpsertWithoutVideosInput
+  export type UserUpdateOneRequiredWithoutPostsNestedInput = {
+    create?: XOR<UserCreateWithoutPostsInput, UserUncheckedCreateWithoutPostsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutPostsInput
+    upsert?: UserUpsertWithoutPostsInput
     connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutVideosInput, UserUpdateWithoutVideosInput>, UserUncheckedUpdateWithoutVideosInput>
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutPostsInput, UserUpdateWithoutPostsInput>, UserUncheckedUpdateWithoutPostsInput>
   }
 
-  export type PublishJobUpdateManyWithoutVideoNestedInput = {
-    create?: XOR<PublishJobCreateWithoutVideoInput, PublishJobUncheckedCreateWithoutVideoInput> | PublishJobCreateWithoutVideoInput[] | PublishJobUncheckedCreateWithoutVideoInput[]
-    connectOrCreate?: PublishJobCreateOrConnectWithoutVideoInput | PublishJobCreateOrConnectWithoutVideoInput[]
-    upsert?: PublishJobUpsertWithWhereUniqueWithoutVideoInput | PublishJobUpsertWithWhereUniqueWithoutVideoInput[]
-    createMany?: PublishJobCreateManyVideoInputEnvelope
+  export type PublishJobUpdateManyWithoutPostNestedInput = {
+    create?: XOR<PublishJobCreateWithoutPostInput, PublishJobUncheckedCreateWithoutPostInput> | PublishJobCreateWithoutPostInput[] | PublishJobUncheckedCreateWithoutPostInput[]
+    connectOrCreate?: PublishJobCreateOrConnectWithoutPostInput | PublishJobCreateOrConnectWithoutPostInput[]
+    upsert?: PublishJobUpsertWithWhereUniqueWithoutPostInput | PublishJobUpsertWithWhereUniqueWithoutPostInput[]
+    createMany?: PublishJobCreateManyPostInputEnvelope
     set?: PublishJobWhereUniqueInput | PublishJobWhereUniqueInput[]
     disconnect?: PublishJobWhereUniqueInput | PublishJobWhereUniqueInput[]
     delete?: PublishJobWhereUniqueInput | PublishJobWhereUniqueInput[]
     connect?: PublishJobWhereUniqueInput | PublishJobWhereUniqueInput[]
-    update?: PublishJobUpdateWithWhereUniqueWithoutVideoInput | PublishJobUpdateWithWhereUniqueWithoutVideoInput[]
-    updateMany?: PublishJobUpdateManyWithWhereWithoutVideoInput | PublishJobUpdateManyWithWhereWithoutVideoInput[]
+    update?: PublishJobUpdateWithWhereUniqueWithoutPostInput | PublishJobUpdateWithWhereUniqueWithoutPostInput[]
+    updateMany?: PublishJobUpdateManyWithWhereWithoutPostInput | PublishJobUpdateManyWithWhereWithoutPostInput[]
     deleteMany?: PublishJobScalarWhereInput | PublishJobScalarWhereInput[]
   }
 
-  export type PublishJobUncheckedUpdateManyWithoutVideoNestedInput = {
-    create?: XOR<PublishJobCreateWithoutVideoInput, PublishJobUncheckedCreateWithoutVideoInput> | PublishJobCreateWithoutVideoInput[] | PublishJobUncheckedCreateWithoutVideoInput[]
-    connectOrCreate?: PublishJobCreateOrConnectWithoutVideoInput | PublishJobCreateOrConnectWithoutVideoInput[]
-    upsert?: PublishJobUpsertWithWhereUniqueWithoutVideoInput | PublishJobUpsertWithWhereUniqueWithoutVideoInput[]
-    createMany?: PublishJobCreateManyVideoInputEnvelope
+  export type PublishJobUncheckedUpdateManyWithoutPostNestedInput = {
+    create?: XOR<PublishJobCreateWithoutPostInput, PublishJobUncheckedCreateWithoutPostInput> | PublishJobCreateWithoutPostInput[] | PublishJobUncheckedCreateWithoutPostInput[]
+    connectOrCreate?: PublishJobCreateOrConnectWithoutPostInput | PublishJobCreateOrConnectWithoutPostInput[]
+    upsert?: PublishJobUpsertWithWhereUniqueWithoutPostInput | PublishJobUpsertWithWhereUniqueWithoutPostInput[]
+    createMany?: PublishJobCreateManyPostInputEnvelope
     set?: PublishJobWhereUniqueInput | PublishJobWhereUniqueInput[]
     disconnect?: PublishJobWhereUniqueInput | PublishJobWhereUniqueInput[]
     delete?: PublishJobWhereUniqueInput | PublishJobWhereUniqueInput[]
     connect?: PublishJobWhereUniqueInput | PublishJobWhereUniqueInput[]
-    update?: PublishJobUpdateWithWhereUniqueWithoutVideoInput | PublishJobUpdateWithWhereUniqueWithoutVideoInput[]
-    updateMany?: PublishJobUpdateManyWithWhereWithoutVideoInput | PublishJobUpdateManyWithWhereWithoutVideoInput[]
+    update?: PublishJobUpdateWithWhereUniqueWithoutPostInput | PublishJobUpdateWithWhereUniqueWithoutPostInput[]
+    updateMany?: PublishJobUpdateManyWithWhereWithoutPostInput | PublishJobUpdateManyWithWhereWithoutPostInput[]
     deleteMany?: PublishJobScalarWhereInput | PublishJobScalarWhereInput[]
   }
 
@@ -15622,10 +14275,10 @@ export namespace Prisma {
     connect?: MetricSnapshotWhereUniqueInput | MetricSnapshotWhereUniqueInput[]
   }
 
-  export type VideoCreateNestedOneWithoutPublishJobsInput = {
-    create?: XOR<VideoCreateWithoutPublishJobsInput, VideoUncheckedCreateWithoutPublishJobsInput>
-    connectOrCreate?: VideoCreateOrConnectWithoutPublishJobsInput
-    connect?: VideoWhereUniqueInput
+  export type PostCreateNestedOneWithoutPublishJobsInput = {
+    create?: XOR<PostCreateWithoutPublishJobsInput, PostUncheckedCreateWithoutPublishJobsInput>
+    connectOrCreate?: PostCreateOrConnectWithoutPublishJobsInput
+    connect?: PostWhereUniqueInput
   }
 
   export type PlatformConnectionCreateNestedOneWithoutPublishJobsInput = {
@@ -15655,6 +14308,14 @@ export namespace Prisma {
     set?: $Enums.VideoPrivacy | null
   }
 
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
   export type MetricSnapshotUpdateManyWithoutPublishJobNestedInput = {
     create?: XOR<MetricSnapshotCreateWithoutPublishJobInput, MetricSnapshotUncheckedCreateWithoutPublishJobInput> | MetricSnapshotCreateWithoutPublishJobInput[] | MetricSnapshotUncheckedCreateWithoutPublishJobInput[]
     connectOrCreate?: MetricSnapshotCreateOrConnectWithoutPublishJobInput | MetricSnapshotCreateOrConnectWithoutPublishJobInput[]
@@ -15669,12 +14330,12 @@ export namespace Prisma {
     deleteMany?: MetricSnapshotScalarWhereInput | MetricSnapshotScalarWhereInput[]
   }
 
-  export type VideoUpdateOneRequiredWithoutPublishJobsNestedInput = {
-    create?: XOR<VideoCreateWithoutPublishJobsInput, VideoUncheckedCreateWithoutPublishJobsInput>
-    connectOrCreate?: VideoCreateOrConnectWithoutPublishJobsInput
-    upsert?: VideoUpsertWithoutPublishJobsInput
-    connect?: VideoWhereUniqueInput
-    update?: XOR<XOR<VideoUpdateToOneWithWhereWithoutPublishJobsInput, VideoUpdateWithoutPublishJobsInput>, VideoUncheckedUpdateWithoutPublishJobsInput>
+  export type PostUpdateOneRequiredWithoutPublishJobsNestedInput = {
+    create?: XOR<PostCreateWithoutPublishJobsInput, PostUncheckedCreateWithoutPublishJobsInput>
+    connectOrCreate?: PostCreateOrConnectWithoutPublishJobsInput
+    upsert?: PostUpsertWithoutPublishJobsInput
+    connect?: PostWhereUniqueInput
+    update?: XOR<XOR<PostUpdateToOneWithWhereWithoutPublishJobsInput, PostUpdateWithoutPublishJobsInput>, PostUncheckedUpdateWithoutPublishJobsInput>
   }
 
   export type PlatformConnectionUpdateOneRequiredWithoutPublishJobsNestedInput = {
@@ -15721,17 +14382,6 @@ export namespace Prisma {
     update?: XOR<XOR<PublishJobUpdateToOneWithWhereWithoutMetricSnapshotsInput, PublishJobUpdateWithoutMetricSnapshotsInput>, PublishJobUncheckedUpdateWithoutMetricSnapshotsInput>
   }
 
-  export type NestedIntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
-  }
-
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -15744,75 +14394,6 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringFilter<$PrismaModel> | string
-  }
-
-  export type NestedDateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
-  }
-
-  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
-  }
-
-  export type NestedFloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
-  }
-
-  export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[] | ListStringFieldRefInput<$PrismaModel>
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedStringFilter<$PrismaModel>
-    _max?: NestedStringFilter<$PrismaModel>
-  }
-
-  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
   export type NestedStringNullableFilter<$PrismaModel = never> = {
@@ -15838,6 +14419,45 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type NestedDateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type NestedIntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
   }
 
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -15882,6 +14502,20 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
+  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
   export type NestedBoolNullableFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
     not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
@@ -15895,15 +14529,22 @@ export namespace Prisma {
     _max?: NestedBoolNullableFilter<$PrismaModel>
   }
 
-  export type NestedBigIntFilter<$PrismaModel = never> = {
-    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
-    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+  export type NestedEnumMediaTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.MediaType | EnumMediaTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.MediaType[] | ListEnumMediaTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MediaType[] | ListEnumMediaTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumMediaTypeFilter<$PrismaModel> | $Enums.MediaType
+  }
+
+  export type NestedBigIntNullableFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel> | null
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
     lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
     lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
     gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
     gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    not?: NestedBigIntFilter<$PrismaModel> | bigint | number
+    not?: NestedBigIntNullableFilter<$PrismaModel> | bigint | number | null
   }
 
   export type NestedEnumVideoPrivacyFilter<$PrismaModel = never> = {
@@ -15913,20 +14554,41 @@ export namespace Prisma {
     not?: NestedEnumVideoPrivacyFilter<$PrismaModel> | $Enums.VideoPrivacy
   }
 
-  export type NestedBigIntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
-    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+  export type NestedEnumMediaTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.MediaType | EnumMediaTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.MediaType[] | ListEnumMediaTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MediaType[] | ListEnumMediaTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumMediaTypeWithAggregatesFilter<$PrismaModel> | $Enums.MediaType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumMediaTypeFilter<$PrismaModel>
+    _max?: NestedEnumMediaTypeFilter<$PrismaModel>
+  }
+
+  export type NestedBigIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel> | null
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel> | null
     lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
     lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
     gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
     gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
-    not?: NestedBigIntWithAggregatesFilter<$PrismaModel> | bigint | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedBigIntFilter<$PrismaModel>
-    _min?: NestedBigIntFilter<$PrismaModel>
-    _max?: NestedBigIntFilter<$PrismaModel>
+    not?: NestedBigIntNullableWithAggregatesFilter<$PrismaModel> | bigint | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedBigIntNullableFilter<$PrismaModel>
+    _min?: NestedBigIntNullableFilter<$PrismaModel>
+    _max?: NestedBigIntNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
   export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -15943,17 +14605,6 @@ export namespace Prisma {
     _sum?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedIntNullableFilter<$PrismaModel>
     _max?: NestedIntNullableFilter<$PrismaModel>
-  }
-
-  export type NestedFloatNullableFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
   export type NestedEnumVideoPrivacyWithAggregatesFilter<$PrismaModel = never> = {
@@ -16053,80 +14704,31 @@ export namespace Prisma {
     _max?: NestedEnumVideoPrivacyNullableFilter<$PrismaModel>
   }
 
-  export type UserCreateWithoutPostsInput = {
-    id?: string
-    name?: string | null
-    email?: string | null
-    emailVerified?: boolean | null
-    image?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    accounts?: AccountCreateNestedManyWithoutUserInput
-    sessions?: SessionCreateNestedManyWithoutUserInput
-    videos?: VideoCreateNestedManyWithoutCreatedByInput
-    platformConnections?: PlatformConnectionCreateNestedManyWithoutUserInput
-    publishJobs?: PublishJobCreateNestedManyWithoutCreatedByInput
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
   }
 
-  export type UserUncheckedCreateWithoutPostsInput = {
-    id?: string
-    name?: string | null
-    email?: string | null
-    emailVerified?: boolean | null
-    image?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
-    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
-    videos?: VideoUncheckedCreateNestedManyWithoutCreatedByInput
-    platformConnections?: PlatformConnectionUncheckedCreateNestedManyWithoutUserInput
-    publishJobs?: PublishJobUncheckedCreateNestedManyWithoutCreatedByInput
-  }
-
-  export type UserCreateOrConnectWithoutPostsInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutPostsInput, UserUncheckedCreateWithoutPostsInput>
-  }
-
-  export type UserUpsertWithoutPostsInput = {
-    update: XOR<UserUpdateWithoutPostsInput, UserUncheckedUpdateWithoutPostsInput>
-    create: XOR<UserCreateWithoutPostsInput, UserUncheckedCreateWithoutPostsInput>
-    where?: UserWhereInput
-  }
-
-  export type UserUpdateToOneWithWhereWithoutPostsInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutPostsInput, UserUncheckedUpdateWithoutPostsInput>
-  }
-
-  export type UserUpdateWithoutPostsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    emailVerified?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    accounts?: AccountUpdateManyWithoutUserNestedInput
-    sessions?: SessionUpdateManyWithoutUserNestedInput
-    videos?: VideoUpdateManyWithoutCreatedByNestedInput
-    platformConnections?: PlatformConnectionUpdateManyWithoutUserNestedInput
-    publishJobs?: PublishJobUpdateManyWithoutCreatedByNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutPostsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    emailVerified?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
-    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
-    videos?: VideoUncheckedUpdateManyWithoutCreatedByNestedInput
-    platformConnections?: PlatformConnectionUncheckedUpdateManyWithoutUserNestedInput
-    publishJobs?: PublishJobUncheckedUpdateManyWithoutCreatedByNestedInput
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
   }
 
   export type UserCreateWithoutAccountsInput = {
@@ -16139,7 +14741,6 @@ export namespace Prisma {
     updatedAt?: Date | string
     sessions?: SessionCreateNestedManyWithoutUserInput
     posts?: PostCreateNestedManyWithoutCreatedByInput
-    videos?: VideoCreateNestedManyWithoutCreatedByInput
     platformConnections?: PlatformConnectionCreateNestedManyWithoutUserInput
     publishJobs?: PublishJobCreateNestedManyWithoutCreatedByInput
   }
@@ -16154,7 +14755,6 @@ export namespace Prisma {
     updatedAt?: Date | string
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     posts?: PostUncheckedCreateNestedManyWithoutCreatedByInput
-    videos?: VideoUncheckedCreateNestedManyWithoutCreatedByInput
     platformConnections?: PlatformConnectionUncheckedCreateNestedManyWithoutUserInput
     publishJobs?: PublishJobUncheckedCreateNestedManyWithoutCreatedByInput
   }
@@ -16185,7 +14785,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUpdateManyWithoutUserNestedInput
     posts?: PostUpdateManyWithoutCreatedByNestedInput
-    videos?: VideoUpdateManyWithoutCreatedByNestedInput
     platformConnections?: PlatformConnectionUpdateManyWithoutUserNestedInput
     publishJobs?: PublishJobUpdateManyWithoutCreatedByNestedInput
   }
@@ -16200,7 +14799,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     posts?: PostUncheckedUpdateManyWithoutCreatedByNestedInput
-    videos?: VideoUncheckedUpdateManyWithoutCreatedByNestedInput
     platformConnections?: PlatformConnectionUncheckedUpdateManyWithoutUserNestedInput
     publishJobs?: PublishJobUncheckedUpdateManyWithoutCreatedByNestedInput
   }
@@ -16215,7 +14813,6 @@ export namespace Prisma {
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
     posts?: PostCreateNestedManyWithoutCreatedByInput
-    videos?: VideoCreateNestedManyWithoutCreatedByInput
     platformConnections?: PlatformConnectionCreateNestedManyWithoutUserInput
     publishJobs?: PublishJobCreateNestedManyWithoutCreatedByInput
   }
@@ -16230,7 +14827,6 @@ export namespace Prisma {
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     posts?: PostUncheckedCreateNestedManyWithoutCreatedByInput
-    videos?: VideoUncheckedCreateNestedManyWithoutCreatedByInput
     platformConnections?: PlatformConnectionUncheckedCreateNestedManyWithoutUserInput
     publishJobs?: PublishJobUncheckedCreateNestedManyWithoutCreatedByInput
   }
@@ -16261,7 +14857,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
     posts?: PostUpdateManyWithoutCreatedByNestedInput
-    videos?: VideoUpdateManyWithoutCreatedByNestedInput
     platformConnections?: PlatformConnectionUpdateManyWithoutUserNestedInput
     publishJobs?: PublishJobUpdateManyWithoutCreatedByNestedInput
   }
@@ -16276,7 +14871,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     posts?: PostUncheckedUpdateManyWithoutCreatedByNestedInput
-    videos?: VideoUncheckedUpdateManyWithoutCreatedByNestedInput
     platformConnections?: PlatformConnectionUncheckedUpdateManyWithoutUserNestedInput
     publishJobs?: PublishJobUncheckedUpdateManyWithoutCreatedByNestedInput
   }
@@ -16352,16 +14946,43 @@ export namespace Prisma {
   }
 
   export type PostCreateWithoutCreatedByInput = {
-    name: string
+    id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    type?: $Enums.MediaType
+    content?: string | null
+    s3Key?: string | null
+    s3Bucket?: string | null
+    fileName?: string | null
+    fileSize?: bigint | number | null
+    mimeType?: string | null
+    duration?: number | null
+    title: string
+    description?: string | null
+    tags?: string | null
+    thumbnailUrl?: string | null
+    privacy?: $Enums.VideoPrivacy
+    publishJobs?: PublishJobCreateNestedManyWithoutPostInput
   }
 
   export type PostUncheckedCreateWithoutCreatedByInput = {
-    id?: number
-    name: string
+    id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    type?: $Enums.MediaType
+    content?: string | null
+    s3Key?: string | null
+    s3Bucket?: string | null
+    fileName?: string | null
+    fileSize?: bigint | number | null
+    mimeType?: string | null
+    duration?: number | null
+    title: string
+    description?: string | null
+    tags?: string | null
+    thumbnailUrl?: string | null
+    privacy?: $Enums.VideoPrivacy
+    publishJobs?: PublishJobUncheckedCreateNestedManyWithoutPostInput
   }
 
   export type PostCreateOrConnectWithoutCreatedByInput = {
@@ -16371,52 +14992,6 @@ export namespace Prisma {
 
   export type PostCreateManyCreatedByInputEnvelope = {
     data: PostCreateManyCreatedByInput | PostCreateManyCreatedByInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type VideoCreateWithoutCreatedByInput = {
-    id?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    s3Key: string
-    s3Bucket: string
-    fileName: string
-    fileSize: bigint | number
-    mimeType: string
-    duration?: number | null
-    title: string
-    description?: string | null
-    tags?: string | null
-    thumbnailUrl?: string | null
-    privacy?: $Enums.VideoPrivacy
-    publishJobs?: PublishJobCreateNestedManyWithoutVideoInput
-  }
-
-  export type VideoUncheckedCreateWithoutCreatedByInput = {
-    id?: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    s3Key: string
-    s3Bucket: string
-    fileName: string
-    fileSize: bigint | number
-    mimeType: string
-    duration?: number | null
-    title: string
-    description?: string | null
-    tags?: string | null
-    thumbnailUrl?: string | null
-    privacy?: $Enums.VideoPrivacy
-    publishJobs?: PublishJobUncheckedCreateNestedManyWithoutVideoInput
-  }
-
-  export type VideoCreateOrConnectWithoutCreatedByInput = {
-    where: VideoWhereUniqueInput
-    create: XOR<VideoCreateWithoutCreatedByInput, VideoUncheckedCreateWithoutCreatedByInput>
-  }
-
-  export type VideoCreateManyCreatedByInputEnvelope = {
-    data: VideoCreateManyCreatedByInput | VideoCreateManyCreatedByInput[]
     skipDuplicates?: boolean
   }
 
@@ -16480,7 +15055,7 @@ export namespace Prisma {
     isUpdate?: boolean
     updateTargetVideoId?: string | null
     metricSnapshots?: MetricSnapshotCreateNestedManyWithoutPublishJobInput
-    video: VideoCreateNestedOneWithoutPublishJobsInput
+    post: PostCreateNestedOneWithoutPublishJobsInput
     platformConnection: PlatformConnectionCreateNestedOneWithoutPublishJobsInput
   }
 
@@ -16503,7 +15078,7 @@ export namespace Prisma {
     retryCount?: number
     isUpdate?: boolean
     updateTargetVideoId?: string | null
-    videoId: string
+    postId: string
     platformConnectionId: string
     metricSnapshots?: MetricSnapshotUncheckedCreateNestedManyWithoutPublishJobInput
   }
@@ -16603,48 +15178,23 @@ export namespace Prisma {
     AND?: PostScalarWhereInput | PostScalarWhereInput[]
     OR?: PostScalarWhereInput[]
     NOT?: PostScalarWhereInput | PostScalarWhereInput[]
-    id?: IntFilter<"Post"> | number
-    name?: StringFilter<"Post"> | string
+    id?: StringFilter<"Post"> | string
     createdAt?: DateTimeFilter<"Post"> | Date | string
     updatedAt?: DateTimeFilter<"Post"> | Date | string
+    type?: EnumMediaTypeFilter<"Post"> | $Enums.MediaType
+    content?: StringNullableFilter<"Post"> | string | null
+    s3Key?: StringNullableFilter<"Post"> | string | null
+    s3Bucket?: StringNullableFilter<"Post"> | string | null
+    fileName?: StringNullableFilter<"Post"> | string | null
+    fileSize?: BigIntNullableFilter<"Post"> | bigint | number | null
+    mimeType?: StringNullableFilter<"Post"> | string | null
+    duration?: IntNullableFilter<"Post"> | number | null
+    title?: StringFilter<"Post"> | string
+    description?: StringNullableFilter<"Post"> | string | null
+    tags?: StringNullableFilter<"Post"> | string | null
+    thumbnailUrl?: StringNullableFilter<"Post"> | string | null
+    privacy?: EnumVideoPrivacyFilter<"Post"> | $Enums.VideoPrivacy
     createdById?: StringFilter<"Post"> | string
-  }
-
-  export type VideoUpsertWithWhereUniqueWithoutCreatedByInput = {
-    where: VideoWhereUniqueInput
-    update: XOR<VideoUpdateWithoutCreatedByInput, VideoUncheckedUpdateWithoutCreatedByInput>
-    create: XOR<VideoCreateWithoutCreatedByInput, VideoUncheckedCreateWithoutCreatedByInput>
-  }
-
-  export type VideoUpdateWithWhereUniqueWithoutCreatedByInput = {
-    where: VideoWhereUniqueInput
-    data: XOR<VideoUpdateWithoutCreatedByInput, VideoUncheckedUpdateWithoutCreatedByInput>
-  }
-
-  export type VideoUpdateManyWithWhereWithoutCreatedByInput = {
-    where: VideoScalarWhereInput
-    data: XOR<VideoUpdateManyMutationInput, VideoUncheckedUpdateManyWithoutCreatedByInput>
-  }
-
-  export type VideoScalarWhereInput = {
-    AND?: VideoScalarWhereInput | VideoScalarWhereInput[]
-    OR?: VideoScalarWhereInput[]
-    NOT?: VideoScalarWhereInput | VideoScalarWhereInput[]
-    id?: StringFilter<"Video"> | string
-    createdAt?: DateTimeFilter<"Video"> | Date | string
-    updatedAt?: DateTimeFilter<"Video"> | Date | string
-    s3Key?: StringFilter<"Video"> | string
-    s3Bucket?: StringFilter<"Video"> | string
-    fileName?: StringFilter<"Video"> | string
-    fileSize?: BigIntFilter<"Video"> | bigint | number
-    mimeType?: StringFilter<"Video"> | string
-    duration?: IntNullableFilter<"Video"> | number | null
-    title?: StringFilter<"Video"> | string
-    description?: StringNullableFilter<"Video"> | string | null
-    tags?: StringNullableFilter<"Video"> | string | null
-    thumbnailUrl?: StringNullableFilter<"Video"> | string | null
-    privacy?: EnumVideoPrivacyFilter<"Video"> | $Enums.VideoPrivacy
-    createdById?: StringFilter<"Video"> | string
   }
 
   export type PlatformConnectionUpsertWithWhereUniqueWithoutUserInput = {
@@ -16719,12 +15269,12 @@ export namespace Prisma {
     retryCount?: IntFilter<"PublishJob"> | number
     isUpdate?: BoolFilter<"PublishJob"> | boolean
     updateTargetVideoId?: StringNullableFilter<"PublishJob"> | string | null
-    videoId?: StringFilter<"PublishJob"> | string
+    postId?: StringFilter<"PublishJob"> | string
     platformConnectionId?: StringFilter<"PublishJob"> | string
     createdById?: StringFilter<"PublishJob"> | string
   }
 
-  export type UserCreateWithoutVideosInput = {
+  export type UserCreateWithoutPostsInput = {
     id?: string
     name?: string | null
     email?: string | null
@@ -16734,12 +15284,11 @@ export namespace Prisma {
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
-    posts?: PostCreateNestedManyWithoutCreatedByInput
     platformConnections?: PlatformConnectionCreateNestedManyWithoutUserInput
     publishJobs?: PublishJobCreateNestedManyWithoutCreatedByInput
   }
 
-  export type UserUncheckedCreateWithoutVideosInput = {
+  export type UserUncheckedCreateWithoutPostsInput = {
     id?: string
     name?: string | null
     email?: string | null
@@ -16749,17 +15298,16 @@ export namespace Prisma {
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
-    posts?: PostUncheckedCreateNestedManyWithoutCreatedByInput
     platformConnections?: PlatformConnectionUncheckedCreateNestedManyWithoutUserInput
     publishJobs?: PublishJobUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
-  export type UserCreateOrConnectWithoutVideosInput = {
+  export type UserCreateOrConnectWithoutPostsInput = {
     where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutVideosInput, UserUncheckedCreateWithoutVideosInput>
+    create: XOR<UserCreateWithoutPostsInput, UserUncheckedCreateWithoutPostsInput>
   }
 
-  export type PublishJobCreateWithoutVideoInput = {
+  export type PublishJobCreateWithoutPostInput = {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -16783,7 +15331,7 @@ export namespace Prisma {
     createdBy: UserCreateNestedOneWithoutPublishJobsInput
   }
 
-  export type PublishJobUncheckedCreateWithoutVideoInput = {
+  export type PublishJobUncheckedCreateWithoutPostInput = {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -16807,28 +15355,28 @@ export namespace Prisma {
     metricSnapshots?: MetricSnapshotUncheckedCreateNestedManyWithoutPublishJobInput
   }
 
-  export type PublishJobCreateOrConnectWithoutVideoInput = {
+  export type PublishJobCreateOrConnectWithoutPostInput = {
     where: PublishJobWhereUniqueInput
-    create: XOR<PublishJobCreateWithoutVideoInput, PublishJobUncheckedCreateWithoutVideoInput>
+    create: XOR<PublishJobCreateWithoutPostInput, PublishJobUncheckedCreateWithoutPostInput>
   }
 
-  export type PublishJobCreateManyVideoInputEnvelope = {
-    data: PublishJobCreateManyVideoInput | PublishJobCreateManyVideoInput[]
+  export type PublishJobCreateManyPostInputEnvelope = {
+    data: PublishJobCreateManyPostInput | PublishJobCreateManyPostInput[]
     skipDuplicates?: boolean
   }
 
-  export type UserUpsertWithoutVideosInput = {
-    update: XOR<UserUpdateWithoutVideosInput, UserUncheckedUpdateWithoutVideosInput>
-    create: XOR<UserCreateWithoutVideosInput, UserUncheckedCreateWithoutVideosInput>
+  export type UserUpsertWithoutPostsInput = {
+    update: XOR<UserUpdateWithoutPostsInput, UserUncheckedUpdateWithoutPostsInput>
+    create: XOR<UserCreateWithoutPostsInput, UserUncheckedCreateWithoutPostsInput>
     where?: UserWhereInput
   }
 
-  export type UserUpdateToOneWithWhereWithoutVideosInput = {
+  export type UserUpdateToOneWithWhereWithoutPostsInput = {
     where?: UserWhereInput
-    data: XOR<UserUpdateWithoutVideosInput, UserUncheckedUpdateWithoutVideosInput>
+    data: XOR<UserUpdateWithoutPostsInput, UserUncheckedUpdateWithoutPostsInput>
   }
 
-  export type UserUpdateWithoutVideosInput = {
+  export type UserUpdateWithoutPostsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
@@ -16838,12 +15386,11 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
-    posts?: PostUpdateManyWithoutCreatedByNestedInput
     platformConnections?: PlatformConnectionUpdateManyWithoutUserNestedInput
     publishJobs?: PublishJobUpdateManyWithoutCreatedByNestedInput
   }
 
-  export type UserUncheckedUpdateWithoutVideosInput = {
+  export type UserUncheckedUpdateWithoutPostsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: NullableStringFieldUpdateOperationsInput | string | null
@@ -16853,25 +15400,24 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
-    posts?: PostUncheckedUpdateManyWithoutCreatedByNestedInput
     platformConnections?: PlatformConnectionUncheckedUpdateManyWithoutUserNestedInput
     publishJobs?: PublishJobUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
-  export type PublishJobUpsertWithWhereUniqueWithoutVideoInput = {
+  export type PublishJobUpsertWithWhereUniqueWithoutPostInput = {
     where: PublishJobWhereUniqueInput
-    update: XOR<PublishJobUpdateWithoutVideoInput, PublishJobUncheckedUpdateWithoutVideoInput>
-    create: XOR<PublishJobCreateWithoutVideoInput, PublishJobUncheckedCreateWithoutVideoInput>
+    update: XOR<PublishJobUpdateWithoutPostInput, PublishJobUncheckedUpdateWithoutPostInput>
+    create: XOR<PublishJobCreateWithoutPostInput, PublishJobUncheckedCreateWithoutPostInput>
   }
 
-  export type PublishJobUpdateWithWhereUniqueWithoutVideoInput = {
+  export type PublishJobUpdateWithWhereUniqueWithoutPostInput = {
     where: PublishJobWhereUniqueInput
-    data: XOR<PublishJobUpdateWithoutVideoInput, PublishJobUncheckedUpdateWithoutVideoInput>
+    data: XOR<PublishJobUpdateWithoutPostInput, PublishJobUncheckedUpdateWithoutPostInput>
   }
 
-  export type PublishJobUpdateManyWithWhereWithoutVideoInput = {
+  export type PublishJobUpdateManyWithWhereWithoutPostInput = {
     where: PublishJobScalarWhereInput
-    data: XOR<PublishJobUpdateManyMutationInput, PublishJobUncheckedUpdateManyWithoutVideoInput>
+    data: XOR<PublishJobUpdateManyMutationInput, PublishJobUncheckedUpdateManyWithoutPostInput>
   }
 
   export type UserCreateWithoutPlatformConnectionsInput = {
@@ -16885,7 +15431,6 @@ export namespace Prisma {
     accounts?: AccountCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     posts?: PostCreateNestedManyWithoutCreatedByInput
-    videos?: VideoCreateNestedManyWithoutCreatedByInput
     publishJobs?: PublishJobCreateNestedManyWithoutCreatedByInput
   }
 
@@ -16900,7 +15445,6 @@ export namespace Prisma {
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     posts?: PostUncheckedCreateNestedManyWithoutCreatedByInput
-    videos?: VideoUncheckedCreateNestedManyWithoutCreatedByInput
     publishJobs?: PublishJobUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
@@ -16929,7 +15473,7 @@ export namespace Prisma {
     isUpdate?: boolean
     updateTargetVideoId?: string | null
     metricSnapshots?: MetricSnapshotCreateNestedManyWithoutPublishJobInput
-    video: VideoCreateNestedOneWithoutPublishJobsInput
+    post: PostCreateNestedOneWithoutPublishJobsInput
     createdBy: UserCreateNestedOneWithoutPublishJobsInput
   }
 
@@ -16952,7 +15496,7 @@ export namespace Prisma {
     retryCount?: number
     isUpdate?: boolean
     updateTargetVideoId?: string | null
-    videoId: string
+    postId: string
     createdById: string
     metricSnapshots?: MetricSnapshotUncheckedCreateNestedManyWithoutPublishJobInput
   }
@@ -16989,7 +15533,6 @@ export namespace Prisma {
     accounts?: AccountUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     posts?: PostUpdateManyWithoutCreatedByNestedInput
-    videos?: VideoUpdateManyWithoutCreatedByNestedInput
     publishJobs?: PublishJobUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -17004,7 +15547,6 @@ export namespace Prisma {
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     posts?: PostUncheckedUpdateManyWithoutCreatedByNestedInput
-    videos?: VideoUncheckedUpdateManyWithoutCreatedByNestedInput
     publishJobs?: PublishJobUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
@@ -17052,33 +15594,37 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type VideoCreateWithoutPublishJobsInput = {
+  export type PostCreateWithoutPublishJobsInput = {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    s3Key: string
-    s3Bucket: string
-    fileName: string
-    fileSize: bigint | number
-    mimeType: string
+    type?: $Enums.MediaType
+    content?: string | null
+    s3Key?: string | null
+    s3Bucket?: string | null
+    fileName?: string | null
+    fileSize?: bigint | number | null
+    mimeType?: string | null
     duration?: number | null
     title: string
     description?: string | null
     tags?: string | null
     thumbnailUrl?: string | null
     privacy?: $Enums.VideoPrivacy
-    createdBy: UserCreateNestedOneWithoutVideosInput
+    createdBy: UserCreateNestedOneWithoutPostsInput
   }
 
-  export type VideoUncheckedCreateWithoutPublishJobsInput = {
+  export type PostUncheckedCreateWithoutPublishJobsInput = {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    s3Key: string
-    s3Bucket: string
-    fileName: string
-    fileSize: bigint | number
-    mimeType: string
+    type?: $Enums.MediaType
+    content?: string | null
+    s3Key?: string | null
+    s3Bucket?: string | null
+    fileName?: string | null
+    fileSize?: bigint | number | null
+    mimeType?: string | null
     duration?: number | null
     title: string
     description?: string | null
@@ -17088,9 +15634,9 @@ export namespace Prisma {
     createdById: string
   }
 
-  export type VideoCreateOrConnectWithoutPublishJobsInput = {
-    where: VideoWhereUniqueInput
-    create: XOR<VideoCreateWithoutPublishJobsInput, VideoUncheckedCreateWithoutPublishJobsInput>
+  export type PostCreateOrConnectWithoutPublishJobsInput = {
+    where: PostWhereUniqueInput
+    create: XOR<PostCreateWithoutPublishJobsInput, PostUncheckedCreateWithoutPublishJobsInput>
   }
 
   export type PlatformConnectionCreateWithoutPublishJobsInput = {
@@ -17139,7 +15685,6 @@ export namespace Prisma {
     accounts?: AccountCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     posts?: PostCreateNestedManyWithoutCreatedByInput
-    videos?: VideoCreateNestedManyWithoutCreatedByInput
     platformConnections?: PlatformConnectionCreateNestedManyWithoutUserInput
   }
 
@@ -17154,7 +15699,6 @@ export namespace Prisma {
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     posts?: PostUncheckedCreateNestedManyWithoutCreatedByInput
-    videos?: VideoUncheckedCreateNestedManyWithoutCreatedByInput
     platformConnections?: PlatformConnectionUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -17192,44 +15736,48 @@ export namespace Prisma {
     shares?: IntFilter<"MetricSnapshot"> | number
   }
 
-  export type VideoUpsertWithoutPublishJobsInput = {
-    update: XOR<VideoUpdateWithoutPublishJobsInput, VideoUncheckedUpdateWithoutPublishJobsInput>
-    create: XOR<VideoCreateWithoutPublishJobsInput, VideoUncheckedCreateWithoutPublishJobsInput>
-    where?: VideoWhereInput
+  export type PostUpsertWithoutPublishJobsInput = {
+    update: XOR<PostUpdateWithoutPublishJobsInput, PostUncheckedUpdateWithoutPublishJobsInput>
+    create: XOR<PostCreateWithoutPublishJobsInput, PostUncheckedCreateWithoutPublishJobsInput>
+    where?: PostWhereInput
   }
 
-  export type VideoUpdateToOneWithWhereWithoutPublishJobsInput = {
-    where?: VideoWhereInput
-    data: XOR<VideoUpdateWithoutPublishJobsInput, VideoUncheckedUpdateWithoutPublishJobsInput>
+  export type PostUpdateToOneWithWhereWithoutPublishJobsInput = {
+    where?: PostWhereInput
+    data: XOR<PostUpdateWithoutPublishJobsInput, PostUncheckedUpdateWithoutPublishJobsInput>
   }
 
-  export type VideoUpdateWithoutPublishJobsInput = {
+  export type PostUpdateWithoutPublishJobsInput = {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    s3Key?: StringFieldUpdateOperationsInput | string
-    s3Bucket?: StringFieldUpdateOperationsInput | string
-    fileName?: StringFieldUpdateOperationsInput | string
-    fileSize?: BigIntFieldUpdateOperationsInput | bigint | number
-    mimeType?: StringFieldUpdateOperationsInput | string
+    type?: EnumMediaTypeFieldUpdateOperationsInput | $Enums.MediaType
+    content?: NullableStringFieldUpdateOperationsInput | string | null
+    s3Key?: NullableStringFieldUpdateOperationsInput | string | null
+    s3Bucket?: NullableStringFieldUpdateOperationsInput | string | null
+    fileName?: NullableStringFieldUpdateOperationsInput | string | null
+    fileSize?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    mimeType?: NullableStringFieldUpdateOperationsInput | string | null
     duration?: NullableIntFieldUpdateOperationsInput | number | null
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: NullableStringFieldUpdateOperationsInput | string | null
     thumbnailUrl?: NullableStringFieldUpdateOperationsInput | string | null
     privacy?: EnumVideoPrivacyFieldUpdateOperationsInput | $Enums.VideoPrivacy
-    createdBy?: UserUpdateOneRequiredWithoutVideosNestedInput
+    createdBy?: UserUpdateOneRequiredWithoutPostsNestedInput
   }
 
-  export type VideoUncheckedUpdateWithoutPublishJobsInput = {
+  export type PostUncheckedUpdateWithoutPublishJobsInput = {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    s3Key?: StringFieldUpdateOperationsInput | string
-    s3Bucket?: StringFieldUpdateOperationsInput | string
-    fileName?: StringFieldUpdateOperationsInput | string
-    fileSize?: BigIntFieldUpdateOperationsInput | bigint | number
-    mimeType?: StringFieldUpdateOperationsInput | string
+    type?: EnumMediaTypeFieldUpdateOperationsInput | $Enums.MediaType
+    content?: NullableStringFieldUpdateOperationsInput | string | null
+    s3Key?: NullableStringFieldUpdateOperationsInput | string | null
+    s3Bucket?: NullableStringFieldUpdateOperationsInput | string | null
+    fileName?: NullableStringFieldUpdateOperationsInput | string | null
+    fileSize?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    mimeType?: NullableStringFieldUpdateOperationsInput | string | null
     duration?: NullableIntFieldUpdateOperationsInput | number | null
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17302,7 +15850,6 @@ export namespace Prisma {
     accounts?: AccountUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     posts?: PostUpdateManyWithoutCreatedByNestedInput
-    videos?: VideoUpdateManyWithoutCreatedByNestedInput
     platformConnections?: PlatformConnectionUpdateManyWithoutUserNestedInput
   }
 
@@ -17317,7 +15864,6 @@ export namespace Prisma {
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     posts?: PostUncheckedUpdateManyWithoutCreatedByNestedInput
-    videos?: VideoUncheckedUpdateManyWithoutCreatedByNestedInput
     platformConnections?: PlatformConnectionUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -17340,7 +15886,7 @@ export namespace Prisma {
     retryCount?: number
     isUpdate?: boolean
     updateTargetVideoId?: string | null
-    video: VideoCreateNestedOneWithoutPublishJobsInput
+    post: PostCreateNestedOneWithoutPublishJobsInput
     platformConnection: PlatformConnectionCreateNestedOneWithoutPublishJobsInput
     createdBy: UserCreateNestedOneWithoutPublishJobsInput
   }
@@ -17364,7 +15910,7 @@ export namespace Prisma {
     retryCount?: number
     isUpdate?: boolean
     updateTargetVideoId?: string | null
-    videoId: string
+    postId: string
     platformConnectionId: string
     createdById: string
   }
@@ -17404,7 +15950,7 @@ export namespace Prisma {
     retryCount?: IntFieldUpdateOperationsInput | number
     isUpdate?: BoolFieldUpdateOperationsInput | boolean
     updateTargetVideoId?: NullableStringFieldUpdateOperationsInput | string | null
-    video?: VideoUpdateOneRequiredWithoutPublishJobsNestedInput
+    post?: PostUpdateOneRequiredWithoutPublishJobsNestedInput
     platformConnection?: PlatformConnectionUpdateOneRequiredWithoutPublishJobsNestedInput
     createdBy?: UserUpdateOneRequiredWithoutPublishJobsNestedInput
   }
@@ -17428,7 +15974,7 @@ export namespace Prisma {
     retryCount?: IntFieldUpdateOperationsInput | number
     isUpdate?: BoolFieldUpdateOperationsInput | boolean
     updateTargetVideoId?: NullableStringFieldUpdateOperationsInput | string | null
-    videoId?: StringFieldUpdateOperationsInput | string
+    postId?: StringFieldUpdateOperationsInput | string
     platformConnectionId?: StringFieldUpdateOperationsInput | string
     createdById?: StringFieldUpdateOperationsInput | string
   }
@@ -17459,21 +16005,16 @@ export namespace Prisma {
   }
 
   export type PostCreateManyCreatedByInput = {
-    id?: number
-    name: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type VideoCreateManyCreatedByInput = {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    s3Key: string
-    s3Bucket: string
-    fileName: string
-    fileSize: bigint | number
-    mimeType: string
+    type?: $Enums.MediaType
+    content?: string | null
+    s3Key?: string | null
+    s3Bucket?: string | null
+    fileName?: string | null
+    fileSize?: bigint | number | null
+    mimeType?: string | null
     duration?: number | null
     title: string
     description?: string | null
@@ -17515,7 +16056,7 @@ export namespace Prisma {
     retryCount?: number
     isUpdate?: boolean
     updateTargetVideoId?: string | null
-    videoId: string
+    postId: string
     platformConnectionId: string
   }
 
@@ -17595,70 +16136,56 @@ export namespace Prisma {
   }
 
   export type PostUpdateWithoutCreatedByInput = {
-    name?: StringFieldUpdateOperationsInput | string
+    id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    type?: EnumMediaTypeFieldUpdateOperationsInput | $Enums.MediaType
+    content?: NullableStringFieldUpdateOperationsInput | string | null
+    s3Key?: NullableStringFieldUpdateOperationsInput | string | null
+    s3Bucket?: NullableStringFieldUpdateOperationsInput | string | null
+    fileName?: NullableStringFieldUpdateOperationsInput | string | null
+    fileSize?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    mimeType?: NullableStringFieldUpdateOperationsInput | string | null
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: NullableStringFieldUpdateOperationsInput | string | null
+    thumbnailUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    privacy?: EnumVideoPrivacyFieldUpdateOperationsInput | $Enums.VideoPrivacy
+    publishJobs?: PublishJobUpdateManyWithoutPostNestedInput
   }
 
   export type PostUncheckedUpdateWithoutCreatedByInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
+    id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    type?: EnumMediaTypeFieldUpdateOperationsInput | $Enums.MediaType
+    content?: NullableStringFieldUpdateOperationsInput | string | null
+    s3Key?: NullableStringFieldUpdateOperationsInput | string | null
+    s3Bucket?: NullableStringFieldUpdateOperationsInput | string | null
+    fileName?: NullableStringFieldUpdateOperationsInput | string | null
+    fileSize?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    mimeType?: NullableStringFieldUpdateOperationsInput | string | null
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: NullableStringFieldUpdateOperationsInput | string | null
+    thumbnailUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    privacy?: EnumVideoPrivacyFieldUpdateOperationsInput | $Enums.VideoPrivacy
+    publishJobs?: PublishJobUncheckedUpdateManyWithoutPostNestedInput
   }
 
   export type PostUncheckedUpdateManyWithoutCreatedByInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type VideoUpdateWithoutCreatedByInput = {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    s3Key?: StringFieldUpdateOperationsInput | string
-    s3Bucket?: StringFieldUpdateOperationsInput | string
-    fileName?: StringFieldUpdateOperationsInput | string
-    fileSize?: BigIntFieldUpdateOperationsInput | bigint | number
-    mimeType?: StringFieldUpdateOperationsInput | string
-    duration?: NullableIntFieldUpdateOperationsInput | number | null
-    title?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    tags?: NullableStringFieldUpdateOperationsInput | string | null
-    thumbnailUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    privacy?: EnumVideoPrivacyFieldUpdateOperationsInput | $Enums.VideoPrivacy
-    publishJobs?: PublishJobUpdateManyWithoutVideoNestedInput
-  }
-
-  export type VideoUncheckedUpdateWithoutCreatedByInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    s3Key?: StringFieldUpdateOperationsInput | string
-    s3Bucket?: StringFieldUpdateOperationsInput | string
-    fileName?: StringFieldUpdateOperationsInput | string
-    fileSize?: BigIntFieldUpdateOperationsInput | bigint | number
-    mimeType?: StringFieldUpdateOperationsInput | string
-    duration?: NullableIntFieldUpdateOperationsInput | number | null
-    title?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    tags?: NullableStringFieldUpdateOperationsInput | string | null
-    thumbnailUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    privacy?: EnumVideoPrivacyFieldUpdateOperationsInput | $Enums.VideoPrivacy
-    publishJobs?: PublishJobUncheckedUpdateManyWithoutVideoNestedInput
-  }
-
-  export type VideoUncheckedUpdateManyWithoutCreatedByInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    s3Key?: StringFieldUpdateOperationsInput | string
-    s3Bucket?: StringFieldUpdateOperationsInput | string
-    fileName?: StringFieldUpdateOperationsInput | string
-    fileSize?: BigIntFieldUpdateOperationsInput | bigint | number
-    mimeType?: StringFieldUpdateOperationsInput | string
+    type?: EnumMediaTypeFieldUpdateOperationsInput | $Enums.MediaType
+    content?: NullableStringFieldUpdateOperationsInput | string | null
+    s3Key?: NullableStringFieldUpdateOperationsInput | string | null
+    s3Bucket?: NullableStringFieldUpdateOperationsInput | string | null
+    fileName?: NullableStringFieldUpdateOperationsInput | string | null
+    fileSize?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    mimeType?: NullableStringFieldUpdateOperationsInput | string | null
     duration?: NullableIntFieldUpdateOperationsInput | number | null
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17731,7 +16258,7 @@ export namespace Prisma {
     isUpdate?: BoolFieldUpdateOperationsInput | boolean
     updateTargetVideoId?: NullableStringFieldUpdateOperationsInput | string | null
     metricSnapshots?: MetricSnapshotUpdateManyWithoutPublishJobNestedInput
-    video?: VideoUpdateOneRequiredWithoutPublishJobsNestedInput
+    post?: PostUpdateOneRequiredWithoutPublishJobsNestedInput
     platformConnection?: PlatformConnectionUpdateOneRequiredWithoutPublishJobsNestedInput
   }
 
@@ -17754,7 +16281,7 @@ export namespace Prisma {
     retryCount?: IntFieldUpdateOperationsInput | number
     isUpdate?: BoolFieldUpdateOperationsInput | boolean
     updateTargetVideoId?: NullableStringFieldUpdateOperationsInput | string | null
-    videoId?: StringFieldUpdateOperationsInput | string
+    postId?: StringFieldUpdateOperationsInput | string
     platformConnectionId?: StringFieldUpdateOperationsInput | string
     metricSnapshots?: MetricSnapshotUncheckedUpdateManyWithoutPublishJobNestedInput
   }
@@ -17778,11 +16305,11 @@ export namespace Prisma {
     retryCount?: IntFieldUpdateOperationsInput | number
     isUpdate?: BoolFieldUpdateOperationsInput | boolean
     updateTargetVideoId?: NullableStringFieldUpdateOperationsInput | string | null
-    videoId?: StringFieldUpdateOperationsInput | string
+    postId?: StringFieldUpdateOperationsInput | string
     platformConnectionId?: StringFieldUpdateOperationsInput | string
   }
 
-  export type PublishJobCreateManyVideoInput = {
+  export type PublishJobCreateManyPostInput = {
     id?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -17805,7 +16332,7 @@ export namespace Prisma {
     createdById: string
   }
 
-  export type PublishJobUpdateWithoutVideoInput = {
+  export type PublishJobUpdateWithoutPostInput = {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17829,7 +16356,7 @@ export namespace Prisma {
     createdBy?: UserUpdateOneRequiredWithoutPublishJobsNestedInput
   }
 
-  export type PublishJobUncheckedUpdateWithoutVideoInput = {
+  export type PublishJobUncheckedUpdateWithoutPostInput = {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17853,7 +16380,7 @@ export namespace Prisma {
     metricSnapshots?: MetricSnapshotUncheckedUpdateManyWithoutPublishJobNestedInput
   }
 
-  export type PublishJobUncheckedUpdateManyWithoutVideoInput = {
+  export type PublishJobUncheckedUpdateManyWithoutPostInput = {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17895,7 +16422,7 @@ export namespace Prisma {
     retryCount?: number
     isUpdate?: boolean
     updateTargetVideoId?: string | null
-    videoId: string
+    postId: string
     createdById: string
   }
 
@@ -17919,7 +16446,7 @@ export namespace Prisma {
     isUpdate?: BoolFieldUpdateOperationsInput | boolean
     updateTargetVideoId?: NullableStringFieldUpdateOperationsInput | string | null
     metricSnapshots?: MetricSnapshotUpdateManyWithoutPublishJobNestedInput
-    video?: VideoUpdateOneRequiredWithoutPublishJobsNestedInput
+    post?: PostUpdateOneRequiredWithoutPublishJobsNestedInput
     createdBy?: UserUpdateOneRequiredWithoutPublishJobsNestedInput
   }
 
@@ -17942,7 +16469,7 @@ export namespace Prisma {
     retryCount?: IntFieldUpdateOperationsInput | number
     isUpdate?: BoolFieldUpdateOperationsInput | boolean
     updateTargetVideoId?: NullableStringFieldUpdateOperationsInput | string | null
-    videoId?: StringFieldUpdateOperationsInput | string
+    postId?: StringFieldUpdateOperationsInput | string
     createdById?: StringFieldUpdateOperationsInput | string
     metricSnapshots?: MetricSnapshotUncheckedUpdateManyWithoutPublishJobNestedInput
   }
@@ -17966,7 +16493,7 @@ export namespace Prisma {
     retryCount?: IntFieldUpdateOperationsInput | number
     isUpdate?: BoolFieldUpdateOperationsInput | boolean
     updateTargetVideoId?: NullableStringFieldUpdateOperationsInput | string | null
-    videoId?: StringFieldUpdateOperationsInput | string
+    postId?: StringFieldUpdateOperationsInput | string
     createdById?: StringFieldUpdateOperationsInput | string
   }
 

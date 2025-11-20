@@ -24,10 +24,10 @@ export function EditVideoPage() {
   const videoId = params.id as string;
 
   // Fetch video data
-  const [video] = api.video.get.useSuspenseQuery({ id: videoId });
+  const [video] = api.post.get.useSuspenseQuery({ id: videoId });
 
   // Update mutation
-  const updateVideo = api.video.update.useMutation({
+  const updateVideo = api.post.update.useMutation({
     onSuccess: () => {
       router.push("/library");
     },

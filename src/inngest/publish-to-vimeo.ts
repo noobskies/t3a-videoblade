@@ -14,7 +14,7 @@ export const publishToVimeo = inngest.createFunction(
       const job = await db.publishJob.findUnique({
         where: { id: jobId },
         include: {
-          video: true,
+          post: true,
           platformConnection: true,
         },
       });
@@ -57,23 +57,26 @@ export const publishToVimeo = inngest.createFunction(
     // 4. Upload to Vimeo
     const result = await step.run("upload-to-vimeo", async () => {
       try {
+        // Ensure s3Key is present
+        if (!job.post.s3Key) throw new Error("Missing S3 key for video post");
+
         const privacy =
           (job.privacy?.toLowerCase() as
             | "public"
             | "unlisted"
             | "private"
             | "disable") ??
-          (job.video.privacy === "PUBLIC"
+          (job.post.privacy === "PUBLIC"
             ? "public"
-            : job.video.privacy === "PRIVATE"
+            : job.post.privacy === "PRIVATE"
               ? "private"
               : "unlisted");
 
         const uploadResult = await uploadVideoToVimeo({
           accessToken: job.platformConnection.accessToken,
-          s3Key: job.video.s3Key,
-          title: job.title ?? job.video.title,
-          description: job.description ?? job.video.description,
+          s3Key: job.post.s3Key,
+          title: job.title ?? job.post.title,
+          description: job.description ?? job.post.description,
           privacy: privacy,
         });
 

@@ -1,22 +1,14 @@
 -- CreateEnum
-CREATE TYPE "Platform" AS ENUM ('YOUTUBE', 'RUMBLE');
+CREATE TYPE "Platform" AS ENUM ('YOUTUBE', 'RUMBLE', 'TIKTOK', 'VIMEO');
 
 -- CreateEnum
-CREATE TYPE "PublishStatus" AS ENUM ('PENDING', 'PROCESSING', 'COMPLETED', 'FAILED', 'CANCELLED');
+CREATE TYPE "PublishStatus" AS ENUM ('PENDING', 'SCHEDULED', 'PLATFORM_SCHEDULED', 'PROCESSING', 'COMPLETED', 'FAILED', 'CANCELLED');
 
 -- CreateEnum
-CREATE TYPE "VideoPrivacy" AS ENUM ('PUBLIC', 'UNLISTED', 'PRIVATE');
+CREATE TYPE "VideoPrivacy" AS ENUM ('PUBLIC', 'UNLISTED', 'PRIVATE', 'MUTUAL_FOLLOW_FRIENDS');
 
--- CreateTable
-CREATE TABLE "Post" (
-    "id" SERIAL NOT NULL,
-    "name" TEXT NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-    "createdById" TEXT NOT NULL,
-
-    CONSTRAINT "Post_pkey" PRIMARY KEY ("id")
-);
+-- CreateEnum
+CREATE TYPE "MediaType" AS ENUM ('VIDEO', 'IMAGE', 'TEXT');
 
 -- CreateTable
 CREATE TABLE "Account" (
@@ -77,15 +69,17 @@ CREATE TABLE "Verification" (
 );
 
 -- CreateTable
-CREATE TABLE "Video" (
+CREATE TABLE "Post" (
     "id" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "s3Key" TEXT NOT NULL,
-    "s3Bucket" TEXT NOT NULL,
-    "fileName" TEXT NOT NULL,
-    "fileSize" BIGINT NOT NULL,
-    "mimeType" TEXT NOT NULL,
+    "type" "MediaType" NOT NULL DEFAULT 'VIDEO',
+    "content" TEXT,
+    "s3Key" TEXT,
+    "s3Bucket" TEXT,
+    "fileName" TEXT,
+    "fileSize" BIGINT,
+    "mimeType" TEXT,
     "duration" INTEGER,
     "title" TEXT NOT NULL,
     "description" TEXT,
@@ -94,7 +88,7 @@ CREATE TABLE "Video" (
     "privacy" "VideoPrivacy" NOT NULL DEFAULT 'UNLISTED',
     "createdById" TEXT NOT NULL,
 
-    CONSTRAINT "Video_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Post_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -133,15 +127,27 @@ CREATE TABLE "PublishJob" (
     "platformVideoUrl" TEXT,
     "errorMessage" TEXT,
     "retryCount" INTEGER NOT NULL DEFAULT 0,
-    "videoId" TEXT NOT NULL,
+    "isUpdate" BOOLEAN NOT NULL DEFAULT false,
+    "updateTargetVideoId" TEXT,
+    "postId" TEXT NOT NULL,
     "platformConnectionId" TEXT NOT NULL,
     "createdById" TEXT NOT NULL,
 
     CONSTRAINT "PublishJob_pkey" PRIMARY KEY ("id")
 );
 
--- CreateIndex
-CREATE INDEX "Post_name_idx" ON "Post"("name");
+-- CreateTable
+CREATE TABLE "MetricSnapshot" (
+    "id" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "publishJobId" TEXT NOT NULL,
+    "views" INTEGER NOT NULL DEFAULT 0,
+    "likes" INTEGER NOT NULL DEFAULT 0,
+    "comments" INTEGER NOT NULL DEFAULT 0,
+    "shares" INTEGER NOT NULL DEFAULT 0,
+
+    CONSTRAINT "MetricSnapshot_pkey" PRIMARY KEY ("id")
+);
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Account_providerId_accountId_key" ON "Account"("providerId", "accountId");
@@ -156,10 +162,13 @@ CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 CREATE UNIQUE INDEX "Verification_identifier_value_key" ON "Verification"("identifier", "value");
 
 -- CreateIndex
-CREATE INDEX "Video_createdById_idx" ON "Video"("createdById");
+CREATE INDEX "Post_createdById_idx" ON "Post"("createdById");
 
 -- CreateIndex
-CREATE INDEX "Video_createdAt_idx" ON "Video"("createdAt");
+CREATE INDEX "Post_createdAt_idx" ON "Post"("createdAt");
+
+-- CreateIndex
+CREATE INDEX "Post_type_idx" ON "Post"("type");
 
 -- CreateIndex
 CREATE INDEX "PlatformConnection_userId_idx" ON "PlatformConnection"("userId");
@@ -171,7 +180,7 @@ CREATE INDEX "PlatformConnection_platform_idx" ON "PlatformConnection"("platform
 CREATE UNIQUE INDEX "PlatformConnection_userId_platform_key" ON "PlatformConnection"("userId", "platform");
 
 -- CreateIndex
-CREATE INDEX "PublishJob_videoId_idx" ON "PublishJob"("videoId");
+CREATE INDEX "PublishJob_postId_idx" ON "PublishJob"("postId");
 
 -- CreateIndex
 CREATE INDEX "PublishJob_platformConnectionId_idx" ON "PublishJob"("platformConnectionId");
@@ -185,8 +194,11 @@ CREATE INDEX "PublishJob_status_idx" ON "PublishJob"("status");
 -- CreateIndex
 CREATE INDEX "PublishJob_scheduledFor_idx" ON "PublishJob"("scheduledFor");
 
--- AddForeignKey
-ALTER TABLE "Post" ADD CONSTRAINT "Post_createdById_fkey" FOREIGN KEY ("createdById") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+-- CreateIndex
+CREATE INDEX "MetricSnapshot_publishJobId_idx" ON "MetricSnapshot"("publishJobId");
+
+-- CreateIndex
+CREATE INDEX "MetricSnapshot_createdAt_idx" ON "MetricSnapshot"("createdAt");
 
 -- AddForeignKey
 ALTER TABLE "Account" ADD CONSTRAINT "Account_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -195,16 +207,19 @@ ALTER TABLE "Account" ADD CONSTRAINT "Account_userId_fkey" FOREIGN KEY ("userId"
 ALTER TABLE "Session" ADD CONSTRAINT "Session_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Video" ADD CONSTRAINT "Video_createdById_fkey" FOREIGN KEY ("createdById") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Post" ADD CONSTRAINT "Post_createdById_fkey" FOREIGN KEY ("createdById") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "PlatformConnection" ADD CONSTRAINT "PlatformConnection_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "PublishJob" ADD CONSTRAINT "PublishJob_videoId_fkey" FOREIGN KEY ("videoId") REFERENCES "Video"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "PublishJob" ADD CONSTRAINT "PublishJob_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Post"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "PublishJob" ADD CONSTRAINT "PublishJob_platformConnectionId_fkey" FOREIGN KEY ("platformConnectionId") REFERENCES "PlatformConnection"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "PublishJob" ADD CONSTRAINT "PublishJob_createdById_fkey" FOREIGN KEY ("createdById") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "MetricSnapshot" ADD CONSTRAINT "MetricSnapshot_publishJobId_fkey" FOREIGN KEY ("publishJobId") REFERENCES "PublishJob"("id") ON DELETE CASCADE ON UPDATE CASCADE;

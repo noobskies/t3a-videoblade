@@ -72,13 +72,13 @@ export function PublishPage({ id }: { id: string }) {
   );
 
   // Get video details
-  const [video] = api.video.get.useSuspenseQuery({ id });
+  const [video] = api.post.get.useSuspenseQuery({ id });
 
   // Get platform connections
   const [platforms] = api.platform.list.useSuspenseQuery();
 
   // Publish mutation
-  const publishMultiMutation = api.video.publishMulti.useMutation();
+  const publishMultiMutation = api.post.publishMulti.useMutation();
 
   const youtubeConnected = platforms.some((c) => c.platform === "YOUTUBE");
   const tiktokConnected = platforms.some((c) => c.platform === "TIKTOK");
@@ -156,7 +156,7 @@ export function PublishPage({ id }: { id: string }) {
       });
 
       const result = await publishMultiMutation.mutateAsync({
-        videoId: id,
+        postId: id,
         platforms: selectedPlatforms,
         metadata: metadataPayload,
         scheduledPublishAt:

@@ -1,4 +1,4 @@
-import { BatchVideoUpload } from "@/app/_components/batch-video-upload";
+import { BatchMediaUpload } from "@/app/_components/batch-media-upload";
 import { Container, Stack } from "@mui/material";
 
 export default function UploadPage() {
@@ -9,7 +9,7 @@ export default function UploadPage() {
         spacing={4}
         sx={{ minHeight: "80vh", justifyContent: "center" }}
       >
-        <BatchVideoUpload />
+        <BatchMediaUpload />
       </Stack>
     </Container>
   );

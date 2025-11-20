@@ -121,14 +121,6 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
-exports.Prisma.PostScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  createdById: 'createdById'
-};
-
 exports.Prisma.AccountScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -175,10 +167,12 @@ exports.Prisma.VerificationScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
-exports.Prisma.VideoScalarFieldEnum = {
+exports.Prisma.PostScalarFieldEnum = {
   id: 'id',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
+  type: 'type',
+  content: 'content',
   s3Key: 's3Key',
   s3Bucket: 's3Bucket',
   fileName: 'fileName',
@@ -227,7 +221,7 @@ exports.Prisma.PublishJobScalarFieldEnum = {
   retryCount: 'retryCount',
   isUpdate: 'isUpdate',
   updateTargetVideoId: 'updateTargetVideoId',
-  videoId: 'videoId',
+  postId: 'postId',
   platformConnectionId: 'platformConnectionId',
   createdById: 'createdById'
 };
@@ -267,6 +261,12 @@ exports.Prisma.JsonNullValueFilter = {
   JsonNull: Prisma.JsonNull,
   AnyNull: Prisma.AnyNull
 };
+exports.MediaType = exports.$Enums.MediaType = {
+  VIDEO: 'VIDEO',
+  IMAGE: 'IMAGE',
+  TEXT: 'TEXT'
+};
+
 exports.VideoPrivacy = exports.$Enums.VideoPrivacy = {
   PUBLIC: 'PUBLIC',
   UNLISTED: 'UNLISTED',
@@ -292,12 +292,11 @@ exports.PublishStatus = exports.$Enums.PublishStatus = {
 };
 
 exports.Prisma.ModelName = {
-  Post: 'Post',
   Account: 'Account',
   Session: 'Session',
   User: 'User',
   Verification: 'Verification',
-  Video: 'Video',
+  Post: 'Post',
   PlatformConnection: 'PlatformConnection',
   PublishJob: 'PublishJob',
   MetricSnapshot: 'MetricSnapshot'

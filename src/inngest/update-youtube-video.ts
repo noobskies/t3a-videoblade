@@ -30,7 +30,7 @@ export const updateYouTubeVideoFunction = inngest.createFunction(
       const job = await db.publishJob.findUnique({
         where: { id: jobId },
         include: {
-          video: true,
+          post: true,
           platformConnection: true,
         },
       });
@@ -65,12 +65,12 @@ export const updateYouTubeVideoFunction = inngest.createFunction(
           accessToken: job.platformConnection.accessToken,
           refreshToken: job.platformConnection.refreshToken,
           videoId: job.updateTargetVideoId!, // YouTube video ID to update
-          title: job.title ?? job.video.title,
-          description: job.description ?? job.video.description,
-          tags: job.tags ?? job.video.tags,
+          title: job.title ?? job.post.title,
+          description: job.description ?? job.post.description,
+          tags: job.tags ?? job.post.tags,
           privacy:
             (job.privacy?.toLowerCase() as "public" | "unlisted" | "private") ??
-            (job.video.privacy.toLowerCase() as
+            (job.post.privacy.toLowerCase() as
               | "public"
               | "unlisted"
               | "private"),

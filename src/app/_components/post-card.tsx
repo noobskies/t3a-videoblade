@@ -31,18 +31,18 @@ import {
 } from "@mui/material";
 import type { VideoListItem } from "@/lib/types";
 
-type VideoCardProps = {
+type PostCardProps = {
   video: VideoListItem;
   onDelete: () => void;
 };
 
-export function VideoCard({ video, onDelete }: VideoCardProps) {
+export function PostCard({ video, onDelete }: PostCardProps) {
   const [isDeleting, setIsDeleting] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [deleteFromPlatforms, setDeleteFromPlatforms] = useState(false);
 
-  const deleteVideo = api.video.delete.useMutation();
-  const retryPublish = api.video.retryPublish.useMutation();
+  const deleteVideo = api.post.delete.useMutation();
+  const retryPublish = api.post.retryPublish.useMutation();
 
   const hasPublishedJobs = video.publishJobs.some(
     (job) => job.status === "COMPLETED",
@@ -277,7 +277,7 @@ export function VideoCard({ video, onDelete }: VideoCardProps) {
         </Button>
         <IconButton
           aria-label="edit"
-          href={`/video/${video.id}/edit`}
+          href={`/post/${video.id}/edit`}
           size="small"
           sx={{ ml: 1 }}
         >

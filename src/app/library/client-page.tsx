@@ -10,7 +10,7 @@
 
 import { api } from "@/trpc/react";
 import type { VideoList } from "@/lib/types";
-import { VideoCard } from "@/app/_components/video-card";
+import { PostCard } from "@/app/_components/post-card";
 import { CloudUpload as Upload, Movie as VideoIcon } from "@mui/icons-material";
 import Link from "next/link";
 import { Button, Container, Typography, Box, Stack, Grid } from "@mui/material";
@@ -25,7 +25,7 @@ function isValidVideoList(data: unknown): data is VideoList {
 
 export function LibraryPage() {
   // Use Suspense query to leverage loading.tsx automatically
-  const [videoList, queryUtils] = api.video.list.useSuspenseQuery();
+  const [videoList, queryUtils] = api.post.list.useSuspenseQuery();
 
   // Validate data shape - this is an actual error if it fails
   if (!isValidVideoList(videoList)) {
@@ -96,7 +96,7 @@ function VideoGrid({
     <Grid container spacing={3}>
       {videos.map((video) => (
         <Grid key={video.id} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
-          <VideoCard video={video} onDelete={onRefresh} />
+          <PostCard video={video} onDelete={onRefresh} />
         </Grid>
       ))}
     </Grid>

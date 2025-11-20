@@ -17,7 +17,7 @@ export const publishToTikTokFunction = inngest.createFunction(
       const job = await db.publishJob.findUnique({
         where: { id: jobId },
         include: {
-          video: true,
+          post: true,
           platformConnection: true,
         },
       });
@@ -56,16 +56,23 @@ export const publishToTikTokFunction = inngest.createFunction(
         // Map privacy settings
         let privacy = "SELF_ONLY";
         if (job.privacy === "PUBLIC") privacy = "PUBLIC_TO_EVERYONE";
-        else if (job.privacy === "MUTUAL_FOLLOW_FRIENDS") privacy = "MUTUAL_FOLLOW_FRIENDS";
-        
+        else if (job.privacy === "MUTUAL_FOLLOW_FRIENDS")
+          privacy = "MUTUAL_FOLLOW_FRIENDS";
+
         // TikTok doesn't have "UNLISTED", map to SELF_ONLY (Private)
-        
+
+        // Ensure s3Key is present
+        if (!job.post.s3Key) throw new Error("Missing S3 key for video post");
+
         return await publishToTikTok({
           accessToken: job.platformConnection.accessToken,
-          s3Key: job.video.s3Key,
-          title: job.title ?? job.video.title,
-          description: job.description ?? job.video.description,
-          privacy: privacy as "PUBLIC_TO_EVERYONE" | "MUTUAL_FOLLOW_FRIENDS" | "SELF_ONLY",
+          s3Key: job.post.s3Key,
+          title: job.title ?? job.post.title,
+          description: job.description ?? job.post.description,
+          privacy: privacy as
+            | "PUBLIC_TO_EVERYONE"
+            | "MUTUAL_FOLLOW_FRIENDS"
+            | "SELF_ONLY",
         });
       } catch (error: unknown) {
         console.error("TikTok upload failed:", error);
@@ -73,7 +80,8 @@ export const publishToTikTokFunction = inngest.createFunction(
           where: { id: jobId },
           data: {
             status: "FAILED",
-            errorMessage: error instanceof Error ? error.message : "Unknown error",
+            errorMessage:
+              error instanceof Error ? error.message : "Unknown error",
             completedAt: new Date(),
           },
         });
@@ -94,35 +102,38 @@ export const publishToTikTokFunction = inngest.createFunction(
     // Step 6: Poll for status (TikTok processing takes time)
     // This might need a separate delayed function or loop with sleep
     // For MVP, we mark as "PROCESSING" and wait
-    
+
     await step.sleep("wait-for-processing", "30s");
-    
+
     const status = await step.run("check-status", async () => {
-       const result = await checkTikTokStatus(job.platformConnection.accessToken, publishId);
-       
-       if (result.data.status === 'PUBLISH_COMPLETE') {
-           await db.publishJob.update({
-            where: { id: jobId },
-            data: {
-              status: "COMPLETED",
-              completedAt: new Date(),
-              // publicaly_available_post_id might be available now
-            },
-          });
-       } else if (result.data.status === 'FAILED') {
-           const errorMsg = `TikTok processing failed: ${result.data.fail_reason}`;
-           await db.publishJob.update({
-            where: { id: jobId },
-            data: {
-              status: "FAILED",
-              errorMessage: errorMsg,
-              completedAt: new Date(),
-            },
-          });
-           throw new Error(errorMsg);
-       }
-       
-       return result.data;
+      const result = await checkTikTokStatus(
+        job.platformConnection.accessToken,
+        publishId,
+      );
+
+      if (result.data.status === "PUBLISH_COMPLETE") {
+        await db.publishJob.update({
+          where: { id: jobId },
+          data: {
+            status: "COMPLETED",
+            completedAt: new Date(),
+            // publicaly_available_post_id might be available now
+          },
+        });
+      } else if (result.data.status === "FAILED") {
+        const errorMsg = `TikTok processing failed: ${result.data.fail_reason}`;
+        await db.publishJob.update({
+          where: { id: jobId },
+          data: {
+            status: "FAILED",
+            errorMessage: errorMsg,
+            completedAt: new Date(),
+          },
+        });
+        throw new Error(errorMsg);
+      }
+
+      return result.data;
     });
 
     return status;

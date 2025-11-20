@@ -37,16 +37,10 @@ enum VideoPrivacy {
     MUTUAL_FOLLOW_FRIENDS
 }
 
-model Post {
-    id        Int      @id @default(autoincrement())
-    name      String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
-    createdBy   User   @relation(fields: [createdById], references: [id])
-    createdById String
-
-    @@index([name])
+enum MediaType {
+    VIDEO
+    IMAGE
+    TEXT
 }
 
 // Better Auth schema - clean implementation
@@ -93,10 +87,9 @@ model User {
     updatedAt     DateTime  @updatedAt
     accounts      Account[]
     sessions      Session[]
-    posts         Post[]
 
     // VideoBlade relations
-    videos             Video[]
+    posts              Post[]
     platformConnections PlatformConnection[]
     publishJobs        PublishJob[]
 }
@@ -112,18 +105,24 @@ model Verification {
     @@unique([identifier, value])
 }
 
-// VideoBlade Models
-model Video {
+// VideoBlade Models - Renamed Video to Post for Multi-Format Support
+model Post {
     id        String   @id @default(cuid())
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    // S3 Storage
-    s3Key       String
-    s3Bucket    String
-    fileName    String
-    fileSize    BigInt
-    mimeType    String
+    // Media Type
+    type MediaType @default(VIDEO)
+
+    // Content (for Text posts)
+    content String? @db.Text
+
+    // S3 Storage (Optional for Text posts)
+    s3Key       String?
+    s3Bucket    String?
+    fileName    String?
+    fileSize    BigInt?
+    mimeType    String?
     duration    Int?
 
     // Metadata
@@ -141,6 +140,7 @@ model Video {
 
     @@index([createdById])
     @@index([createdAt])
+    @@index([type])
 }
 
 model PlatformConnection {
@@ -185,7 +185,7 @@ model PublishJob {
     platform Platform
     status   PublishStatus @default(PENDING)
 
-    // Platform-specific metadata (overrides from Video)
+    // Platform-specific metadata (overrides from Post)
     title       String?
     description String?
     tags        String?
@@ -202,14 +202,15 @@ model PublishJob {
     errorMessage     String?
     retryCount       Int     @default(0)
 
-    // Update logic (for editing already-published videos)
+    // Update logic (for editing already-published posts)
     isUpdate           Boolean @default(false)
     updateTargetVideoId String?
 
     // Relationships
     metricSnapshots MetricSnapshot[]
-    video           Video            @relation(fields: [videoId], references: [id], onDelete: Cascade)
-    videoId         String
+    
+    post    Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+    postId  String
 
     platformConnection   PlatformConnection @relation(fields: [platformConnectionId], references: [id], onDelete: Cascade)
     platformConnectionId String
@@ -217,7 +218,7 @@ model PublishJob {
     createdBy   User   @relation(fields: [createdById], references: [id], onDelete: Cascade)
     createdById String
 
-    @@index([videoId])
+    @@index([postId])
     @@index([platformConnectionId])
     @@index([createdById])
     @@index([status])

@@ -30,7 +30,7 @@ export const publishToYouTubeFunction = inngest.createFunction(
       const job = await db.publishJob.findUnique({
         where: { id: jobId },
         include: {
-          video: true,
+          post: true,
           platformConnection: true,
         },
       });
@@ -68,16 +68,19 @@ export const publishToYouTubeFunction = inngest.createFunction(
     // Step 4: Upload video to YouTube
     const result = await step.run("upload-video", async () => {
       try {
+        // Ensure s3Key is present (it should be for VIDEO type)
+        if (!job.post.s3Key) throw new Error("Missing S3 key for video post");
+
         const result = await uploadVideoToYouTube({
           accessToken: job.platformConnection.accessToken,
           refreshToken: job.platformConnection.refreshToken,
-          s3Key: job.video.s3Key,
-          title: job.title ?? job.video.title,
-          description: job.description ?? job.video.description,
-          tags: job.tags ?? job.video.tags,
+          s3Key: job.post.s3Key,
+          title: job.title ?? job.post.title,
+          description: job.description ?? job.post.description,
+          tags: job.tags ?? job.post.tags,
           privacy:
             (job.privacy?.toLowerCase() as "public" | "unlisted" | "private") ??
-            (job.video.privacy.toLowerCase() as
+            (job.post.privacy.toLowerCase() as
               | "public"
               | "unlisted"
               | "private"),
@@ -117,13 +120,13 @@ export const publishToYouTubeFunction = inngest.createFunction(
       });
     });
 
-    // Step 6: Update video with thumbnail (if successful)
+    // Step 6: Update post with thumbnail (if successful)
     if (result.success && result.videoId) {
       await step.run("update-thumbnail", async () => {
         const thumbnailUrl = `https://img.youtube.com/vi/${result.videoId}/mqdefault.jpg`;
 
-        await db.video.update({
-          where: { id: job.videoId },
+        await db.post.update({
+          where: { id: job.postId },
           data: { thumbnailUrl },
         });
       });

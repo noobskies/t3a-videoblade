@@ -11,17 +11,15 @@ import {
   TextField,
   Typography,
   Alert,
-  List,
-  ListItem,
   IconButton,
   Card,
   CardContent,
   Grid,
-  Divider,
 } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import DeleteIcon from "@mui/icons-material/Delete";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import InsertPhotoIcon from "@mui/icons-material/InsertPhoto";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import ErrorIcon from "@mui/icons-material/Error";
 
@@ -37,16 +35,13 @@ interface UploadQueueItem {
   thumbnailBlob?: Blob | null;
 }
 
-export function BatchVideoUpload() {
+export function BatchMediaUpload() {
   const [queue, setQueue] = useState<UploadQueueItem[]>([]);
   const [isGlobalUploading, setIsGlobalUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // We need a hidden video element to capture thumbnails
-  const thumbnailVideoRef = useRef<HTMLVideoElement>(null);
-
-  const getUploadUrl = api.video.getUploadUrl.useMutation();
-  const confirmUpload = api.video.confirmUpload.useMutation();
+  const getUploadUrl = api.post.getUploadUrl.useMutation();
+  const confirmUpload = api.post.confirmUpload.useMutation();
 
   // Clean up preview URLs on unmount
   useEffect(() => {
@@ -87,8 +82,8 @@ export function BatchVideoUpload() {
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    const droppedFiles = Array.from(e.dataTransfer.files).filter((f) =>
-      f.type.startsWith("video/"),
+    const droppedFiles = Array.from(e.dataTransfer.files).filter(
+      (f) => f.type.startsWith("video/") || f.type.startsWith("image/"),
     );
     if (droppedFiles.length > 0) {
       addFiles(droppedFiles);
@@ -109,7 +104,7 @@ export function BatchVideoUpload() {
     );
   };
 
-  // Capture thumbnail helper
+  // Capture thumbnail helper (only for videos)
   const captureThumbnail = async (videoUrl: string): Promise<Blob | null> => {
     return new Promise((resolve) => {
       const video = document.createElement("video");
@@ -199,11 +194,14 @@ export function BatchVideoUpload() {
         error: undefined,
       });
 
-      // 1. Capture Thumbnail
+      const isVideo = item.file.type.startsWith("video/");
+
+      // 1. Capture Thumbnail (only for videos)
       let thumbnailBlob = item.thumbnailBlob;
-      if (!thumbnailBlob && item.previewUrl) {
+      if (isVideo && !thumbnailBlob && item.previewUrl) {
         thumbnailBlob = await captureThumbnail(item.previewUrl);
       }
+      // For images, we don't need a separate thumbnail upload (handled in confirmUpload logic if needed, or main file is thumb)
 
       // 2. Get Presigned URLs
       const { uploadUrl, s3Key, s3Bucket, thumbnailUploadUrl, thumbnailS3Key } =
@@ -214,12 +212,12 @@ export function BatchVideoUpload() {
           thumbnailType: thumbnailBlob ? "image/jpeg" : undefined,
         });
 
-      // 3. Upload Video
+      // 3. Upload Main File
       await uploadToS3(uploadUrl, item.file, item.file.type, (percent) => {
         updateItem(item.id, { progress: percent });
       });
 
-      // 4. Upload Thumbnail (if exists)
+      // 4. Upload Thumbnail (if exists and needed)
       if (thumbnailBlob && thumbnailUploadUrl) {
         await uploadToS3(thumbnailUploadUrl, thumbnailBlob, "image/jpeg");
       }
@@ -253,9 +251,7 @@ export function BatchVideoUpload() {
       (i) => i.status === "idle" || i.status === "error",
     );
 
-    // Process sequentially for now to allow one progress bar to finish before next
-    // Or we can do `Promise.all(pendingItems.map(processUpload))` for concurrency
-    // Let's do sequential to be safe on bandwidth for MVP
+    // Process sequentially for now
     for (const item of pendingItems) {
       await processUpload(item);
     }
@@ -292,7 +288,7 @@ export function BatchVideoUpload() {
         <input
           type="file"
           multiple
-          accept="video/*"
+          accept="video/*,image/*"
           onChange={handleFileChange}
           disabled={isGlobalUploading}
           style={{ display: "none" }}
@@ -300,10 +296,10 @@ export function BatchVideoUpload() {
         />
         <CloudUploadIcon sx={{ fontSize: 64, color: "primary.main", mb: 2 }} />
         <Typography variant="h6" gutterBottom>
-          Drag & Drop Videos Here
+          Drag & Drop Files Here
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          or click to browse multiple files
+          Supports Videos and Images
         </Typography>
       </Paper>
 
@@ -336,152 +332,187 @@ export function BatchVideoUpload() {
 
       {/* Queue List */}
       <Stack spacing={2}>
-        {queue.map((item) => (
-          <Card key={item.id} variant="outlined">
-            <CardContent sx={{ p: 2, "&:last-child": { pb: 2 } }}>
-              <Grid container spacing={2} alignItems="center">
-                {/* Thumbnail Preview */}
-                <Grid size={{ xs: 4, sm: 3, md: 2 }}>
-                  <Box
-                    sx={{
-                      width: "100%",
-                      paddingTop: "56.25%",
-                      position: "relative",
-                      bgcolor: "black",
-                      borderRadius: 1,
-                      overflow: "hidden",
-                    }}
-                  >
-                    {item.previewUrl ? (
-                      <video
-                        src={item.previewUrl}
-                        style={{
-                          position: "absolute",
-                          top: 0,
-                          left: 0,
-                          width: "100%",
-                          height: "100%",
-                          objectFit: "cover",
-                        }}
-                      />
-                    ) : (
-                      <Box
-                        sx={{
-                          position: "absolute",
-                          top: 0,
-                          left: 0,
-                          width: "100%",
-                          height: "100%",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
-                      >
-                        <PlayArrowIcon sx={{ color: "white" }} />
-                      </Box>
-                    )}
-                    {item.status === "success" && (
-                      <Box
-                        sx={{
-                          position: "absolute",
-                          inset: 0,
-                          bgcolor: "rgba(0,0,0,0.5)",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
-                      >
-                        <CheckCircleIcon color="success" fontSize="large" />
-                      </Box>
-                    )}
-                  </Box>
-                </Grid>
+        {queue.map((item) => {
+          const isVideo = item.file.type.startsWith("video/");
+          const isImage = item.file.type.startsWith("image/");
 
-                {/* Inputs */}
-                <Grid size={{ xs: 8, sm: 9, md: 10 }}>
-                  <Stack spacing={2}>
+          return (
+            <Card key={item.id} variant="outlined">
+              <CardContent sx={{ p: 2, "&:last-child": { pb: 2 } }}>
+                <Grid container spacing={2} alignItems="center">
+                  {/* Thumbnail Preview */}
+                  <Grid size={{ xs: 4, sm: 3, md: 2 }}>
                     <Box
-                      sx={{ display: "flex", gap: 2, alignItems: "flex-start" }}
+                      sx={{
+                        width: "100%",
+                        paddingTop: "56.25%",
+                        position: "relative",
+                        bgcolor: "black",
+                        borderRadius: 1,
+                        overflow: "hidden",
+                      }}
                     >
+                      {item.previewUrl ? (
+                        isImage ? (
+                          <img
+                            src={item.previewUrl}
+                            style={{
+                              position: "absolute",
+                              top: 0,
+                              left: 0,
+                              width: "100%",
+                              height: "100%",
+                              objectFit: "cover",
+                            }}
+                            alt="Preview"
+                          />
+                        ) : (
+                          <video
+                            src={item.previewUrl}
+                            style={{
+                              position: "absolute",
+                              top: 0,
+                              left: 0,
+                              width: "100%",
+                              height: "100%",
+                              objectFit: "cover",
+                            }}
+                          />
+                        )
+                      ) : (
+                        <Box
+                          sx={{
+                            position: "absolute",
+                            top: 0,
+                            left: 0,
+                            width: "100%",
+                            height: "100%",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
+                          {isVideo ? (
+                            <PlayArrowIcon sx={{ color: "white" }} />
+                          ) : (
+                            <InsertPhotoIcon sx={{ color: "white" }} />
+                          )}
+                        </Box>
+                      )}
+                      {item.status === "success" && (
+                        <Box
+                          sx={{
+                            position: "absolute",
+                            inset: 0,
+                            bgcolor: "rgba(0,0,0,0.5)",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <CheckCircleIcon color="success" fontSize="large" />
+                        </Box>
+                      )}
+                    </Box>
+                  </Grid>
+
+                  {/* Inputs */}
+                  <Grid size={{ xs: 8, sm: 9, md: 10 }}>
+                    <Stack spacing={2}>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          gap: 2,
+                          alignItems: "flex-start",
+                        }}
+                      >
+                        <TextField
+                          label="Title"
+                          value={item.title}
+                          onChange={(e) =>
+                            updateItem(item.id, { title: e.target.value })
+                          }
+                          disabled={
+                            item.status !== "idle" && item.status !== "error"
+                          }
+                          size="small"
+                          fullWidth
+                        />
+                        <IconButton
+                          color="error"
+                          onClick={() => removeItem(item.id)}
+                          disabled={
+                            item.status === "uploading" ||
+                            item.status === "success"
+                          }
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      </Box>
+
                       <TextField
-                        label="Title"
-                        value={item.title}
+                        label="Description"
+                        value={item.description}
                         onChange={(e) =>
-                          updateItem(item.id, { title: e.target.value })
+                          updateItem(item.id, { description: e.target.value })
                         }
                         disabled={
                           item.status !== "idle" && item.status !== "error"
                         }
                         size="small"
                         fullWidth
+                        multiline
+                        rows={2}
                       />
-                      <IconButton
-                        color="error"
-                        onClick={() => removeItem(item.id)}
-                        disabled={
-                          item.status === "uploading" ||
-                          item.status === "success"
-                        }
-                      >
-                        <DeleteIcon />
-                      </IconButton>
-                    </Box>
 
-                    <TextField
-                      label="Description"
-                      value={item.description}
-                      onChange={(e) =>
-                        updateItem(item.id, { description: e.target.value })
-                      }
-                      disabled={
-                        item.status !== "idle" && item.status !== "error"
-                      }
-                      size="small"
-                      fullWidth
-                      multiline
-                      rows={2}
-                    />
-
-                    {/* Progress / Status */}
-                    <Box>
-                      {item.status === "uploading" && (
-                        <Box
-                          sx={{ display: "flex", alignItems: "center", gap: 2 }}
-                        >
-                          <LinearProgress
-                            variant="determinate"
-                            value={item.progress}
-                            sx={{ flexGrow: 1 }}
-                          />
-                          <Typography variant="caption" color="text.secondary">
-                            {item.progress}%
+                      {/* Progress / Status */}
+                      <Box>
+                        {item.status === "uploading" && (
+                          <Box
+                            sx={{
+                              display: "flex",
+                              alignItems: "center",
+                              gap: 2,
+                            }}
+                          >
+                            <LinearProgress
+                              variant="determinate"
+                              value={item.progress}
+                              sx={{ flexGrow: 1 }}
+                            />
+                            <Typography
+                              variant="caption"
+                              color="text.secondary"
+                            >
+                              {item.progress}%
+                            </Typography>
+                          </Box>
+                        )}
+                        {item.status === "error" && (
+                          <Alert
+                            severity="error"
+                            icon={<ErrorIcon fontSize="inherit" />}
+                          >
+                            {item.error ?? "Upload failed"}
+                          </Alert>
+                        )}
+                        {item.status === "success" && (
+                          <Typography
+                            variant="caption"
+                            color="success.main"
+                            fontWeight="bold"
+                          >
+                            Upload Complete
                           </Typography>
-                        </Box>
-                      )}
-                      {item.status === "error" && (
-                        <Alert
-                          severity="error"
-                          icon={<ErrorIcon fontSize="inherit" />}
-                        >
-                          {item.error ?? "Upload failed"}
-                        </Alert>
-                      )}
-                      {item.status === "success" && (
-                        <Typography
-                          variant="caption"
-                          color="success.main"
-                          fontWeight="bold"
-                        >
-                          Upload Complete
-                        </Typography>
-                      )}
-                    </Box>
-                  </Stack>
+                        )}
+                      </Box>
+                    </Stack>
+                  </Grid>
                 </Grid>
-              </Grid>
-            </CardContent>
-          </Card>
-        ))}
+              </CardContent>
+            </Card>
+          );
+        })}
       </Stack>
     </Stack>
   );
