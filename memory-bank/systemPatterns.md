@@ -669,6 +669,30 @@ export default function Page() {
 - Clear type contracts
 - Better error messages
 
+### Smart Queue Pattern (Phase 4)
+
+**Problem**: Users want to "set and forget" posts without manually picking times for every single piece of content.
+
+**Solution**: A "Smart Queue" that automatically assigns the next available slot based on a pre-defined schedule.
+
+**Components**:
+
+1.  **`PostingSchedule` Model**: Stores the schedule configuration (days and times) for a specific `PlatformConnection`.
+2.  **`QueueService`**: A backend service class that handles the slot calculation algorithm.
+    - **Input**: `PlatformConnectionId`
+    - **Logic**:
+      - Fetches the user's schedule.
+      - Fetches all _future_ jobs for that platform (status `SCHEDULED` or `PLATFORM_SCHEDULED`).
+      - Iterates through potential slots starting from `NOW`.
+      - Skips slots that are already occupied by a job.
+      - Returns the first free timestamp.
+3.  **Status Logic**:
+    - **`PENDING`**: Job is ready to be processed immediately (or as soon as `scheduledFor` arrives).
+    - **`SCHEDULED`**: Job is waiting for its time.
+    - **Cron Job**: `check-scheduled-jobs` runs every 5 minutes. It looks for jobs with status `PENDING` OR `SCHEDULED` where `scheduledFor <= NOW`. This effectively activates the queued jobs when their time comes.
+
+**Benefit**: Decouples the "planning" (content creation) from the "scheduling" (time selection).
+
 ## Conventions
 
 ### File Naming

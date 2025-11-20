@@ -123,6 +123,14 @@
 - Used in tRPC input validation
 - Used in environment variable validation (`src/env.js`)
 
+### Date Handling
+
+**Dayjs 1.11.19**
+
+- Lightweight date manipulation
+- **Plugins**: `utc`, `timezone` used for Smart Queue logic.
+- **Critical**: All scheduling logic relies on Dayjs timezone conversion to match user's local time preference with UTC storage.
+
 ### State Management
 
 **TanStack Query 5.69.0** (React Query)
