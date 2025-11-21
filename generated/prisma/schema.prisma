@@ -75,6 +75,8 @@ model Session {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  activeOrganizationId String?
+
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
@@ -89,10 +91,8 @@ model User {
   accounts      Account[]
   sessions      Session[]
 
-  // VideoBlade relations
-  posts               Post[]
-  platformConnections PlatformConnection[]
-  publishJobs         PublishJob[]
+  members     Member[]
+  invitations Invitation[]
 }
 
 model Verification {
@@ -104,6 +104,48 @@ model Verification {
   updatedAt  DateTime @updatedAt
 
   @@unique([identifier, value])
+}
+
+// Organization Models (Phase 7)
+model Organization {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String?  @unique
+  logo      String?
+  createdAt DateTime @default(now())
+  metadata  String?
+
+  members     Member[]
+  invitations Invitation[]
+
+  // VideoBlade Relations
+  posts               Post[]
+  platformConnections PlatformConnection[]
+}
+
+model Member {
+  id             String       @id @default(cuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  userId         String
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role           String
+  createdAt      DateTime     @default(now())
+
+  @@unique([organizationId, userId])
+}
+
+model Invitation {
+  id             String       @id @default(cuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  email          String
+  role           String?
+  status         String
+  expiresAt      DateTime
+  inviterId      String
+  user           User         @relation(fields: [inviterId], references: [id], onDelete: Cascade)
+  createdAt      DateTime     @default(now())
 }
 
 // VideoBlade Models - Renamed Video to Post for Multi-Format Support
@@ -134,14 +176,14 @@ model Post {
   thumbnailUrl String?
   privacy      VideoPrivacy @default(UNLISTED)
 
-  // Relationships
-  createdBy   User   @relation(fields: [createdById], references: [id], onDelete: Cascade)
-  createdById String
+  // Ownership
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
 
   publishJobs PublishJob[]
   comments    Comment[]
 
-  @@index([createdById])
+  @@index([organizationId])
   @@index([createdAt])
   @@index([type])
 }
@@ -167,17 +209,17 @@ model PlatformConnection {
   // Status
   isActive Boolean @default(true)
 
-  // Relationships
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String
+  // Ownership
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
 
   publishJobs     PublishJob[]
   postingSchedule PostingSchedule?
   comments        Comment[]
 
-  // One connection per platform per user
-  @@unique([userId, platform])
-  @@index([userId])
+  // One connection per platform per organization
+  @@unique([organizationId, platform])
+  @@index([organizationId])
   @@index([platform])
 }
 
@@ -220,12 +262,10 @@ model PublishJob {
   platformConnection   PlatformConnection @relation(fields: [platformConnectionId], references: [id], onDelete: Cascade)
   platformConnectionId String
 
-  createdBy   User   @relation(fields: [createdById], references: [id], onDelete: Cascade)
-  createdById String
+  // Removed: createdBy (User) - ownership is via Post -> Organization
 
   @@index([postId])
   @@index([platformConnectionId])
-  @@index([createdById])
   @@index([status])
   @@index([scheduledFor])
 }

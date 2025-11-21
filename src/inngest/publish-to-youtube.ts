@@ -75,7 +75,7 @@ export const publishToYouTubeFunction = inngest.createFunction(
           accessToken: job.platformConnection.accessToken,
           refreshToken: job.platformConnection.refreshToken,
           s3Key: job.post.s3Key,
-          title: job.title ?? job.post.title,
+          title: job.title ?? job.post.title ?? "Untitled",
           description: job.description ?? job.post.description,
           tags: job.tags ?? job.post.tags,
           privacy:

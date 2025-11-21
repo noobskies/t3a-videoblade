@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
+import { createTRPCRouter, organizationProcedure } from "@/server/api/trpc";
 import { TRPCError } from "@trpc/server";
 import { updateVideoOnYouTube } from "@/lib/youtube";
 import { updateVideoOnVimeo } from "@/lib/vimeo";
@@ -8,7 +8,7 @@ export const calendarRouter = createTRPCRouter({
   /**
    * Get calendar events (publish jobs) within a date range
    */
-  getEvents: protectedProcedure
+  getEvents: organizationProcedure
     .input(
       z.object({
         start: z.date(),
@@ -18,7 +18,9 @@ export const calendarRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       const jobs = await ctx.db.publishJob.findMany({
         where: {
-          createdById: ctx.session.user.id,
+          platformConnection: {
+            organizationId: ctx.session.activeOrganizationId,
+          },
           OR: [
             // Scenario 1: Scheduled jobs (any status)
             {
@@ -106,7 +108,7 @@ export const calendarRouter = createTRPCRouter({
   /**
    * Reschedule a job
    */
-  rescheduleEvent: protectedProcedure
+  rescheduleEvent: organizationProcedure
     .input(
       z.object({
         jobId: z.string().cuid(),
@@ -119,7 +121,11 @@ export const calendarRouter = createTRPCRouter({
         include: { platformConnection: true },
       });
 
-      if (!job || job.createdById !== ctx.session.user.id) {
+      if (
+        !job ||
+        job.platformConnection.organizationId !==
+          ctx.session.activeOrganizationId
+      ) {
         throw new TRPCError({ code: "NOT_FOUND", message: "Job not found" });
       }
 

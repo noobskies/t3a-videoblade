@@ -1,11 +1,11 @@
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
-import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
+import { createTRPCRouter, organizationProcedure } from "@/server/api/trpc";
 import { Platform } from "../../../../generated/prisma";
 import { SyncService } from "@/server/lib/comments/sync-service";
 
 export const commentRouter = createTRPCRouter({
-  list: protectedProcedure
+  list: organizationProcedure
     .input(
       z.object({
         limit: z.number().min(1).max(100).default(20),
@@ -33,7 +33,7 @@ export const commentRouter = createTRPCRouter({
         cursor: cursor ? { id: cursor } : undefined,
         where: {
           platformConnection: {
-            userId: ctx.session.user.id,
+            organizationId: ctx.session.activeOrganizationId,
           },
           platformConnectionId: platformConnectionId,
           platform: platform,
@@ -80,14 +80,14 @@ export const commentRouter = createTRPCRouter({
       };
     }),
 
-  resolve: protectedProcedure
+  resolve: organizationProcedure
     .input(z.object({ id: z.string(), isResolved: z.boolean() }))
     .mutation(async ({ ctx, input }) => {
       return ctx.db.comment.update({
         where: {
           id: input.id,
           platformConnection: {
-            userId: ctx.session.user.id,
+            organizationId: ctx.session.activeOrganizationId,
           },
         },
         data: {
@@ -96,14 +96,14 @@ export const commentRouter = createTRPCRouter({
       });
     }),
 
-  hide: protectedProcedure
+  hide: organizationProcedure
     .input(z.object({ id: z.string(), isHidden: z.boolean() }))
     .mutation(async ({ ctx, input }) => {
       return ctx.db.comment.update({
         where: {
           id: input.id,
           platformConnection: {
-            userId: ctx.session.user.id,
+            organizationId: ctx.session.activeOrganizationId,
           },
         },
         data: {
@@ -112,10 +112,13 @@ export const commentRouter = createTRPCRouter({
       });
     }),
 
-  sync: protectedProcedure.mutation(async ({ ctx }) => {
+  sync: organizationProcedure.mutation(async ({ ctx }) => {
     // Trigger sync for all user connections
     const connections = await ctx.db.platformConnection.findMany({
-      where: { userId: ctx.session.user.id, isActive: true },
+      where: {
+        organizationId: ctx.session.activeOrganizationId,
+        isActive: true,
+      },
     });
 
     const service = new SyncService();
@@ -140,7 +143,7 @@ export const commentRouter = createTRPCRouter({
     return { success: true, syncedCount: count };
   }),
 
-  reply: protectedProcedure
+  reply: organizationProcedure
     .input(z.object({ commentId: z.string(), content: z.string().min(1) }))
     .mutation(async ({ ctx, input }) => {
       // 1. Fetch original comment and its connection
@@ -159,7 +162,10 @@ export const commentRouter = createTRPCRouter({
       }
 
       // Ensure user owns this connection
-      if (comment.platformConnection.userId !== ctx.session.user.id) {
+      if (
+        comment.platformConnection.organizationId !==
+        ctx.session.activeOrganizationId
+      ) {
         throw new TRPCError({
           code: "UNAUTHORIZED",
           message: "You do not own this connection",

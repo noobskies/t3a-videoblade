@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
+import { createTRPCRouter, organizationProcedure } from "@/server/api/trpc";
 import { TRPCError } from "@trpc/server";
 import { getLinkedInProfile } from "@/lib/linkedin";
 
@@ -7,7 +7,7 @@ export const platformRouter = createTRPCRouter({
   /**
    * Get scheduled jobs for a connection (Queue)
    */
-  getScheduledJobs: protectedProcedure
+  getScheduledJobs: organizationProcedure
     .input(z.object({ connectionId: z.string().cuid() }))
     .query(async ({ ctx, input }) => {
       // Verify ownership
@@ -15,7 +15,10 @@ export const platformRouter = createTRPCRouter({
         where: { id: input.connectionId },
       });
 
-      if (!connection || connection.userId !== ctx.session.user.id) {
+      if (
+        !connection ||
+        connection.organizationId !== ctx.session.activeOrganizationId
+      ) {
         throw new TRPCError({
           code: "FORBIDDEN",
           message: "Platform connection not found or unauthorized",
@@ -48,10 +51,10 @@ export const platformRouter = createTRPCRouter({
   /**
    * Get user's connected platforms
    */
-  list: protectedProcedure.query(async ({ ctx }) => {
+  list: organizationProcedure.query(async ({ ctx }) => {
     const connections = await ctx.db.platformConnection.findMany({
       where: {
-        userId: ctx.session.user.id,
+        organizationId: ctx.session.activeOrganizationId,
       },
       orderBy: {
         createdAt: "desc",
@@ -71,7 +74,7 @@ export const platformRouter = createTRPCRouter({
   /**
    * Create platform connection from OAuth account
    */
-  connectYouTube: protectedProcedure.mutation(async ({ ctx }) => {
+  connectYouTube: organizationProcedure.mutation(async ({ ctx }) => {
     // Get user's Google account from Better Auth
     const googleAccount = await ctx.db.account.findFirst({
       where: {
@@ -97,8 +100,8 @@ export const platformRouter = createTRPCRouter({
     // Check if already connected
     const existing = await ctx.db.platformConnection.findUnique({
       where: {
-        userId_platform: {
-          userId: ctx.session.user.id,
+        organizationId_platform: {
+          organizationId: ctx.session.activeOrganizationId,
           platform: "YOUTUBE",
         },
       },
@@ -128,7 +131,7 @@ export const platformRouter = createTRPCRouter({
         accessToken: googleAccount.accessToken,
         refreshToken: googleAccount.refreshToken ?? null,
         tokenExpiry: googleAccount.accessTokenExpiresAt ?? null, // Better Auth field name
-        userId: ctx.session.user.id,
+        organizationId: ctx.session.activeOrganizationId,
       },
     });
 
@@ -138,7 +141,7 @@ export const platformRouter = createTRPCRouter({
   /**
    * Create platform connection from TikTok account
    */
-  connectTikTok: protectedProcedure.mutation(async ({ ctx }) => {
+  connectTikTok: organizationProcedure.mutation(async ({ ctx }) => {
     // Get user's TikTok account from Better Auth
     const tiktokAccount = await ctx.db.account.findFirst({
       where: {
@@ -165,8 +168,8 @@ export const platformRouter = createTRPCRouter({
     // Check if already connected
     const existing = await ctx.db.platformConnection.findUnique({
       where: {
-        userId_platform: {
-          userId: ctx.session.user.id,
+        organizationId_platform: {
+          organizationId: ctx.session.activeOrganizationId,
           platform: "TIKTOK",
         },
       },
@@ -196,7 +199,7 @@ export const platformRouter = createTRPCRouter({
         accessToken: tiktokAccount.accessToken,
         refreshToken: tiktokAccount.refreshToken ?? null,
         tokenExpiry: tiktokAccount.accessTokenExpiresAt ?? null,
-        userId: ctx.session.user.id,
+        organizationId: ctx.session.activeOrganizationId,
       },
     });
 
@@ -206,7 +209,7 @@ export const platformRouter = createTRPCRouter({
   /**
    * Create platform connection from Vimeo account
    */
-  connectVimeo: protectedProcedure.mutation(async ({ ctx }) => {
+  connectVimeo: organizationProcedure.mutation(async ({ ctx }) => {
     // Get user's Vimeo account from Better Auth
     const vimeoAccount = await ctx.db.account.findFirst({
       where: {
@@ -232,8 +235,8 @@ export const platformRouter = createTRPCRouter({
     // Check if already connected
     const existing = await ctx.db.platformConnection.findUnique({
       where: {
-        userId_platform: {
-          userId: ctx.session.user.id,
+        organizationId_platform: {
+          organizationId: ctx.session.activeOrganizationId,
           platform: "VIMEO",
         },
       },
@@ -263,7 +266,7 @@ export const platformRouter = createTRPCRouter({
         accessToken: vimeoAccount.accessToken,
         refreshToken: vimeoAccount.refreshToken ?? null,
         tokenExpiry: vimeoAccount.accessTokenExpiresAt ?? null,
-        userId: ctx.session.user.id,
+        organizationId: ctx.session.activeOrganizationId,
       },
     });
 
@@ -273,7 +276,7 @@ export const platformRouter = createTRPCRouter({
   /**
    * Create platform connection from LinkedIn account
    */
-  connectLinkedIn: protectedProcedure.mutation(async ({ ctx }) => {
+  connectLinkedIn: organizationProcedure.mutation(async ({ ctx }) => {
     // Get user's LinkedIn account from Better Auth
     const linkedinAccount = await ctx.db.account.findFirst({
       where: {
@@ -312,8 +315,8 @@ export const platformRouter = createTRPCRouter({
     // Check if already connected
     const existing = await ctx.db.platformConnection.findUnique({
       where: {
-        userId_platform: {
-          userId: ctx.session.user.id,
+        organizationId_platform: {
+          organizationId: ctx.session.activeOrganizationId,
           platform: "LINKEDIN",
         },
       },
@@ -344,7 +347,7 @@ export const platformRouter = createTRPCRouter({
         accessToken: linkedinAccount.accessToken,
         refreshToken: linkedinAccount.refreshToken ?? null,
         tokenExpiry: linkedinAccount.accessTokenExpiresAt ?? null,
-        userId: ctx.session.user.id,
+        organizationId: ctx.session.activeOrganizationId,
       },
     });
 
@@ -354,7 +357,7 @@ export const platformRouter = createTRPCRouter({
   /**
    * Disconnect platform
    */
-  disconnect: protectedProcedure
+  disconnect: organizationProcedure
     .input(z.object({ id: z.string().cuid() }))
     .mutation(async ({ ctx, input }) => {
       const connection = await ctx.db.platformConnection.findUnique({
@@ -368,7 +371,7 @@ export const platformRouter = createTRPCRouter({
         });
       }
 
-      if (connection.userId !== ctx.session.user.id) {
+      if (connection.organizationId !== ctx.session.activeOrganizationId) {
         throw new TRPCError({
           code: "FORBIDDEN",
           message: "Not your connection",

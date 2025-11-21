@@ -75,7 +75,7 @@ export const publishToVimeo = inngest.createFunction(
         const uploadResult = await uploadVideoToVimeo({
           accessToken: job.platformConnection.accessToken,
           s3Key: job.post.s3Key,
-          title: job.title ?? job.post.title,
+          title: job.title ?? job.post.title ?? "Untitled",
           description: job.description ?? job.post.description,
           privacy: privacy,
         });

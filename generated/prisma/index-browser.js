@@ -145,7 +145,8 @@ exports.Prisma.SessionScalarFieldEnum = {
   ipAddress: 'ipAddress',
   userAgent: 'userAgent',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  activeOrganizationId: 'activeOrganizationId'
 };
 
 exports.Prisma.UserScalarFieldEnum = {
@@ -167,6 +168,34 @@ exports.Prisma.VerificationScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.OrganizationScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  logo: 'logo',
+  createdAt: 'createdAt',
+  metadata: 'metadata'
+};
+
+exports.Prisma.MemberScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  userId: 'userId',
+  role: 'role',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.InvitationScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  email: 'email',
+  role: 'role',
+  status: 'status',
+  expiresAt: 'expiresAt',
+  inviterId: 'inviterId',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.PostScalarFieldEnum = {
   id: 'id',
   createdAt: 'createdAt',
@@ -185,7 +214,7 @@ exports.Prisma.PostScalarFieldEnum = {
   tags: 'tags',
   thumbnailUrl: 'thumbnailUrl',
   privacy: 'privacy',
-  createdById: 'createdById'
+  organizationId: 'organizationId'
 };
 
 exports.Prisma.PlatformConnectionScalarFieldEnum = {
@@ -200,7 +229,7 @@ exports.Prisma.PlatformConnectionScalarFieldEnum = {
   tokenExpiry: 'tokenExpiry',
   metadata: 'metadata',
   isActive: 'isActive',
-  userId: 'userId'
+  organizationId: 'organizationId'
 };
 
 exports.Prisma.PublishJobScalarFieldEnum = {
@@ -223,8 +252,7 @@ exports.Prisma.PublishJobScalarFieldEnum = {
   isUpdate: 'isUpdate',
   updateTargetVideoId: 'updateTargetVideoId',
   postId: 'postId',
-  platformConnectionId: 'platformConnectionId',
-  createdById: 'createdById'
+  platformConnectionId: 'platformConnectionId'
 };
 
 exports.Prisma.PostingScheduleScalarFieldEnum = {
@@ -339,6 +367,9 @@ exports.Prisma.ModelName = {
   Session: 'Session',
   User: 'User',
   Verification: 'Verification',
+  Organization: 'Organization',
+  Member: 'Member',
+  Invitation: 'Invitation',
   Post: 'Post',
   PlatformConnection: 'PlatformConnection',
   PublishJob: 'PublishJob',

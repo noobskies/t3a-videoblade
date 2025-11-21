@@ -1,36 +1,38 @@
 # Active Context
 
-## Current Focus: Channel-Centric UI Polish (Phase 6.5)
+## Current Focus: Team & Workspace Features (Phase 7)
 
-We have focused heavily on refining the channel-specific experience (`/platforms/[id]`). This ensures that each channel operates as a distinct workspace with its own Overview, Inbox, Queue, and Settings.
+We have transitioned the application from a single-user model to a multi-tenant **Workspace** model. This involved a destructive database reset and major backend refactoring.
 
 ### Recent Changes (2025-11-21)
 
-1.  **Channel-Centric Architecture**
-    - **Sidebar**: Dynamically lists connected channels.
-    - **Channel Routing**: `/platforms/[id]` structure with tabs for Overview, Inbox, Schedule, and Settings.
+1.  **Architecture Shift: Workspaces**
+    - **Schema**: Introduced `Organization`, `Member`, `Invitation`.
+    - **Ownership**: Moved resource ownership (`Post`, `PlatformConnection`, etc.) from `User` to `Organization`.
+    - **Database**: Reset database to apply these breaking changes.
 
-2.  **Channel Features Implementation**
-    - **Overview**: Enhanced with real-time stats (Views, Likes, etc.) and an "Up Next" card showing the next scheduled post.
-    - **Inbox**: Channel-specific filtered view of comments.
-    - **Schedule (Queue)**: Renamed tab purpose to "Content Queue". Now shows a list of upcoming posts (Pending/Scheduled) instead of configuration.
-    - **Settings**: Created a new Settings tab.
-      - Moved "Posting Schedule" (slots configuration) here.
-      - Added "Disconnect Channel" functionality.
-      - Shows connection details.
+2.  **Backend Refactoring**
+    - **Auth**: Integrated Better Auth `organization` plugin.
+    - **TRPC**: Created `organizationProcedure` to enforce active organization context.
+    - **Routers**: Updated all routers (`post`, `platform`, `comment`, etc.) to filter by `organizationId` instead of `userId`.
 
-3.  **Backend Updates**
-    - **TRPC**: Added `platform.getScheduledJobs` and `analytics.getPlatformStats` to support the new UI.
+3.  **Frontend Implementation**
+    - **Sidebar**: Added **Workspace Switcher** and "Create Workspace" functionality.
+    - **Settings**: Added `/settings/members` for Team Management (Invite/Remove members).
+    - **Auth Client**: Configured `organizationClient` plugin.
 
 4.  **Cleanup**
-    - Deleted `MUI_MIGRATION_PLAN.md` as migration is complete.
+    - Removed legacy `components.json` and verified Tailwind removal.
 
 ## Active Decisions
 
-- **Separation of Concerns**: "Schedule" tab is for _viewing_ the queue (what's happening), while "Settings" is for _configuring_ the rules (when it happens).
-- **Unified State**: The application treats all platforms consistently in the UI.
+- **Strict Multi-Tenancy**: All operations require an active organization. The `organizationProcedure` middleware enforces this.
+- **Fresh Start**: We opted for a fresh database start instead of complex migration logic for existing single-user data.
 
 ## Next Steps
 
-1.  **Resume Phase 5**: X (Twitter) integration is the next logical platform expansion step when ready.
-2.  **Phase 3 Features**: Team features and API access are on the horizon.
+1.  **Phase 7 Polish**:
+    - Improve "No Workspace" state (onboarding flow).
+    - Add Role-Based Access Control (RBAC) checks in routers (currently just Org membership).
+2.  **Resume Phase 5**: X (Twitter) integration.
+3.  **Production Hardening**: Verify Inngest functions in the new multi-tenant environment.

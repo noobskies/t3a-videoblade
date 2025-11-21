@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
+import { createTRPCRouter, organizationProcedure } from "@/server/api/trpc";
 import { TRPCError } from "@trpc/server";
 
 const scheduleSlotSchema = z.object({
@@ -8,7 +8,7 @@ const scheduleSlotSchema = z.object({
 });
 
 export const scheduleRouter = createTRPCRouter({
-  getSettings: protectedProcedure
+  getSettings: organizationProcedure
     .input(z.object({ platformConnectionId: z.string() }))
     .query(async ({ ctx, input }) => {
       const connection = await ctx.db.platformConnection.findUnique({
@@ -23,7 +23,7 @@ export const scheduleRouter = createTRPCRouter({
         });
       }
 
-      if (connection.userId !== ctx.session.user.id) {
+      if (connection.organizationId !== ctx.session.activeOrganizationId) {
         throw new TRPCError({
           code: "FORBIDDEN",
           message: "You do not own this connection",
@@ -33,7 +33,7 @@ export const scheduleRouter = createTRPCRouter({
       return connection.postingSchedule;
     }),
 
-  updateSettings: protectedProcedure
+  updateSettings: organizationProcedure
     .input(
       z.object({
         platformConnectionId: z.string(),
@@ -53,7 +53,7 @@ export const scheduleRouter = createTRPCRouter({
         });
       }
 
-      if (connection.userId !== ctx.session.user.id) {
+      if (connection.organizationId !== ctx.session.activeOrganizationId) {
         throw new TRPCError({
           code: "FORBIDDEN",
           message: "You do not own this connection",

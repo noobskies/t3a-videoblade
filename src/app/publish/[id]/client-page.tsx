@@ -101,10 +101,10 @@ export function PublishPage({ id }: { id: string }) {
       setMetadata({
         ...metadata,
         [platform]: {
-          title: video.title,
+          title: video.title ?? "",
           description: video.description ?? "",
           // Default privacy
-          privacy: video.privacy as Privacy,
+          privacy: (video.privacy as Privacy) ?? "UNLISTED",
           tags: video.tags ?? "",
         },
       });
@@ -242,7 +242,7 @@ export function PublishPage({ id }: { id: string }) {
               >
                 <Image
                   src={video.thumbnailUrl}
-                  alt={video.title}
+                  alt={video.title ?? "Video Thumbnail"}
                   fill
                   style={{ objectFit: "cover" }}
                 />

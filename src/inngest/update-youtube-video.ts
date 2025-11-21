@@ -65,7 +65,7 @@ export const updateYouTubeVideoFunction = inngest.createFunction(
           accessToken: job.platformConnection.accessToken,
           refreshToken: job.platformConnection.refreshToken,
           videoId: job.updateTargetVideoId!, // YouTube video ID to update
-          title: job.title ?? job.post.title,
+          title: job.title ?? job.post.title ?? "Untitled",
           description: job.description ?? job.post.description,
           tags: job.tags ?? job.post.tags,
           privacy:

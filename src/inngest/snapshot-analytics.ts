@@ -17,7 +17,7 @@ export const snapshotAnalyticsFunction = inngest.createFunction(
           platform: true,
           accessToken: true,
           refreshToken: true,
-          userId: true,
+          organizationId: true,
         },
       });
     });
@@ -107,7 +107,7 @@ export const snapshotAnalyticsFunction = inngest.createFunction(
             return {
               processed: snapshots.length,
               platform: connection.platform,
-              userId: connection.userId,
+              organizationId: connection.organizationId,
             };
           } catch (error) {
             console.error(
@@ -117,7 +117,7 @@ export const snapshotAnalyticsFunction = inngest.createFunction(
             return {
               error: error instanceof Error ? error.message : "Unknown error",
               platform: connection.platform,
-              userId: connection.userId,
+              organizationId: connection.organizationId,
             };
           }
         },

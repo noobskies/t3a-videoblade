@@ -67,7 +67,7 @@ export const publishToTikTokFunction = inngest.createFunction(
         return await publishToTikTok({
           accessToken: job.platformConnection.accessToken,
           s3Key: job.post.s3Key,
-          title: job.title ?? job.post.title,
+          title: job.title ?? job.post.title ?? "Untitled",
           description: job.description ?? job.post.description,
           privacy: privacy as
             | "PUBLIC_TO_EVERYONE"

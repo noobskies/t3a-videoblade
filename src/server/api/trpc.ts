@@ -158,3 +158,26 @@ export const protectedProcedure = t.procedure
       },
     });
   });
+
+/**
+ * Organization (authenticated & active org) procedure
+ *
+ * Use this for procedures that require an active organization context.
+ */
+export const organizationProcedure = protectedProcedure.use(({ ctx, next }) => {
+  if (!ctx.session.session.activeOrganizationId) {
+    throw new TRPCError({
+      code: "PRECONDITION_FAILED",
+      message: "No active organization selected",
+    });
+  }
+
+  return next({
+    ctx: {
+      session: {
+        ...ctx.session,
+        activeOrganizationId: ctx.session.session.activeOrganizationId,
+      },
+    },
+  });
+});

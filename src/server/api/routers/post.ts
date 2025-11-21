@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { createPostSchema, updatePostSchema } from "@/lib/validators";
-import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
+import { createTRPCRouter, organizationProcedure } from "@/server/api/trpc";
 import {
   generateVideoS3Key,
   getUploadPresignedUrl,
@@ -19,7 +19,7 @@ export const postRouter = createTRPCRouter({
   /**
    * Get presigned URL for uploading media (Video or Image)
    */
-  getUploadUrl: protectedProcedure
+  getUploadUrl: organizationProcedure
     .input(
       z.object({
         fileName: z.string(),
@@ -46,7 +46,10 @@ export const postRouter = createTRPCRouter({
       }
 
       // Generate unique S3 key (using same helper for now, maybe rename helper later)
-      const s3Key = generateVideoS3Key(ctx.session.user.id, input.fileName);
+      const s3Key = generateVideoS3Key(
+        ctx.session.activeOrganizationId,
+        input.fileName,
+      );
 
       // Get presigned URL
       const uploadUrl = await getUploadPresignedUrl(s3Key, input.mimeType);
@@ -77,7 +80,7 @@ export const postRouter = createTRPCRouter({
   /**
    * Create a new post (Text, Video, or Image)
    */
-  create: protectedProcedure
+  create: organizationProcedure
     .input(createPostSchema)
     .mutation(async ({ ctx, input }) => {
       // For text posts, we don't need S3 fields
@@ -91,7 +94,7 @@ export const postRouter = createTRPCRouter({
             content: input.content ?? null,
             tags: input.tags ?? null,
             privacy: input.privacy,
-            createdById: ctx.session.user.id,
+            organizationId: ctx.session.activeOrganizationId,
           },
         });
 
@@ -133,7 +136,7 @@ export const postRouter = createTRPCRouter({
           tags: input.tags ?? null,
           privacy: input.privacy,
           thumbnailUrl,
-          createdById: ctx.session.user.id,
+          organizationId: ctx.session.activeOrganizationId,
         },
       });
 
@@ -147,7 +150,7 @@ export const postRouter = createTRPCRouter({
   /**
    * Get all user's posts
    */
-  list: protectedProcedure
+  list: organizationProcedure
     .input(
       z
         .object({
@@ -159,7 +162,7 @@ export const postRouter = createTRPCRouter({
       const isIdea = input?.isIdea ?? false;
       const posts = await ctx.db.post.findMany({
         where: {
-          createdById: ctx.session.user.id,
+          organizationId: ctx.session.activeOrganizationId,
           isIdea: isIdea,
         },
         orderBy: {
@@ -218,7 +221,7 @@ export const postRouter = createTRPCRouter({
   /**
    * Get single post details
    */
-  get: protectedProcedure
+  get: organizationProcedure
     .input(z.object({ id: z.string().cuid() }))
     .query(async ({ ctx, input }) => {
       const post = await ctx.db.post.findUnique({
@@ -232,7 +235,7 @@ export const postRouter = createTRPCRouter({
         },
       });
 
-      if (!post || post.createdById !== ctx.session.user.id) {
+      if (!post || post.organizationId !== ctx.session.activeOrganizationId) {
         throw new TRPCError({
           code: "NOT_FOUND",
           message: "Post not found",
@@ -262,7 +265,7 @@ export const postRouter = createTRPCRouter({
   /**
    * Update post metadata
    */
-  update: protectedProcedure
+  update: organizationProcedure
     .input(updatePostSchema)
     .mutation(async ({ ctx, input }) => {
       const { id, ...updateData } = input;
@@ -270,10 +273,10 @@ export const postRouter = createTRPCRouter({
       // Verify ownership
       const post = await ctx.db.post.findUnique({
         where: { id },
-        select: { createdById: true },
+        select: { organizationId: true },
       });
 
-      if (!post || post.createdById !== ctx.session.user.id) {
+      if (!post || post.organizationId !== ctx.session.activeOrganizationId) {
         throw new TRPCError({
           code: "FORBIDDEN",
           message: "You don't own this post",
@@ -295,7 +298,7 @@ export const postRouter = createTRPCRouter({
   /**
    * Delete post
    */
-  delete: protectedProcedure
+  delete: organizationProcedure
     .input(
       z.object({
         id: z.string().cuid(),
@@ -322,7 +325,7 @@ export const postRouter = createTRPCRouter({
       }
 
       // Ensure user owns the post
-      if (post.createdById !== ctx.session.user.id) {
+      if (post.organizationId !== ctx.session.activeOrganizationId) {
         throw new TRPCError({
           code: "FORBIDDEN",
           message: "You don't own this post",
@@ -373,7 +376,7 @@ export const postRouter = createTRPCRouter({
   /**
    * Trigger publish job for post
    */
-  publish: protectedProcedure
+  publish: organizationProcedure
     .input(
       z.object({
         postId: z.string().cuid(),
@@ -390,10 +393,10 @@ export const postRouter = createTRPCRouter({
       // Verify user owns the post
       const post = await ctx.db.post.findUnique({
         where: { id: input.postId },
-        select: { createdById: true },
+        select: { organizationId: true },
       });
 
-      if (!post || post.createdById !== ctx.session.user.id) {
+      if (!post || post.organizationId !== ctx.session.activeOrganizationId) {
         throw new TRPCError({
           code: "FORBIDDEN",
           message: "You don't own this post",
@@ -403,12 +406,12 @@ export const postRouter = createTRPCRouter({
       // Verify user owns the platform connection
       const platformConnection = await ctx.db.platformConnection.findUnique({
         where: { id: input.platformConnectionId },
-        select: { userId: true, platform: true },
+        select: { organizationId: true, platform: true },
       });
 
       if (
         !platformConnection ||
-        platformConnection.userId !== ctx.session.user.id
+        platformConnection.organizationId !== ctx.session.activeOrganizationId
       ) {
         throw new TRPCError({
           code: "FORBIDDEN",
@@ -436,7 +439,6 @@ export const postRouter = createTRPCRouter({
           status: "PENDING",
           postId: input.postId,
           platformConnectionId: input.platformConnectionId,
-          createdById: ctx.session.user.id,
           title: input.title,
           description: input.description,
           tags: input.tags,
@@ -474,7 +476,7 @@ export const postRouter = createTRPCRouter({
   /**
    * Publish to multiple platforms
    */
-  publishMulti: protectedProcedure
+  publishMulti: organizationProcedure
     .input(
       z.object({
         postId: z.string().cuid(),
@@ -499,10 +501,10 @@ export const postRouter = createTRPCRouter({
       // Verify user owns the post
       const post = await ctx.db.post.findUnique({
         where: { id: input.postId },
-        select: { createdById: true },
+        select: { organizationId: true },
       });
 
-      if (!post || post.createdById !== ctx.session.user.id) {
+      if (!post || post.organizationId !== ctx.session.activeOrganizationId) {
         throw new TRPCError({
           code: "FORBIDDEN",
           message: "You don't own this post",
@@ -516,8 +518,8 @@ export const postRouter = createTRPCRouter({
         // Get platform connection
         const connection = await ctx.db.platformConnection.findUnique({
           where: {
-            userId_platform: {
-              userId: ctx.session.user.id,
+            organizationId_platform: {
+              organizationId: ctx.session.activeOrganizationId,
               platform,
             },
           },
@@ -552,7 +554,6 @@ export const postRouter = createTRPCRouter({
             scheduledFor,
             postId: input.postId,
             platformConnectionId: connection.id,
-            createdById: ctx.session.user.id,
             title: meta.title,
             description: meta.description,
             tags: meta.tags,
@@ -582,19 +583,23 @@ export const postRouter = createTRPCRouter({
   /**
    * Retry failed publish job
    */
-  retryPublish: protectedProcedure
+  retryPublish: organizationProcedure
     .input(z.object({ jobId: z.string().cuid() }))
     .mutation(async ({ ctx, input }) => {
       // Get job
       const job = await ctx.db.publishJob.findUnique({
         where: { id: input.jobId },
+        include: { platformConnection: true },
       });
 
       if (!job) {
         throw new TRPCError({ code: "NOT_FOUND" });
       }
 
-      if (job.createdById !== ctx.session.user.id) {
+      if (
+        job.platformConnection.organizationId !==
+        ctx.session.activeOrganizationId
+      ) {
         throw new TRPCError({ code: "FORBIDDEN" });
       }
 

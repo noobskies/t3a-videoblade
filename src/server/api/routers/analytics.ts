@@ -1,4 +1,4 @@
-import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
+import { createTRPCRouter, organizationProcedure } from "@/server/api/trpc";
 import type { DashboardStats, TrendDataPoint } from "@/lib/types/analytics";
 import dayjs from "dayjs";
 import type { Platform } from "../../../../generated/prisma";
@@ -8,13 +8,15 @@ export const analyticsRouter = createTRPCRouter({
   /**
    * Get stats for a specific platform connection
    */
-  getPlatformStats: protectedProcedure
+  getPlatformStats: organizationProcedure
     .input(z.object({ connectionId: z.string().cuid() }))
     .query(async ({ ctx, input }): Promise<DashboardStats> => {
       // 1. Get all publish jobs for this connection
       const jobs = await ctx.db.publishJob.findMany({
         where: {
-          createdById: ctx.session.user.id,
+          platformConnection: {
+            organizationId: ctx.session.activeOrganizationId,
+          },
           platformConnectionId: input.connectionId,
           status: "COMPLETED",
           platformVideoId: { not: null },
@@ -71,12 +73,14 @@ export const analyticsRouter = createTRPCRouter({
    * Get aggregated stats for the dashboard
    * (Total Views, Likes, etc. from the LATEST snapshot of each job)
    */
-  getDashboardStats: protectedProcedure.query(
+  getDashboardStats: organizationProcedure.query(
     async ({ ctx }): Promise<DashboardStats> => {
       // 1. Get all publish jobs for this user
       const jobs = await ctx.db.publishJob.findMany({
         where: {
-          createdById: ctx.session.user.id,
+          platformConnection: {
+            organizationId: ctx.session.activeOrganizationId,
+          },
           status: "COMPLETED",
           platformVideoId: { not: null },
         },
@@ -138,7 +142,7 @@ export const analyticsRouter = createTRPCRouter({
    * Get trend data for charts
    * Aggregates views by day for the last 30 days
    */
-  getTrends: protectedProcedure.query(
+  getTrends: organizationProcedure.query(
     async ({ ctx }): Promise<TrendDataPoint[]> => {
       const endDate = dayjs().endOf("day").toDate();
       const startDate = dayjs().subtract(30, "days").startOf("day").toDate();
@@ -147,7 +151,9 @@ export const analyticsRouter = createTRPCRouter({
       const snapshots = await ctx.db.metricSnapshot.findMany({
         where: {
           publishJob: {
-            createdById: ctx.session.user.id,
+            platformConnection: {
+              organizationId: ctx.session.activeOrganizationId,
+            },
           },
           createdAt: {
             gte: startDate,

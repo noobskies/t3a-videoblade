@@ -24,6 +24,7 @@ import {
   MenuItem,
   Skeleton,
   Stack,
+  Button,
 } from "@mui/material";
 import {
   Menu as MenuIcon,
@@ -39,8 +40,11 @@ import {
   LinkedIn as LinkedInIcon,
   Add as AddIcon,
   Movie as VideoIcon,
+  Business as OrganizationIcon,
+  ExpandMore as ExpandMoreIcon,
+  Settings as SettingsIcon,
 } from "@mui/icons-material";
-import { useSession, signOut } from "@/lib/auth-client";
+import { useSession, signOut, organization } from "@/lib/auth-client";
 import { AuthButton } from "@/app/_components/auth-button";
 import { api } from "@/trpc/react";
 import { Platform } from "../../../../generated/prisma";
@@ -61,6 +65,7 @@ const NAV_ITEMS: NavItem[] = [
   { label: "Upload", path: "/upload", icon: <UploadIcon /> },
   { label: "Calendar", path: "/calendar", icon: <CalendarMonthIcon /> },
   { label: "Platforms", path: "/platforms", icon: <PlatformsIcon /> },
+  { label: "Settings", path: "/settings", icon: <SettingsIcon /> },
 ];
 
 const SUPPORTED_PLATFORMS = [
@@ -83,9 +88,47 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     enabled: !!session,
   });
 
+  // Organization State
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { data: organizations } = (organization as any).useListOrganizations();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { data: activeOrg } = (organization as any).useActiveOrganization();
+  const [orgAnchorEl, setOrgAnchorEl] = React.useState<null | HTMLElement>(
+    null,
+  );
+
   const handleDrawerClose = () => {
     setIsClosing(true);
     setMobileOpen(false);
+  };
+
+  const handleOrgMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setOrgAnchorEl(event.currentTarget);
+  };
+
+  const handleOrgMenuClose = () => {
+    setOrgAnchorEl(null);
+  };
+
+  const handleSwitchOrg = async (orgId: string) => {
+    handleOrgMenuClose();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    await (organization as any).setActiveOrganization({
+      organizationId: orgId,
+    });
+  };
+
+  const handleCreateOrg = async () => {
+    handleOrgMenuClose();
+    const name = prompt("Enter workspace name:");
+    if (name) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      await (organization as any).create({
+        name,
+        slug: name.toLowerCase().replace(/\s+/g, "-"),
+      });
+      // Auto-switch happens via Better Auth usually, or we might need to trigger it
+    }
   };
 
   const handleDrawerTransitionEnd = () => {
@@ -170,6 +213,67 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </Typography>
       </Toolbar>
       <Divider />
+
+      {/* Organization Switcher */}
+      {session && (
+        <Box sx={{ p: 2 }}>
+          <Button
+            fullWidth
+            variant="outlined"
+            color="inherit"
+            endIcon={<ExpandMoreIcon />}
+            onClick={handleOrgMenuOpen}
+            sx={{
+              justifyContent: "space-between",
+              textTransform: "none",
+              borderColor: "divider",
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+                overflow: "hidden",
+              }}
+            >
+              <OrganizationIcon fontSize="small" color="action" />
+              <Typography noWrap variant="body2" fontWeight="medium">
+                {activeOrg?.name ?? "Select Workspace"}
+              </Typography>
+            </Box>
+          </Button>
+          <Menu
+            anchorEl={orgAnchorEl}
+            open={Boolean(orgAnchorEl)}
+            onClose={handleOrgMenuClose}
+            slotProps={{ paper: { sx: { width: 200 } } }}
+          >
+            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+            {organizations?.map((org: any) => (
+              <MenuItem
+                key={org.id}
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+                selected={org.id === activeOrg?.id}
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+                onClick={() => handleSwitchOrg(org.id)}
+              >
+                {/* eslint-disable-next-line @typescript-eslint/no-unsafe-member-access */}
+                <ListItemText primary={org.name} />
+              </MenuItem>
+            ))}
+            {organizations && organizations.length > 0 && <Divider />}
+            <MenuItem onClick={handleCreateOrg}>
+              <ListItemIcon>
+                <AddIcon fontSize="small" />
+              </ListItemIcon>
+              <ListItemText primary="Create Workspace" />
+            </MenuItem>
+          </Menu>
+        </Box>
+      )}
+      <Divider />
+
       <List>
         {NAV_ITEMS.map((item) => {
           const isActive = pathname === item.path;

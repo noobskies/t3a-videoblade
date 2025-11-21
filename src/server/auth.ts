@@ -1,7 +1,7 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { nextCookies } from "better-auth/next-js";
-import { genericOAuth } from "better-auth/plugins";
+import { genericOAuth, organization } from "better-auth/plugins";
 import { db } from "@/server/db";
 
 export const auth = betterAuth({
@@ -35,6 +35,7 @@ export const auth = betterAuth({
     },
   },
   plugins: [
+    organization(),
     genericOAuth({
       config: [
         {
