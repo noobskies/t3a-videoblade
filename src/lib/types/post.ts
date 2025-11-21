@@ -5,7 +5,7 @@
 
 import type { RouterOutputs } from "@/trpc/react";
 
-export type Platform = "YOUTUBE" | "TIKTOK" | "RUMBLE" | "VIMEO";
+export type Platform = "YOUTUBE" | "TIKTOK" | "RUMBLE" | "VIMEO" | "LINKEDIN";
 export type PublishStatus =
   | "PENDING"
   | "SCHEDULED"

@@ -66,8 +66,8 @@ const NAV_ITEMS: NavItem[] = [
 const SUPPORTED_PLATFORMS = [
   { id: Platform.YOUTUBE, label: "YouTube" },
   { id: Platform.LINKEDIN, label: "LinkedIn" },
-  // { id: Platform.TIKTOK, label: "TikTok" },
-  // { id: Platform.VIMEO, label: "Vimeo" },
+  { id: Platform.TIKTOK, label: "TikTok" },
+  { id: Platform.VIMEO, label: "Vimeo" },
 ];
 
 export function AppShell({ children }: { children: React.ReactNode }) {

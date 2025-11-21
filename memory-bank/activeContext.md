@@ -18,8 +18,15 @@ We are restructuring the application to be more **Channel-Centric**, similar to 
     - **Visuals**: Improved card styling (cleaner, elevation 0, better avatars).
     - **Filtering**: Added support for filtering by `platformConnectionId` in backend and frontend.
 
+3.  **Unified Platform State (2025-11-21)**
+    - **Dashboard**: Added "Connect LinkedIn" option to the setup/dashboard page.
+    - **Sidebar**: Updated to show "Connect [Platform]" for disconnected platforms (TikTok, Vimeo, LinkedIn).
+    - **Analytics**: Added LinkedIn to Platform Breakdown and Trend Charts.
+    - **Types**: Updated `Platform` and Analytics types to include `LINKEDIN` fully.
+
 ## Active Decisions
 
+- **Unified State**: The application now treats all 4 platforms (YouTube, TikTok, Vimeo, LinkedIn) as first-class citizens in the UI, showing them as options to connect even if disconnected.
 - **Navigation**: We are moving towards a hybrid model where "Unified" views (Dashboard, Inbox, Calendar) exist alongside "Channel-Specific" views. This gives users flexibility.
 - **MUI Grid**: We seem to be using MUI v6 or Grid v2 (`size` prop instead of `item xs`).
 - **Infinite Scroll**: Implemented via "Load More" button for better UX control, rather than auto-scroll.

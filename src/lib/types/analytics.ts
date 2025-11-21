@@ -17,6 +17,7 @@ export interface DashboardStats {
     youtube: number;
     tiktok: number;
     vimeo: number;
+    linkedin: number;
   };
 }
 
@@ -26,4 +27,5 @@ export interface TrendDataPoint {
   youtube: number;
   tiktok: number;
   vimeo: number;
+  linkedin: number;
 }

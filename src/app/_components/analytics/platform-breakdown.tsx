@@ -16,6 +16,7 @@ import Link from "next/link";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import MusicNoteIcon from "@mui/icons-material/MusicNote";
 import OndemandVideoIcon from "@mui/icons-material/OndemandVideo";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
 
 interface ConnectedPlatform {
   platform: Platform;
@@ -41,6 +42,9 @@ export function PlatformBreakdown({
   );
   const isVimeoConnected = connectedPlatforms.some(
     (p) => p.platform === "VIMEO",
+  );
+  const isLinkedinConnected = connectedPlatforms.some(
+    (p) => p.platform === "LINKEDIN",
   );
 
   // Build chart data dynamically based on connection OR data presence
@@ -68,6 +72,13 @@ export function PlatformBreakdown({
       color: "#1AB7EA", // Vimeo Blue
       show: isVimeoConnected || platformBreakdown.vimeo > 0,
     },
+    {
+      name: "LinkedIn",
+      value: platformBreakdown.linkedin,
+      platform: "LINKEDIN",
+      color: "#0077B5", // LinkedIn Blue
+      show: isLinkedinConnected || platformBreakdown.linkedin > 0,
+    },
   ];
 
   const data = rawData.filter((d) => d.show);
@@ -88,6 +99,11 @@ export function PlatformBreakdown({
     missingPlatforms.push({
       name: "Vimeo",
       icon: <OndemandVideoIcon fontSize="small" />,
+    });
+  if (!isLinkedinConnected)
+    missingPlatforms.push({
+      name: "LinkedIn",
+      icon: <LinkedInIcon fontSize="small" />,
     });
 
   return (

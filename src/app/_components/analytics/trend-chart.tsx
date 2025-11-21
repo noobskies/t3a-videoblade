@@ -26,6 +26,7 @@ export function TrendChart({ data, connectedPlatforms }: TrendChartProps) {
   const hasYouTube = connectedPlatforms.some((p) => p.platform === "YOUTUBE");
   const hasTikTok = connectedPlatforms.some((p) => p.platform === "TIKTOK");
   const hasVimeo = connectedPlatforms.some((p) => p.platform === "VIMEO");
+  const hasLinkedin = connectedPlatforms.some((p) => p.platform === "LINKEDIN");
 
   return (
     <Paper sx={{ p: 3, height: "100%" }}>
@@ -95,6 +96,17 @@ export function TrendChart({ data, connectedPlatforms }: TrendChartProps) {
                 stackId="1"
                 stroke="#1AB7EA"
                 fill="#1AB7EA"
+                fillOpacity={0.3}
+              />
+            )}
+            {hasLinkedin && (
+              <Area
+                type="monotone"
+                dataKey="linkedin"
+                name="LinkedIn"
+                stackId="1"
+                stroke="#0077B5"
+                fill="#0077B5"
                 fillOpacity={0.3}
               />
             )}

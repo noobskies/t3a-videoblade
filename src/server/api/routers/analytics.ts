@@ -36,6 +36,7 @@ export const analyticsRouter = createTRPCRouter({
         youtube: 0,
         tiktok: 0,
         vimeo: 0,
+        linkedin: 0,
       };
 
       for (const job of jobs) {
@@ -49,6 +50,7 @@ export const analyticsRouter = createTRPCRouter({
           if (job.platform === "YOUTUBE") platformBreakdown.youtube += views;
           if (job.platform === "TIKTOK") platformBreakdown.tiktok += views;
           if (job.platform === "VIMEO") platformBreakdown.vimeo += views;
+          if (job.platform === "LINKEDIN") platformBreakdown.linkedin += views;
         }
       }
 
@@ -100,7 +102,13 @@ export const analyticsRouter = createTRPCRouter({
       // Map/Reduce to group by Date (YYYY-MM-DD)
       const dailyMap = new Map<
         string,
-        { views: number; youtube: number; tiktok: number; vimeo: number }
+        {
+          views: number;
+          youtube: number;
+          tiktok: number;
+          vimeo: number;
+          linkedin: number;
+        }
       >();
 
       // Initialize map with 0s for all days
@@ -113,6 +121,7 @@ export const analyticsRouter = createTRPCRouter({
           youtube: 0,
           tiktok: 0,
           vimeo: 0,
+          linkedin: 0,
         });
       }
 
@@ -157,6 +166,7 @@ export const analyticsRouter = createTRPCRouter({
         let dailyYoutube = 0;
         let dailyTiktok = 0;
         let dailyVimeo = 0;
+        let dailyLinkedin = 0;
 
         for (const snap of jobMap.values()) {
           dailyTotal += snap.views;
@@ -164,6 +174,8 @@ export const analyticsRouter = createTRPCRouter({
             dailyYoutube += snap.views;
           if (snap.publishJob.platform === "TIKTOK") dailyTiktok += snap.views;
           if (snap.publishJob.platform === "VIMEO") dailyVimeo += snap.views;
+          if (snap.publishJob.platform === "LINKEDIN")
+            dailyLinkedin += snap.views;
         }
 
         dailyMap.set(dateStr, {
@@ -171,6 +183,7 @@ export const analyticsRouter = createTRPCRouter({
           youtube: dailyYoutube,
           tiktok: dailyTiktok,
           vimeo: dailyVimeo,
+          linkedin: dailyLinkedin,
         });
       }
 

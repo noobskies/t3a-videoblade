@@ -109,6 +109,11 @@
   - [x] **Routing**: `/platforms/[id]` structure with tabs
   - [x] **Channel Inbox**: Filtered inbox for specific channels
   - [x] **Polish**: Infinite scroll and visual improvements for comments
+- [x] **Step 4**: Unified Platform State (2025-11-21)
+  - [x] **Global**: Updated `Platform` types to include all supported platforms (YouTube, TikTok, Vimeo, LinkedIn).
+  - [x] **Analytics**: Updated Dashboard and Trends to show data for all 4 platforms.
+  - [x] **Sidebar**: Fixed "Connect" prompts for disconnected platforms (TikTok, Vimeo).
+  - [x] **Dashboard**: Added "Connect LinkedIn" card to setup screen.
 
 ## Current Status
 

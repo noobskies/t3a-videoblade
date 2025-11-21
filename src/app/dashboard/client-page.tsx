@@ -24,6 +24,7 @@ import Link from "next/link";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import MusicNoteIcon from "@mui/icons-material/MusicNote"; // For TikTok
 import OndemandVideoIcon from "@mui/icons-material/OndemandVideo"; // For Vimeo
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import { useSearchParams, useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 
@@ -39,6 +40,7 @@ export function DashboardPage() {
   const connectYouTube = api.platform.connectYouTube.useMutation();
   const connectTikTok = api.platform.connectTikTok.useMutation();
   const connectVimeo = api.platform.connectVimeo.useMutation();
+  const connectLinkedIn = api.platform.connectLinkedIn.useMutation();
 
   // Analytics Data (only fetch if not in pure setup mode or if we have platforms)
   // We can safe-fetch; if no platforms, it returns 0s.
@@ -113,8 +115,30 @@ export function DashboardPage() {
     }
   };
 
+  const handleConnectLinkedIn = async () => {
+    try {
+      await connectLinkedIn.mutateAsync();
+      await queryUtils.refetch();
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Failed to connect LinkedIn";
+
+      if (
+        errorMessage.includes("not connected") ||
+        errorMessage.includes("link your LinkedIn")
+      ) {
+        await authClient.signIn.social({
+          provider: "linkedin",
+          callbackURL: "/dashboard?setup=true", // Return to setup mode
+        });
+        return;
+      }
+      alert(errorMessage);
+    }
+  };
+
   // Helper to check connection status
-  const isConnected = (p: "YOUTUBE" | "TIKTOK" | "VIMEO") =>
+  const isConnected = (p: "YOUTUBE" | "TIKTOK" | "VIMEO" | "LINKEDIN") =>
     platforms.some((c) => c.platform === p);
 
   // --- SHOW SETUP/ONBOARDING IF: No platforms OR ?setup=true ---
@@ -262,6 +286,47 @@ export function DashboardPage() {
                       disabled={connectVimeo.isPending}
                     >
                       {connectVimeo.isPending ? "Connecting..." : "Connect"}
+                    </Button>
+                  )}
+                </CardContent>
+              </Card>
+            </Grid>
+
+            {/* LinkedIn Card */}
+            <Grid size={{ xs: 12, md: 4 }}>
+              <Card
+                variant="outlined"
+                sx={{ height: "100%", position: "relative" }}
+              >
+                <CardContent
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    gap: 2,
+                    pt: 4,
+                  }}
+                >
+                  <LinkedInIcon sx={{ fontSize: 56, color: "#0077B5" }} />
+                  <Typography variant="h6">LinkedIn</Typography>
+                  {isConnected("LINKEDIN") ? (
+                    <Chip
+                      icon={<CheckIcon />}
+                      label="Connected"
+                      color="success"
+                      variant="filled"
+                    />
+                  ) : (
+                    <Button
+                      variant="contained"
+                      onClick={handleConnectLinkedIn}
+                      disabled={connectLinkedIn.isPending}
+                      sx={{
+                        bgcolor: "#0077B5",
+                        "&:hover": { bgcolor: "#005582" },
+                      }}
+                    >
+                      {connectLinkedIn.isPending ? "Connecting..." : "Connect"}
                     </Button>
                   )}
                 </CardContent>
