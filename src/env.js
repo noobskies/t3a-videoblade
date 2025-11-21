@@ -17,6 +17,8 @@ export const env = createEnv({
     TIKTOK_CLIENT_SECRET: z.string().optional(),
     VIMEO_CLIENT_ID: z.string().optional(),
     VIMEO_CLIENT_SECRET: z.string().optional(),
+    LINKEDIN_CLIENT_ID: z.string().optional(),
+    LINKEDIN_CLIENT_SECRET: z.string().optional(),
     DATABASE_URL: z.string().url(),
     DIRECT_URL: z.string().url(),
     NODE_ENV: z
@@ -53,6 +55,8 @@ export const env = createEnv({
     TIKTOK_CLIENT_SECRET: process.env.TIKTOK_CLIENT_SECRET,
     VIMEO_CLIENT_ID: process.env.VIMEO_CLIENT_ID,
     VIMEO_CLIENT_SECRET: process.env.VIMEO_CLIENT_SECRET,
+    LINKEDIN_CLIENT_ID: process.env.LINKEDIN_CLIENT_ID,
+    LINKEDIN_CLIENT_SECRET: process.env.LINKEDIN_CLIENT_SECRET,
     DATABASE_URL: process.env.DATABASE_URL,
     DIRECT_URL: process.env.DIRECT_URL,
     NODE_ENV: process.env.NODE_ENV,

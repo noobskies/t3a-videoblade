@@ -67,7 +67,8 @@ export namespace $Enums {
   YOUTUBE: 'YOUTUBE',
   RUMBLE: 'RUMBLE',
   TIKTOK: 'TIKTOK',
-  VIMEO: 'VIMEO'
+  VIMEO: 'VIMEO',
+  LINKEDIN: 'LINKEDIN'
 };
 
 export type Platform = (typeof Platform)[keyof typeof Platform]

@@ -18,6 +18,7 @@
 - [x] Prisma adapter configured
 - [x] Google OAuth with YouTube API scopes
 - [x] Vimeo OAuth integrated
+- [x] **LinkedIn OAuth integrated** (2025-11-21)
 - [x] Session management working
 
 **Database Layer**
@@ -79,9 +80,13 @@
   - [x] Convert Idea to Post workflow
   - [x] **Polish**: Added proper loading skeletons and refined UI
 
-### 🔄 Phase 5: Platform Expansion (Pending)
+### 🔄 Phase 5: Platform Expansion (In Progress)
 
-- [ ] **Step 1**: LinkedIn Integration
+- [x] **Step 1**: LinkedIn Integration (2025-11-21)
+  - [x] Authentication (Better Auth)
+  - [x] API Library (`src/lib/linkedin.ts`) with Media Support
+  - [x] Background Job (`src/inngest/publish-to-linkedin.ts`)
+  - [x] UI Integration
 - [ ] **Step 2**: X (Twitter) Integration
 - [ ] **Step 3**: Instagram/Facebook Integration
 
@@ -91,6 +96,6 @@
 
 ## Current Status
 
-**Status**: Phase 4 Complete. Ready for Phase 5 (Platform Expansion).
+**Status**: Phase 5 In Progress. LinkedIn Integrated.
 **Product**: MediaBlade (Buffer Clone)
-**Next Action**: Phase 5, Step 1: LinkedIn Integration.
+**Next Action**: Phase 5, Step 2: X (Twitter) Integration.

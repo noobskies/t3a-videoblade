@@ -292,7 +292,8 @@ exports.Platform = exports.$Enums.Platform = {
   YOUTUBE: 'YOUTUBE',
   RUMBLE: 'RUMBLE',
   TIKTOK: 'TIKTOK',
-  VIMEO: 'VIMEO'
+  VIMEO: 'VIMEO',
+  LINKEDIN: 'LINKEDIN'
 };
 
 exports.PublishStatus = exports.$Enums.PublishStatus = {

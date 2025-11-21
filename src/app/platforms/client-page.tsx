@@ -8,6 +8,7 @@ import {
   YouTube as YouTubeIcon,
   MusicNote as TikTokIcon,
   OndemandVideo as VimeoIcon,
+  LinkedIn as LinkedInIcon,
 } from "@mui/icons-material";
 import {
   Alert,
@@ -37,6 +38,7 @@ export function PlatformsPage() {
   const connectYouTube = api.platform.connectYouTube.useMutation();
   const connectTikTok = api.platform.connectTikTok.useMutation();
   const connectVimeo = api.platform.connectVimeo.useMutation();
+  const connectLinkedIn = api.platform.connectLinkedIn.useMutation();
   const disconnect = api.platform.disconnect.useMutation();
 
   const handleConnectYouTube = async () => {
@@ -103,6 +105,32 @@ export function PlatformsPage() {
     }
   };
 
+  const handleConnectLinkedIn = async () => {
+    try {
+      // Try to connect using existing link first
+      await connectLinkedIn.mutateAsync();
+      await queryUtils.refetch();
+      alert("LinkedIn connected successfully!");
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Failed to connect LinkedIn";
+
+      // If account not found, redirect to link it
+      if (
+        errorMessage.includes("not connected") ||
+        errorMessage.includes("link your LinkedIn")
+      ) {
+        await authClient.signIn.social({
+          provider: "linkedin",
+          callbackURL: "/platforms",
+        });
+        return;
+      }
+
+      alert(errorMessage);
+    }
+  };
+
   const handleDisconnect = async (id: string) => {
     if (
       !confirm(
@@ -131,6 +159,7 @@ export function PlatformsPage() {
   const youtubeConnection = connections.find((c) => c.platform === "YOUTUBE");
   const tiktokConnection = connections.find((c) => c.platform === "TIKTOK");
   const vimeoConnection = connections.find((c) => c.platform === "VIMEO");
+  const linkedinConnection = connections.find((c) => c.platform === "LINKEDIN");
 
   return (
     <Container maxWidth="md" sx={{ py: 3 }}>
@@ -342,6 +371,76 @@ export function PlatformsPage() {
                 <Typography variant="body2" color="text.secondary">
                   Connected:{" "}
                   {new Date(vimeoConnection.createdAt).toLocaleDateString()}
+                </Typography>
+              </Box>
+            )}
+          </CardContent>
+        </Card>
+
+        {/* LinkedIn Card */}
+        <Card>
+          <CardContent>
+            <Stack
+              direction={{ xs: "column", sm: "row" }}
+              justifyContent="space-between"
+              alignItems={{ xs: "flex-start", sm: "center" }}
+              spacing={2}
+            >
+              <Stack direction="row" spacing={2} alignItems="center">
+                <LinkedInIcon sx={{ fontSize: 40, color: "#0077b5" }} />
+                <Box>
+                  <Typography variant="h6">LinkedIn</Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Share updates and engage with your professional network
+                  </Typography>
+                </Box>
+              </Stack>
+
+              {linkedinConnection ? (
+                <Stack direction="row" spacing={2} alignItems="center">
+                  <Chip
+                    icon={<CheckIcon />}
+                    label="Connected"
+                    color="success"
+                    variant="outlined"
+                  />
+                  <Button
+                    variant="outlined"
+                    startIcon={<CalendarMonthIcon />}
+                    component={Link}
+                    href={`/platforms/${linkedinConnection.id}/schedule`}
+                  >
+                    Schedule Settings
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    color="error"
+                    onClick={() => handleDisconnect(linkedinConnection.id)}
+                    disabled={disconnect.isPending}
+                  >
+                    {disconnect.isPending ? "Disconnecting..." : "Disconnect"}
+                  </Button>
+                </Stack>
+              ) : (
+                <Button
+                  variant="contained"
+                  sx={{ bgcolor: "#0077b5", "&:hover": { bgcolor: "#005e93" } }}
+                  onClick={handleConnectLinkedIn}
+                  disabled={connectLinkedIn.isPending}
+                >
+                  {connectLinkedIn.isPending ? "Connecting..." : "Connect"}
+                </Button>
+              )}
+            </Stack>
+
+            {linkedinConnection && (
+              <Box mt={2} pt={2} borderTop={1} borderColor="divider">
+                <Typography variant="body2" color="text.secondary">
+                  User: {linkedinConnection.platformUsername}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  Connected:{" "}
+                  {new Date(linkedinConnection.createdAt).toLocaleDateString()}
                 </Typography>
               </Box>
             )}

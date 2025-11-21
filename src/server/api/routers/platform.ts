@@ -229,6 +229,75 @@ export const platformRouter = createTRPCRouter({
   }),
 
   /**
+   * Create platform connection from LinkedIn account
+   */
+  connectLinkedIn: protectedProcedure.mutation(async ({ ctx }) => {
+    // Get user's LinkedIn account from Better Auth
+    const linkedinAccount = await ctx.db.account.findFirst({
+      where: {
+        userId: ctx.session.user.id,
+        providerId: "linkedin",
+      },
+    });
+
+    if (!linkedinAccount) {
+      throw new TRPCError({
+        code: "NOT_FOUND",
+        message:
+          "LinkedIn account not connected. Please link your LinkedIn account.",
+      });
+    }
+
+    if (!linkedinAccount.accessToken) {
+      throw new TRPCError({
+        code: "BAD_REQUEST",
+        message:
+          "No access token found. Please reconnect your LinkedIn account.",
+      });
+    }
+
+    // Check if already connected
+    const existing = await ctx.db.platformConnection.findUnique({
+      where: {
+        userId_platform: {
+          userId: ctx.session.user.id,
+          platform: "LINKEDIN",
+        },
+      },
+    });
+
+    if (existing) {
+      // Update existing connection
+      const updated = await ctx.db.platformConnection.update({
+        where: { id: existing.id },
+        data: {
+          accessToken: linkedinAccount.accessToken,
+          refreshToken: linkedinAccount.refreshToken ?? null,
+          tokenExpiry: linkedinAccount.accessTokenExpiresAt ?? null,
+          isActive: true,
+        },
+      });
+
+      return { id: updated.id, platform: "LINKEDIN" as const, new: false };
+    }
+
+    // Create new connection
+    const connection = await ctx.db.platformConnection.create({
+      data: {
+        platform: "LINKEDIN",
+        platformUserId: linkedinAccount.accountId, // LinkedIn user ID
+        platformUsername: "LinkedIn User", // Will be updated
+        accessToken: linkedinAccount.accessToken,
+        refreshToken: linkedinAccount.refreshToken ?? null,
+        tokenExpiry: linkedinAccount.accessTokenExpiresAt ?? null,
+        userId: ctx.session.user.id,
+      },
+    });
+
+    return { id: connection.id, platform: "LINKEDIN" as const, new: true };
+  }),
+
+  /**
    * Disconnect platform
    */
   disconnect: protectedProcedure

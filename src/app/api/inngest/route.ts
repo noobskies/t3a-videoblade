@@ -4,6 +4,7 @@ import { publishToYouTubeFunction } from "@/inngest/publish-to-youtube";
 import { updateYouTubeVideoFunction } from "@/inngest/update-youtube-video";
 import { publishToTikTokFunction } from "@/inngest/publish-to-tiktok";
 import { publishToVimeo } from "@/inngest/publish-to-vimeo";
+import { publishToLinkedInFunction } from "@/inngest/publish-to-linkedin";
 import { snapshotAnalyticsFunction } from "@/inngest/snapshot-analytics";
 import { checkScheduledJobsFunction } from "@/inngest/check-scheduled-jobs";
 
@@ -20,6 +21,7 @@ export const { GET, POST, PUT } = serve({
     updateYouTubeVideoFunction,
     publishToTikTokFunction,
     publishToVimeo,
+    publishToLinkedInFunction,
     snapshotAnalyticsFunction,
     checkScheduledJobsFunction,
     // Add more functions here as needed (e.g., Rumble publishing in Phase 2)

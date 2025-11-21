@@ -18,6 +18,7 @@ enum Platform {
   RUMBLE
   TIKTOK
   VIMEO
+  LINKEDIN
 }
 
 enum PublishStatus {

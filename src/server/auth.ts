@@ -28,6 +28,11 @@ export const auth = betterAuth({
       clientSecret: process.env.TIKTOK_CLIENT_SECRET!,
       scope: ["user.info.basic", "video.upload", "video.publish"],
     },
+    linkedin: {
+      clientId: process.env.LINKEDIN_CLIENT_ID!,
+      clientSecret: process.env.LINKEDIN_CLIENT_SECRET!,
+      scope: ["openid", "profile", "email", "w_member_social"],
+    },
   },
   plugins: [
     genericOAuth({
