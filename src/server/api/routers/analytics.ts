@@ -2,8 +2,71 @@ import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import type { DashboardStats, TrendDataPoint } from "@/lib/types/analytics";
 import dayjs from "dayjs";
 import type { Platform } from "../../../../generated/prisma";
+import { z } from "zod";
 
 export const analyticsRouter = createTRPCRouter({
+  /**
+   * Get stats for a specific platform connection
+   */
+  getPlatformStats: protectedProcedure
+    .input(z.object({ connectionId: z.string().cuid() }))
+    .query(async ({ ctx, input }): Promise<DashboardStats> => {
+      // 1. Get all publish jobs for this connection
+      const jobs = await ctx.db.publishJob.findMany({
+        where: {
+          createdById: ctx.session.user.id,
+          platformConnectionId: input.connectionId,
+          status: "COMPLETED",
+          platformVideoId: { not: null },
+        },
+        select: {
+          id: true,
+          platform: true,
+          metricSnapshots: {
+            orderBy: { createdAt: "desc" },
+            take: 1,
+          },
+        },
+      });
+
+      let totalViews = 0;
+      let totalLikes = 0;
+      let totalComments = 0;
+      let totalShares = 0;
+      // We only care about the specific platform stats here, but matching the type structure
+      const platformBreakdown = {
+        youtube: 0,
+        tiktok: 0,
+        vimeo: 0,
+        linkedin: 0,
+      };
+
+      for (const job of jobs) {
+        if (job.metricSnapshots[0]) {
+          const views = job.metricSnapshots[0].views;
+          totalViews += views;
+          totalLikes += job.metricSnapshots[0].likes;
+          totalComments += job.metricSnapshots[0].comments;
+          totalShares += job.metricSnapshots[0].shares;
+
+          if (job.platform === "YOUTUBE") platformBreakdown.youtube += views;
+          if (job.platform === "TIKTOK") platformBreakdown.tiktok += views;
+          if (job.platform === "VIMEO") platformBreakdown.vimeo += views;
+          if (job.platform === "LINKEDIN") platformBreakdown.linkedin += views;
+        }
+      }
+
+      return {
+        totalViews,
+        totalLikes,
+        totalComments,
+        totalShares,
+        totalVideos: jobs.length,
+        viewsGrowth: 0, // TODO: Implement growth calculation
+        platformBreakdown,
+      };
+    }),
+
   /**
    * Get aggregated stats for the dashboard
    * (Total Views, Likes, etc. from the LATEST snapshot of each job)

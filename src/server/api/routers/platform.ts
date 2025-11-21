@@ -5,6 +5,47 @@ import { getLinkedInProfile } from "@/lib/linkedin";
 
 export const platformRouter = createTRPCRouter({
   /**
+   * Get scheduled jobs for a connection (Queue)
+   */
+  getScheduledJobs: protectedProcedure
+    .input(z.object({ connectionId: z.string().cuid() }))
+    .query(async ({ ctx, input }) => {
+      // Verify ownership
+      const connection = await ctx.db.platformConnection.findUnique({
+        where: { id: input.connectionId },
+      });
+
+      if (!connection || connection.userId !== ctx.session.user.id) {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: "Platform connection not found or unauthorized",
+        });
+      }
+
+      // Fetch jobs
+      return ctx.db.publishJob.findMany({
+        where: {
+          platformConnectionId: input.connectionId,
+          status: { in: ["PENDING", "SCHEDULED", "PROCESSING"] },
+        },
+        include: {
+          post: {
+            select: {
+              id: true,
+              title: true,
+              thumbnailUrl: true,
+              type: true,
+            },
+          },
+        },
+        orderBy: [
+          { scheduledFor: "asc" }, // Scheduled ones first (by date)
+          { createdAt: "asc" }, // Then unscheduled pending ones
+        ],
+      });
+    }),
+
+  /**
    * Get user's connected platforms
    */
   list: protectedProcedure.query(async ({ ctx }) => {

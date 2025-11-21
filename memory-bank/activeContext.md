@@ -1,38 +1,36 @@
 # Active Context
 
-## Current Focus: Channel-Centric UI & Engagement Polish
+## Current Focus: Channel-Centric UI Polish (Phase 6.5)
 
-We are restructuring the application to be more **Channel-Centric**, similar to Buffer. Instead of just a unified inbox/calendar, users can now navigate to specific channels (platform connections) from the sidebar and access features specific to that channel.
+We have focused heavily on refining the channel-specific experience (`/platforms/[id]`). This ensures that each channel operates as a distinct workspace with its own Overview, Inbox, Queue, and Settings.
 
 ### Recent Changes (2025-11-21)
 
 1.  **Channel-Centric Architecture**
-    - **Sidebar**: Updated `AppShell` to dynamically list connected channels (YouTube, LinkedIn, etc.) under a "Channels" section.
-    - **Channel Routing**: Created `/platforms/[id]` structure for channel-specific views.
-    - **Channel Layout**: Added `PlatformLayout` with tabs for Overview, Inbox, Schedule, and Settings.
-    - **Channel Overview**: Added a dashboard page for individual channels.
-    - **Channel Inbox**: Added a filtered inbox view at `/platforms/[id]/inbox`.
+    - **Sidebar**: Dynamically lists connected channels.
+    - **Channel Routing**: `/platforms/[id]` structure with tabs for Overview, Inbox, Schedule, and Settings.
 
-2.  **Unified Inbox Polish**
-    - **Pagination**: Refactored `CommentList` to use `useInfiniteQuery` with a "Load More" button.
-    - **Visuals**: Improved card styling (cleaner, elevation 0, better avatars).
-    - **Filtering**: Added support for filtering by `platformConnectionId` in backend and frontend.
+2.  **Channel Features Implementation**
+    - **Overview**: Enhanced with real-time stats (Views, Likes, etc.) and an "Up Next" card showing the next scheduled post.
+    - **Inbox**: Channel-specific filtered view of comments.
+    - **Schedule (Queue)**: Renamed tab purpose to "Content Queue". Now shows a list of upcoming posts (Pending/Scheduled) instead of configuration.
+    - **Settings**: Created a new Settings tab.
+      - Moved "Posting Schedule" (slots configuration) here.
+      - Added "Disconnect Channel" functionality.
+      - Shows connection details.
 
-3.  **Unified Platform State (2025-11-21)**
-    - **Dashboard**: Added "Connect LinkedIn" option to the setup/dashboard page.
-    - **Sidebar**: Updated to show "Connect [Platform]" for disconnected platforms (TikTok, Vimeo, LinkedIn).
-    - **Analytics**: Added LinkedIn to Platform Breakdown and Trend Charts.
-    - **Types**: Updated `Platform` and Analytics types to include `LINKEDIN` fully.
+3.  **Backend Updates**
+    - **TRPC**: Added `platform.getScheduledJobs` and `analytics.getPlatformStats` to support the new UI.
+
+4.  **Cleanup**
+    - Deleted `MUI_MIGRATION_PLAN.md` as migration is complete.
 
 ## Active Decisions
 
-- **Unified State**: The application now treats all 4 platforms (YouTube, TikTok, Vimeo, LinkedIn) as first-class citizens in the UI, showing them as options to connect even if disconnected.
-- **Navigation**: We are moving towards a hybrid model where "Unified" views (Dashboard, Inbox, Calendar) exist alongside "Channel-Specific" views. This gives users flexibility.
-- **MUI Grid**: We seem to be using MUI v6 or Grid v2 (`size` prop instead of `item xs`).
-- **Infinite Scroll**: Implemented via "Load More" button for better UX control, rather than auto-scroll.
+- **Separation of Concerns**: "Schedule" tab is for _viewing_ the queue (what's happening), while "Settings" is for _configuring_ the rules (when it happens).
+- **Unified State**: The application treats all platforms consistently in the UI.
 
 ## Next Steps
 
-1.  **Finish Phase 6 (Engagement)**: The Inbox is now polished and integrated into the channel view.
-2.  **Resume Phase 5**: X (Twitter) integration is the next logical platform expansion step when ready.
-3.  **Phase 3 Features**: Team features and API access are on the horizon.
+1.  **Resume Phase 5**: X (Twitter) integration is the next logical platform expansion step when ready.
+2.  **Phase 3 Features**: Team features and API access are on the horizon.

@@ -114,9 +114,14 @@
   - [x] **Analytics**: Updated Dashboard and Trends to show data for all 4 platforms.
   - [x] **Sidebar**: Fixed "Connect" prompts for disconnected platforms (TikTok, Vimeo).
   - [x] **Dashboard**: Added "Connect LinkedIn" card to setup screen.
+- [x] **Step 5**: Channel-Centric Polish (2025-11-21)
+  - [x] **Settings Page**: Created `/platforms/[id]/settings` with Disconnect and Schedule Config.
+  - [x] **Schedule Page**: Repurposed `/platforms/[id]/schedule` to show the Content Queue (Upcoming Posts).
+  - [x] **Overview**: Enhanced with real stats and "Next Up" card.
+  - [x] **Backend**: Added `platform.getScheduledJobs` and `analytics.getPlatformStats`.
 
 ## Current Status
 
-**Status**: Phase 6 (Engagement) Complete.
+**Status**: Phase 6 (Engagement) & Channel Polish Complete.
 **Product**: MediaBlade (Buffer Clone)
 **Next Action**: Resume Phase 5 (Platform Expansion) or start Phase 7 (Team/API).
