@@ -43,6 +43,9 @@ export const checkScheduledJobsFunction = inngest.createFunction(
           case "VIMEO":
             eventName = "video/publish.vimeo";
             break;
+          case "LINKEDIN":
+            eventName = "video/publish.linkedin";
+            break;
           default:
             console.warn(`Unknown platform: ${job.platform}`);
             return null;

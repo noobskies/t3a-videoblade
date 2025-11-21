@@ -30,7 +30,7 @@ We are currently implementing new social platforms to transform VideoBlade into 
 ## Next Steps
 
 1.  **Phase 5: Platform Expansion (Continued)**
-    - **Step 2**: X (Twitter) Integration.
+    - **Step 2**: X (Twitter) Integration (On Hold due to API costs).
     - **Step 3**: Instagram/Facebook Integration.
 
 2.  **Phase 6: Engagement**
@@ -39,4 +39,4 @@ We are currently implementing new social platforms to transform VideoBlade into 
 ## Current Project State
 
 - **Phase**: 5 (Platform Expansion)
-- **Status**: LinkedIn Integration Complete (Text, Image, Video). Ready for X (Twitter).
+- **Status**: LinkedIn Integration Complete (Text, Image, Video). Twitter On Hold.

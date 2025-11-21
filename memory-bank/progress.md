@@ -86,8 +86,9 @@
   - [x] Authentication (Better Auth)
   - [x] API Library (`src/lib/linkedin.ts`) with Media Support
   - [x] Background Job (`src/inngest/publish-to-linkedin.ts`)
+  - [x] Scheduler Integration (`check-scheduled-jobs.ts`)
   - [x] UI Integration
-- [ ] **Step 2**: X (Twitter) Integration
+- [ ] **Step 2**: X (Twitter) Integration (On Hold - API Cost)
 - [ ] **Step 3**: Instagram/Facebook Integration
 
 ### 🔄 Phase 6: Engagement (Pending)
@@ -98,4 +99,4 @@
 
 **Status**: Phase 5 In Progress. LinkedIn Integrated.
 **Product**: MediaBlade (Buffer Clone)
-**Next Action**: Phase 5, Step 2: X (Twitter) Integration.
+**Next Action**: Awaiting direction (Twitter On Hold).
