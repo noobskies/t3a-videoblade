@@ -6,7 +6,7 @@ import { db } from "@/server/db";
 
 export const auth = betterAuth({
   database: prismaAdapter(db, {
-    provider: "sqlite", // Change to "postgresql" in production
+    provider: "postgresql",
   }),
   emailAndPassword: {
     enabled: false, // Disabled for now, enable later if needed

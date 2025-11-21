@@ -106,14 +106,14 @@
 
 ### Database
 
-**PostgreSQL** (Production - Prisma Accelerate)
+**PostgreSQL** (Production & Development - Prisma Accelerate)
 
 - Cloud-hosted PostgreSQL via Prisma
 - Connection pooling and query caching with Prisma Accelerate
 - Location: `db.prisma.io:5432`
 - Configured with connection pooling for serverless environments
-- Migrated from SQLite: 2025-11-17
-- **Core Models**: `Post` (Multi-format), `PlatformConnection`, `PublishJob`
+- Fully Migrated from SQLite
+- **Core Models**: `Post` (Multi-format), `PlatformConnection`, `PublishJob`, `Comment` (Unified Inbox)
 
 ### Data Validation
 
@@ -215,7 +215,8 @@ This project has access to **Model Context Protocol (MCP) servers** that extend 
 
 ```env
 # Database
-DATABASE_URL="file:./db.sqlite"
+DATABASE_URL="postgresql://..."
+DIRECT_URL="postgresql://..."
 
 # Better Auth
 BETTER_AUTH_SECRET="your-secret-here"

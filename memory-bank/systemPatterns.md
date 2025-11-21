@@ -174,17 +174,17 @@ It's **acceptable and encouraged** to break backwards compatibility when:
 **Schema Location**: `prisma/schema.prisma`
 **Generated Client**: `generated/prisma/`
 
-### 4. SQLite for Development
+### 4. PostgreSQL for All Environments
 
-**Decision**: SQLite with plan to migrate for production
+**Decision**: PostgreSQL (via Prisma Accelerate/Cloud)
 
 **Rationale**:
 
-- Zero configuration for development
-- File-based, easy to reset
-- Good for prototyping
+- **Consistency**: Dev matches production environment exactly.
+- **Features**: Full support for Postgres-specific features if needed.
+- **Better Auth Compatibility**: Ensures authentication adapter works consistently.
 
-**Production Consideration**: Will need PostgreSQL or MySQL
+**Migration Status**: Fully migrated from SQLite (Nov 2025).
 
 ### 5. Multi-Format Content Support (Phase 4)
 
