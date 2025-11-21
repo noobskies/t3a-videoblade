@@ -8,7 +8,7 @@ import { YouTubeCommentService } from "./youtube-comment-service";
 import { LinkedInCommentService } from "./linkedin-comment-service";
 
 export class SyncService {
-  private getService(platform: Platform): CommentService | null {
+  public getService(platform: Platform): CommentService | null {
     switch (platform) {
       case Platform.YOUTUBE:
         return new YouTubeCommentService();

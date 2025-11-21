@@ -98,11 +98,14 @@
   - [x] **Database**: `Comment` schema
   - [x] **Services**: `YouTubeCommentService`, `LinkedInCommentService`, `SyncService`
   - [x] **Background Job**: `sync-comments` Inngest function
-  - [x] **UI**: `/dashboard/inbox` Page and `CommentList` component
-- [ ] **Step 2**: Reply Functionality (Next)
+  - [x] **UI**: `/inbox` Page (moved from `/dashboard/inbox`) and `CommentList` component
+- [x] **Step 2**: Reply Functionality (2025-11-21)
+  - [x] **API**: `CommentService.reply` implemented
+  - [x] **Backend**: `comment.reply` tRPC mutation with optimistic updates
+  - [x] **UI**: `ReplyInput` component integrated into Inbox
 
 ## Current Status
 
 **Status**: Phase 6 (Engagement) In Progress.
 **Product**: MediaBlade (Buffer Clone)
-**Next Action**: Verify Sync and Implement Replies.
+**Next Action**: Polish Unified Inbox (Filtering/Search).

@@ -3,17 +3,14 @@
 ## Current Focus
 
 **Phase 6: Engagement (Unified Inbox)**
-With Phase 5 (Platform Expansion) on hold, we are shifting focus to the "Engagement" pillar of the project. We are building the **Unified Inbox** to aggregate and manage comments from connected platforms.
+We are building the **Unified Inbox** to aggregate and manage comments from connected platforms. The core foundation and reply functionality are now complete.
 
 ## Recent Changes
 
-- **Phase 5 Paused**:
-  - **LinkedIn Integration**: Complete.
-  - **X (Twitter)**: On Hold (Cost).
-  - **Meta (Facebook/Instagram)**: On Hold (User request).
-- **Phase 6 Started**:
-  - Defined roadmap for Unified Inbox.
-  - Chose "Sync-First" architecture for reliable "Inbox Zero" workflow.
+- **Phase 6 (Engagement)**:
+  - **Unified Inbox Foundation**: Database schema, Sync Services, and Inngest jobs implemented.
+  - **Reply Functionality**: Users can now reply to YouTube and LinkedIn comments directly from the dashboard.
+  - **Optimistic Updates**: Replies are immediately added to the local database for instant feedback.
 
 ## Active Decisions
 
@@ -23,12 +20,13 @@ With Phase 5 (Platform Expansion) on hold, we are shifting focus to the "Engagem
 
 ## Next Steps
 
-1.  **Database Schema**: Add `Comment` and `CommentAuthor` models to Prisma schema.
-2.  **Service Layer**: Create `CommentService` interface and platform implementations.
-3.  **Sync Logic**: Implement Inngest job to poll platform APIs.
-4.  **UI**: Build the `/dashboard/inbox` interface.
+1.  **Unified Inbox Polish**:
+    - Add filtering by platform.
+    - Add search functionality.
+    - Improve "My Reply" visualization (currently just shows as a comment).
+2.  **Phase 6 Wrap-up**: Verify all engagement features are stable.
 
 ## Current Project State
 
 - **Phase**: 6 (Engagement)
-- **Status**: Starting Unified Inbox Implementation.
+- **Status**: Unified Inbox Implemented (Sync + Reply).

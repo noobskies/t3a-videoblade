@@ -24,6 +24,7 @@ import {
 import { Platform } from "../../../../generated/prisma";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { ReplyInput } from "./reply-input";
 
 dayjs.extend(relativeTime);
 
@@ -203,6 +204,8 @@ export function CommentList() {
                         </Box>
                       </Box>
                     )}
+
+                    <ReplyInput commentId={comment.id} />
                   </Box>
                 </Stack>
               </CardContent>
