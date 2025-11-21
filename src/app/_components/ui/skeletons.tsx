@@ -264,6 +264,62 @@ export function LandingFeaturesSkeleton() {
 }
 
 /**
+ * Skeleton for Idea Card
+ * Matches src/app/_components/ideas/idea-card.tsx
+ */
+export function IdeaCardSkeleton() {
+  return (
+    <Card sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
+      <CardContent sx={{ flexGrow: 1 }}>
+        <Skeleton variant="text" width="80%" height={32} sx={{ mb: 1 }} />
+        <Skeleton variant="text" width="100%" height={20} />
+        <Skeleton variant="text" width="90%" height={20} />
+        <Skeleton variant="text" width="60%" height={20} />
+        <Skeleton
+          variant="text"
+          width={80}
+          height={16}
+          sx={{ mt: 2, display: "block" }}
+        />
+      </CardContent>
+      <CardActions>
+        <Skeleton
+          variant="rectangular"
+          width={120}
+          height={30}
+          sx={{ mr: "auto", borderRadius: 1 }}
+        />
+        <Skeleton variant="circular" width={30} height={30} sx={{ ml: 1 }} />
+        <Skeleton variant="circular" width={30} height={30} sx={{ ml: 0 }} />
+      </CardActions>
+    </Card>
+  );
+}
+
+/**
+ * Skeleton for a list of Idea Cards
+ */
+export function IdeaGridSkeleton({ count = 6 }: { count?: number }) {
+  return (
+    <Box
+      display="grid"
+      gridTemplateColumns={{
+        xs: "1fr",
+        sm: "repeat(2, 1fr)",
+        md: "repeat(3, 1fr)",
+      }}
+      gap={3}
+    >
+      {Array.from(new Array(count)).map((_, index) => (
+        <Box key={index}>
+          <IdeaCardSkeleton />
+        </Box>
+      ))}
+    </Box>
+  );
+}
+
+/**
  * Skeleton for Edit Video Page
  * Matches src/app/video/[id]/edit/page.tsx
  */

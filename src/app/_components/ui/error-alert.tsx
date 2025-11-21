@@ -6,8 +6,7 @@
  * This component is for component-level error states (e.g., form validation, API errors within a component, etc.)
  */
 
-import { ErrorOutline } from "@mui/icons-material";
-import { Box, Button, Typography, Stack } from "@mui/material";
+import { Alert, AlertTitle, Box, Button } from "@mui/material";
 
 type ErrorAlertProps = {
   message: string;
@@ -16,27 +15,20 @@ type ErrorAlertProps = {
 
 export function ErrorAlert({ message, onRetry }: ErrorAlertProps) {
   return (
-    <Box
-      sx={{
-        display: "flex",
-        minHeight: "100vh",
-        alignItems: "center",
-        justifyContent: "center",
-        background: "linear-gradient(to bottom, #111827, #000000)",
-        color: "white",
-      }}
-    >
-      <Stack spacing={2} alignItems="center" textAlign="center">
-        <ErrorOutline sx={{ fontSize: 48, color: "error.main" }} />
-        <Typography color="error.main" variant="body1">
-          Error: {message}
-        </Typography>
-        {onRetry && (
-          <Button onClick={onRetry} variant="outlined" color="inherit">
-            Try Again
-          </Button>
-        )}
-      </Stack>
+    <Box sx={{ p: 2 }}>
+      <Alert
+        severity="error"
+        action={
+          onRetry ? (
+            <Button color="inherit" size="small" onClick={onRetry}>
+              Try Again
+            </Button>
+          ) : undefined
+        }
+      >
+        <AlertTitle>Error</AlertTitle>
+        {message}
+      </Alert>
     </Box>
   );
 }

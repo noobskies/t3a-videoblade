@@ -2,10 +2,15 @@
 
 ## Current Focus
 
-**Phase 4: Core Buffer Experience**
-We have completed **Phase 4, Step 4: Ideas/Drafts**. The application now supports quick idea entry, managing ideas separate from posts, and converting ideas to full posts.
+**Polish & Hardening**
+We have completed a **Polish Sprint** to clean up technical debt, finalize the MUI migration, and refine the Ideas feature.
 
 ## Recent Changes
+
+- **Codebase Polish & Cleanup**:
+  - **Legacy Removal**: Completely removed Tailwind CSS, PostCSS, and shadcn/radix dependencies.
+  - **MUI Migration**: Finalized migration of UI components (`ErrorAlert`, `Skeletons`) to native MUI.
+  - **Ideas Polish**: Added proper loading skeletons (`IdeaCardSkeleton`, `IdeaGridSkeleton`) and polished the UI.
 
 - **Ideas & Drafts Implementation**:
   - **Schema**: Modified `Post` model to make `title` optional and added `isIdea` boolean.
@@ -34,5 +39,5 @@ We have completed **Phase 4, Step 4: Ideas/Drafts**. The application now support
 
 ## Current Project State
 
-- **Phase**: 4 (Buffer Core)
-- **Status**: Ideas/Drafts Complete. Phase 4 Complete. Ready for Phase 5.
+- **Phase**: 4 (Buffer Core) -> Polish
+- **Status**: Codebase polished and legacy dependencies removed. Ready for Phase 5.

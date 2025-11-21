@@ -40,6 +40,7 @@
 - [x] MUI v7 Foundation
 - [x] Theme with CSS Variables & Dark Mode
 - [x] Core Layout & Components
+- [x] **Legacy Cleanup**: Removed Tailwind, PostCSS, and shadcn/radix dependencies (2025-11-21)
 
 ### ✅ Development Workflow (Complete)
 
@@ -76,6 +77,7 @@
   - [x] Ideas Schema (`isIdea`, optional `title`)
   - [x] Ideas Page (`/ideas`) & Quick Entry
   - [x] Convert Idea to Post workflow
+  - [x] **Polish**: Added proper loading skeletons and refined UI
 
 ### 🔄 Phase 5: Platform Expansion (Pending)
 

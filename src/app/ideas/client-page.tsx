@@ -4,6 +4,7 @@ import { api } from "@/trpc/react";
 import { Box, Container, Typography, Stack, Alert, Grid } from "@mui/material";
 import { QuickEntry } from "@/app/_components/ideas/quick-entry";
 import { IdeaCard } from "@/app/_components/ideas/idea-card";
+import { IdeaGridSkeleton } from "@/app/_components/ui/skeletons";
 import { Lightbulb as IdeaIcon } from "@mui/icons-material";
 
 export default function IdeasPage() {
@@ -42,7 +43,7 @@ export default function IdeasPage() {
         <QuickEntry onSuccess={refetch} />
 
         {isLoading ? (
-          <Typography>Loading ideas...</Typography>
+          <IdeaGridSkeleton count={6} />
         ) : ideas && ideas.length > 0 ? (
           <Grid container spacing={3}>
             {ideas.map((idea) => (
