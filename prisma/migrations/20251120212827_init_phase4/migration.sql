@@ -1,14 +1,30 @@
 -- CreateEnum
-CREATE TYPE "Platform" AS ENUM ('YOUTUBE', 'RUMBLE', 'TIKTOK', 'VIMEO');
+DO $$ BEGIN
+    CREATE TYPE "Platform" AS ENUM ('YOUTUBE', 'RUMBLE', 'TIKTOK', 'VIMEO');
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
 
 -- CreateEnum
-CREATE TYPE "PublishStatus" AS ENUM ('PENDING', 'SCHEDULED', 'PLATFORM_SCHEDULED', 'PROCESSING', 'COMPLETED', 'FAILED', 'CANCELLED');
+DO $$ BEGIN
+    CREATE TYPE "PublishStatus" AS ENUM ('PENDING', 'SCHEDULED', 'PLATFORM_SCHEDULED', 'PROCESSING', 'COMPLETED', 'FAILED', 'CANCELLED');
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
 
 -- CreateEnum
-CREATE TYPE "VideoPrivacy" AS ENUM ('PUBLIC', 'UNLISTED', 'PRIVATE', 'MUTUAL_FOLLOW_FRIENDS');
+DO $$ BEGIN
+    CREATE TYPE "VideoPrivacy" AS ENUM ('PUBLIC', 'UNLISTED', 'PRIVATE', 'MUTUAL_FOLLOW_FRIENDS');
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
 
 -- CreateEnum
-CREATE TYPE "MediaType" AS ENUM ('VIDEO', 'IMAGE', 'TEXT');
+DO $$ BEGIN
+    CREATE TYPE "MediaType" AS ENUM ('VIDEO', 'IMAGE', 'TEXT');
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
 
 -- CreateTable
 CREATE TABLE "Account" (

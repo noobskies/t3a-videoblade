@@ -127,6 +127,12 @@ export function PostCard({ post, onDelete }: PostCardProps) {
     }
   };
 
+  const displayTitle =
+    post.title ??
+    (post.content
+      ? post.content.slice(0, 30) + (post.content.length > 30 ? "..." : "")
+      : "Untitled");
+
   return (
     <Card
       sx={{
@@ -151,7 +157,7 @@ export function PostCard({ post, onDelete }: PostCardProps) {
         {post.thumbnailUrl ? (
           <Image
             src={post.thumbnailUrl}
-            alt={post.title}
+            alt={displayTitle}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             style={{ objectFit: "cover" }}
@@ -182,9 +188,9 @@ export function PostCard({ post, onDelete }: PostCardProps) {
           component="h3"
           noWrap
           gutterBottom
-          title={post.title}
+          title={displayTitle}
         >
-          {post.title}
+          {displayTitle}
         </Typography>
 
         {/* Description */}
@@ -303,7 +309,7 @@ export function PostCard({ post, onDelete }: PostCardProps) {
         aria-describedby="delete-dialog-description"
       >
         <DialogTitle id="delete-dialog-title">
-          {`Delete "${post.title}"?`}
+          {`Delete "${displayTitle}"?`}
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="delete-dialog-description" gutterBottom>

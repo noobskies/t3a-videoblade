@@ -6321,6 +6321,7 @@ export namespace Prisma {
     mimeType: string | null
     duration: number | null
     title: string | null
+    isIdea: boolean | null
     description: string | null
     tags: string | null
     thumbnailUrl: string | null
@@ -6341,6 +6342,7 @@ export namespace Prisma {
     mimeType: string | null
     duration: number | null
     title: string | null
+    isIdea: boolean | null
     description: string | null
     tags: string | null
     thumbnailUrl: string | null
@@ -6361,6 +6363,7 @@ export namespace Prisma {
     mimeType: number
     duration: number
     title: number
+    isIdea: number
     description: number
     tags: number
     thumbnailUrl: number
@@ -6393,6 +6396,7 @@ export namespace Prisma {
     mimeType?: true
     duration?: true
     title?: true
+    isIdea?: true
     description?: true
     tags?: true
     thumbnailUrl?: true
@@ -6413,6 +6417,7 @@ export namespace Prisma {
     mimeType?: true
     duration?: true
     title?: true
+    isIdea?: true
     description?: true
     tags?: true
     thumbnailUrl?: true
@@ -6433,6 +6438,7 @@ export namespace Prisma {
     mimeType?: true
     duration?: true
     title?: true
+    isIdea?: true
     description?: true
     tags?: true
     thumbnailUrl?: true
@@ -6539,7 +6545,8 @@ export namespace Prisma {
     fileSize: bigint | null
     mimeType: string | null
     duration: number | null
-    title: string
+    title: string | null
+    isIdea: boolean
     description: string | null
     tags: string | null
     thumbnailUrl: string | null
@@ -6579,6 +6586,7 @@ export namespace Prisma {
     mimeType?: boolean
     duration?: boolean
     title?: boolean
+    isIdea?: boolean
     description?: boolean
     tags?: boolean
     thumbnailUrl?: boolean
@@ -6602,6 +6610,7 @@ export namespace Prisma {
     mimeType?: boolean
     duration?: boolean
     title?: boolean
+    isIdea?: boolean
     description?: boolean
     tags?: boolean
     thumbnailUrl?: boolean
@@ -6623,6 +6632,7 @@ export namespace Prisma {
     mimeType?: boolean
     duration?: boolean
     title?: boolean
+    isIdea?: boolean
     description?: boolean
     tags?: boolean
     thumbnailUrl?: boolean
@@ -6644,6 +6654,7 @@ export namespace Prisma {
     mimeType?: boolean
     duration?: boolean
     title?: boolean
+    isIdea?: boolean
     description?: boolean
     tags?: boolean
     thumbnailUrl?: boolean
@@ -6651,7 +6662,7 @@ export namespace Prisma {
     createdById?: boolean
   }
 
-  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "type" | "content" | "s3Key" | "s3Bucket" | "fileName" | "fileSize" | "mimeType" | "duration" | "title" | "description" | "tags" | "thumbnailUrl" | "privacy" | "createdById", ExtArgs["result"]["post"]>
+  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "type" | "content" | "s3Key" | "s3Bucket" | "fileName" | "fileSize" | "mimeType" | "duration" | "title" | "isIdea" | "description" | "tags" | "thumbnailUrl" | "privacy" | "createdById", ExtArgs["result"]["post"]>
   export type PostInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     createdBy?: boolean | UserDefaultArgs<ExtArgs>
     publishJobs?: boolean | Post$publishJobsArgs<ExtArgs>
@@ -6682,7 +6693,8 @@ export namespace Prisma {
       fileSize: bigint | null
       mimeType: string | null
       duration: number | null
-      title: string
+      title: string | null
+      isIdea: boolean
       description: string | null
       tags: string | null
       thumbnailUrl: string | null
@@ -7125,6 +7137,7 @@ export namespace Prisma {
     readonly mimeType: FieldRef<"Post", 'String'>
     readonly duration: FieldRef<"Post", 'Int'>
     readonly title: FieldRef<"Post", 'String'>
+    readonly isIdea: FieldRef<"Post", 'Boolean'>
     readonly description: FieldRef<"Post", 'String'>
     readonly tags: FieldRef<"Post", 'String'>
     readonly thumbnailUrl: FieldRef<"Post", 'String'>
@@ -12394,6 +12407,7 @@ export namespace Prisma {
     mimeType: 'mimeType',
     duration: 'duration',
     title: 'title',
+    isIdea: 'isIdea',
     description: 'description',
     tags: 'tags',
     thumbnailUrl: 'thumbnailUrl',
@@ -12993,7 +13007,8 @@ export namespace Prisma {
     fileSize?: BigIntNullableFilter<"Post"> | bigint | number | null
     mimeType?: StringNullableFilter<"Post"> | string | null
     duration?: IntNullableFilter<"Post"> | number | null
-    title?: StringFilter<"Post"> | string
+    title?: StringNullableFilter<"Post"> | string | null
+    isIdea?: BoolFilter<"Post"> | boolean
     description?: StringNullableFilter<"Post"> | string | null
     tags?: StringNullableFilter<"Post"> | string | null
     thumbnailUrl?: StringNullableFilter<"Post"> | string | null
@@ -13015,7 +13030,8 @@ export namespace Prisma {
     fileSize?: SortOrderInput | SortOrder
     mimeType?: SortOrderInput | SortOrder
     duration?: SortOrderInput | SortOrder
-    title?: SortOrder
+    title?: SortOrderInput | SortOrder
+    isIdea?: SortOrder
     description?: SortOrderInput | SortOrder
     tags?: SortOrderInput | SortOrder
     thumbnailUrl?: SortOrderInput | SortOrder
@@ -13040,7 +13056,8 @@ export namespace Prisma {
     fileSize?: BigIntNullableFilter<"Post"> | bigint | number | null
     mimeType?: StringNullableFilter<"Post"> | string | null
     duration?: IntNullableFilter<"Post"> | number | null
-    title?: StringFilter<"Post"> | string
+    title?: StringNullableFilter<"Post"> | string | null
+    isIdea?: BoolFilter<"Post"> | boolean
     description?: StringNullableFilter<"Post"> | string | null
     tags?: StringNullableFilter<"Post"> | string | null
     thumbnailUrl?: StringNullableFilter<"Post"> | string | null
@@ -13062,7 +13079,8 @@ export namespace Prisma {
     fileSize?: SortOrderInput | SortOrder
     mimeType?: SortOrderInput | SortOrder
     duration?: SortOrderInput | SortOrder
-    title?: SortOrder
+    title?: SortOrderInput | SortOrder
+    isIdea?: SortOrder
     description?: SortOrderInput | SortOrder
     tags?: SortOrderInput | SortOrder
     thumbnailUrl?: SortOrderInput | SortOrder
@@ -13090,7 +13108,8 @@ export namespace Prisma {
     fileSize?: BigIntNullableWithAggregatesFilter<"Post"> | bigint | number | null
     mimeType?: StringNullableWithAggregatesFilter<"Post"> | string | null
     duration?: IntNullableWithAggregatesFilter<"Post"> | number | null
-    title?: StringWithAggregatesFilter<"Post"> | string
+    title?: StringNullableWithAggregatesFilter<"Post"> | string | null
+    isIdea?: BoolWithAggregatesFilter<"Post"> | boolean
     description?: StringNullableWithAggregatesFilter<"Post"> | string | null
     tags?: StringNullableWithAggregatesFilter<"Post"> | string | null
     thumbnailUrl?: StringNullableWithAggregatesFilter<"Post"> | string | null
@@ -13820,7 +13839,8 @@ export namespace Prisma {
     fileSize?: bigint | number | null
     mimeType?: string | null
     duration?: number | null
-    title: string
+    title?: string | null
+    isIdea?: boolean
     description?: string | null
     tags?: string | null
     thumbnailUrl?: string | null
@@ -13841,7 +13861,8 @@ export namespace Prisma {
     fileSize?: bigint | number | null
     mimeType?: string | null
     duration?: number | null
-    title: string
+    title?: string | null
+    isIdea?: boolean
     description?: string | null
     tags?: string | null
     thumbnailUrl?: string | null
@@ -13862,7 +13883,8 @@ export namespace Prisma {
     fileSize?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     mimeType?: NullableStringFieldUpdateOperationsInput | string | null
     duration?: NullableIntFieldUpdateOperationsInput | number | null
-    title?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    isIdea?: BoolFieldUpdateOperationsInput | boolean
     description?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: NullableStringFieldUpdateOperationsInput | string | null
     thumbnailUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -13883,7 +13905,8 @@ export namespace Prisma {
     fileSize?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     mimeType?: NullableStringFieldUpdateOperationsInput | string | null
     duration?: NullableIntFieldUpdateOperationsInput | number | null
-    title?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    isIdea?: BoolFieldUpdateOperationsInput | boolean
     description?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: NullableStringFieldUpdateOperationsInput | string | null
     thumbnailUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -13904,7 +13927,8 @@ export namespace Prisma {
     fileSize?: bigint | number | null
     mimeType?: string | null
     duration?: number | null
-    title: string
+    title?: string | null
+    isIdea?: boolean
     description?: string | null
     tags?: string | null
     thumbnailUrl?: string | null
@@ -13924,7 +13948,8 @@ export namespace Prisma {
     fileSize?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     mimeType?: NullableStringFieldUpdateOperationsInput | string | null
     duration?: NullableIntFieldUpdateOperationsInput | number | null
-    title?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    isIdea?: BoolFieldUpdateOperationsInput | boolean
     description?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: NullableStringFieldUpdateOperationsInput | string | null
     thumbnailUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -13943,7 +13968,8 @@ export namespace Prisma {
     fileSize?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     mimeType?: NullableStringFieldUpdateOperationsInput | string | null
     duration?: NullableIntFieldUpdateOperationsInput | number | null
-    title?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    isIdea?: BoolFieldUpdateOperationsInput | boolean
     description?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: NullableStringFieldUpdateOperationsInput | string | null
     thumbnailUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -14729,6 +14755,11 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type EnumVideoPrivacyFilter<$PrismaModel = never> = {
     equals?: $Enums.VideoPrivacy | EnumVideoPrivacyFieldRefInput<$PrismaModel>
     in?: $Enums.VideoPrivacy[] | ListEnumVideoPrivacyFieldRefInput<$PrismaModel>
@@ -14749,6 +14780,7 @@ export namespace Prisma {
     mimeType?: SortOrder
     duration?: SortOrder
     title?: SortOrder
+    isIdea?: SortOrder
     description?: SortOrder
     tags?: SortOrder
     thumbnailUrl?: SortOrder
@@ -14774,6 +14806,7 @@ export namespace Prisma {
     mimeType?: SortOrder
     duration?: SortOrder
     title?: SortOrder
+    isIdea?: SortOrder
     description?: SortOrder
     tags?: SortOrder
     thumbnailUrl?: SortOrder
@@ -14794,6 +14827,7 @@ export namespace Prisma {
     mimeType?: SortOrder
     duration?: SortOrder
     title?: SortOrder
+    isIdea?: SortOrder
     description?: SortOrder
     tags?: SortOrder
     thumbnailUrl?: SortOrder
@@ -14848,6 +14882,14 @@ export namespace Prisma {
     _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type EnumVideoPrivacyWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.VideoPrivacy | EnumVideoPrivacyFieldRefInput<$PrismaModel>
     in?: $Enums.VideoPrivacy[] | ListEnumVideoPrivacyFieldRefInput<$PrismaModel>
@@ -14886,11 +14928,6 @@ export namespace Prisma {
     gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
     gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-  }
-
-  export type BoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
   export type PostingScheduleNullableScalarRelationFilter = {
@@ -14980,14 +15017,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedJsonNullableFilter<$PrismaModel>
     _max?: NestedJsonNullableFilter<$PrismaModel>
-  }
-
-  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type EnumPublishStatusFilter<$PrismaModel = never> = {
@@ -15572,6 +15601,10 @@ export namespace Prisma {
     divide?: number
   }
 
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
   export type EnumVideoPrivacyFieldUpdateOperationsInput = {
     set?: $Enums.VideoPrivacy
   }
@@ -15646,10 +15679,6 @@ export namespace Prisma {
 
   export type EnumPlatformFieldUpdateOperationsInput = {
     set?: $Enums.Platform
-  }
-
-  export type BoolFieldUpdateOperationsInput = {
-    set?: boolean
   }
 
   export type UserUpdateOneRequiredWithoutPlatformConnectionsNestedInput = {
@@ -16001,6 +16030,11 @@ export namespace Prisma {
     not?: NestedBigIntNullableFilter<$PrismaModel> | bigint | number | null
   }
 
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type NestedEnumVideoPrivacyFilter<$PrismaModel = never> = {
     equals?: $Enums.VideoPrivacy | EnumVideoPrivacyFieldRefInput<$PrismaModel>
     in?: $Enums.VideoPrivacy[] | ListEnumVideoPrivacyFieldRefInput<$PrismaModel>
@@ -16061,6 +16095,14 @@ export namespace Prisma {
     _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type NestedEnumVideoPrivacyWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.VideoPrivacy | EnumVideoPrivacyFieldRefInput<$PrismaModel>
     in?: $Enums.VideoPrivacy[] | ListEnumVideoPrivacyFieldRefInput<$PrismaModel>
@@ -16076,11 +16118,6 @@ export namespace Prisma {
     in?: $Enums.Platform[] | ListEnumPlatformFieldRefInput<$PrismaModel>
     notIn?: $Enums.Platform[] | ListEnumPlatformFieldRefInput<$PrismaModel>
     not?: NestedEnumPlatformFilter<$PrismaModel> | $Enums.Platform
-  }
-
-  export type NestedBoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
   export type NestedEnumPlatformWithAggregatesFilter<$PrismaModel = never> = {
@@ -16114,14 +16151,6 @@ export namespace Prisma {
     gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
     gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-  }
-
-  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type NestedEnumPublishStatusFilter<$PrismaModel = never> = {
@@ -16434,7 +16463,8 @@ export namespace Prisma {
     fileSize?: bigint | number | null
     mimeType?: string | null
     duration?: number | null
-    title: string
+    title?: string | null
+    isIdea?: boolean
     description?: string | null
     tags?: string | null
     thumbnailUrl?: string | null
@@ -16454,7 +16484,8 @@ export namespace Prisma {
     fileSize?: bigint | number | null
     mimeType?: string | null
     duration?: number | null
-    title: string
+    title?: string | null
+    isIdea?: boolean
     description?: string | null
     tags?: string | null
     thumbnailUrl?: string | null
@@ -16668,7 +16699,8 @@ export namespace Prisma {
     fileSize?: BigIntNullableFilter<"Post"> | bigint | number | null
     mimeType?: StringNullableFilter<"Post"> | string | null
     duration?: IntNullableFilter<"Post"> | number | null
-    title?: StringFilter<"Post"> | string
+    title?: StringNullableFilter<"Post"> | string | null
+    isIdea?: BoolFilter<"Post"> | boolean
     description?: StringNullableFilter<"Post"> | string | null
     tags?: StringNullableFilter<"Post"> | string | null
     thumbnailUrl?: StringNullableFilter<"Post"> | string | null
@@ -17133,7 +17165,8 @@ export namespace Prisma {
     fileSize?: bigint | number | null
     mimeType?: string | null
     duration?: number | null
-    title: string
+    title?: string | null
+    isIdea?: boolean
     description?: string | null
     tags?: string | null
     thumbnailUrl?: string | null
@@ -17153,7 +17186,8 @@ export namespace Prisma {
     fileSize?: bigint | number | null
     mimeType?: string | null
     duration?: number | null
-    title: string
+    title?: string | null
+    isIdea?: boolean
     description?: string | null
     tags?: string | null
     thumbnailUrl?: string | null
@@ -17288,7 +17322,8 @@ export namespace Prisma {
     fileSize?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     mimeType?: NullableStringFieldUpdateOperationsInput | string | null
     duration?: NullableIntFieldUpdateOperationsInput | number | null
-    title?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    isIdea?: BoolFieldUpdateOperationsInput | boolean
     description?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: NullableStringFieldUpdateOperationsInput | string | null
     thumbnailUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17308,7 +17343,8 @@ export namespace Prisma {
     fileSize?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     mimeType?: NullableStringFieldUpdateOperationsInput | string | null
     duration?: NullableIntFieldUpdateOperationsInput | number | null
-    title?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    isIdea?: BoolFieldUpdateOperationsInput | boolean
     description?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: NullableStringFieldUpdateOperationsInput | string | null
     thumbnailUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17627,7 +17663,8 @@ export namespace Prisma {
     fileSize?: bigint | number | null
     mimeType?: string | null
     duration?: number | null
-    title: string
+    title?: string | null
+    isIdea?: boolean
     description?: string | null
     tags?: string | null
     thumbnailUrl?: string | null
@@ -17758,7 +17795,8 @@ export namespace Prisma {
     fileSize?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     mimeType?: NullableStringFieldUpdateOperationsInput | string | null
     duration?: NullableIntFieldUpdateOperationsInput | number | null
-    title?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    isIdea?: BoolFieldUpdateOperationsInput | boolean
     description?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: NullableStringFieldUpdateOperationsInput | string | null
     thumbnailUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17778,7 +17816,8 @@ export namespace Prisma {
     fileSize?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     mimeType?: NullableStringFieldUpdateOperationsInput | string | null
     duration?: NullableIntFieldUpdateOperationsInput | number | null
-    title?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    isIdea?: BoolFieldUpdateOperationsInput | boolean
     description?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: NullableStringFieldUpdateOperationsInput | string | null
     thumbnailUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17798,7 +17837,8 @@ export namespace Prisma {
     fileSize?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     mimeType?: NullableStringFieldUpdateOperationsInput | string | null
     duration?: NullableIntFieldUpdateOperationsInput | number | null
-    title?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    isIdea?: BoolFieldUpdateOperationsInput | boolean
     description?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: NullableStringFieldUpdateOperationsInput | string | null
     thumbnailUrl?: NullableStringFieldUpdateOperationsInput | string | null

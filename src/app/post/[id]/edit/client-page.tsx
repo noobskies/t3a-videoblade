@@ -36,6 +36,7 @@ export function EditVideoPage() {
   // Form state
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [content, setContent] = useState("");
   const [tags, setTags] = useState("");
   const [privacy, setPrivacy] = useState<
     "PUBLIC" | "UNLISTED" | "PRIVATE" | "MUTUAL_FOLLOW_FRIENDS"
@@ -44,24 +45,32 @@ export function EditVideoPage() {
   // Initialize form when video loads
   useEffect(() => {
     if (video) {
-      setTitle(video.title);
+      setTitle(video.title ?? "");
       setDescription(video.description ?? "");
+      setContent(video.content ?? "");
       setTags(video.tags ?? "");
       setPrivacy(video.privacy);
     }
   }, [video]);
 
-  const handleSave = () => {
-    if (!title.trim()) {
+  const handleSave = (convertToPost = false) => {
+    // For Ideas, title is optional. For Posts, it's required.
+    if (convertToPost && !title.trim()) {
+      alert("Title is required to convert to a post");
       return;
     }
 
+    // If it's currently an idea but user didn't click convert, keeping it as idea (unless validation fails?)
+    // Actually we allow saving ideas without title.
+
     updateVideo.mutate({
       id: videoId,
-      title: title.trim(),
+      title: title.trim() || undefined,
       description: description.trim() || undefined,
+      content: content.trim() || undefined,
       tags: tags.trim() || undefined,
       privacy,
+      isIdea: convertToPost ? false : video.isIdea,
     });
   };
 
@@ -95,10 +104,10 @@ export function EditVideoPage() {
           </IconButton>
           <Box>
             <Typography variant="h4" component="h1" fontWeight="bold">
-              Edit Video
+              {video.isIdea ? "Edit Idea" : "Edit Post"}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              {video.fileName}
+              {video.fileName ?? (video.isIdea ? "Draft Idea" : "Untitled")}
             </Typography>
           </Box>
         </Stack>
@@ -106,76 +115,93 @@ export function EditVideoPage() {
         {/* Edit Form */}
         <Paper elevation={1} sx={{ p: 4 }}>
           <Stack spacing={4}>
-            {/* Thumbnail */}
-            <Box
-              sx={{
-                width: "100%",
-                position: "relative",
-                paddingTop: "56.25%", // 16:9 aspect ratio
-                bgcolor: "action.hover",
-                borderRadius: 1,
-                overflow: "hidden",
-              }}
-            >
-              {video.thumbnailUrl ? (
-                <Image
-                  src={video.thumbnailUrl}
-                  alt={video.title}
-                  fill
-                  style={{ objectFit: "cover" }}
-                />
-              ) : (
-                <Box
-                  sx={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    flexDirection: "column",
-                    color: "text.secondary",
-                  }}
-                >
-                  <MovieIcon sx={{ fontSize: 64, opacity: 0.5, mb: 1 }} />
-                  <Typography variant="body2">
-                    No thumbnail available
-                  </Typography>
-                </Box>
-              )}
-            </Box>
+            {/* Thumbnail (Only for Media types) */}
+            {video.type !== "TEXT" && (
+              <Box
+                sx={{
+                  width: "100%",
+                  position: "relative",
+                  paddingTop: "56.25%", // 16:9 aspect ratio
+                  bgcolor: "action.hover",
+                  borderRadius: 1,
+                  overflow: "hidden",
+                }}
+              >
+                {video.thumbnailUrl ? (
+                  <Image
+                    src={video.thumbnailUrl}
+                    alt={video.title ?? "Thumbnail"}
+                    fill
+                    style={{ objectFit: "cover" }}
+                  />
+                ) : (
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      width: "100%",
+                      height: "100%",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      flexDirection: "column",
+                      color: "text.secondary",
+                    }}
+                  >
+                    <MovieIcon sx={{ fontSize: 64, opacity: 0.5, mb: 1 }} />
+                    <Typography variant="body2">
+                      No thumbnail available
+                    </Typography>
+                  </Box>
+                )}
+              </Box>
+            )}
 
             {/* Title */}
             <TextField
               label="Title"
-              required
+              required={!video.isIdea}
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              placeholder="Enter video title"
+              placeholder="Enter post title"
               fullWidth
               helperText={`${title.length}/100 characters`}
-              error={!title.trim() && title.length > 0}
+              error={!video.isIdea && !title.trim() && title.length > 0}
               slotProps={{
                 htmlInput: { maxLength: 100 },
               }}
             />
 
-            {/* Description */}
-            <TextField
-              label="Description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              placeholder="Enter video description"
-              multiline
-              rows={6}
-              fullWidth
-              helperText={`${description.length}/5000 characters`}
-              slotProps={{
-                htmlInput: { maxLength: 5000 },
-              }}
-            />
+            {/* Content (For Text Posts/Ideas) */}
+            {video.type === "TEXT" && (
+              <TextField
+                label="Content"
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+                placeholder="Write your post content..."
+                multiline
+                rows={6}
+                fullWidth
+              />
+            )}
+
+            {/* Description (For Media Posts) */}
+            {video.type !== "TEXT" && (
+              <TextField
+                label="Description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                placeholder="Enter video description"
+                multiline
+                rows={6}
+                fullWidth
+                helperText={`${description.length}/5000 characters`}
+                slotProps={{
+                  htmlInput: { maxLength: 5000 },
+                }}
+              />
+            )}
 
             {/* Tags */}
             <TextField
@@ -227,13 +253,28 @@ export function EditVideoPage() {
             <Stack direction="row" spacing={2} pt={2}>
               <Button
                 variant="contained"
-                onClick={handleSave}
-                disabled={updateVideo.isPending || !title.trim()}
+                onClick={() => handleSave(false)}
+                disabled={
+                  updateVideo.isPending || (!video.isIdea && !title.trim())
+                }
                 startIcon={<Save />}
                 sx={{ flex: 1 }}
               >
                 {updateVideo.isPending ? "Saving..." : "Save Changes"}
               </Button>
+
+              {video.isIdea && (
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={() => handleSave(true)}
+                  disabled={updateVideo.isPending || !title.trim()}
+                  sx={{ flex: 1 }}
+                >
+                  Convert to Post
+                </Button>
+              )}
+
               <Button
                 variant="outlined"
                 onClick={handleCancel}

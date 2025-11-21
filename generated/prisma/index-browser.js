@@ -180,6 +180,7 @@ exports.Prisma.PostScalarFieldEnum = {
   mimeType: 'mimeType',
   duration: 'duration',
   title: 'title',
+  isIdea: 'isIdea',
   description: 'description',
   tags: 'tags',
   thumbnailUrl: 'thumbnailUrl',

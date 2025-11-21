@@ -50,6 +50,7 @@ export const calendarRouter = createTRPCRouter({
           post: {
             select: {
               title: true,
+              content: true,
               thumbnailUrl: true,
             },
           },
@@ -78,9 +79,17 @@ export const calendarRouter = createTRPCRouter({
             break;
         }
 
+        const displayTitle =
+          job.post.title ||
+          (job.post.content
+            ? job.post.content.length > 20
+              ? job.post.content.substring(0, 20) + "..."
+              : job.post.content
+            : "Untitled");
+
         return {
           id: job.id,
-          title: `${job.platform}: ${job.post.title}`,
+          title: `${job.platform}: ${displayTitle}`,
           start,
           end: new Date(start.getTime() + 1000 * 60 * 30), // Default 30 min duration for visualization
           allDay: false,

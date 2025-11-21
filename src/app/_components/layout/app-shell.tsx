@@ -33,6 +33,7 @@ import {
   SettingsInputComponent as PlatformsIcon,
   Logout as LogoutIcon,
   CalendarMonth as CalendarMonthIcon,
+  Lightbulb as IdeaIcon,
 } from "@mui/icons-material";
 import { useSession, signOut } from "@/lib/auth-client";
 import { AuthButton } from "@/app/_components/auth-button";
@@ -47,6 +48,7 @@ interface NavItem {
 
 const NAV_ITEMS: NavItem[] = [
   { label: "Dashboard", path: "/dashboard", icon: <DashboardIcon /> },
+  { label: "Ideas", path: "/ideas", icon: <IdeaIcon /> },
   { label: "Library", path: "/library", icon: <LibraryIcon /> },
   { label: "Upload", path: "/upload", icon: <UploadIcon /> },
   { label: "Calendar", path: "/calendar", icon: <CalendarMonthIcon /> },

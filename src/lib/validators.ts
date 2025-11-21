@@ -4,10 +4,13 @@ import { z } from "zod";
 export const createPostSchema = z
   .object({
     type: z.enum(["VIDEO", "IMAGE", "TEXT"]).default("VIDEO"),
-    title: z.string().min(1).max(100),
+    isIdea: z.boolean().default(false),
+    title: z.string().min(1).max(100).optional(),
     description: z.string().max(5000).optional(),
     tags: z.string().max(500).optional(),
-    privacy: z.enum(["PUBLIC", "UNLISTED", "PRIVATE"]).default("UNLISTED"),
+    privacy: z
+      .enum(["PUBLIC", "UNLISTED", "PRIVATE", "MUTUAL_FOLLOW_FRIENDS"])
+      .default("UNLISTED"),
 
     // Text content
     content: z.string().optional(),
@@ -24,6 +27,12 @@ export const createPostSchema = z
   .refine(
     (data) => {
       if (data.type === "TEXT") {
+        // If it's an idea, we need at least title or content
+        // If it's a post, we usually expect content, but maybe title is enough?
+        // For now, enforce content for TEXT posts unless it's an idea with a title
+        if (data.isIdea) {
+          return !!(data.title || data.content);
+        }
         return !!data.content;
       }
       // For VIDEO/IMAGE, S3 fields are required
@@ -43,10 +52,13 @@ export const createPostSchema = z
 export const updatePostSchema = z.object({
   id: z.string().cuid(),
   title: z.string().min(1).max(100).optional(),
+  isIdea: z.boolean().optional(),
   description: z.string().max(5000).optional(),
   content: z.string().optional(),
   tags: z.string().max(500).optional(),
-  privacy: z.enum(["PUBLIC", "UNLISTED", "PRIVATE"]).optional(),
+  privacy: z
+    .enum(["PUBLIC", "UNLISTED", "PRIVATE", "MUTUAL_FOLLOW_FRIENDS"])
+    .optional(),
   thumbnailUrl: z.string().url().optional(),
 });
 
@@ -68,7 +80,9 @@ export const createPublishJobSchema = z.object({
   title: z.string().min(1).max(100).optional(),
   description: z.string().max(5000).optional(),
   tags: z.string().max(500).optional(),
-  privacy: z.enum(["PUBLIC", "UNLISTED", "PRIVATE"]).optional(),
+  privacy: z
+    .enum(["PUBLIC", "UNLISTED", "PRIVATE", "MUTUAL_FOLLOW_FRIENDS"])
+    .optional(),
   scheduledFor: z.date().optional(),
 });
 

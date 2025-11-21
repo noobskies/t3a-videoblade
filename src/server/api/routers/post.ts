@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { createPostSchema } from "@/lib/validators";
+import { createPostSchema, updatePostSchema } from "@/lib/validators";
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import {
   generateVideoS3Key,
@@ -85,7 +85,8 @@ export const postRouter = createTRPCRouter({
         const post = await ctx.db.post.create({
           data: {
             type: "TEXT",
-            title: input.title,
+            isIdea: input.isIdea,
+            title: input.title ?? null, // Allow null if not provided
             description: input.description ?? null,
             content: input.content ?? null,
             tags: input.tags ?? null,
@@ -120,13 +121,14 @@ export const postRouter = createTRPCRouter({
       const post = await ctx.db.post.create({
         data: {
           type: input.type,
+          isIdea: input.isIdea,
           s3Key,
           s3Bucket,
           fileName,
           fileSize: fileSize,
           mimeType,
           duration: input.duration,
-          title: input.title,
+          title: input.title ?? fileName, // Default to filename if no title provided
           description: input.description ?? null,
           tags: input.tags ?? null,
           privacy: input.privacy,
@@ -145,62 +147,73 @@ export const postRouter = createTRPCRouter({
   /**
    * Get all user's posts
    */
-  list: protectedProcedure.query(async ({ ctx }) => {
-    const posts = await ctx.db.post.findMany({
-      where: {
-        createdById: ctx.session.user.id,
-      },
-      orderBy: {
-        createdAt: "desc",
-      },
-      select: {
-        id: true,
-        type: true,
-        title: true,
-        description: true,
-        fileName: true,
-        fileSize: true,
-        thumbnailUrl: true,
-        privacy: true,
-        createdAt: true,
-        publishJobs: {
-          select: {
-            id: true,
-            platform: true,
-            status: true,
-            errorMessage: true,
+  list: protectedProcedure
+    .input(
+      z
+        .object({
+          isIdea: z.boolean().default(false),
+        })
+        .optional(),
+    )
+    .query(async ({ ctx, input }) => {
+      const isIdea = input?.isIdea ?? false;
+      const posts = await ctx.db.post.findMany({
+        where: {
+          createdById: ctx.session.user.id,
+          isIdea: isIdea,
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+        select: {
+          id: true,
+          type: true,
+          title: true,
+          description: true,
+          content: true, // Need content for text ideas
+          fileName: true,
+          fileSize: true,
+          thumbnailUrl: true,
+          privacy: true,
+          createdAt: true,
+          publishJobs: {
+            select: {
+              id: true,
+              platform: true,
+              status: true,
+              errorMessage: true,
+            },
           },
         },
-      },
-    });
+      });
 
-    // Process posts to sign S3 thumbnail URLs
-    const processedPosts = await Promise.all(
-      posts.map(async (p) => {
-        let thumbnailUrl = p.thumbnailUrl;
+      // Process posts to sign S3 thumbnail URLs
+      const processedPosts = await Promise.all(
+        posts.map(async (p) => {
+          let thumbnailUrl = p.thumbnailUrl;
 
-        // If thumbnail is on S3 (private bucket), generate signed URL
-        if (thumbnailUrl?.includes("amazonaws.com")) {
-          try {
-            const url = new URL(thumbnailUrl);
-            // Extract key from pathname (remove leading slash)
-            const key = decodeURIComponent(url.pathname.substring(1));
-            thumbnailUrl = await getDownloadPresignedUrl(key);
-          } catch (error) {
-            console.error("Failed to sign thumbnail URL:", error);
+          // If thumbnail is on S3 (private bucket), generate signed URL
+          if (thumbnailUrl?.includes("amazonaws.com")) {
+            try {
+              const url = new URL(thumbnailUrl);
+              // Extract key from pathname (remove leading slash)
+              const key = decodeURIComponent(url.pathname.substring(1));
+              thumbnailUrl = await getDownloadPresignedUrl(key);
+            } catch (error) {
+              console.error("Failed to sign thumbnail URL:", error);
+            }
           }
-        }
 
-        return {
-          ...p,
-          thumbnailUrl,
-          fileSize: p.fileSize?.toString() ?? "0",
-        };
-      }),
-    );
+          return {
+            ...p,
+            thumbnailUrl,
+            fileSize: p.fileSize?.toString() ?? "0",
+          };
+        }),
+      );
 
-    return processedPosts;
-  }),
+      return processedPosts;
+    }),
 
   /**
    * Get single post details
@@ -250,18 +263,7 @@ export const postRouter = createTRPCRouter({
    * Update post metadata
    */
   update: protectedProcedure
-    .input(
-      z.object({
-        id: z.string().cuid(),
-        title: z.string().min(1).max(100).optional(),
-        description: z.string().max(5000).optional(),
-        tags: z.string().max(500).optional(),
-        privacy: z
-          .enum(["PUBLIC", "UNLISTED", "PRIVATE", "MUTUAL_FOLLOW_FRIENDS"])
-          .optional(),
-        content: z.string().optional(), // For text posts
-      }),
-    )
+    .input(updatePostSchema)
     .mutation(async ({ ctx, input }) => {
       const { id, ...updateData } = input;
 

@@ -3,45 +3,36 @@
 ## Current Focus
 
 **Phase 4: Core Buffer Experience**
-We have successfully completed **Phase 4, Step 3: Queue System**. The application now supports defining posting schedules and "Add to Queue" functionality.
+We have completed **Phase 4, Step 4: Ideas/Drafts**. The application now supports quick idea entry, managing ideas separate from posts, and converting ideas to full posts.
 
 ## Recent Changes
 
-- **API Layer Multi-Format Support**:
-  - **Refactoring**: Renamed `createVideoSchema` to `createPostSchema` in validators.
-  - **Backend**: Updated `postRouter.create` (formerly `confirmUpload`) to support creating Text, Video, and Image posts.
-  - **Frontend**: Updated `BatchMediaUpload` to use the renamed API mutation.
+- **Ideas & Drafts Implementation**:
+  - **Schema**: Modified `Post` model to make `title` optional and added `isIdea` boolean.
+  - **Backend**: Updated `createPostSchema` and `postRouter` to support optional titles and idea creation.
+  - **Frontend**:
+    - Created `/ideas` page with `QuickEntry` and `IdeaCard` components.
+    - Updated `PostCard` and `EditPostPage` to handle optional titles.
+    - Implemented "Convert to Post" workflow in the edit page.
+    - Added "Ideas" to the navigation sidebar.
 
-- **Queue System Implementation**:
+- **Queue System Implementation (Previous Step)**:
   - **Schema**: Added `PostingSchedule` model linked to `PlatformConnection`.
-  - **Backend**: Created `scheduleRouter` and `QueueService` for schedule management and slot calculation.
-  - **UI**: Created Schedule Settings page (`/platforms/[id]/schedule`) and integrated "Smart Queue" into the Publish workflow.
-  - **Scheduling Logic**: Updated `checkScheduledJobs` to support `SCHEDULED` status jobs.
-
-- **Visual Calendar Implementation (Previous Step)**:
-  - **Frontend**: Built with `react-big-calendar` and `react-dnd`.
-  - **Backend**: Updated `calendarRouter`.
+  - **Backend**: Created `scheduleRouter` and `QueueService`.
+  - **UI**: Created Schedule Settings page and integrated "Smart Queue".
 
 ## Active Decisions
 
-- **Smart Queue Logic**:
-  - Uses a "First Available Slot" algorithm.
-  - Looks ahead 60 days for open slots.
-  - Assigns `SCHEDULED` status with a calculated `scheduledFor` timestamp.
-  - Relies on `check-scheduled-jobs` cron to pick up jobs when their time comes.
-
-- **Terminology**: "Post" is now the ubiquitous term for content items. "Video" is only used when referring specifically to video media type or platform constraints.
+- **Ideas as Posts**: We decided to use the existing `Post` model for Ideas by adding an `isIdea` flag and making `title` optional. This simplifies the "Convert to Post" workflow (it's just an update operation) and keeps the codebase unified.
+- **Optional Titles**: Since Ideas are for quick entry, we allow creating them without a title (using the content as a fallback display). When converting to a Post, a title is required if it's missing.
 
 ## Next Steps
 
-1.  **Phase 4, Step 4: Ideas/Drafts**
-    - Create a space for content ideas that aren't yet scheduled or fully formed.
-    - Allow "Quick Draft" creation without media.
-
-2.  **Phase 5: Platform Expansion**
+1.  **Phase 5: Platform Expansion**
     - Begin adding LinkedIn integration.
+    - Support text-only posts on LinkedIn (and X/Twitter later).
 
 ## Current Project State
 
 - **Phase**: 4 (Buffer Core)
-- **Status**: Queue System Complete. Ready for Ideas/Drafts.
+- **Status**: Ideas/Drafts Complete. Phase 4 Complete. Ready for Phase 5.

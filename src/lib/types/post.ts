@@ -32,8 +32,9 @@ export interface PublishJob {
 export interface PostListItem {
   id: string;
   type: "VIDEO" | "IMAGE" | "TEXT";
-  title: string;
+  title: string | null;
   description: string | null;
+  content: string | null;
   fileName: string | null;
   fileSize: string | null; // BigInt converted to string for JSON
   thumbnailUrl: string | null;

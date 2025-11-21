@@ -26,7 +26,7 @@
 - [x] Production PostgreSQL database (Prisma Accelerate)
 - [x] Database schema defined
 - [x] Migration system ready
-- [x] Models: User, Account, Session, Post (renamed from Video), PlatformConnection, PublishJob, MetricSnapshot
+- [x] Models: User, Account, Session, Post (renamed from Video), PlatformConnection, PublishJob, MetricSnapshot, PostingSchedule
 
 **API Layer**
 
@@ -57,7 +57,7 @@
   - [x] Batch Uploads
   - [x] Production Hardening (Sentry + Rate Limit)
 
-### 🔄 Phase 4: Core Buffer Experience (In Progress)
+### ✅ Phase 4: Core Buffer Experience (Complete)
 
 - [x] **Step 1**: Multi-Format Infrastructure (Image/Text) (2025-11-20)
   - [x] Database Schema Refactor (Video -> Post, MediaType)
@@ -72,7 +72,10 @@
   - [x] Schedule Settings Page (`/platforms/[id]/schedule`)
   - [x] Smart Queue Logic (`QueueService`)
   - [x] "Add to Queue" Workflow
-- [ ] **Step 4**: Ideas/Drafts
+- [x] **Step 4**: Ideas/Drafts (2025-11-21)
+  - [x] Ideas Schema (`isIdea`, optional `title`)
+  - [x] Ideas Page (`/ideas`) & Quick Entry
+  - [x] Convert Idea to Post workflow
 
 ### 🔄 Phase 5: Platform Expansion (Pending)
 
@@ -86,6 +89,6 @@
 
 ## Current Status
 
-**Status**: Phase 4 In Progress. Step 3 Complete.
+**Status**: Phase 4 Complete. Ready for Phase 5 (Platform Expansion).
 **Product**: MediaBlade (Buffer Clone)
-**Next Action**: Phase 4, Step 4: Ideas/Drafts.
+**Next Action**: Phase 5, Step 1: LinkedIn Integration.

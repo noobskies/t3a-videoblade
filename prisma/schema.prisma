@@ -126,7 +126,8 @@ model Post {
     duration    Int?
 
     // Metadata
-    title        String
+    title        String?
+    isIdea       Boolean      @default(false)
     description  String?
     tags         String?
     thumbnailUrl String?
