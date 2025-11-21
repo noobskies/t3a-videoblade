@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { createPostSchema } from "@/lib/validators";
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import {
   generateVideoS3Key,
@@ -74,47 +75,57 @@ export const postRouter = createTRPCRouter({
     }),
 
   /**
-   * Confirm upload and create post record
+   * Create a new post (Text, Video, or Image)
    */
-  confirmUpload: protectedProcedure
-    .input(
-      z.object({
-        s3Key: z.string(),
-        s3Bucket: z.string(),
-        fileName: z.string(),
-        fileSize: z.number().positive(),
-        mimeType: z.string(),
-        title: z.string().min(1).max(100),
-        description: z.string().max(5000).optional(),
-        tags: z.string().max(500).optional(),
-        privacy: z
-          .enum(["PUBLIC", "UNLISTED", "PRIVATE", "MUTUAL_FOLLOW_FRIENDS"])
-          .default("UNLISTED"),
-        thumbnailS3Key: z.string().optional(),
-      }),
-    )
+  create: protectedProcedure
+    .input(createPostSchema)
     .mutation(async ({ ctx, input }) => {
-      const type = input.mimeType.startsWith("video/") ? "VIDEO" : "IMAGE";
+      // For text posts, we don't need S3 fields
+      if (input.type === "TEXT") {
+        const post = await ctx.db.post.create({
+          data: {
+            type: "TEXT",
+            title: input.title,
+            description: input.description ?? null,
+            content: input.content ?? null,
+            tags: input.tags ?? null,
+            privacy: input.privacy,
+            createdById: ctx.session.user.id,
+          },
+        });
 
-      // For images, the main file is the thumbnail (unless we process it separately)
-      // For now, if it's an image, use the signed URL of the main file as thumbnail
+        return {
+          id: post.id,
+          title: post.title,
+          createdAt: post.createdAt,
+        };
+      }
+
+      // For media posts (VIDEO/IMAGE), S3 fields are required (validated by Zod refine)
+      // Use non-null assertion or fallback (though refine guarantees presence)
+      const s3Key = input.s3Key!;
+      const s3Bucket = input.s3Bucket!;
+      const fileName = input.fileName!;
+      const fileSize = input.fileSize!;
+      const mimeType = input.mimeType!;
+
       let thumbnailUrl = input.thumbnailS3Key
         ? getS3Url(input.thumbnailS3Key)
         : null;
 
-      if (type === "IMAGE" && !thumbnailUrl) {
-        thumbnailUrl = getS3Url(input.s3Key);
+      if (input.type === "IMAGE" && !thumbnailUrl) {
+        thumbnailUrl = getS3Url(s3Key);
       }
 
-      // Create post record
       const post = await ctx.db.post.create({
         data: {
-          type,
-          s3Key: input.s3Key,
-          s3Bucket: input.s3Bucket,
-          fileName: input.fileName,
-          fileSize: BigInt(input.fileSize),
-          mimeType: input.mimeType,
+          type: input.type,
+          s3Key,
+          s3Bucket,
+          fileName,
+          fileSize: fileSize,
+          mimeType,
+          duration: input.duration,
           title: input.title,
           description: input.description ?? null,
           tags: input.tags ?? null,

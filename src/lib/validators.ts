@@ -1,23 +1,50 @@
 import { z } from "zod";
 
-// Video validation schemas
-export const createVideoSchema = z.object({
-  s3Key: z.string().min(1),
-  s3Bucket: z.string().min(1),
-  fileName: z.string().min(1),
-  fileSize: z.bigint().positive(),
-  mimeType: z.string().regex(/^video\//),
-  title: z.string().min(1).max(100),
-  description: z.string().max(5000).optional(),
-  tags: z.string().max(500).optional(),
-  privacy: z.enum(["PUBLIC", "UNLISTED", "PRIVATE"]),
-  duration: z.number().int().positive().optional(),
-});
+// Post validation schemas
+export const createPostSchema = z
+  .object({
+    type: z.enum(["VIDEO", "IMAGE", "TEXT"]).default("VIDEO"),
+    title: z.string().min(1).max(100),
+    description: z.string().max(5000).optional(),
+    tags: z.string().max(500).optional(),
+    privacy: z.enum(["PUBLIC", "UNLISTED", "PRIVATE"]).default("UNLISTED"),
 
-export const updateVideoMetadataSchema = z.object({
+    // Text content
+    content: z.string().optional(),
+
+    // Media fields (Video/Image)
+    s3Key: z.string().optional(),
+    s3Bucket: z.string().optional(),
+    fileName: z.string().optional(),
+    fileSize: z.bigint().positive().optional(),
+    mimeType: z.string().optional(),
+    duration: z.number().int().positive().optional(),
+    thumbnailS3Key: z.string().optional(),
+  })
+  .refine(
+    (data) => {
+      if (data.type === "TEXT") {
+        return !!data.content;
+      }
+      // For VIDEO/IMAGE, S3 fields are required
+      return !!(
+        data.s3Key &&
+        data.s3Bucket &&
+        data.fileName &&
+        data.fileSize &&
+        data.mimeType
+      );
+    },
+    {
+      message: "Missing required fields for the selected post type",
+    },
+  );
+
+export const updatePostSchema = z.object({
   id: z.string().cuid(),
   title: z.string().min(1).max(100).optional(),
   description: z.string().max(5000).optional(),
+  content: z.string().optional(),
   tags: z.string().max(500).optional(),
   privacy: z.enum(["PUBLIC", "UNLISTED", "PRIVATE"]).optional(),
   thumbnailUrl: z.string().url().optional(),
@@ -36,7 +63,7 @@ export const createPlatformConnectionSchema = z.object({
 
 // Publish Job validation schemas
 export const createPublishJobSchema = z.object({
-  videoId: z.string().cuid(),
+  postId: z.string().cuid(),
   platformConnectionId: z.string().cuid(),
   title: z.string().min(1).max(100).optional(),
   description: z.string().max(5000).optional(),
@@ -54,10 +81,8 @@ export const updatePublishJobStatusSchema = z.object({
 });
 
 // Type exports for use in tRPC procedures
-export type CreateVideoInput = z.infer<typeof createVideoSchema>;
-export type UpdateVideoMetadataInput = z.infer<
-  typeof updateVideoMetadataSchema
->;
+export type CreatePostInput = z.infer<typeof createPostSchema>;
+export type UpdatePostInput = z.infer<typeof updatePostSchema>;
 export type CreatePlatformConnectionInput = z.infer<
   typeof createPlatformConnectionSchema
 >;

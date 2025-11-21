@@ -200,6 +200,9 @@ It's **acceptable and encouraged** to break backwards compatibility when:
 
 - `Post` model replaces `Video`
 - `MediaType` enum: `VIDEO`, `IMAGE`, `TEXT`
+- **Unified Creation Logic**: `postRouter.create` handles all types.
+  - `TEXT`: Creates record directly.
+  - `VIDEO`/`IMAGE`: Requires S3 keys from `getUploadUrl`.
 - Conditional fields in UI and backend logic based on type
 
 ## Design Patterns in Use

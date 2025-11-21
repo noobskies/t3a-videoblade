@@ -41,7 +41,7 @@ export function BatchMediaUpload() {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const getUploadUrl = api.post.getUploadUrl.useMutation();
-  const confirmUpload = api.post.confirmUpload.useMutation();
+  const createPost = api.post.create.useMutation();
 
   // Clean up preview URLs on unmount
   useEffect(() => {
@@ -201,7 +201,7 @@ export function BatchMediaUpload() {
       if (isVideo && !thumbnailBlob && item.previewUrl) {
         thumbnailBlob = await captureThumbnail(item.previewUrl);
       }
-      // For images, we don't need a separate thumbnail upload (handled in confirmUpload logic if needed, or main file is thumb)
+      // For images, we don't need a separate thumbnail upload (handled in create logic if needed, or main file is thumb)
 
       // 2. Get Presigned URLs
       const { uploadUrl, s3Key, s3Bucket, thumbnailUploadUrl, thumbnailS3Key } =
@@ -223,11 +223,12 @@ export function BatchMediaUpload() {
       }
 
       // 5. Confirm
-      await confirmUpload.mutateAsync({
+      await createPost.mutateAsync({
+        type: isVideo ? "VIDEO" : "IMAGE",
         s3Key,
         s3Bucket,
         fileName: item.file.name,
-        fileSize: item.file.size,
+        fileSize: BigInt(item.file.size),
         mimeType: item.file.type,
         title: item.title,
         description: item.description || undefined,

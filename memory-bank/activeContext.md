@@ -7,6 +7,11 @@ We have successfully completed **Phase 4, Step 3: Queue System**. The applicatio
 
 ## Recent Changes
 
+- **API Layer Multi-Format Support**:
+  - **Refactoring**: Renamed `createVideoSchema` to `createPostSchema` in validators.
+  - **Backend**: Updated `postRouter.create` (formerly `confirmUpload`) to support creating Text, Video, and Image posts.
+  - **Frontend**: Updated `BatchMediaUpload` to use the renamed API mutation.
+
 - **Queue System Implementation**:
   - **Schema**: Added `PostingSchedule` model linked to `PlatformConnection`.
   - **Backend**: Created `scheduleRouter` and `QueueService` for schedule management and slot calculation.
