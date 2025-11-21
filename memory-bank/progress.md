@@ -28,6 +28,7 @@
 - [x] Database schema defined
 - [x] Migration system ready
 - [x] Models: User, Account, Session, Post (renamed from Video), PlatformConnection, PublishJob, MetricSnapshot, PostingSchedule
+- [x] **Unified Inbox Models**: `Comment`, `CommentAuthor` (2025-11-21)
 
 **API Layer**
 
@@ -80,7 +81,7 @@
   - [x] Convert Idea to Post workflow
   - [x] **Polish**: Added proper loading skeletons and refined UI
 
-### 🔄 Phase 5: Platform Expansion (In Progress)
+### ⏸️ Phase 5: Platform Expansion (Paused)
 
 - [x] **Step 1**: LinkedIn Integration (2025-11-21)
   - [x] Authentication (Better Auth)
@@ -89,14 +90,19 @@
   - [x] Scheduler Integration (`check-scheduled-jobs.ts`)
   - [x] UI Integration
 - [ ] **Step 2**: X (Twitter) Integration (On Hold - API Cost)
-- [ ] **Step 3**: Instagram/Facebook Integration
+- [ ] **Step 3**: Instagram/Facebook Integration (On Hold - User Request)
 
-### 🔄 Phase 6: Engagement (Pending)
+### 🔄 Phase 6: Engagement (In Progress)
 
-- [ ] **Step 1**: Unified Inbox
+- [x] **Step 1**: Unified Inbox Foundation (2025-11-21)
+  - [x] **Database**: `Comment` schema
+  - [x] **Services**: `YouTubeCommentService`, `LinkedInCommentService`, `SyncService`
+  - [x] **Background Job**: `sync-comments` Inngest function
+  - [x] **UI**: `/dashboard/inbox` Page and `CommentList` component
+- [ ] **Step 2**: Reply Functionality (Next)
 
 ## Current Status
 
-**Status**: Phase 5 In Progress. LinkedIn Integrated.
+**Status**: Phase 6 (Engagement) In Progress.
 **Product**: MediaBlade (Buffer Clone)
-**Next Action**: Awaiting direction (Twitter On Hold).
+**Next Action**: Verify Sync and Implement Replies.

@@ -246,6 +246,34 @@ exports.Prisma.MetricSnapshotScalarFieldEnum = {
   shares: 'shares'
 };
 
+exports.Prisma.CommentScalarFieldEnum = {
+  id: 'id',
+  platform: 'platform',
+  externalId: 'externalId',
+  content: 'content',
+  publishedAt: 'publishedAt',
+  isResolved: 'isResolved',
+  isHidden: 'isHidden',
+  platformConnectionId: 'platformConnectionId',
+  authorId: 'authorId',
+  postId: 'postId',
+  externalPostId: 'externalPostId',
+  parentId: 'parentId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CommentAuthorScalarFieldEnum = {
+  id: 'id',
+  platform: 'platform',
+  externalId: 'externalId',
+  name: 'name',
+  avatarUrl: 'avatarUrl',
+  profileUrl: 'profileUrl',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -315,7 +343,9 @@ exports.Prisma.ModelName = {
   PlatformConnection: 'PlatformConnection',
   PublishJob: 'PublishJob',
   PostingSchedule: 'PostingSchedule',
-  MetricSnapshot: 'MetricSnapshot'
+  MetricSnapshot: 'MetricSnapshot',
+  Comment: 'Comment',
+  CommentAuthor: 'CommentAuthor'
 };
 
 /**

@@ -58,6 +58,16 @@ export type PostingSchedule = $Result.DefaultSelection<Prisma.$PostingSchedulePa
  * 
  */
 export type MetricSnapshot = $Result.DefaultSelection<Prisma.$MetricSnapshotPayload>
+/**
+ * Model Comment
+ * 
+ */
+export type Comment = $Result.DefaultSelection<Prisma.$CommentPayload>
+/**
+ * Model CommentAuthor
+ * 
+ */
+export type CommentAuthor = $Result.DefaultSelection<Prisma.$CommentAuthorPayload>
 
 /**
  * Enums
@@ -330,6 +340,26 @@ export class PrismaClient<
     * ```
     */
   get metricSnapshot(): Prisma.MetricSnapshotDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.comment`: Exposes CRUD operations for the **Comment** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Comments
+    * const comments = await prisma.comment.findMany()
+    * ```
+    */
+  get comment(): Prisma.CommentDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.commentAuthor`: Exposes CRUD operations for the **CommentAuthor** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CommentAuthors
+    * const commentAuthors = await prisma.commentAuthor.findMany()
+    * ```
+    */
+  get commentAuthor(): Prisma.CommentAuthorDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -779,7 +809,9 @@ export namespace Prisma {
     PlatformConnection: 'PlatformConnection',
     PublishJob: 'PublishJob',
     PostingSchedule: 'PostingSchedule',
-    MetricSnapshot: 'MetricSnapshot'
+    MetricSnapshot: 'MetricSnapshot',
+    Comment: 'Comment',
+    CommentAuthor: 'CommentAuthor'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -798,7 +830,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "account" | "session" | "user" | "verification" | "post" | "platformConnection" | "publishJob" | "postingSchedule" | "metricSnapshot"
+      modelProps: "account" | "session" | "user" | "verification" | "post" | "platformConnection" | "publishJob" | "postingSchedule" | "metricSnapshot" | "comment" | "commentAuthor"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1468,6 +1500,154 @@ export namespace Prisma {
           }
         }
       }
+      Comment: {
+        payload: Prisma.$CommentPayload<ExtArgs>
+        fields: Prisma.CommentFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CommentFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommentPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CommentFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommentPayload>
+          }
+          findFirst: {
+            args: Prisma.CommentFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommentPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CommentFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommentPayload>
+          }
+          findMany: {
+            args: Prisma.CommentFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommentPayload>[]
+          }
+          create: {
+            args: Prisma.CommentCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommentPayload>
+          }
+          createMany: {
+            args: Prisma.CommentCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CommentCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommentPayload>[]
+          }
+          delete: {
+            args: Prisma.CommentDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommentPayload>
+          }
+          update: {
+            args: Prisma.CommentUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommentPayload>
+          }
+          deleteMany: {
+            args: Prisma.CommentDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CommentUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.CommentUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommentPayload>[]
+          }
+          upsert: {
+            args: Prisma.CommentUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommentPayload>
+          }
+          aggregate: {
+            args: Prisma.CommentAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateComment>
+          }
+          groupBy: {
+            args: Prisma.CommentGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CommentGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CommentCountArgs<ExtArgs>
+            result: $Utils.Optional<CommentCountAggregateOutputType> | number
+          }
+        }
+      }
+      CommentAuthor: {
+        payload: Prisma.$CommentAuthorPayload<ExtArgs>
+        fields: Prisma.CommentAuthorFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CommentAuthorFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommentAuthorPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CommentAuthorFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommentAuthorPayload>
+          }
+          findFirst: {
+            args: Prisma.CommentAuthorFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommentAuthorPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CommentAuthorFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommentAuthorPayload>
+          }
+          findMany: {
+            args: Prisma.CommentAuthorFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommentAuthorPayload>[]
+          }
+          create: {
+            args: Prisma.CommentAuthorCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommentAuthorPayload>
+          }
+          createMany: {
+            args: Prisma.CommentAuthorCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CommentAuthorCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommentAuthorPayload>[]
+          }
+          delete: {
+            args: Prisma.CommentAuthorDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommentAuthorPayload>
+          }
+          update: {
+            args: Prisma.CommentAuthorUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommentAuthorPayload>
+          }
+          deleteMany: {
+            args: Prisma.CommentAuthorDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CommentAuthorUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.CommentAuthorUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommentAuthorPayload>[]
+          }
+          upsert: {
+            args: Prisma.CommentAuthorUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CommentAuthorPayload>
+          }
+          aggregate: {
+            args: Prisma.CommentAuthorAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCommentAuthor>
+          }
+          groupBy: {
+            args: Prisma.CommentAuthorGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CommentAuthorGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CommentAuthorCountArgs<ExtArgs>
+            result: $Utils.Optional<CommentAuthorCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1573,6 +1753,8 @@ export namespace Prisma {
     publishJob?: PublishJobOmit
     postingSchedule?: PostingScheduleOmit
     metricSnapshot?: MetricSnapshotOmit
+    comment?: CommentOmit
+    commentAuthor?: CommentAuthorOmit
   }
 
   /* Types for Logging */
@@ -1721,10 +1903,12 @@ export namespace Prisma {
 
   export type PostCountOutputType = {
     publishJobs: number
+    comments: number
   }
 
   export type PostCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     publishJobs?: boolean | PostCountOutputTypeCountPublishJobsArgs
+    comments?: boolean | PostCountOutputTypeCountCommentsArgs
   }
 
   // Custom InputTypes
@@ -1745,6 +1929,13 @@ export namespace Prisma {
     where?: PublishJobWhereInput
   }
 
+  /**
+   * PostCountOutputType without action
+   */
+  export type PostCountOutputTypeCountCommentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CommentWhereInput
+  }
+
 
   /**
    * Count Type PlatformConnectionCountOutputType
@@ -1752,10 +1943,12 @@ export namespace Prisma {
 
   export type PlatformConnectionCountOutputType = {
     publishJobs: number
+    comments: number
   }
 
   export type PlatformConnectionCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     publishJobs?: boolean | PlatformConnectionCountOutputTypeCountPublishJobsArgs
+    comments?: boolean | PlatformConnectionCountOutputTypeCountCommentsArgs
   }
 
   // Custom InputTypes
@@ -1774,6 +1967,13 @@ export namespace Prisma {
    */
   export type PlatformConnectionCountOutputTypeCountPublishJobsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: PublishJobWhereInput
+  }
+
+  /**
+   * PlatformConnectionCountOutputType without action
+   */
+  export type PlatformConnectionCountOutputTypeCountCommentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CommentWhereInput
   }
 
 
@@ -1805,6 +2005,68 @@ export namespace Prisma {
    */
   export type PublishJobCountOutputTypeCountMetricSnapshotsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: MetricSnapshotWhereInput
+  }
+
+
+  /**
+   * Count Type CommentCountOutputType
+   */
+
+  export type CommentCountOutputType = {
+    replies: number
+  }
+
+  export type CommentCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    replies?: boolean | CommentCountOutputTypeCountRepliesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * CommentCountOutputType without action
+   */
+  export type CommentCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CommentCountOutputType
+     */
+    select?: CommentCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * CommentCountOutputType without action
+   */
+  export type CommentCountOutputTypeCountRepliesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CommentWhereInput
+  }
+
+
+  /**
+   * Count Type CommentAuthorCountOutputType
+   */
+
+  export type CommentAuthorCountOutputType = {
+    comments: number
+  }
+
+  export type CommentAuthorCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    comments?: boolean | CommentAuthorCountOutputTypeCountCommentsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * CommentAuthorCountOutputType without action
+   */
+  export type CommentAuthorCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CommentAuthorCountOutputType
+     */
+    select?: CommentAuthorCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * CommentAuthorCountOutputType without action
+   */
+  export type CommentAuthorCountOutputTypeCountCommentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CommentWhereInput
   }
 
 
@@ -6595,6 +6857,7 @@ export namespace Prisma {
     createdById?: boolean
     createdBy?: boolean | UserDefaultArgs<ExtArgs>
     publishJobs?: boolean | Post$publishJobsArgs<ExtArgs>
+    comments?: boolean | Post$commentsArgs<ExtArgs>
     _count?: boolean | PostCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["post"]>
 
@@ -6667,6 +6930,7 @@ export namespace Prisma {
   export type PostInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     createdBy?: boolean | UserDefaultArgs<ExtArgs>
     publishJobs?: boolean | Post$publishJobsArgs<ExtArgs>
+    comments?: boolean | Post$commentsArgs<ExtArgs>
     _count?: boolean | PostCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type PostIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6681,6 +6945,7 @@ export namespace Prisma {
     objects: {
       createdBy: Prisma.$UserPayload<ExtArgs>
       publishJobs: Prisma.$PublishJobPayload<ExtArgs>[]
+      comments: Prisma.$CommentPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -7097,6 +7362,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     createdBy<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     publishJobs<T extends Post$publishJobsArgs<ExtArgs> = {}>(args?: Subset<T, Post$publishJobsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PublishJobPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    comments<T extends Post$commentsArgs<ExtArgs> = {}>(args?: Subset<T, Post$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7564,6 +7830,30 @@ export namespace Prisma {
   }
 
   /**
+   * Post.comments
+   */
+  export type Post$commentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Comment
+     */
+    select?: CommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Comment
+     */
+    omit?: CommentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommentInclude<ExtArgs> | null
+    where?: CommentWhereInput
+    orderBy?: CommentOrderByWithRelationInput | CommentOrderByWithRelationInput[]
+    cursor?: CommentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CommentScalarFieldEnum | CommentScalarFieldEnum[]
+  }
+
+  /**
    * Post without action
    */
   export type PostDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7801,6 +8091,7 @@ export namespace Prisma {
     user?: boolean | UserDefaultArgs<ExtArgs>
     publishJobs?: boolean | PlatformConnection$publishJobsArgs<ExtArgs>
     postingSchedule?: boolean | PlatformConnection$postingScheduleArgs<ExtArgs>
+    comments?: boolean | PlatformConnection$commentsArgs<ExtArgs>
     _count?: boolean | PlatformConnectionCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["platformConnection"]>
 
@@ -7856,6 +8147,7 @@ export namespace Prisma {
     user?: boolean | UserDefaultArgs<ExtArgs>
     publishJobs?: boolean | PlatformConnection$publishJobsArgs<ExtArgs>
     postingSchedule?: boolean | PlatformConnection$postingScheduleArgs<ExtArgs>
+    comments?: boolean | PlatformConnection$commentsArgs<ExtArgs>
     _count?: boolean | PlatformConnectionCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type PlatformConnectionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7871,6 +8163,7 @@ export namespace Prisma {
       user: Prisma.$UserPayload<ExtArgs>
       publishJobs: Prisma.$PublishJobPayload<ExtArgs>[]
       postingSchedule: Prisma.$PostingSchedulePayload<ExtArgs> | null
+      comments: Prisma.$CommentPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -8282,6 +8575,7 @@ export namespace Prisma {
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     publishJobs<T extends PlatformConnection$publishJobsArgs<ExtArgs> = {}>(args?: Subset<T, PlatformConnection$publishJobsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PublishJobPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     postingSchedule<T extends PlatformConnection$postingScheduleArgs<ExtArgs> = {}>(args?: Subset<T, PlatformConnection$postingScheduleArgs<ExtArgs>>): Prisma__PostingScheduleClient<$Result.GetResult<Prisma.$PostingSchedulePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    comments<T extends PlatformConnection$commentsArgs<ExtArgs> = {}>(args?: Subset<T, PlatformConnection$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -8759,6 +9053,30 @@ export namespace Prisma {
      */
     include?: PostingScheduleInclude<ExtArgs> | null
     where?: PostingScheduleWhereInput
+  }
+
+  /**
+   * PlatformConnection.comments
+   */
+  export type PlatformConnection$commentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Comment
+     */
+    select?: CommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Comment
+     */
+    omit?: CommentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommentInclude<ExtArgs> | null
+    where?: CommentWhereInput
+    orderBy?: CommentOrderByWithRelationInput | CommentOrderByWithRelationInput[]
+    cursor?: CommentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CommentScalarFieldEnum | CommentScalarFieldEnum[]
   }
 
   /**
@@ -12324,6 +12642,2382 @@ export namespace Prisma {
 
 
   /**
+   * Model Comment
+   */
+
+  export type AggregateComment = {
+    _count: CommentCountAggregateOutputType | null
+    _min: CommentMinAggregateOutputType | null
+    _max: CommentMaxAggregateOutputType | null
+  }
+
+  export type CommentMinAggregateOutputType = {
+    id: string | null
+    platform: $Enums.Platform | null
+    externalId: string | null
+    content: string | null
+    publishedAt: Date | null
+    isResolved: boolean | null
+    isHidden: boolean | null
+    platformConnectionId: string | null
+    authorId: string | null
+    postId: string | null
+    externalPostId: string | null
+    parentId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CommentMaxAggregateOutputType = {
+    id: string | null
+    platform: $Enums.Platform | null
+    externalId: string | null
+    content: string | null
+    publishedAt: Date | null
+    isResolved: boolean | null
+    isHidden: boolean | null
+    platformConnectionId: string | null
+    authorId: string | null
+    postId: string | null
+    externalPostId: string | null
+    parentId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CommentCountAggregateOutputType = {
+    id: number
+    platform: number
+    externalId: number
+    content: number
+    publishedAt: number
+    isResolved: number
+    isHidden: number
+    platformConnectionId: number
+    authorId: number
+    postId: number
+    externalPostId: number
+    parentId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type CommentMinAggregateInputType = {
+    id?: true
+    platform?: true
+    externalId?: true
+    content?: true
+    publishedAt?: true
+    isResolved?: true
+    isHidden?: true
+    platformConnectionId?: true
+    authorId?: true
+    postId?: true
+    externalPostId?: true
+    parentId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type CommentMaxAggregateInputType = {
+    id?: true
+    platform?: true
+    externalId?: true
+    content?: true
+    publishedAt?: true
+    isResolved?: true
+    isHidden?: true
+    platformConnectionId?: true
+    authorId?: true
+    postId?: true
+    externalPostId?: true
+    parentId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type CommentCountAggregateInputType = {
+    id?: true
+    platform?: true
+    externalId?: true
+    content?: true
+    publishedAt?: true
+    isResolved?: true
+    isHidden?: true
+    platformConnectionId?: true
+    authorId?: true
+    postId?: true
+    externalPostId?: true
+    parentId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type CommentAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Comment to aggregate.
+     */
+    where?: CommentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Comments to fetch.
+     */
+    orderBy?: CommentOrderByWithRelationInput | CommentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CommentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Comments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Comments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Comments
+    **/
+    _count?: true | CommentCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CommentMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CommentMaxAggregateInputType
+  }
+
+  export type GetCommentAggregateType<T extends CommentAggregateArgs> = {
+        [P in keyof T & keyof AggregateComment]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateComment[P]>
+      : GetScalarType<T[P], AggregateComment[P]>
+  }
+
+
+
+
+  export type CommentGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CommentWhereInput
+    orderBy?: CommentOrderByWithAggregationInput | CommentOrderByWithAggregationInput[]
+    by: CommentScalarFieldEnum[] | CommentScalarFieldEnum
+    having?: CommentScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CommentCountAggregateInputType | true
+    _min?: CommentMinAggregateInputType
+    _max?: CommentMaxAggregateInputType
+  }
+
+  export type CommentGroupByOutputType = {
+    id: string
+    platform: $Enums.Platform
+    externalId: string
+    content: string
+    publishedAt: Date
+    isResolved: boolean
+    isHidden: boolean
+    platformConnectionId: string
+    authorId: string
+    postId: string | null
+    externalPostId: string | null
+    parentId: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: CommentCountAggregateOutputType | null
+    _min: CommentMinAggregateOutputType | null
+    _max: CommentMaxAggregateOutputType | null
+  }
+
+  type GetCommentGroupByPayload<T extends CommentGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CommentGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CommentGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CommentGroupByOutputType[P]>
+            : GetScalarType<T[P], CommentGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CommentSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    platform?: boolean
+    externalId?: boolean
+    content?: boolean
+    publishedAt?: boolean
+    isResolved?: boolean
+    isHidden?: boolean
+    platformConnectionId?: boolean
+    authorId?: boolean
+    postId?: boolean
+    externalPostId?: boolean
+    parentId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    platformConnection?: boolean | PlatformConnectionDefaultArgs<ExtArgs>
+    author?: boolean | CommentAuthorDefaultArgs<ExtArgs>
+    post?: boolean | Comment$postArgs<ExtArgs>
+    parent?: boolean | Comment$parentArgs<ExtArgs>
+    replies?: boolean | Comment$repliesArgs<ExtArgs>
+    _count?: boolean | CommentCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["comment"]>
+
+  export type CommentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    platform?: boolean
+    externalId?: boolean
+    content?: boolean
+    publishedAt?: boolean
+    isResolved?: boolean
+    isHidden?: boolean
+    platformConnectionId?: boolean
+    authorId?: boolean
+    postId?: boolean
+    externalPostId?: boolean
+    parentId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    platformConnection?: boolean | PlatformConnectionDefaultArgs<ExtArgs>
+    author?: boolean | CommentAuthorDefaultArgs<ExtArgs>
+    post?: boolean | Comment$postArgs<ExtArgs>
+    parent?: boolean | Comment$parentArgs<ExtArgs>
+  }, ExtArgs["result"]["comment"]>
+
+  export type CommentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    platform?: boolean
+    externalId?: boolean
+    content?: boolean
+    publishedAt?: boolean
+    isResolved?: boolean
+    isHidden?: boolean
+    platformConnectionId?: boolean
+    authorId?: boolean
+    postId?: boolean
+    externalPostId?: boolean
+    parentId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    platformConnection?: boolean | PlatformConnectionDefaultArgs<ExtArgs>
+    author?: boolean | CommentAuthorDefaultArgs<ExtArgs>
+    post?: boolean | Comment$postArgs<ExtArgs>
+    parent?: boolean | Comment$parentArgs<ExtArgs>
+  }, ExtArgs["result"]["comment"]>
+
+  export type CommentSelectScalar = {
+    id?: boolean
+    platform?: boolean
+    externalId?: boolean
+    content?: boolean
+    publishedAt?: boolean
+    isResolved?: boolean
+    isHidden?: boolean
+    platformConnectionId?: boolean
+    authorId?: boolean
+    postId?: boolean
+    externalPostId?: boolean
+    parentId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type CommentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "platform" | "externalId" | "content" | "publishedAt" | "isResolved" | "isHidden" | "platformConnectionId" | "authorId" | "postId" | "externalPostId" | "parentId" | "createdAt" | "updatedAt", ExtArgs["result"]["comment"]>
+  export type CommentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    platformConnection?: boolean | PlatformConnectionDefaultArgs<ExtArgs>
+    author?: boolean | CommentAuthorDefaultArgs<ExtArgs>
+    post?: boolean | Comment$postArgs<ExtArgs>
+    parent?: boolean | Comment$parentArgs<ExtArgs>
+    replies?: boolean | Comment$repliesArgs<ExtArgs>
+    _count?: boolean | CommentCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type CommentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    platformConnection?: boolean | PlatformConnectionDefaultArgs<ExtArgs>
+    author?: boolean | CommentAuthorDefaultArgs<ExtArgs>
+    post?: boolean | Comment$postArgs<ExtArgs>
+    parent?: boolean | Comment$parentArgs<ExtArgs>
+  }
+  export type CommentIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    platformConnection?: boolean | PlatformConnectionDefaultArgs<ExtArgs>
+    author?: boolean | CommentAuthorDefaultArgs<ExtArgs>
+    post?: boolean | Comment$postArgs<ExtArgs>
+    parent?: boolean | Comment$parentArgs<ExtArgs>
+  }
+
+  export type $CommentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Comment"
+    objects: {
+      platformConnection: Prisma.$PlatformConnectionPayload<ExtArgs>
+      author: Prisma.$CommentAuthorPayload<ExtArgs>
+      post: Prisma.$PostPayload<ExtArgs> | null
+      parent: Prisma.$CommentPayload<ExtArgs> | null
+      replies: Prisma.$CommentPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      platform: $Enums.Platform
+      externalId: string
+      content: string
+      publishedAt: Date
+      isResolved: boolean
+      isHidden: boolean
+      platformConnectionId: string
+      authorId: string
+      postId: string | null
+      externalPostId: string | null
+      parentId: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["comment"]>
+    composites: {}
+  }
+
+  type CommentGetPayload<S extends boolean | null | undefined | CommentDefaultArgs> = $Result.GetResult<Prisma.$CommentPayload, S>
+
+  type CommentCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CommentFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CommentCountAggregateInputType | true
+    }
+
+  export interface CommentDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Comment'], meta: { name: 'Comment' } }
+    /**
+     * Find zero or one Comment that matches the filter.
+     * @param {CommentFindUniqueArgs} args - Arguments to find a Comment
+     * @example
+     * // Get one Comment
+     * const comment = await prisma.comment.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CommentFindUniqueArgs>(args: SelectSubset<T, CommentFindUniqueArgs<ExtArgs>>): Prisma__CommentClient<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Comment that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CommentFindUniqueOrThrowArgs} args - Arguments to find a Comment
+     * @example
+     * // Get one Comment
+     * const comment = await prisma.comment.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CommentFindUniqueOrThrowArgs>(args: SelectSubset<T, CommentFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CommentClient<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Comment that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CommentFindFirstArgs} args - Arguments to find a Comment
+     * @example
+     * // Get one Comment
+     * const comment = await prisma.comment.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CommentFindFirstArgs>(args?: SelectSubset<T, CommentFindFirstArgs<ExtArgs>>): Prisma__CommentClient<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Comment that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CommentFindFirstOrThrowArgs} args - Arguments to find a Comment
+     * @example
+     * // Get one Comment
+     * const comment = await prisma.comment.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CommentFindFirstOrThrowArgs>(args?: SelectSubset<T, CommentFindFirstOrThrowArgs<ExtArgs>>): Prisma__CommentClient<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Comments that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CommentFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Comments
+     * const comments = await prisma.comment.findMany()
+     * 
+     * // Get first 10 Comments
+     * const comments = await prisma.comment.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const commentWithIdOnly = await prisma.comment.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CommentFindManyArgs>(args?: SelectSubset<T, CommentFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Comment.
+     * @param {CommentCreateArgs} args - Arguments to create a Comment.
+     * @example
+     * // Create one Comment
+     * const Comment = await prisma.comment.create({
+     *   data: {
+     *     // ... data to create a Comment
+     *   }
+     * })
+     * 
+     */
+    create<T extends CommentCreateArgs>(args: SelectSubset<T, CommentCreateArgs<ExtArgs>>): Prisma__CommentClient<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Comments.
+     * @param {CommentCreateManyArgs} args - Arguments to create many Comments.
+     * @example
+     * // Create many Comments
+     * const comment = await prisma.comment.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CommentCreateManyArgs>(args?: SelectSubset<T, CommentCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Comments and returns the data saved in the database.
+     * @param {CommentCreateManyAndReturnArgs} args - Arguments to create many Comments.
+     * @example
+     * // Create many Comments
+     * const comment = await prisma.comment.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Comments and only return the `id`
+     * const commentWithIdOnly = await prisma.comment.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CommentCreateManyAndReturnArgs>(args?: SelectSubset<T, CommentCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Comment.
+     * @param {CommentDeleteArgs} args - Arguments to delete one Comment.
+     * @example
+     * // Delete one Comment
+     * const Comment = await prisma.comment.delete({
+     *   where: {
+     *     // ... filter to delete one Comment
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CommentDeleteArgs>(args: SelectSubset<T, CommentDeleteArgs<ExtArgs>>): Prisma__CommentClient<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Comment.
+     * @param {CommentUpdateArgs} args - Arguments to update one Comment.
+     * @example
+     * // Update one Comment
+     * const comment = await prisma.comment.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CommentUpdateArgs>(args: SelectSubset<T, CommentUpdateArgs<ExtArgs>>): Prisma__CommentClient<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Comments.
+     * @param {CommentDeleteManyArgs} args - Arguments to filter Comments to delete.
+     * @example
+     * // Delete a few Comments
+     * const { count } = await prisma.comment.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CommentDeleteManyArgs>(args?: SelectSubset<T, CommentDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Comments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CommentUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Comments
+     * const comment = await prisma.comment.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CommentUpdateManyArgs>(args: SelectSubset<T, CommentUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Comments and returns the data updated in the database.
+     * @param {CommentUpdateManyAndReturnArgs} args - Arguments to update many Comments.
+     * @example
+     * // Update many Comments
+     * const comment = await prisma.comment.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Comments and only return the `id`
+     * const commentWithIdOnly = await prisma.comment.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends CommentUpdateManyAndReturnArgs>(args: SelectSubset<T, CommentUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Comment.
+     * @param {CommentUpsertArgs} args - Arguments to update or create a Comment.
+     * @example
+     * // Update or create a Comment
+     * const comment = await prisma.comment.upsert({
+     *   create: {
+     *     // ... data to create a Comment
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Comment we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CommentUpsertArgs>(args: SelectSubset<T, CommentUpsertArgs<ExtArgs>>): Prisma__CommentClient<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Comments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CommentCountArgs} args - Arguments to filter Comments to count.
+     * @example
+     * // Count the number of Comments
+     * const count = await prisma.comment.count({
+     *   where: {
+     *     // ... the filter for the Comments we want to count
+     *   }
+     * })
+    **/
+    count<T extends CommentCountArgs>(
+      args?: Subset<T, CommentCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CommentCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Comment.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CommentAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CommentAggregateArgs>(args: Subset<T, CommentAggregateArgs>): Prisma.PrismaPromise<GetCommentAggregateType<T>>
+
+    /**
+     * Group by Comment.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CommentGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CommentGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CommentGroupByArgs['orderBy'] }
+        : { orderBy?: CommentGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CommentGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCommentGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Comment model
+   */
+  readonly fields: CommentFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Comment.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CommentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    platformConnection<T extends PlatformConnectionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PlatformConnectionDefaultArgs<ExtArgs>>): Prisma__PlatformConnectionClient<$Result.GetResult<Prisma.$PlatformConnectionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    author<T extends CommentAuthorDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CommentAuthorDefaultArgs<ExtArgs>>): Prisma__CommentAuthorClient<$Result.GetResult<Prisma.$CommentAuthorPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    post<T extends Comment$postArgs<ExtArgs> = {}>(args?: Subset<T, Comment$postArgs<ExtArgs>>): Prisma__PostClient<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    parent<T extends Comment$parentArgs<ExtArgs> = {}>(args?: Subset<T, Comment$parentArgs<ExtArgs>>): Prisma__CommentClient<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    replies<T extends Comment$repliesArgs<ExtArgs> = {}>(args?: Subset<T, Comment$repliesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Comment model
+   */
+  interface CommentFieldRefs {
+    readonly id: FieldRef<"Comment", 'String'>
+    readonly platform: FieldRef<"Comment", 'Platform'>
+    readonly externalId: FieldRef<"Comment", 'String'>
+    readonly content: FieldRef<"Comment", 'String'>
+    readonly publishedAt: FieldRef<"Comment", 'DateTime'>
+    readonly isResolved: FieldRef<"Comment", 'Boolean'>
+    readonly isHidden: FieldRef<"Comment", 'Boolean'>
+    readonly platformConnectionId: FieldRef<"Comment", 'String'>
+    readonly authorId: FieldRef<"Comment", 'String'>
+    readonly postId: FieldRef<"Comment", 'String'>
+    readonly externalPostId: FieldRef<"Comment", 'String'>
+    readonly parentId: FieldRef<"Comment", 'String'>
+    readonly createdAt: FieldRef<"Comment", 'DateTime'>
+    readonly updatedAt: FieldRef<"Comment", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Comment findUnique
+   */
+  export type CommentFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Comment
+     */
+    select?: CommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Comment
+     */
+    omit?: CommentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommentInclude<ExtArgs> | null
+    /**
+     * Filter, which Comment to fetch.
+     */
+    where: CommentWhereUniqueInput
+  }
+
+  /**
+   * Comment findUniqueOrThrow
+   */
+  export type CommentFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Comment
+     */
+    select?: CommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Comment
+     */
+    omit?: CommentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommentInclude<ExtArgs> | null
+    /**
+     * Filter, which Comment to fetch.
+     */
+    where: CommentWhereUniqueInput
+  }
+
+  /**
+   * Comment findFirst
+   */
+  export type CommentFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Comment
+     */
+    select?: CommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Comment
+     */
+    omit?: CommentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommentInclude<ExtArgs> | null
+    /**
+     * Filter, which Comment to fetch.
+     */
+    where?: CommentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Comments to fetch.
+     */
+    orderBy?: CommentOrderByWithRelationInput | CommentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Comments.
+     */
+    cursor?: CommentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Comments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Comments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Comments.
+     */
+    distinct?: CommentScalarFieldEnum | CommentScalarFieldEnum[]
+  }
+
+  /**
+   * Comment findFirstOrThrow
+   */
+  export type CommentFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Comment
+     */
+    select?: CommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Comment
+     */
+    omit?: CommentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommentInclude<ExtArgs> | null
+    /**
+     * Filter, which Comment to fetch.
+     */
+    where?: CommentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Comments to fetch.
+     */
+    orderBy?: CommentOrderByWithRelationInput | CommentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Comments.
+     */
+    cursor?: CommentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Comments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Comments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Comments.
+     */
+    distinct?: CommentScalarFieldEnum | CommentScalarFieldEnum[]
+  }
+
+  /**
+   * Comment findMany
+   */
+  export type CommentFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Comment
+     */
+    select?: CommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Comment
+     */
+    omit?: CommentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommentInclude<ExtArgs> | null
+    /**
+     * Filter, which Comments to fetch.
+     */
+    where?: CommentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Comments to fetch.
+     */
+    orderBy?: CommentOrderByWithRelationInput | CommentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Comments.
+     */
+    cursor?: CommentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Comments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Comments.
+     */
+    skip?: number
+    distinct?: CommentScalarFieldEnum | CommentScalarFieldEnum[]
+  }
+
+  /**
+   * Comment create
+   */
+  export type CommentCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Comment
+     */
+    select?: CommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Comment
+     */
+    omit?: CommentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommentInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Comment.
+     */
+    data: XOR<CommentCreateInput, CommentUncheckedCreateInput>
+  }
+
+  /**
+   * Comment createMany
+   */
+  export type CommentCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Comments.
+     */
+    data: CommentCreateManyInput | CommentCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Comment createManyAndReturn
+   */
+  export type CommentCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Comment
+     */
+    select?: CommentSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Comment
+     */
+    omit?: CommentOmit<ExtArgs> | null
+    /**
+     * The data used to create many Comments.
+     */
+    data: CommentCreateManyInput | CommentCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommentIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Comment update
+   */
+  export type CommentUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Comment
+     */
+    select?: CommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Comment
+     */
+    omit?: CommentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommentInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Comment.
+     */
+    data: XOR<CommentUpdateInput, CommentUncheckedUpdateInput>
+    /**
+     * Choose, which Comment to update.
+     */
+    where: CommentWhereUniqueInput
+  }
+
+  /**
+   * Comment updateMany
+   */
+  export type CommentUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Comments.
+     */
+    data: XOR<CommentUpdateManyMutationInput, CommentUncheckedUpdateManyInput>
+    /**
+     * Filter which Comments to update
+     */
+    where?: CommentWhereInput
+    /**
+     * Limit how many Comments to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Comment updateManyAndReturn
+   */
+  export type CommentUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Comment
+     */
+    select?: CommentSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Comment
+     */
+    omit?: CommentOmit<ExtArgs> | null
+    /**
+     * The data used to update Comments.
+     */
+    data: XOR<CommentUpdateManyMutationInput, CommentUncheckedUpdateManyInput>
+    /**
+     * Filter which Comments to update
+     */
+    where?: CommentWhereInput
+    /**
+     * Limit how many Comments to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommentIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Comment upsert
+   */
+  export type CommentUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Comment
+     */
+    select?: CommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Comment
+     */
+    omit?: CommentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommentInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Comment to update in case it exists.
+     */
+    where: CommentWhereUniqueInput
+    /**
+     * In case the Comment found by the `where` argument doesn't exist, create a new Comment with this data.
+     */
+    create: XOR<CommentCreateInput, CommentUncheckedCreateInput>
+    /**
+     * In case the Comment was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CommentUpdateInput, CommentUncheckedUpdateInput>
+  }
+
+  /**
+   * Comment delete
+   */
+  export type CommentDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Comment
+     */
+    select?: CommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Comment
+     */
+    omit?: CommentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommentInclude<ExtArgs> | null
+    /**
+     * Filter which Comment to delete.
+     */
+    where: CommentWhereUniqueInput
+  }
+
+  /**
+   * Comment deleteMany
+   */
+  export type CommentDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Comments to delete
+     */
+    where?: CommentWhereInput
+    /**
+     * Limit how many Comments to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Comment.post
+   */
+  export type Comment$postArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Post
+     */
+    select?: PostSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Post
+     */
+    omit?: PostOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PostInclude<ExtArgs> | null
+    where?: PostWhereInput
+  }
+
+  /**
+   * Comment.parent
+   */
+  export type Comment$parentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Comment
+     */
+    select?: CommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Comment
+     */
+    omit?: CommentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommentInclude<ExtArgs> | null
+    where?: CommentWhereInput
+  }
+
+  /**
+   * Comment.replies
+   */
+  export type Comment$repliesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Comment
+     */
+    select?: CommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Comment
+     */
+    omit?: CommentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommentInclude<ExtArgs> | null
+    where?: CommentWhereInput
+    orderBy?: CommentOrderByWithRelationInput | CommentOrderByWithRelationInput[]
+    cursor?: CommentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CommentScalarFieldEnum | CommentScalarFieldEnum[]
+  }
+
+  /**
+   * Comment without action
+   */
+  export type CommentDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Comment
+     */
+    select?: CommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Comment
+     */
+    omit?: CommentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommentInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model CommentAuthor
+   */
+
+  export type AggregateCommentAuthor = {
+    _count: CommentAuthorCountAggregateOutputType | null
+    _min: CommentAuthorMinAggregateOutputType | null
+    _max: CommentAuthorMaxAggregateOutputType | null
+  }
+
+  export type CommentAuthorMinAggregateOutputType = {
+    id: string | null
+    platform: $Enums.Platform | null
+    externalId: string | null
+    name: string | null
+    avatarUrl: string | null
+    profileUrl: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CommentAuthorMaxAggregateOutputType = {
+    id: string | null
+    platform: $Enums.Platform | null
+    externalId: string | null
+    name: string | null
+    avatarUrl: string | null
+    profileUrl: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CommentAuthorCountAggregateOutputType = {
+    id: number
+    platform: number
+    externalId: number
+    name: number
+    avatarUrl: number
+    profileUrl: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type CommentAuthorMinAggregateInputType = {
+    id?: true
+    platform?: true
+    externalId?: true
+    name?: true
+    avatarUrl?: true
+    profileUrl?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type CommentAuthorMaxAggregateInputType = {
+    id?: true
+    platform?: true
+    externalId?: true
+    name?: true
+    avatarUrl?: true
+    profileUrl?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type CommentAuthorCountAggregateInputType = {
+    id?: true
+    platform?: true
+    externalId?: true
+    name?: true
+    avatarUrl?: true
+    profileUrl?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type CommentAuthorAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CommentAuthor to aggregate.
+     */
+    where?: CommentAuthorWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CommentAuthors to fetch.
+     */
+    orderBy?: CommentAuthorOrderByWithRelationInput | CommentAuthorOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CommentAuthorWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CommentAuthors from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CommentAuthors.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned CommentAuthors
+    **/
+    _count?: true | CommentAuthorCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CommentAuthorMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CommentAuthorMaxAggregateInputType
+  }
+
+  export type GetCommentAuthorAggregateType<T extends CommentAuthorAggregateArgs> = {
+        [P in keyof T & keyof AggregateCommentAuthor]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCommentAuthor[P]>
+      : GetScalarType<T[P], AggregateCommentAuthor[P]>
+  }
+
+
+
+
+  export type CommentAuthorGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CommentAuthorWhereInput
+    orderBy?: CommentAuthorOrderByWithAggregationInput | CommentAuthorOrderByWithAggregationInput[]
+    by: CommentAuthorScalarFieldEnum[] | CommentAuthorScalarFieldEnum
+    having?: CommentAuthorScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CommentAuthorCountAggregateInputType | true
+    _min?: CommentAuthorMinAggregateInputType
+    _max?: CommentAuthorMaxAggregateInputType
+  }
+
+  export type CommentAuthorGroupByOutputType = {
+    id: string
+    platform: $Enums.Platform
+    externalId: string
+    name: string
+    avatarUrl: string | null
+    profileUrl: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: CommentAuthorCountAggregateOutputType | null
+    _min: CommentAuthorMinAggregateOutputType | null
+    _max: CommentAuthorMaxAggregateOutputType | null
+  }
+
+  type GetCommentAuthorGroupByPayload<T extends CommentAuthorGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CommentAuthorGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CommentAuthorGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CommentAuthorGroupByOutputType[P]>
+            : GetScalarType<T[P], CommentAuthorGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CommentAuthorSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    platform?: boolean
+    externalId?: boolean
+    name?: boolean
+    avatarUrl?: boolean
+    profileUrl?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    comments?: boolean | CommentAuthor$commentsArgs<ExtArgs>
+    _count?: boolean | CommentAuthorCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["commentAuthor"]>
+
+  export type CommentAuthorSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    platform?: boolean
+    externalId?: boolean
+    name?: boolean
+    avatarUrl?: boolean
+    profileUrl?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["commentAuthor"]>
+
+  export type CommentAuthorSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    platform?: boolean
+    externalId?: boolean
+    name?: boolean
+    avatarUrl?: boolean
+    profileUrl?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["commentAuthor"]>
+
+  export type CommentAuthorSelectScalar = {
+    id?: boolean
+    platform?: boolean
+    externalId?: boolean
+    name?: boolean
+    avatarUrl?: boolean
+    profileUrl?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type CommentAuthorOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "platform" | "externalId" | "name" | "avatarUrl" | "profileUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["commentAuthor"]>
+  export type CommentAuthorInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    comments?: boolean | CommentAuthor$commentsArgs<ExtArgs>
+    _count?: boolean | CommentAuthorCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type CommentAuthorIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type CommentAuthorIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $CommentAuthorPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "CommentAuthor"
+    objects: {
+      comments: Prisma.$CommentPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      platform: $Enums.Platform
+      externalId: string
+      name: string
+      avatarUrl: string | null
+      profileUrl: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["commentAuthor"]>
+    composites: {}
+  }
+
+  type CommentAuthorGetPayload<S extends boolean | null | undefined | CommentAuthorDefaultArgs> = $Result.GetResult<Prisma.$CommentAuthorPayload, S>
+
+  type CommentAuthorCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CommentAuthorFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CommentAuthorCountAggregateInputType | true
+    }
+
+  export interface CommentAuthorDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CommentAuthor'], meta: { name: 'CommentAuthor' } }
+    /**
+     * Find zero or one CommentAuthor that matches the filter.
+     * @param {CommentAuthorFindUniqueArgs} args - Arguments to find a CommentAuthor
+     * @example
+     * // Get one CommentAuthor
+     * const commentAuthor = await prisma.commentAuthor.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CommentAuthorFindUniqueArgs>(args: SelectSubset<T, CommentAuthorFindUniqueArgs<ExtArgs>>): Prisma__CommentAuthorClient<$Result.GetResult<Prisma.$CommentAuthorPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one CommentAuthor that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CommentAuthorFindUniqueOrThrowArgs} args - Arguments to find a CommentAuthor
+     * @example
+     * // Get one CommentAuthor
+     * const commentAuthor = await prisma.commentAuthor.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CommentAuthorFindUniqueOrThrowArgs>(args: SelectSubset<T, CommentAuthorFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CommentAuthorClient<$Result.GetResult<Prisma.$CommentAuthorPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CommentAuthor that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CommentAuthorFindFirstArgs} args - Arguments to find a CommentAuthor
+     * @example
+     * // Get one CommentAuthor
+     * const commentAuthor = await prisma.commentAuthor.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CommentAuthorFindFirstArgs>(args?: SelectSubset<T, CommentAuthorFindFirstArgs<ExtArgs>>): Prisma__CommentAuthorClient<$Result.GetResult<Prisma.$CommentAuthorPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CommentAuthor that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CommentAuthorFindFirstOrThrowArgs} args - Arguments to find a CommentAuthor
+     * @example
+     * // Get one CommentAuthor
+     * const commentAuthor = await prisma.commentAuthor.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CommentAuthorFindFirstOrThrowArgs>(args?: SelectSubset<T, CommentAuthorFindFirstOrThrowArgs<ExtArgs>>): Prisma__CommentAuthorClient<$Result.GetResult<Prisma.$CommentAuthorPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more CommentAuthors that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CommentAuthorFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all CommentAuthors
+     * const commentAuthors = await prisma.commentAuthor.findMany()
+     * 
+     * // Get first 10 CommentAuthors
+     * const commentAuthors = await prisma.commentAuthor.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const commentAuthorWithIdOnly = await prisma.commentAuthor.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CommentAuthorFindManyArgs>(args?: SelectSubset<T, CommentAuthorFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommentAuthorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a CommentAuthor.
+     * @param {CommentAuthorCreateArgs} args - Arguments to create a CommentAuthor.
+     * @example
+     * // Create one CommentAuthor
+     * const CommentAuthor = await prisma.commentAuthor.create({
+     *   data: {
+     *     // ... data to create a CommentAuthor
+     *   }
+     * })
+     * 
+     */
+    create<T extends CommentAuthorCreateArgs>(args: SelectSubset<T, CommentAuthorCreateArgs<ExtArgs>>): Prisma__CommentAuthorClient<$Result.GetResult<Prisma.$CommentAuthorPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many CommentAuthors.
+     * @param {CommentAuthorCreateManyArgs} args - Arguments to create many CommentAuthors.
+     * @example
+     * // Create many CommentAuthors
+     * const commentAuthor = await prisma.commentAuthor.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CommentAuthorCreateManyArgs>(args?: SelectSubset<T, CommentAuthorCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many CommentAuthors and returns the data saved in the database.
+     * @param {CommentAuthorCreateManyAndReturnArgs} args - Arguments to create many CommentAuthors.
+     * @example
+     * // Create many CommentAuthors
+     * const commentAuthor = await prisma.commentAuthor.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many CommentAuthors and only return the `id`
+     * const commentAuthorWithIdOnly = await prisma.commentAuthor.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CommentAuthorCreateManyAndReturnArgs>(args?: SelectSubset<T, CommentAuthorCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommentAuthorPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a CommentAuthor.
+     * @param {CommentAuthorDeleteArgs} args - Arguments to delete one CommentAuthor.
+     * @example
+     * // Delete one CommentAuthor
+     * const CommentAuthor = await prisma.commentAuthor.delete({
+     *   where: {
+     *     // ... filter to delete one CommentAuthor
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CommentAuthorDeleteArgs>(args: SelectSubset<T, CommentAuthorDeleteArgs<ExtArgs>>): Prisma__CommentAuthorClient<$Result.GetResult<Prisma.$CommentAuthorPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one CommentAuthor.
+     * @param {CommentAuthorUpdateArgs} args - Arguments to update one CommentAuthor.
+     * @example
+     * // Update one CommentAuthor
+     * const commentAuthor = await prisma.commentAuthor.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CommentAuthorUpdateArgs>(args: SelectSubset<T, CommentAuthorUpdateArgs<ExtArgs>>): Prisma__CommentAuthorClient<$Result.GetResult<Prisma.$CommentAuthorPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more CommentAuthors.
+     * @param {CommentAuthorDeleteManyArgs} args - Arguments to filter CommentAuthors to delete.
+     * @example
+     * // Delete a few CommentAuthors
+     * const { count } = await prisma.commentAuthor.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CommentAuthorDeleteManyArgs>(args?: SelectSubset<T, CommentAuthorDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CommentAuthors.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CommentAuthorUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many CommentAuthors
+     * const commentAuthor = await prisma.commentAuthor.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CommentAuthorUpdateManyArgs>(args: SelectSubset<T, CommentAuthorUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CommentAuthors and returns the data updated in the database.
+     * @param {CommentAuthorUpdateManyAndReturnArgs} args - Arguments to update many CommentAuthors.
+     * @example
+     * // Update many CommentAuthors
+     * const commentAuthor = await prisma.commentAuthor.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more CommentAuthors and only return the `id`
+     * const commentAuthorWithIdOnly = await prisma.commentAuthor.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends CommentAuthorUpdateManyAndReturnArgs>(args: SelectSubset<T, CommentAuthorUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommentAuthorPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one CommentAuthor.
+     * @param {CommentAuthorUpsertArgs} args - Arguments to update or create a CommentAuthor.
+     * @example
+     * // Update or create a CommentAuthor
+     * const commentAuthor = await prisma.commentAuthor.upsert({
+     *   create: {
+     *     // ... data to create a CommentAuthor
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the CommentAuthor we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CommentAuthorUpsertArgs>(args: SelectSubset<T, CommentAuthorUpsertArgs<ExtArgs>>): Prisma__CommentAuthorClient<$Result.GetResult<Prisma.$CommentAuthorPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of CommentAuthors.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CommentAuthorCountArgs} args - Arguments to filter CommentAuthors to count.
+     * @example
+     * // Count the number of CommentAuthors
+     * const count = await prisma.commentAuthor.count({
+     *   where: {
+     *     // ... the filter for the CommentAuthors we want to count
+     *   }
+     * })
+    **/
+    count<T extends CommentAuthorCountArgs>(
+      args?: Subset<T, CommentAuthorCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CommentAuthorCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a CommentAuthor.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CommentAuthorAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CommentAuthorAggregateArgs>(args: Subset<T, CommentAuthorAggregateArgs>): Prisma.PrismaPromise<GetCommentAuthorAggregateType<T>>
+
+    /**
+     * Group by CommentAuthor.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CommentAuthorGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CommentAuthorGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CommentAuthorGroupByArgs['orderBy'] }
+        : { orderBy?: CommentAuthorGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CommentAuthorGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCommentAuthorGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the CommentAuthor model
+   */
+  readonly fields: CommentAuthorFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for CommentAuthor.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CommentAuthorClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    comments<T extends CommentAuthor$commentsArgs<ExtArgs> = {}>(args?: Subset<T, CommentAuthor$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the CommentAuthor model
+   */
+  interface CommentAuthorFieldRefs {
+    readonly id: FieldRef<"CommentAuthor", 'String'>
+    readonly platform: FieldRef<"CommentAuthor", 'Platform'>
+    readonly externalId: FieldRef<"CommentAuthor", 'String'>
+    readonly name: FieldRef<"CommentAuthor", 'String'>
+    readonly avatarUrl: FieldRef<"CommentAuthor", 'String'>
+    readonly profileUrl: FieldRef<"CommentAuthor", 'String'>
+    readonly createdAt: FieldRef<"CommentAuthor", 'DateTime'>
+    readonly updatedAt: FieldRef<"CommentAuthor", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * CommentAuthor findUnique
+   */
+  export type CommentAuthorFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CommentAuthor
+     */
+    select?: CommentAuthorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CommentAuthor
+     */
+    omit?: CommentAuthorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommentAuthorInclude<ExtArgs> | null
+    /**
+     * Filter, which CommentAuthor to fetch.
+     */
+    where: CommentAuthorWhereUniqueInput
+  }
+
+  /**
+   * CommentAuthor findUniqueOrThrow
+   */
+  export type CommentAuthorFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CommentAuthor
+     */
+    select?: CommentAuthorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CommentAuthor
+     */
+    omit?: CommentAuthorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommentAuthorInclude<ExtArgs> | null
+    /**
+     * Filter, which CommentAuthor to fetch.
+     */
+    where: CommentAuthorWhereUniqueInput
+  }
+
+  /**
+   * CommentAuthor findFirst
+   */
+  export type CommentAuthorFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CommentAuthor
+     */
+    select?: CommentAuthorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CommentAuthor
+     */
+    omit?: CommentAuthorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommentAuthorInclude<ExtArgs> | null
+    /**
+     * Filter, which CommentAuthor to fetch.
+     */
+    where?: CommentAuthorWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CommentAuthors to fetch.
+     */
+    orderBy?: CommentAuthorOrderByWithRelationInput | CommentAuthorOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CommentAuthors.
+     */
+    cursor?: CommentAuthorWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CommentAuthors from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CommentAuthors.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CommentAuthors.
+     */
+    distinct?: CommentAuthorScalarFieldEnum | CommentAuthorScalarFieldEnum[]
+  }
+
+  /**
+   * CommentAuthor findFirstOrThrow
+   */
+  export type CommentAuthorFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CommentAuthor
+     */
+    select?: CommentAuthorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CommentAuthor
+     */
+    omit?: CommentAuthorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommentAuthorInclude<ExtArgs> | null
+    /**
+     * Filter, which CommentAuthor to fetch.
+     */
+    where?: CommentAuthorWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CommentAuthors to fetch.
+     */
+    orderBy?: CommentAuthorOrderByWithRelationInput | CommentAuthorOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CommentAuthors.
+     */
+    cursor?: CommentAuthorWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CommentAuthors from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CommentAuthors.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CommentAuthors.
+     */
+    distinct?: CommentAuthorScalarFieldEnum | CommentAuthorScalarFieldEnum[]
+  }
+
+  /**
+   * CommentAuthor findMany
+   */
+  export type CommentAuthorFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CommentAuthor
+     */
+    select?: CommentAuthorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CommentAuthor
+     */
+    omit?: CommentAuthorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommentAuthorInclude<ExtArgs> | null
+    /**
+     * Filter, which CommentAuthors to fetch.
+     */
+    where?: CommentAuthorWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CommentAuthors to fetch.
+     */
+    orderBy?: CommentAuthorOrderByWithRelationInput | CommentAuthorOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing CommentAuthors.
+     */
+    cursor?: CommentAuthorWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CommentAuthors from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CommentAuthors.
+     */
+    skip?: number
+    distinct?: CommentAuthorScalarFieldEnum | CommentAuthorScalarFieldEnum[]
+  }
+
+  /**
+   * CommentAuthor create
+   */
+  export type CommentAuthorCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CommentAuthor
+     */
+    select?: CommentAuthorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CommentAuthor
+     */
+    omit?: CommentAuthorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommentAuthorInclude<ExtArgs> | null
+    /**
+     * The data needed to create a CommentAuthor.
+     */
+    data: XOR<CommentAuthorCreateInput, CommentAuthorUncheckedCreateInput>
+  }
+
+  /**
+   * CommentAuthor createMany
+   */
+  export type CommentAuthorCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many CommentAuthors.
+     */
+    data: CommentAuthorCreateManyInput | CommentAuthorCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CommentAuthor createManyAndReturn
+   */
+  export type CommentAuthorCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CommentAuthor
+     */
+    select?: CommentAuthorSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CommentAuthor
+     */
+    omit?: CommentAuthorOmit<ExtArgs> | null
+    /**
+     * The data used to create many CommentAuthors.
+     */
+    data: CommentAuthorCreateManyInput | CommentAuthorCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CommentAuthor update
+   */
+  export type CommentAuthorUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CommentAuthor
+     */
+    select?: CommentAuthorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CommentAuthor
+     */
+    omit?: CommentAuthorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommentAuthorInclude<ExtArgs> | null
+    /**
+     * The data needed to update a CommentAuthor.
+     */
+    data: XOR<CommentAuthorUpdateInput, CommentAuthorUncheckedUpdateInput>
+    /**
+     * Choose, which CommentAuthor to update.
+     */
+    where: CommentAuthorWhereUniqueInput
+  }
+
+  /**
+   * CommentAuthor updateMany
+   */
+  export type CommentAuthorUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update CommentAuthors.
+     */
+    data: XOR<CommentAuthorUpdateManyMutationInput, CommentAuthorUncheckedUpdateManyInput>
+    /**
+     * Filter which CommentAuthors to update
+     */
+    where?: CommentAuthorWhereInput
+    /**
+     * Limit how many CommentAuthors to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * CommentAuthor updateManyAndReturn
+   */
+  export type CommentAuthorUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CommentAuthor
+     */
+    select?: CommentAuthorSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CommentAuthor
+     */
+    omit?: CommentAuthorOmit<ExtArgs> | null
+    /**
+     * The data used to update CommentAuthors.
+     */
+    data: XOR<CommentAuthorUpdateManyMutationInput, CommentAuthorUncheckedUpdateManyInput>
+    /**
+     * Filter which CommentAuthors to update
+     */
+    where?: CommentAuthorWhereInput
+    /**
+     * Limit how many CommentAuthors to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * CommentAuthor upsert
+   */
+  export type CommentAuthorUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CommentAuthor
+     */
+    select?: CommentAuthorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CommentAuthor
+     */
+    omit?: CommentAuthorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommentAuthorInclude<ExtArgs> | null
+    /**
+     * The filter to search for the CommentAuthor to update in case it exists.
+     */
+    where: CommentAuthorWhereUniqueInput
+    /**
+     * In case the CommentAuthor found by the `where` argument doesn't exist, create a new CommentAuthor with this data.
+     */
+    create: XOR<CommentAuthorCreateInput, CommentAuthorUncheckedCreateInput>
+    /**
+     * In case the CommentAuthor was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CommentAuthorUpdateInput, CommentAuthorUncheckedUpdateInput>
+  }
+
+  /**
+   * CommentAuthor delete
+   */
+  export type CommentAuthorDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CommentAuthor
+     */
+    select?: CommentAuthorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CommentAuthor
+     */
+    omit?: CommentAuthorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommentAuthorInclude<ExtArgs> | null
+    /**
+     * Filter which CommentAuthor to delete.
+     */
+    where: CommentAuthorWhereUniqueInput
+  }
+
+  /**
+   * CommentAuthor deleteMany
+   */
+  export type CommentAuthorDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CommentAuthors to delete
+     */
+    where?: CommentAuthorWhereInput
+    /**
+     * Limit how many CommentAuthors to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * CommentAuthor.comments
+   */
+  export type CommentAuthor$commentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Comment
+     */
+    select?: CommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Comment
+     */
+    omit?: CommentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommentInclude<ExtArgs> | null
+    where?: CommentWhereInput
+    orderBy?: CommentOrderByWithRelationInput | CommentOrderByWithRelationInput[]
+    cursor?: CommentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CommentScalarFieldEnum | CommentScalarFieldEnum[]
+  }
+
+  /**
+   * CommentAuthor without action
+   */
+  export type CommentAuthorDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CommentAuthor
+     */
+    select?: CommentAuthorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CommentAuthor
+     */
+    omit?: CommentAuthorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CommentAuthorInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -12487,6 +15181,40 @@ export namespace Prisma {
   };
 
   export type MetricSnapshotScalarFieldEnum = (typeof MetricSnapshotScalarFieldEnum)[keyof typeof MetricSnapshotScalarFieldEnum]
+
+
+  export const CommentScalarFieldEnum: {
+    id: 'id',
+    platform: 'platform',
+    externalId: 'externalId',
+    content: 'content',
+    publishedAt: 'publishedAt',
+    isResolved: 'isResolved',
+    isHidden: 'isHidden',
+    platformConnectionId: 'platformConnectionId',
+    authorId: 'authorId',
+    postId: 'postId',
+    externalPostId: 'externalPostId',
+    parentId: 'parentId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type CommentScalarFieldEnum = (typeof CommentScalarFieldEnum)[keyof typeof CommentScalarFieldEnum]
+
+
+  export const CommentAuthorScalarFieldEnum: {
+    id: 'id',
+    platform: 'platform',
+    externalId: 'externalId',
+    name: 'name',
+    avatarUrl: 'avatarUrl',
+    profileUrl: 'profileUrl',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type CommentAuthorScalarFieldEnum = (typeof CommentAuthorScalarFieldEnum)[keyof typeof CommentAuthorScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -13017,6 +15745,7 @@ export namespace Prisma {
     createdById?: StringFilter<"Post"> | string
     createdBy?: XOR<UserScalarRelationFilter, UserWhereInput>
     publishJobs?: PublishJobListRelationFilter
+    comments?: CommentListRelationFilter
   }
 
   export type PostOrderByWithRelationInput = {
@@ -13040,6 +15769,7 @@ export namespace Prisma {
     createdById?: SortOrder
     createdBy?: UserOrderByWithRelationInput
     publishJobs?: PublishJobOrderByRelationAggregateInput
+    comments?: CommentOrderByRelationAggregateInput
   }
 
   export type PostWhereUniqueInput = Prisma.AtLeast<{
@@ -13066,6 +15796,7 @@ export namespace Prisma {
     createdById?: StringFilter<"Post"> | string
     createdBy?: XOR<UserScalarRelationFilter, UserWhereInput>
     publishJobs?: PublishJobListRelationFilter
+    comments?: CommentListRelationFilter
   }, "id">
 
   export type PostOrderByWithAggregationInput = {
@@ -13137,6 +15868,7 @@ export namespace Prisma {
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     publishJobs?: PublishJobListRelationFilter
     postingSchedule?: XOR<PostingScheduleNullableScalarRelationFilter, PostingScheduleWhereInput> | null
+    comments?: CommentListRelationFilter
   }
 
   export type PlatformConnectionOrderByWithRelationInput = {
@@ -13155,6 +15887,7 @@ export namespace Prisma {
     user?: UserOrderByWithRelationInput
     publishJobs?: PublishJobOrderByRelationAggregateInput
     postingSchedule?: PostingScheduleOrderByWithRelationInput
+    comments?: CommentOrderByRelationAggregateInput
   }
 
   export type PlatformConnectionWhereUniqueInput = Prisma.AtLeast<{
@@ -13177,6 +15910,7 @@ export namespace Prisma {
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     publishJobs?: PublishJobListRelationFilter
     postingSchedule?: XOR<PostingScheduleNullableScalarRelationFilter, PostingScheduleWhereInput> | null
+    comments?: CommentListRelationFilter
   }, "id" | "userId_platform">
 
   export type PlatformConnectionOrderByWithAggregationInput = {
@@ -13486,6 +16220,190 @@ export namespace Prisma {
     likes?: IntWithAggregatesFilter<"MetricSnapshot"> | number
     comments?: IntWithAggregatesFilter<"MetricSnapshot"> | number
     shares?: IntWithAggregatesFilter<"MetricSnapshot"> | number
+  }
+
+  export type CommentWhereInput = {
+    AND?: CommentWhereInput | CommentWhereInput[]
+    OR?: CommentWhereInput[]
+    NOT?: CommentWhereInput | CommentWhereInput[]
+    id?: StringFilter<"Comment"> | string
+    platform?: EnumPlatformFilter<"Comment"> | $Enums.Platform
+    externalId?: StringFilter<"Comment"> | string
+    content?: StringFilter<"Comment"> | string
+    publishedAt?: DateTimeFilter<"Comment"> | Date | string
+    isResolved?: BoolFilter<"Comment"> | boolean
+    isHidden?: BoolFilter<"Comment"> | boolean
+    platformConnectionId?: StringFilter<"Comment"> | string
+    authorId?: StringFilter<"Comment"> | string
+    postId?: StringNullableFilter<"Comment"> | string | null
+    externalPostId?: StringNullableFilter<"Comment"> | string | null
+    parentId?: StringNullableFilter<"Comment"> | string | null
+    createdAt?: DateTimeFilter<"Comment"> | Date | string
+    updatedAt?: DateTimeFilter<"Comment"> | Date | string
+    platformConnection?: XOR<PlatformConnectionScalarRelationFilter, PlatformConnectionWhereInput>
+    author?: XOR<CommentAuthorScalarRelationFilter, CommentAuthorWhereInput>
+    post?: XOR<PostNullableScalarRelationFilter, PostWhereInput> | null
+    parent?: XOR<CommentNullableScalarRelationFilter, CommentWhereInput> | null
+    replies?: CommentListRelationFilter
+  }
+
+  export type CommentOrderByWithRelationInput = {
+    id?: SortOrder
+    platform?: SortOrder
+    externalId?: SortOrder
+    content?: SortOrder
+    publishedAt?: SortOrder
+    isResolved?: SortOrder
+    isHidden?: SortOrder
+    platformConnectionId?: SortOrder
+    authorId?: SortOrder
+    postId?: SortOrderInput | SortOrder
+    externalPostId?: SortOrderInput | SortOrder
+    parentId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    platformConnection?: PlatformConnectionOrderByWithRelationInput
+    author?: CommentAuthorOrderByWithRelationInput
+    post?: PostOrderByWithRelationInput
+    parent?: CommentOrderByWithRelationInput
+    replies?: CommentOrderByRelationAggregateInput
+  }
+
+  export type CommentWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    platform_externalId?: CommentPlatformExternalIdCompoundUniqueInput
+    AND?: CommentWhereInput | CommentWhereInput[]
+    OR?: CommentWhereInput[]
+    NOT?: CommentWhereInput | CommentWhereInput[]
+    platform?: EnumPlatformFilter<"Comment"> | $Enums.Platform
+    externalId?: StringFilter<"Comment"> | string
+    content?: StringFilter<"Comment"> | string
+    publishedAt?: DateTimeFilter<"Comment"> | Date | string
+    isResolved?: BoolFilter<"Comment"> | boolean
+    isHidden?: BoolFilter<"Comment"> | boolean
+    platformConnectionId?: StringFilter<"Comment"> | string
+    authorId?: StringFilter<"Comment"> | string
+    postId?: StringNullableFilter<"Comment"> | string | null
+    externalPostId?: StringNullableFilter<"Comment"> | string | null
+    parentId?: StringNullableFilter<"Comment"> | string | null
+    createdAt?: DateTimeFilter<"Comment"> | Date | string
+    updatedAt?: DateTimeFilter<"Comment"> | Date | string
+    platformConnection?: XOR<PlatformConnectionScalarRelationFilter, PlatformConnectionWhereInput>
+    author?: XOR<CommentAuthorScalarRelationFilter, CommentAuthorWhereInput>
+    post?: XOR<PostNullableScalarRelationFilter, PostWhereInput> | null
+    parent?: XOR<CommentNullableScalarRelationFilter, CommentWhereInput> | null
+    replies?: CommentListRelationFilter
+  }, "id" | "platform_externalId">
+
+  export type CommentOrderByWithAggregationInput = {
+    id?: SortOrder
+    platform?: SortOrder
+    externalId?: SortOrder
+    content?: SortOrder
+    publishedAt?: SortOrder
+    isResolved?: SortOrder
+    isHidden?: SortOrder
+    platformConnectionId?: SortOrder
+    authorId?: SortOrder
+    postId?: SortOrderInput | SortOrder
+    externalPostId?: SortOrderInput | SortOrder
+    parentId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: CommentCountOrderByAggregateInput
+    _max?: CommentMaxOrderByAggregateInput
+    _min?: CommentMinOrderByAggregateInput
+  }
+
+  export type CommentScalarWhereWithAggregatesInput = {
+    AND?: CommentScalarWhereWithAggregatesInput | CommentScalarWhereWithAggregatesInput[]
+    OR?: CommentScalarWhereWithAggregatesInput[]
+    NOT?: CommentScalarWhereWithAggregatesInput | CommentScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Comment"> | string
+    platform?: EnumPlatformWithAggregatesFilter<"Comment"> | $Enums.Platform
+    externalId?: StringWithAggregatesFilter<"Comment"> | string
+    content?: StringWithAggregatesFilter<"Comment"> | string
+    publishedAt?: DateTimeWithAggregatesFilter<"Comment"> | Date | string
+    isResolved?: BoolWithAggregatesFilter<"Comment"> | boolean
+    isHidden?: BoolWithAggregatesFilter<"Comment"> | boolean
+    platformConnectionId?: StringWithAggregatesFilter<"Comment"> | string
+    authorId?: StringWithAggregatesFilter<"Comment"> | string
+    postId?: StringNullableWithAggregatesFilter<"Comment"> | string | null
+    externalPostId?: StringNullableWithAggregatesFilter<"Comment"> | string | null
+    parentId?: StringNullableWithAggregatesFilter<"Comment"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Comment"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Comment"> | Date | string
+  }
+
+  export type CommentAuthorWhereInput = {
+    AND?: CommentAuthorWhereInput | CommentAuthorWhereInput[]
+    OR?: CommentAuthorWhereInput[]
+    NOT?: CommentAuthorWhereInput | CommentAuthorWhereInput[]
+    id?: StringFilter<"CommentAuthor"> | string
+    platform?: EnumPlatformFilter<"CommentAuthor"> | $Enums.Platform
+    externalId?: StringFilter<"CommentAuthor"> | string
+    name?: StringFilter<"CommentAuthor"> | string
+    avatarUrl?: StringNullableFilter<"CommentAuthor"> | string | null
+    profileUrl?: StringNullableFilter<"CommentAuthor"> | string | null
+    createdAt?: DateTimeFilter<"CommentAuthor"> | Date | string
+    updatedAt?: DateTimeFilter<"CommentAuthor"> | Date | string
+    comments?: CommentListRelationFilter
+  }
+
+  export type CommentAuthorOrderByWithRelationInput = {
+    id?: SortOrder
+    platform?: SortOrder
+    externalId?: SortOrder
+    name?: SortOrder
+    avatarUrl?: SortOrderInput | SortOrder
+    profileUrl?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    comments?: CommentOrderByRelationAggregateInput
+  }
+
+  export type CommentAuthorWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    platform_externalId?: CommentAuthorPlatformExternalIdCompoundUniqueInput
+    AND?: CommentAuthorWhereInput | CommentAuthorWhereInput[]
+    OR?: CommentAuthorWhereInput[]
+    NOT?: CommentAuthorWhereInput | CommentAuthorWhereInput[]
+    platform?: EnumPlatformFilter<"CommentAuthor"> | $Enums.Platform
+    externalId?: StringFilter<"CommentAuthor"> | string
+    name?: StringFilter<"CommentAuthor"> | string
+    avatarUrl?: StringNullableFilter<"CommentAuthor"> | string | null
+    profileUrl?: StringNullableFilter<"CommentAuthor"> | string | null
+    createdAt?: DateTimeFilter<"CommentAuthor"> | Date | string
+    updatedAt?: DateTimeFilter<"CommentAuthor"> | Date | string
+    comments?: CommentListRelationFilter
+  }, "id" | "platform_externalId">
+
+  export type CommentAuthorOrderByWithAggregationInput = {
+    id?: SortOrder
+    platform?: SortOrder
+    externalId?: SortOrder
+    name?: SortOrder
+    avatarUrl?: SortOrderInput | SortOrder
+    profileUrl?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: CommentAuthorCountOrderByAggregateInput
+    _max?: CommentAuthorMaxOrderByAggregateInput
+    _min?: CommentAuthorMinOrderByAggregateInput
+  }
+
+  export type CommentAuthorScalarWhereWithAggregatesInput = {
+    AND?: CommentAuthorScalarWhereWithAggregatesInput | CommentAuthorScalarWhereWithAggregatesInput[]
+    OR?: CommentAuthorScalarWhereWithAggregatesInput[]
+    NOT?: CommentAuthorScalarWhereWithAggregatesInput | CommentAuthorScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"CommentAuthor"> | string
+    platform?: EnumPlatformWithAggregatesFilter<"CommentAuthor"> | $Enums.Platform
+    externalId?: StringWithAggregatesFilter<"CommentAuthor"> | string
+    name?: StringWithAggregatesFilter<"CommentAuthor"> | string
+    avatarUrl?: StringNullableWithAggregatesFilter<"CommentAuthor"> | string | null
+    profileUrl?: StringNullableWithAggregatesFilter<"CommentAuthor"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"CommentAuthor"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"CommentAuthor"> | Date | string
   }
 
   export type AccountCreateInput = {
@@ -13848,6 +16766,7 @@ export namespace Prisma {
     privacy?: $Enums.VideoPrivacy
     createdBy: UserCreateNestedOneWithoutPostsInput
     publishJobs?: PublishJobCreateNestedManyWithoutPostInput
+    comments?: CommentCreateNestedManyWithoutPostInput
   }
 
   export type PostUncheckedCreateInput = {
@@ -13870,6 +16789,7 @@ export namespace Prisma {
     privacy?: $Enums.VideoPrivacy
     createdById: string
     publishJobs?: PublishJobUncheckedCreateNestedManyWithoutPostInput
+    comments?: CommentUncheckedCreateNestedManyWithoutPostInput
   }
 
   export type PostUpdateInput = {
@@ -13892,6 +16812,7 @@ export namespace Prisma {
     privacy?: EnumVideoPrivacyFieldUpdateOperationsInput | $Enums.VideoPrivacy
     createdBy?: UserUpdateOneRequiredWithoutPostsNestedInput
     publishJobs?: PublishJobUpdateManyWithoutPostNestedInput
+    comments?: CommentUpdateManyWithoutPostNestedInput
   }
 
   export type PostUncheckedUpdateInput = {
@@ -13914,6 +16835,7 @@ export namespace Prisma {
     privacy?: EnumVideoPrivacyFieldUpdateOperationsInput | $Enums.VideoPrivacy
     createdById?: StringFieldUpdateOperationsInput | string
     publishJobs?: PublishJobUncheckedUpdateManyWithoutPostNestedInput
+    comments?: CommentUncheckedUpdateManyWithoutPostNestedInput
   }
 
   export type PostCreateManyInput = {
@@ -13993,6 +16915,7 @@ export namespace Prisma {
     user: UserCreateNestedOneWithoutPlatformConnectionsInput
     publishJobs?: PublishJobCreateNestedManyWithoutPlatformConnectionInput
     postingSchedule?: PostingScheduleCreateNestedOneWithoutPlatformConnectionInput
+    comments?: CommentCreateNestedManyWithoutPlatformConnectionInput
   }
 
   export type PlatformConnectionUncheckedCreateInput = {
@@ -14010,6 +16933,7 @@ export namespace Prisma {
     userId: string
     publishJobs?: PublishJobUncheckedCreateNestedManyWithoutPlatformConnectionInput
     postingSchedule?: PostingScheduleUncheckedCreateNestedOneWithoutPlatformConnectionInput
+    comments?: CommentUncheckedCreateNestedManyWithoutPlatformConnectionInput
   }
 
   export type PlatformConnectionUpdateInput = {
@@ -14027,6 +16951,7 @@ export namespace Prisma {
     user?: UserUpdateOneRequiredWithoutPlatformConnectionsNestedInput
     publishJobs?: PublishJobUpdateManyWithoutPlatformConnectionNestedInput
     postingSchedule?: PostingScheduleUpdateOneWithoutPlatformConnectionNestedInput
+    comments?: CommentUpdateManyWithoutPlatformConnectionNestedInput
   }
 
   export type PlatformConnectionUncheckedUpdateInput = {
@@ -14044,6 +16969,7 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     publishJobs?: PublishJobUncheckedUpdateManyWithoutPlatformConnectionNestedInput
     postingSchedule?: PostingScheduleUncheckedUpdateOneWithoutPlatformConnectionNestedInput
+    comments?: CommentUncheckedUpdateManyWithoutPlatformConnectionNestedInput
   }
 
   export type PlatformConnectionCreateManyInput = {
@@ -14388,6 +17314,206 @@ export namespace Prisma {
     likes?: IntFieldUpdateOperationsInput | number
     comments?: IntFieldUpdateOperationsInput | number
     shares?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type CommentCreateInput = {
+    id?: string
+    platform: $Enums.Platform
+    externalId: string
+    content: string
+    publishedAt: Date | string
+    isResolved?: boolean
+    isHidden?: boolean
+    externalPostId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    platformConnection: PlatformConnectionCreateNestedOneWithoutCommentsInput
+    author: CommentAuthorCreateNestedOneWithoutCommentsInput
+    post?: PostCreateNestedOneWithoutCommentsInput
+    parent?: CommentCreateNestedOneWithoutRepliesInput
+    replies?: CommentCreateNestedManyWithoutParentInput
+  }
+
+  export type CommentUncheckedCreateInput = {
+    id?: string
+    platform: $Enums.Platform
+    externalId: string
+    content: string
+    publishedAt: Date | string
+    isResolved?: boolean
+    isHidden?: boolean
+    platformConnectionId: string
+    authorId: string
+    postId?: string | null
+    externalPostId?: string | null
+    parentId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    replies?: CommentUncheckedCreateNestedManyWithoutParentInput
+  }
+
+  export type CommentUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    platform?: EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
+    externalId?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    publishedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isResolved?: BoolFieldUpdateOperationsInput | boolean
+    isHidden?: BoolFieldUpdateOperationsInput | boolean
+    externalPostId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    platformConnection?: PlatformConnectionUpdateOneRequiredWithoutCommentsNestedInput
+    author?: CommentAuthorUpdateOneRequiredWithoutCommentsNestedInput
+    post?: PostUpdateOneWithoutCommentsNestedInput
+    parent?: CommentUpdateOneWithoutRepliesNestedInput
+    replies?: CommentUpdateManyWithoutParentNestedInput
+  }
+
+  export type CommentUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    platform?: EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
+    externalId?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    publishedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isResolved?: BoolFieldUpdateOperationsInput | boolean
+    isHidden?: BoolFieldUpdateOperationsInput | boolean
+    platformConnectionId?: StringFieldUpdateOperationsInput | string
+    authorId?: StringFieldUpdateOperationsInput | string
+    postId?: NullableStringFieldUpdateOperationsInput | string | null
+    externalPostId?: NullableStringFieldUpdateOperationsInput | string | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    replies?: CommentUncheckedUpdateManyWithoutParentNestedInput
+  }
+
+  export type CommentCreateManyInput = {
+    id?: string
+    platform: $Enums.Platform
+    externalId: string
+    content: string
+    publishedAt: Date | string
+    isResolved?: boolean
+    isHidden?: boolean
+    platformConnectionId: string
+    authorId: string
+    postId?: string | null
+    externalPostId?: string | null
+    parentId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CommentUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    platform?: EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
+    externalId?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    publishedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isResolved?: BoolFieldUpdateOperationsInput | boolean
+    isHidden?: BoolFieldUpdateOperationsInput | boolean
+    externalPostId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CommentUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    platform?: EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
+    externalId?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    publishedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isResolved?: BoolFieldUpdateOperationsInput | boolean
+    isHidden?: BoolFieldUpdateOperationsInput | boolean
+    platformConnectionId?: StringFieldUpdateOperationsInput | string
+    authorId?: StringFieldUpdateOperationsInput | string
+    postId?: NullableStringFieldUpdateOperationsInput | string | null
+    externalPostId?: NullableStringFieldUpdateOperationsInput | string | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CommentAuthorCreateInput = {
+    id?: string
+    platform: $Enums.Platform
+    externalId: string
+    name: string
+    avatarUrl?: string | null
+    profileUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    comments?: CommentCreateNestedManyWithoutAuthorInput
+  }
+
+  export type CommentAuthorUncheckedCreateInput = {
+    id?: string
+    platform: $Enums.Platform
+    externalId: string
+    name: string
+    avatarUrl?: string | null
+    profileUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
+  }
+
+  export type CommentAuthorUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    platform?: EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
+    externalId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    profileUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    comments?: CommentUpdateManyWithoutAuthorNestedInput
+  }
+
+  export type CommentAuthorUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    platform?: EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
+    externalId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    profileUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
+  }
+
+  export type CommentAuthorCreateManyInput = {
+    id?: string
+    platform: $Enums.Platform
+    externalId: string
+    name: string
+    avatarUrl?: string | null
+    profileUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CommentAuthorUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    platform?: EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
+    externalId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    profileUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CommentAuthorUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    platform?: EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
+    externalId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    profileUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -14766,6 +17892,16 @@ export namespace Prisma {
     in?: $Enums.VideoPrivacy[] | ListEnumVideoPrivacyFieldRefInput<$PrismaModel>
     notIn?: $Enums.VideoPrivacy[] | ListEnumVideoPrivacyFieldRefInput<$PrismaModel>
     not?: NestedEnumVideoPrivacyFilter<$PrismaModel> | $Enums.VideoPrivacy
+  }
+
+  export type CommentListRelationFilter = {
+    every?: CommentWhereInput
+    some?: CommentWhereInput
+    none?: CommentWhereInput
+  }
+
+  export type CommentOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type PostCountOrderByAggregateInput = {
@@ -15304,6 +18440,115 @@ export namespace Prisma {
     shares?: SortOrder
   }
 
+  export type CommentAuthorScalarRelationFilter = {
+    is?: CommentAuthorWhereInput
+    isNot?: CommentAuthorWhereInput
+  }
+
+  export type PostNullableScalarRelationFilter = {
+    is?: PostWhereInput | null
+    isNot?: PostWhereInput | null
+  }
+
+  export type CommentNullableScalarRelationFilter = {
+    is?: CommentWhereInput | null
+    isNot?: CommentWhereInput | null
+  }
+
+  export type CommentPlatformExternalIdCompoundUniqueInput = {
+    platform: $Enums.Platform
+    externalId: string
+  }
+
+  export type CommentCountOrderByAggregateInput = {
+    id?: SortOrder
+    platform?: SortOrder
+    externalId?: SortOrder
+    content?: SortOrder
+    publishedAt?: SortOrder
+    isResolved?: SortOrder
+    isHidden?: SortOrder
+    platformConnectionId?: SortOrder
+    authorId?: SortOrder
+    postId?: SortOrder
+    externalPostId?: SortOrder
+    parentId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CommentMaxOrderByAggregateInput = {
+    id?: SortOrder
+    platform?: SortOrder
+    externalId?: SortOrder
+    content?: SortOrder
+    publishedAt?: SortOrder
+    isResolved?: SortOrder
+    isHidden?: SortOrder
+    platformConnectionId?: SortOrder
+    authorId?: SortOrder
+    postId?: SortOrder
+    externalPostId?: SortOrder
+    parentId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CommentMinOrderByAggregateInput = {
+    id?: SortOrder
+    platform?: SortOrder
+    externalId?: SortOrder
+    content?: SortOrder
+    publishedAt?: SortOrder
+    isResolved?: SortOrder
+    isHidden?: SortOrder
+    platformConnectionId?: SortOrder
+    authorId?: SortOrder
+    postId?: SortOrder
+    externalPostId?: SortOrder
+    parentId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CommentAuthorPlatformExternalIdCompoundUniqueInput = {
+    platform: $Enums.Platform
+    externalId: string
+  }
+
+  export type CommentAuthorCountOrderByAggregateInput = {
+    id?: SortOrder
+    platform?: SortOrder
+    externalId?: SortOrder
+    name?: SortOrder
+    avatarUrl?: SortOrder
+    profileUrl?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CommentAuthorMaxOrderByAggregateInput = {
+    id?: SortOrder
+    platform?: SortOrder
+    externalId?: SortOrder
+    name?: SortOrder
+    avatarUrl?: SortOrder
+    profileUrl?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CommentAuthorMinOrderByAggregateInput = {
+    id?: SortOrder
+    platform?: SortOrder
+    externalId?: SortOrder
+    name?: SortOrder
+    avatarUrl?: SortOrder
+    profileUrl?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
   export type UserCreateNestedOneWithoutAccountsInput = {
     create?: XOR<UserCreateWithoutAccountsInput, UserUncheckedCreateWithoutAccountsInput>
     connectOrCreate?: UserCreateOrConnectWithoutAccountsInput
@@ -15575,11 +18820,25 @@ export namespace Prisma {
     connect?: PublishJobWhereUniqueInput | PublishJobWhereUniqueInput[]
   }
 
+  export type CommentCreateNestedManyWithoutPostInput = {
+    create?: XOR<CommentCreateWithoutPostInput, CommentUncheckedCreateWithoutPostInput> | CommentCreateWithoutPostInput[] | CommentUncheckedCreateWithoutPostInput[]
+    connectOrCreate?: CommentCreateOrConnectWithoutPostInput | CommentCreateOrConnectWithoutPostInput[]
+    createMany?: CommentCreateManyPostInputEnvelope
+    connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+  }
+
   export type PublishJobUncheckedCreateNestedManyWithoutPostInput = {
     create?: XOR<PublishJobCreateWithoutPostInput, PublishJobUncheckedCreateWithoutPostInput> | PublishJobCreateWithoutPostInput[] | PublishJobUncheckedCreateWithoutPostInput[]
     connectOrCreate?: PublishJobCreateOrConnectWithoutPostInput | PublishJobCreateOrConnectWithoutPostInput[]
     createMany?: PublishJobCreateManyPostInputEnvelope
     connect?: PublishJobWhereUniqueInput | PublishJobWhereUniqueInput[]
+  }
+
+  export type CommentUncheckedCreateNestedManyWithoutPostInput = {
+    create?: XOR<CommentCreateWithoutPostInput, CommentUncheckedCreateWithoutPostInput> | CommentCreateWithoutPostInput[] | CommentUncheckedCreateWithoutPostInput[]
+    connectOrCreate?: CommentCreateOrConnectWithoutPostInput | CommentCreateOrConnectWithoutPostInput[]
+    createMany?: CommentCreateManyPostInputEnvelope
+    connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
   }
 
   export type EnumMediaTypeFieldUpdateOperationsInput = {
@@ -15632,6 +18891,20 @@ export namespace Prisma {
     deleteMany?: PublishJobScalarWhereInput | PublishJobScalarWhereInput[]
   }
 
+  export type CommentUpdateManyWithoutPostNestedInput = {
+    create?: XOR<CommentCreateWithoutPostInput, CommentUncheckedCreateWithoutPostInput> | CommentCreateWithoutPostInput[] | CommentUncheckedCreateWithoutPostInput[]
+    connectOrCreate?: CommentCreateOrConnectWithoutPostInput | CommentCreateOrConnectWithoutPostInput[]
+    upsert?: CommentUpsertWithWhereUniqueWithoutPostInput | CommentUpsertWithWhereUniqueWithoutPostInput[]
+    createMany?: CommentCreateManyPostInputEnvelope
+    set?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    disconnect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    delete?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    update?: CommentUpdateWithWhereUniqueWithoutPostInput | CommentUpdateWithWhereUniqueWithoutPostInput[]
+    updateMany?: CommentUpdateManyWithWhereWithoutPostInput | CommentUpdateManyWithWhereWithoutPostInput[]
+    deleteMany?: CommentScalarWhereInput | CommentScalarWhereInput[]
+  }
+
   export type PublishJobUncheckedUpdateManyWithoutPostNestedInput = {
     create?: XOR<PublishJobCreateWithoutPostInput, PublishJobUncheckedCreateWithoutPostInput> | PublishJobCreateWithoutPostInput[] | PublishJobUncheckedCreateWithoutPostInput[]
     connectOrCreate?: PublishJobCreateOrConnectWithoutPostInput | PublishJobCreateOrConnectWithoutPostInput[]
@@ -15644,6 +18917,20 @@ export namespace Prisma {
     update?: PublishJobUpdateWithWhereUniqueWithoutPostInput | PublishJobUpdateWithWhereUniqueWithoutPostInput[]
     updateMany?: PublishJobUpdateManyWithWhereWithoutPostInput | PublishJobUpdateManyWithWhereWithoutPostInput[]
     deleteMany?: PublishJobScalarWhereInput | PublishJobScalarWhereInput[]
+  }
+
+  export type CommentUncheckedUpdateManyWithoutPostNestedInput = {
+    create?: XOR<CommentCreateWithoutPostInput, CommentUncheckedCreateWithoutPostInput> | CommentCreateWithoutPostInput[] | CommentUncheckedCreateWithoutPostInput[]
+    connectOrCreate?: CommentCreateOrConnectWithoutPostInput | CommentCreateOrConnectWithoutPostInput[]
+    upsert?: CommentUpsertWithWhereUniqueWithoutPostInput | CommentUpsertWithWhereUniqueWithoutPostInput[]
+    createMany?: CommentCreateManyPostInputEnvelope
+    set?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    disconnect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    delete?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    update?: CommentUpdateWithWhereUniqueWithoutPostInput | CommentUpdateWithWhereUniqueWithoutPostInput[]
+    updateMany?: CommentUpdateManyWithWhereWithoutPostInput | CommentUpdateManyWithWhereWithoutPostInput[]
+    deleteMany?: CommentScalarWhereInput | CommentScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutPlatformConnectionsInput = {
@@ -15665,6 +18952,13 @@ export namespace Prisma {
     connect?: PostingScheduleWhereUniqueInput
   }
 
+  export type CommentCreateNestedManyWithoutPlatformConnectionInput = {
+    create?: XOR<CommentCreateWithoutPlatformConnectionInput, CommentUncheckedCreateWithoutPlatformConnectionInput> | CommentCreateWithoutPlatformConnectionInput[] | CommentUncheckedCreateWithoutPlatformConnectionInput[]
+    connectOrCreate?: CommentCreateOrConnectWithoutPlatformConnectionInput | CommentCreateOrConnectWithoutPlatformConnectionInput[]
+    createMany?: CommentCreateManyPlatformConnectionInputEnvelope
+    connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+  }
+
   export type PublishJobUncheckedCreateNestedManyWithoutPlatformConnectionInput = {
     create?: XOR<PublishJobCreateWithoutPlatformConnectionInput, PublishJobUncheckedCreateWithoutPlatformConnectionInput> | PublishJobCreateWithoutPlatformConnectionInput[] | PublishJobUncheckedCreateWithoutPlatformConnectionInput[]
     connectOrCreate?: PublishJobCreateOrConnectWithoutPlatformConnectionInput | PublishJobCreateOrConnectWithoutPlatformConnectionInput[]
@@ -15676,6 +18970,13 @@ export namespace Prisma {
     create?: XOR<PostingScheduleCreateWithoutPlatformConnectionInput, PostingScheduleUncheckedCreateWithoutPlatformConnectionInput>
     connectOrCreate?: PostingScheduleCreateOrConnectWithoutPlatformConnectionInput
     connect?: PostingScheduleWhereUniqueInput
+  }
+
+  export type CommentUncheckedCreateNestedManyWithoutPlatformConnectionInput = {
+    create?: XOR<CommentCreateWithoutPlatformConnectionInput, CommentUncheckedCreateWithoutPlatformConnectionInput> | CommentCreateWithoutPlatformConnectionInput[] | CommentUncheckedCreateWithoutPlatformConnectionInput[]
+    connectOrCreate?: CommentCreateOrConnectWithoutPlatformConnectionInput | CommentCreateOrConnectWithoutPlatformConnectionInput[]
+    createMany?: CommentCreateManyPlatformConnectionInputEnvelope
+    connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
   }
 
   export type EnumPlatformFieldUpdateOperationsInput = {
@@ -15714,6 +19015,20 @@ export namespace Prisma {
     update?: XOR<XOR<PostingScheduleUpdateToOneWithWhereWithoutPlatformConnectionInput, PostingScheduleUpdateWithoutPlatformConnectionInput>, PostingScheduleUncheckedUpdateWithoutPlatformConnectionInput>
   }
 
+  export type CommentUpdateManyWithoutPlatformConnectionNestedInput = {
+    create?: XOR<CommentCreateWithoutPlatformConnectionInput, CommentUncheckedCreateWithoutPlatformConnectionInput> | CommentCreateWithoutPlatformConnectionInput[] | CommentUncheckedCreateWithoutPlatformConnectionInput[]
+    connectOrCreate?: CommentCreateOrConnectWithoutPlatformConnectionInput | CommentCreateOrConnectWithoutPlatformConnectionInput[]
+    upsert?: CommentUpsertWithWhereUniqueWithoutPlatformConnectionInput | CommentUpsertWithWhereUniqueWithoutPlatformConnectionInput[]
+    createMany?: CommentCreateManyPlatformConnectionInputEnvelope
+    set?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    disconnect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    delete?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    update?: CommentUpdateWithWhereUniqueWithoutPlatformConnectionInput | CommentUpdateWithWhereUniqueWithoutPlatformConnectionInput[]
+    updateMany?: CommentUpdateManyWithWhereWithoutPlatformConnectionInput | CommentUpdateManyWithWhereWithoutPlatformConnectionInput[]
+    deleteMany?: CommentScalarWhereInput | CommentScalarWhereInput[]
+  }
+
   export type PublishJobUncheckedUpdateManyWithoutPlatformConnectionNestedInput = {
     create?: XOR<PublishJobCreateWithoutPlatformConnectionInput, PublishJobUncheckedCreateWithoutPlatformConnectionInput> | PublishJobCreateWithoutPlatformConnectionInput[] | PublishJobUncheckedCreateWithoutPlatformConnectionInput[]
     connectOrCreate?: PublishJobCreateOrConnectWithoutPlatformConnectionInput | PublishJobCreateOrConnectWithoutPlatformConnectionInput[]
@@ -15736,6 +19051,20 @@ export namespace Prisma {
     delete?: PostingScheduleWhereInput | boolean
     connect?: PostingScheduleWhereUniqueInput
     update?: XOR<XOR<PostingScheduleUpdateToOneWithWhereWithoutPlatformConnectionInput, PostingScheduleUpdateWithoutPlatformConnectionInput>, PostingScheduleUncheckedUpdateWithoutPlatformConnectionInput>
+  }
+
+  export type CommentUncheckedUpdateManyWithoutPlatformConnectionNestedInput = {
+    create?: XOR<CommentCreateWithoutPlatformConnectionInput, CommentUncheckedCreateWithoutPlatformConnectionInput> | CommentCreateWithoutPlatformConnectionInput[] | CommentUncheckedCreateWithoutPlatformConnectionInput[]
+    connectOrCreate?: CommentCreateOrConnectWithoutPlatformConnectionInput | CommentCreateOrConnectWithoutPlatformConnectionInput[]
+    upsert?: CommentUpsertWithWhereUniqueWithoutPlatformConnectionInput | CommentUpsertWithWhereUniqueWithoutPlatformConnectionInput[]
+    createMany?: CommentCreateManyPlatformConnectionInputEnvelope
+    set?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    disconnect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    delete?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    update?: CommentUpdateWithWhereUniqueWithoutPlatformConnectionInput | CommentUpdateWithWhereUniqueWithoutPlatformConnectionInput[]
+    updateMany?: CommentUpdateManyWithWhereWithoutPlatformConnectionInput | CommentUpdateManyWithWhereWithoutPlatformConnectionInput[]
+    deleteMany?: CommentScalarWhereInput | CommentScalarWhereInput[]
   }
 
   export type MetricSnapshotCreateNestedManyWithoutPublishJobInput = {
@@ -15864,6 +19193,150 @@ export namespace Prisma {
     upsert?: PublishJobUpsertWithoutMetricSnapshotsInput
     connect?: PublishJobWhereUniqueInput
     update?: XOR<XOR<PublishJobUpdateToOneWithWhereWithoutMetricSnapshotsInput, PublishJobUpdateWithoutMetricSnapshotsInput>, PublishJobUncheckedUpdateWithoutMetricSnapshotsInput>
+  }
+
+  export type PlatformConnectionCreateNestedOneWithoutCommentsInput = {
+    create?: XOR<PlatformConnectionCreateWithoutCommentsInput, PlatformConnectionUncheckedCreateWithoutCommentsInput>
+    connectOrCreate?: PlatformConnectionCreateOrConnectWithoutCommentsInput
+    connect?: PlatformConnectionWhereUniqueInput
+  }
+
+  export type CommentAuthorCreateNestedOneWithoutCommentsInput = {
+    create?: XOR<CommentAuthorCreateWithoutCommentsInput, CommentAuthorUncheckedCreateWithoutCommentsInput>
+    connectOrCreate?: CommentAuthorCreateOrConnectWithoutCommentsInput
+    connect?: CommentAuthorWhereUniqueInput
+  }
+
+  export type PostCreateNestedOneWithoutCommentsInput = {
+    create?: XOR<PostCreateWithoutCommentsInput, PostUncheckedCreateWithoutCommentsInput>
+    connectOrCreate?: PostCreateOrConnectWithoutCommentsInput
+    connect?: PostWhereUniqueInput
+  }
+
+  export type CommentCreateNestedOneWithoutRepliesInput = {
+    create?: XOR<CommentCreateWithoutRepliesInput, CommentUncheckedCreateWithoutRepliesInput>
+    connectOrCreate?: CommentCreateOrConnectWithoutRepliesInput
+    connect?: CommentWhereUniqueInput
+  }
+
+  export type CommentCreateNestedManyWithoutParentInput = {
+    create?: XOR<CommentCreateWithoutParentInput, CommentUncheckedCreateWithoutParentInput> | CommentCreateWithoutParentInput[] | CommentUncheckedCreateWithoutParentInput[]
+    connectOrCreate?: CommentCreateOrConnectWithoutParentInput | CommentCreateOrConnectWithoutParentInput[]
+    createMany?: CommentCreateManyParentInputEnvelope
+    connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+  }
+
+  export type CommentUncheckedCreateNestedManyWithoutParentInput = {
+    create?: XOR<CommentCreateWithoutParentInput, CommentUncheckedCreateWithoutParentInput> | CommentCreateWithoutParentInput[] | CommentUncheckedCreateWithoutParentInput[]
+    connectOrCreate?: CommentCreateOrConnectWithoutParentInput | CommentCreateOrConnectWithoutParentInput[]
+    createMany?: CommentCreateManyParentInputEnvelope
+    connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+  }
+
+  export type PlatformConnectionUpdateOneRequiredWithoutCommentsNestedInput = {
+    create?: XOR<PlatformConnectionCreateWithoutCommentsInput, PlatformConnectionUncheckedCreateWithoutCommentsInput>
+    connectOrCreate?: PlatformConnectionCreateOrConnectWithoutCommentsInput
+    upsert?: PlatformConnectionUpsertWithoutCommentsInput
+    connect?: PlatformConnectionWhereUniqueInput
+    update?: XOR<XOR<PlatformConnectionUpdateToOneWithWhereWithoutCommentsInput, PlatformConnectionUpdateWithoutCommentsInput>, PlatformConnectionUncheckedUpdateWithoutCommentsInput>
+  }
+
+  export type CommentAuthorUpdateOneRequiredWithoutCommentsNestedInput = {
+    create?: XOR<CommentAuthorCreateWithoutCommentsInput, CommentAuthorUncheckedCreateWithoutCommentsInput>
+    connectOrCreate?: CommentAuthorCreateOrConnectWithoutCommentsInput
+    upsert?: CommentAuthorUpsertWithoutCommentsInput
+    connect?: CommentAuthorWhereUniqueInput
+    update?: XOR<XOR<CommentAuthorUpdateToOneWithWhereWithoutCommentsInput, CommentAuthorUpdateWithoutCommentsInput>, CommentAuthorUncheckedUpdateWithoutCommentsInput>
+  }
+
+  export type PostUpdateOneWithoutCommentsNestedInput = {
+    create?: XOR<PostCreateWithoutCommentsInput, PostUncheckedCreateWithoutCommentsInput>
+    connectOrCreate?: PostCreateOrConnectWithoutCommentsInput
+    upsert?: PostUpsertWithoutCommentsInput
+    disconnect?: PostWhereInput | boolean
+    delete?: PostWhereInput | boolean
+    connect?: PostWhereUniqueInput
+    update?: XOR<XOR<PostUpdateToOneWithWhereWithoutCommentsInput, PostUpdateWithoutCommentsInput>, PostUncheckedUpdateWithoutCommentsInput>
+  }
+
+  export type CommentUpdateOneWithoutRepliesNestedInput = {
+    create?: XOR<CommentCreateWithoutRepliesInput, CommentUncheckedCreateWithoutRepliesInput>
+    connectOrCreate?: CommentCreateOrConnectWithoutRepliesInput
+    upsert?: CommentUpsertWithoutRepliesInput
+    disconnect?: CommentWhereInput | boolean
+    delete?: CommentWhereInput | boolean
+    connect?: CommentWhereUniqueInput
+    update?: XOR<XOR<CommentUpdateToOneWithWhereWithoutRepliesInput, CommentUpdateWithoutRepliesInput>, CommentUncheckedUpdateWithoutRepliesInput>
+  }
+
+  export type CommentUpdateManyWithoutParentNestedInput = {
+    create?: XOR<CommentCreateWithoutParentInput, CommentUncheckedCreateWithoutParentInput> | CommentCreateWithoutParentInput[] | CommentUncheckedCreateWithoutParentInput[]
+    connectOrCreate?: CommentCreateOrConnectWithoutParentInput | CommentCreateOrConnectWithoutParentInput[]
+    upsert?: CommentUpsertWithWhereUniqueWithoutParentInput | CommentUpsertWithWhereUniqueWithoutParentInput[]
+    createMany?: CommentCreateManyParentInputEnvelope
+    set?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    disconnect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    delete?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    update?: CommentUpdateWithWhereUniqueWithoutParentInput | CommentUpdateWithWhereUniqueWithoutParentInput[]
+    updateMany?: CommentUpdateManyWithWhereWithoutParentInput | CommentUpdateManyWithWhereWithoutParentInput[]
+    deleteMany?: CommentScalarWhereInput | CommentScalarWhereInput[]
+  }
+
+  export type CommentUncheckedUpdateManyWithoutParentNestedInput = {
+    create?: XOR<CommentCreateWithoutParentInput, CommentUncheckedCreateWithoutParentInput> | CommentCreateWithoutParentInput[] | CommentUncheckedCreateWithoutParentInput[]
+    connectOrCreate?: CommentCreateOrConnectWithoutParentInput | CommentCreateOrConnectWithoutParentInput[]
+    upsert?: CommentUpsertWithWhereUniqueWithoutParentInput | CommentUpsertWithWhereUniqueWithoutParentInput[]
+    createMany?: CommentCreateManyParentInputEnvelope
+    set?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    disconnect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    delete?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    update?: CommentUpdateWithWhereUniqueWithoutParentInput | CommentUpdateWithWhereUniqueWithoutParentInput[]
+    updateMany?: CommentUpdateManyWithWhereWithoutParentInput | CommentUpdateManyWithWhereWithoutParentInput[]
+    deleteMany?: CommentScalarWhereInput | CommentScalarWhereInput[]
+  }
+
+  export type CommentCreateNestedManyWithoutAuthorInput = {
+    create?: XOR<CommentCreateWithoutAuthorInput, CommentUncheckedCreateWithoutAuthorInput> | CommentCreateWithoutAuthorInput[] | CommentUncheckedCreateWithoutAuthorInput[]
+    connectOrCreate?: CommentCreateOrConnectWithoutAuthorInput | CommentCreateOrConnectWithoutAuthorInput[]
+    createMany?: CommentCreateManyAuthorInputEnvelope
+    connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+  }
+
+  export type CommentUncheckedCreateNestedManyWithoutAuthorInput = {
+    create?: XOR<CommentCreateWithoutAuthorInput, CommentUncheckedCreateWithoutAuthorInput> | CommentCreateWithoutAuthorInput[] | CommentUncheckedCreateWithoutAuthorInput[]
+    connectOrCreate?: CommentCreateOrConnectWithoutAuthorInput | CommentCreateOrConnectWithoutAuthorInput[]
+    createMany?: CommentCreateManyAuthorInputEnvelope
+    connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+  }
+
+  export type CommentUpdateManyWithoutAuthorNestedInput = {
+    create?: XOR<CommentCreateWithoutAuthorInput, CommentUncheckedCreateWithoutAuthorInput> | CommentCreateWithoutAuthorInput[] | CommentUncheckedCreateWithoutAuthorInput[]
+    connectOrCreate?: CommentCreateOrConnectWithoutAuthorInput | CommentCreateOrConnectWithoutAuthorInput[]
+    upsert?: CommentUpsertWithWhereUniqueWithoutAuthorInput | CommentUpsertWithWhereUniqueWithoutAuthorInput[]
+    createMany?: CommentCreateManyAuthorInputEnvelope
+    set?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    disconnect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    delete?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    update?: CommentUpdateWithWhereUniqueWithoutAuthorInput | CommentUpdateWithWhereUniqueWithoutAuthorInput[]
+    updateMany?: CommentUpdateManyWithWhereWithoutAuthorInput | CommentUpdateManyWithWhereWithoutAuthorInput[]
+    deleteMany?: CommentScalarWhereInput | CommentScalarWhereInput[]
+  }
+
+  export type CommentUncheckedUpdateManyWithoutAuthorNestedInput = {
+    create?: XOR<CommentCreateWithoutAuthorInput, CommentUncheckedCreateWithoutAuthorInput> | CommentCreateWithoutAuthorInput[] | CommentUncheckedCreateWithoutAuthorInput[]
+    connectOrCreate?: CommentCreateOrConnectWithoutAuthorInput | CommentCreateOrConnectWithoutAuthorInput[]
+    upsert?: CommentUpsertWithWhereUniqueWithoutAuthorInput | CommentUpsertWithWhereUniqueWithoutAuthorInput[]
+    createMany?: CommentCreateManyAuthorInputEnvelope
+    set?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    disconnect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    delete?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    update?: CommentUpdateWithWhereUniqueWithoutAuthorInput | CommentUpdateWithWhereUniqueWithoutAuthorInput[]
+    updateMany?: CommentUpdateManyWithWhereWithoutAuthorInput | CommentUpdateManyWithWhereWithoutAuthorInput[]
+    deleteMany?: CommentScalarWhereInput | CommentScalarWhereInput[]
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -16471,6 +19944,7 @@ export namespace Prisma {
     thumbnailUrl?: string | null
     privacy?: $Enums.VideoPrivacy
     publishJobs?: PublishJobCreateNestedManyWithoutPostInput
+    comments?: CommentCreateNestedManyWithoutPostInput
   }
 
   export type PostUncheckedCreateWithoutCreatedByInput = {
@@ -16492,6 +19966,7 @@ export namespace Prisma {
     thumbnailUrl?: string | null
     privacy?: $Enums.VideoPrivacy
     publishJobs?: PublishJobUncheckedCreateNestedManyWithoutPostInput
+    comments?: CommentUncheckedCreateNestedManyWithoutPostInput
   }
 
   export type PostCreateOrConnectWithoutCreatedByInput = {
@@ -16518,6 +19993,7 @@ export namespace Prisma {
     isActive?: boolean
     publishJobs?: PublishJobCreateNestedManyWithoutPlatformConnectionInput
     postingSchedule?: PostingScheduleCreateNestedOneWithoutPlatformConnectionInput
+    comments?: CommentCreateNestedManyWithoutPlatformConnectionInput
   }
 
   export type PlatformConnectionUncheckedCreateWithoutUserInput = {
@@ -16534,6 +20010,7 @@ export namespace Prisma {
     isActive?: boolean
     publishJobs?: PublishJobUncheckedCreateNestedManyWithoutPlatformConnectionInput
     postingSchedule?: PostingScheduleUncheckedCreateNestedOneWithoutPlatformConnectionInput
+    comments?: CommentUncheckedCreateNestedManyWithoutPlatformConnectionInput
   }
 
   export type PlatformConnectionCreateOrConnectWithoutUserInput = {
@@ -16877,6 +20354,50 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type CommentCreateWithoutPostInput = {
+    id?: string
+    platform: $Enums.Platform
+    externalId: string
+    content: string
+    publishedAt: Date | string
+    isResolved?: boolean
+    isHidden?: boolean
+    externalPostId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    platformConnection: PlatformConnectionCreateNestedOneWithoutCommentsInput
+    author: CommentAuthorCreateNestedOneWithoutCommentsInput
+    parent?: CommentCreateNestedOneWithoutRepliesInput
+    replies?: CommentCreateNestedManyWithoutParentInput
+  }
+
+  export type CommentUncheckedCreateWithoutPostInput = {
+    id?: string
+    platform: $Enums.Platform
+    externalId: string
+    content: string
+    publishedAt: Date | string
+    isResolved?: boolean
+    isHidden?: boolean
+    platformConnectionId: string
+    authorId: string
+    externalPostId?: string | null
+    parentId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    replies?: CommentUncheckedCreateNestedManyWithoutParentInput
+  }
+
+  export type CommentCreateOrConnectWithoutPostInput = {
+    where: CommentWhereUniqueInput
+    create: XOR<CommentCreateWithoutPostInput, CommentUncheckedCreateWithoutPostInput>
+  }
+
+  export type CommentCreateManyPostInputEnvelope = {
+    data: CommentCreateManyPostInput | CommentCreateManyPostInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UserUpsertWithoutPostsInput = {
     update: XOR<UserUpdateWithoutPostsInput, UserUncheckedUpdateWithoutPostsInput>
     create: XOR<UserCreateWithoutPostsInput, UserUncheckedCreateWithoutPostsInput>
@@ -16930,6 +20451,42 @@ export namespace Prisma {
   export type PublishJobUpdateManyWithWhereWithoutPostInput = {
     where: PublishJobScalarWhereInput
     data: XOR<PublishJobUpdateManyMutationInput, PublishJobUncheckedUpdateManyWithoutPostInput>
+  }
+
+  export type CommentUpsertWithWhereUniqueWithoutPostInput = {
+    where: CommentWhereUniqueInput
+    update: XOR<CommentUpdateWithoutPostInput, CommentUncheckedUpdateWithoutPostInput>
+    create: XOR<CommentCreateWithoutPostInput, CommentUncheckedCreateWithoutPostInput>
+  }
+
+  export type CommentUpdateWithWhereUniqueWithoutPostInput = {
+    where: CommentWhereUniqueInput
+    data: XOR<CommentUpdateWithoutPostInput, CommentUncheckedUpdateWithoutPostInput>
+  }
+
+  export type CommentUpdateManyWithWhereWithoutPostInput = {
+    where: CommentScalarWhereInput
+    data: XOR<CommentUpdateManyMutationInput, CommentUncheckedUpdateManyWithoutPostInput>
+  }
+
+  export type CommentScalarWhereInput = {
+    AND?: CommentScalarWhereInput | CommentScalarWhereInput[]
+    OR?: CommentScalarWhereInput[]
+    NOT?: CommentScalarWhereInput | CommentScalarWhereInput[]
+    id?: StringFilter<"Comment"> | string
+    platform?: EnumPlatformFilter<"Comment"> | $Enums.Platform
+    externalId?: StringFilter<"Comment"> | string
+    content?: StringFilter<"Comment"> | string
+    publishedAt?: DateTimeFilter<"Comment"> | Date | string
+    isResolved?: BoolFilter<"Comment"> | boolean
+    isHidden?: BoolFilter<"Comment"> | boolean
+    platformConnectionId?: StringFilter<"Comment"> | string
+    authorId?: StringFilter<"Comment"> | string
+    postId?: StringNullableFilter<"Comment"> | string | null
+    externalPostId?: StringNullableFilter<"Comment"> | string | null
+    parentId?: StringNullableFilter<"Comment"> | string | null
+    createdAt?: DateTimeFilter<"Comment"> | Date | string
+    updatedAt?: DateTimeFilter<"Comment"> | Date | string
   }
 
   export type UserCreateWithoutPlatformConnectionsInput = {
@@ -17044,6 +20601,50 @@ export namespace Prisma {
     create: XOR<PostingScheduleCreateWithoutPlatformConnectionInput, PostingScheduleUncheckedCreateWithoutPlatformConnectionInput>
   }
 
+  export type CommentCreateWithoutPlatformConnectionInput = {
+    id?: string
+    platform: $Enums.Platform
+    externalId: string
+    content: string
+    publishedAt: Date | string
+    isResolved?: boolean
+    isHidden?: boolean
+    externalPostId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    author: CommentAuthorCreateNestedOneWithoutCommentsInput
+    post?: PostCreateNestedOneWithoutCommentsInput
+    parent?: CommentCreateNestedOneWithoutRepliesInput
+    replies?: CommentCreateNestedManyWithoutParentInput
+  }
+
+  export type CommentUncheckedCreateWithoutPlatformConnectionInput = {
+    id?: string
+    platform: $Enums.Platform
+    externalId: string
+    content: string
+    publishedAt: Date | string
+    isResolved?: boolean
+    isHidden?: boolean
+    authorId: string
+    postId?: string | null
+    externalPostId?: string | null
+    parentId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    replies?: CommentUncheckedCreateNestedManyWithoutParentInput
+  }
+
+  export type CommentCreateOrConnectWithoutPlatformConnectionInput = {
+    where: CommentWhereUniqueInput
+    create: XOR<CommentCreateWithoutPlatformConnectionInput, CommentUncheckedCreateWithoutPlatformConnectionInput>
+  }
+
+  export type CommentCreateManyPlatformConnectionInputEnvelope = {
+    data: CommentCreateManyPlatformConnectionInput | CommentCreateManyPlatformConnectionInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UserUpsertWithoutPlatformConnectionsInput = {
     update: XOR<UserUpdateWithoutPlatformConnectionsInput, UserUncheckedUpdateWithoutPlatformConnectionsInput>
     create: XOR<UserCreateWithoutPlatformConnectionsInput, UserUncheckedCreateWithoutPlatformConnectionsInput>
@@ -17126,6 +20727,22 @@ export namespace Prisma {
     slots?: JsonNullValueInput | InputJsonValue
   }
 
+  export type CommentUpsertWithWhereUniqueWithoutPlatformConnectionInput = {
+    where: CommentWhereUniqueInput
+    update: XOR<CommentUpdateWithoutPlatformConnectionInput, CommentUncheckedUpdateWithoutPlatformConnectionInput>
+    create: XOR<CommentCreateWithoutPlatformConnectionInput, CommentUncheckedCreateWithoutPlatformConnectionInput>
+  }
+
+  export type CommentUpdateWithWhereUniqueWithoutPlatformConnectionInput = {
+    where: CommentWhereUniqueInput
+    data: XOR<CommentUpdateWithoutPlatformConnectionInput, CommentUncheckedUpdateWithoutPlatformConnectionInput>
+  }
+
+  export type CommentUpdateManyWithWhereWithoutPlatformConnectionInput = {
+    where: CommentScalarWhereInput
+    data: XOR<CommentUpdateManyMutationInput, CommentUncheckedUpdateManyWithoutPlatformConnectionInput>
+  }
+
   export type MetricSnapshotCreateWithoutPublishJobInput = {
     id?: string
     createdAt?: Date | string
@@ -17173,6 +20790,7 @@ export namespace Prisma {
     thumbnailUrl?: string | null
     privacy?: $Enums.VideoPrivacy
     createdBy: UserCreateNestedOneWithoutPostsInput
+    comments?: CommentCreateNestedManyWithoutPostInput
   }
 
   export type PostUncheckedCreateWithoutPublishJobsInput = {
@@ -17194,6 +20812,7 @@ export namespace Prisma {
     thumbnailUrl?: string | null
     privacy?: $Enums.VideoPrivacy
     createdById: string
+    comments?: CommentUncheckedCreateNestedManyWithoutPostInput
   }
 
   export type PostCreateOrConnectWithoutPublishJobsInput = {
@@ -17215,6 +20834,7 @@ export namespace Prisma {
     isActive?: boolean
     user: UserCreateNestedOneWithoutPlatformConnectionsInput
     postingSchedule?: PostingScheduleCreateNestedOneWithoutPlatformConnectionInput
+    comments?: CommentCreateNestedManyWithoutPlatformConnectionInput
   }
 
   export type PlatformConnectionUncheckedCreateWithoutPublishJobsInput = {
@@ -17231,6 +20851,7 @@ export namespace Prisma {
     isActive?: boolean
     userId: string
     postingSchedule?: PostingScheduleUncheckedCreateNestedOneWithoutPlatformConnectionInput
+    comments?: CommentUncheckedCreateNestedManyWithoutPlatformConnectionInput
   }
 
   export type PlatformConnectionCreateOrConnectWithoutPublishJobsInput = {
@@ -17330,6 +20951,7 @@ export namespace Prisma {
     thumbnailUrl?: NullableStringFieldUpdateOperationsInput | string | null
     privacy?: EnumVideoPrivacyFieldUpdateOperationsInput | $Enums.VideoPrivacy
     createdBy?: UserUpdateOneRequiredWithoutPostsNestedInput
+    comments?: CommentUpdateManyWithoutPostNestedInput
   }
 
   export type PostUncheckedUpdateWithoutPublishJobsInput = {
@@ -17351,6 +20973,7 @@ export namespace Prisma {
     thumbnailUrl?: NullableStringFieldUpdateOperationsInput | string | null
     privacy?: EnumVideoPrivacyFieldUpdateOperationsInput | $Enums.VideoPrivacy
     createdById?: StringFieldUpdateOperationsInput | string
+    comments?: CommentUncheckedUpdateManyWithoutPostNestedInput
   }
 
   export type PlatformConnectionUpsertWithoutPublishJobsInput = {
@@ -17378,6 +21001,7 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     user?: UserUpdateOneRequiredWithoutPlatformConnectionsNestedInput
     postingSchedule?: PostingScheduleUpdateOneWithoutPlatformConnectionNestedInput
+    comments?: CommentUpdateManyWithoutPlatformConnectionNestedInput
   }
 
   export type PlatformConnectionUncheckedUpdateWithoutPublishJobsInput = {
@@ -17394,6 +21018,7 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     userId?: StringFieldUpdateOperationsInput | string
     postingSchedule?: PostingScheduleUncheckedUpdateOneWithoutPlatformConnectionNestedInput
+    comments?: CommentUncheckedUpdateManyWithoutPlatformConnectionNestedInput
   }
 
   export type UserUpsertWithoutPublishJobsInput = {
@@ -17449,6 +21074,7 @@ export namespace Prisma {
     isActive?: boolean
     user: UserCreateNestedOneWithoutPlatformConnectionsInput
     publishJobs?: PublishJobCreateNestedManyWithoutPlatformConnectionInput
+    comments?: CommentCreateNestedManyWithoutPlatformConnectionInput
   }
 
   export type PlatformConnectionUncheckedCreateWithoutPostingScheduleInput = {
@@ -17465,6 +21091,7 @@ export namespace Prisma {
     isActive?: boolean
     userId: string
     publishJobs?: PublishJobUncheckedCreateNestedManyWithoutPlatformConnectionInput
+    comments?: CommentUncheckedCreateNestedManyWithoutPlatformConnectionInput
   }
 
   export type PlatformConnectionCreateOrConnectWithoutPostingScheduleInput = {
@@ -17497,6 +21124,7 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     user?: UserUpdateOneRequiredWithoutPlatformConnectionsNestedInput
     publishJobs?: PublishJobUpdateManyWithoutPlatformConnectionNestedInput
+    comments?: CommentUpdateManyWithoutPlatformConnectionNestedInput
   }
 
   export type PlatformConnectionUncheckedUpdateWithoutPostingScheduleInput = {
@@ -17513,6 +21141,7 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     userId?: StringFieldUpdateOperationsInput | string
     publishJobs?: PublishJobUncheckedUpdateManyWithoutPlatformConnectionNestedInput
+    comments?: CommentUncheckedUpdateManyWithoutPlatformConnectionNestedInput
   }
 
   export type PublishJobCreateWithoutMetricSnapshotsInput = {
@@ -17625,6 +21254,458 @@ export namespace Prisma {
     postId?: StringFieldUpdateOperationsInput | string
     platformConnectionId?: StringFieldUpdateOperationsInput | string
     createdById?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type PlatformConnectionCreateWithoutCommentsInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    platform: $Enums.Platform
+    platformUserId: string
+    platformUsername?: string | null
+    accessToken: string
+    refreshToken?: string | null
+    tokenExpiry?: Date | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    isActive?: boolean
+    user: UserCreateNestedOneWithoutPlatformConnectionsInput
+    publishJobs?: PublishJobCreateNestedManyWithoutPlatformConnectionInput
+    postingSchedule?: PostingScheduleCreateNestedOneWithoutPlatformConnectionInput
+  }
+
+  export type PlatformConnectionUncheckedCreateWithoutCommentsInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    platform: $Enums.Platform
+    platformUserId: string
+    platformUsername?: string | null
+    accessToken: string
+    refreshToken?: string | null
+    tokenExpiry?: Date | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    isActive?: boolean
+    userId: string
+    publishJobs?: PublishJobUncheckedCreateNestedManyWithoutPlatformConnectionInput
+    postingSchedule?: PostingScheduleUncheckedCreateNestedOneWithoutPlatformConnectionInput
+  }
+
+  export type PlatformConnectionCreateOrConnectWithoutCommentsInput = {
+    where: PlatformConnectionWhereUniqueInput
+    create: XOR<PlatformConnectionCreateWithoutCommentsInput, PlatformConnectionUncheckedCreateWithoutCommentsInput>
+  }
+
+  export type CommentAuthorCreateWithoutCommentsInput = {
+    id?: string
+    platform: $Enums.Platform
+    externalId: string
+    name: string
+    avatarUrl?: string | null
+    profileUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CommentAuthorUncheckedCreateWithoutCommentsInput = {
+    id?: string
+    platform: $Enums.Platform
+    externalId: string
+    name: string
+    avatarUrl?: string | null
+    profileUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CommentAuthorCreateOrConnectWithoutCommentsInput = {
+    where: CommentAuthorWhereUniqueInput
+    create: XOR<CommentAuthorCreateWithoutCommentsInput, CommentAuthorUncheckedCreateWithoutCommentsInput>
+  }
+
+  export type PostCreateWithoutCommentsInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    type?: $Enums.MediaType
+    content?: string | null
+    s3Key?: string | null
+    s3Bucket?: string | null
+    fileName?: string | null
+    fileSize?: bigint | number | null
+    mimeType?: string | null
+    duration?: number | null
+    title?: string | null
+    isIdea?: boolean
+    description?: string | null
+    tags?: string | null
+    thumbnailUrl?: string | null
+    privacy?: $Enums.VideoPrivacy
+    createdBy: UserCreateNestedOneWithoutPostsInput
+    publishJobs?: PublishJobCreateNestedManyWithoutPostInput
+  }
+
+  export type PostUncheckedCreateWithoutCommentsInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    type?: $Enums.MediaType
+    content?: string | null
+    s3Key?: string | null
+    s3Bucket?: string | null
+    fileName?: string | null
+    fileSize?: bigint | number | null
+    mimeType?: string | null
+    duration?: number | null
+    title?: string | null
+    isIdea?: boolean
+    description?: string | null
+    tags?: string | null
+    thumbnailUrl?: string | null
+    privacy?: $Enums.VideoPrivacy
+    createdById: string
+    publishJobs?: PublishJobUncheckedCreateNestedManyWithoutPostInput
+  }
+
+  export type PostCreateOrConnectWithoutCommentsInput = {
+    where: PostWhereUniqueInput
+    create: XOR<PostCreateWithoutCommentsInput, PostUncheckedCreateWithoutCommentsInput>
+  }
+
+  export type CommentCreateWithoutRepliesInput = {
+    id?: string
+    platform: $Enums.Platform
+    externalId: string
+    content: string
+    publishedAt: Date | string
+    isResolved?: boolean
+    isHidden?: boolean
+    externalPostId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    platformConnection: PlatformConnectionCreateNestedOneWithoutCommentsInput
+    author: CommentAuthorCreateNestedOneWithoutCommentsInput
+    post?: PostCreateNestedOneWithoutCommentsInput
+    parent?: CommentCreateNestedOneWithoutRepliesInput
+  }
+
+  export type CommentUncheckedCreateWithoutRepliesInput = {
+    id?: string
+    platform: $Enums.Platform
+    externalId: string
+    content: string
+    publishedAt: Date | string
+    isResolved?: boolean
+    isHidden?: boolean
+    platformConnectionId: string
+    authorId: string
+    postId?: string | null
+    externalPostId?: string | null
+    parentId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CommentCreateOrConnectWithoutRepliesInput = {
+    where: CommentWhereUniqueInput
+    create: XOR<CommentCreateWithoutRepliesInput, CommentUncheckedCreateWithoutRepliesInput>
+  }
+
+  export type CommentCreateWithoutParentInput = {
+    id?: string
+    platform: $Enums.Platform
+    externalId: string
+    content: string
+    publishedAt: Date | string
+    isResolved?: boolean
+    isHidden?: boolean
+    externalPostId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    platformConnection: PlatformConnectionCreateNestedOneWithoutCommentsInput
+    author: CommentAuthorCreateNestedOneWithoutCommentsInput
+    post?: PostCreateNestedOneWithoutCommentsInput
+    replies?: CommentCreateNestedManyWithoutParentInput
+  }
+
+  export type CommentUncheckedCreateWithoutParentInput = {
+    id?: string
+    platform: $Enums.Platform
+    externalId: string
+    content: string
+    publishedAt: Date | string
+    isResolved?: boolean
+    isHidden?: boolean
+    platformConnectionId: string
+    authorId: string
+    postId?: string | null
+    externalPostId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    replies?: CommentUncheckedCreateNestedManyWithoutParentInput
+  }
+
+  export type CommentCreateOrConnectWithoutParentInput = {
+    where: CommentWhereUniqueInput
+    create: XOR<CommentCreateWithoutParentInput, CommentUncheckedCreateWithoutParentInput>
+  }
+
+  export type CommentCreateManyParentInputEnvelope = {
+    data: CommentCreateManyParentInput | CommentCreateManyParentInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type PlatformConnectionUpsertWithoutCommentsInput = {
+    update: XOR<PlatformConnectionUpdateWithoutCommentsInput, PlatformConnectionUncheckedUpdateWithoutCommentsInput>
+    create: XOR<PlatformConnectionCreateWithoutCommentsInput, PlatformConnectionUncheckedCreateWithoutCommentsInput>
+    where?: PlatformConnectionWhereInput
+  }
+
+  export type PlatformConnectionUpdateToOneWithWhereWithoutCommentsInput = {
+    where?: PlatformConnectionWhereInput
+    data: XOR<PlatformConnectionUpdateWithoutCommentsInput, PlatformConnectionUncheckedUpdateWithoutCommentsInput>
+  }
+
+  export type PlatformConnectionUpdateWithoutCommentsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    platform?: EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
+    platformUserId?: StringFieldUpdateOperationsInput | string
+    platformUsername?: NullableStringFieldUpdateOperationsInput | string | null
+    accessToken?: StringFieldUpdateOperationsInput | string
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    user?: UserUpdateOneRequiredWithoutPlatformConnectionsNestedInput
+    publishJobs?: PublishJobUpdateManyWithoutPlatformConnectionNestedInput
+    postingSchedule?: PostingScheduleUpdateOneWithoutPlatformConnectionNestedInput
+  }
+
+  export type PlatformConnectionUncheckedUpdateWithoutCommentsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    platform?: EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
+    platformUserId?: StringFieldUpdateOperationsInput | string
+    platformUsername?: NullableStringFieldUpdateOperationsInput | string | null
+    accessToken?: StringFieldUpdateOperationsInput | string
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    tokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    userId?: StringFieldUpdateOperationsInput | string
+    publishJobs?: PublishJobUncheckedUpdateManyWithoutPlatformConnectionNestedInput
+    postingSchedule?: PostingScheduleUncheckedUpdateOneWithoutPlatformConnectionNestedInput
+  }
+
+  export type CommentAuthorUpsertWithoutCommentsInput = {
+    update: XOR<CommentAuthorUpdateWithoutCommentsInput, CommentAuthorUncheckedUpdateWithoutCommentsInput>
+    create: XOR<CommentAuthorCreateWithoutCommentsInput, CommentAuthorUncheckedCreateWithoutCommentsInput>
+    where?: CommentAuthorWhereInput
+  }
+
+  export type CommentAuthorUpdateToOneWithWhereWithoutCommentsInput = {
+    where?: CommentAuthorWhereInput
+    data: XOR<CommentAuthorUpdateWithoutCommentsInput, CommentAuthorUncheckedUpdateWithoutCommentsInput>
+  }
+
+  export type CommentAuthorUpdateWithoutCommentsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    platform?: EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
+    externalId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    profileUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CommentAuthorUncheckedUpdateWithoutCommentsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    platform?: EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
+    externalId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    profileUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PostUpsertWithoutCommentsInput = {
+    update: XOR<PostUpdateWithoutCommentsInput, PostUncheckedUpdateWithoutCommentsInput>
+    create: XOR<PostCreateWithoutCommentsInput, PostUncheckedCreateWithoutCommentsInput>
+    where?: PostWhereInput
+  }
+
+  export type PostUpdateToOneWithWhereWithoutCommentsInput = {
+    where?: PostWhereInput
+    data: XOR<PostUpdateWithoutCommentsInput, PostUncheckedUpdateWithoutCommentsInput>
+  }
+
+  export type PostUpdateWithoutCommentsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    type?: EnumMediaTypeFieldUpdateOperationsInput | $Enums.MediaType
+    content?: NullableStringFieldUpdateOperationsInput | string | null
+    s3Key?: NullableStringFieldUpdateOperationsInput | string | null
+    s3Bucket?: NullableStringFieldUpdateOperationsInput | string | null
+    fileName?: NullableStringFieldUpdateOperationsInput | string | null
+    fileSize?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    mimeType?: NullableStringFieldUpdateOperationsInput | string | null
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    isIdea?: BoolFieldUpdateOperationsInput | boolean
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: NullableStringFieldUpdateOperationsInput | string | null
+    thumbnailUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    privacy?: EnumVideoPrivacyFieldUpdateOperationsInput | $Enums.VideoPrivacy
+    createdBy?: UserUpdateOneRequiredWithoutPostsNestedInput
+    publishJobs?: PublishJobUpdateManyWithoutPostNestedInput
+  }
+
+  export type PostUncheckedUpdateWithoutCommentsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    type?: EnumMediaTypeFieldUpdateOperationsInput | $Enums.MediaType
+    content?: NullableStringFieldUpdateOperationsInput | string | null
+    s3Key?: NullableStringFieldUpdateOperationsInput | string | null
+    s3Bucket?: NullableStringFieldUpdateOperationsInput | string | null
+    fileName?: NullableStringFieldUpdateOperationsInput | string | null
+    fileSize?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    mimeType?: NullableStringFieldUpdateOperationsInput | string | null
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    isIdea?: BoolFieldUpdateOperationsInput | boolean
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: NullableStringFieldUpdateOperationsInput | string | null
+    thumbnailUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    privacy?: EnumVideoPrivacyFieldUpdateOperationsInput | $Enums.VideoPrivacy
+    createdById?: StringFieldUpdateOperationsInput | string
+    publishJobs?: PublishJobUncheckedUpdateManyWithoutPostNestedInput
+  }
+
+  export type CommentUpsertWithoutRepliesInput = {
+    update: XOR<CommentUpdateWithoutRepliesInput, CommentUncheckedUpdateWithoutRepliesInput>
+    create: XOR<CommentCreateWithoutRepliesInput, CommentUncheckedCreateWithoutRepliesInput>
+    where?: CommentWhereInput
+  }
+
+  export type CommentUpdateToOneWithWhereWithoutRepliesInput = {
+    where?: CommentWhereInput
+    data: XOR<CommentUpdateWithoutRepliesInput, CommentUncheckedUpdateWithoutRepliesInput>
+  }
+
+  export type CommentUpdateWithoutRepliesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    platform?: EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
+    externalId?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    publishedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isResolved?: BoolFieldUpdateOperationsInput | boolean
+    isHidden?: BoolFieldUpdateOperationsInput | boolean
+    externalPostId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    platformConnection?: PlatformConnectionUpdateOneRequiredWithoutCommentsNestedInput
+    author?: CommentAuthorUpdateOneRequiredWithoutCommentsNestedInput
+    post?: PostUpdateOneWithoutCommentsNestedInput
+    parent?: CommentUpdateOneWithoutRepliesNestedInput
+  }
+
+  export type CommentUncheckedUpdateWithoutRepliesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    platform?: EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
+    externalId?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    publishedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isResolved?: BoolFieldUpdateOperationsInput | boolean
+    isHidden?: BoolFieldUpdateOperationsInput | boolean
+    platformConnectionId?: StringFieldUpdateOperationsInput | string
+    authorId?: StringFieldUpdateOperationsInput | string
+    postId?: NullableStringFieldUpdateOperationsInput | string | null
+    externalPostId?: NullableStringFieldUpdateOperationsInput | string | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CommentUpsertWithWhereUniqueWithoutParentInput = {
+    where: CommentWhereUniqueInput
+    update: XOR<CommentUpdateWithoutParentInput, CommentUncheckedUpdateWithoutParentInput>
+    create: XOR<CommentCreateWithoutParentInput, CommentUncheckedCreateWithoutParentInput>
+  }
+
+  export type CommentUpdateWithWhereUniqueWithoutParentInput = {
+    where: CommentWhereUniqueInput
+    data: XOR<CommentUpdateWithoutParentInput, CommentUncheckedUpdateWithoutParentInput>
+  }
+
+  export type CommentUpdateManyWithWhereWithoutParentInput = {
+    where: CommentScalarWhereInput
+    data: XOR<CommentUpdateManyMutationInput, CommentUncheckedUpdateManyWithoutParentInput>
+  }
+
+  export type CommentCreateWithoutAuthorInput = {
+    id?: string
+    platform: $Enums.Platform
+    externalId: string
+    content: string
+    publishedAt: Date | string
+    isResolved?: boolean
+    isHidden?: boolean
+    externalPostId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    platformConnection: PlatformConnectionCreateNestedOneWithoutCommentsInput
+    post?: PostCreateNestedOneWithoutCommentsInput
+    parent?: CommentCreateNestedOneWithoutRepliesInput
+    replies?: CommentCreateNestedManyWithoutParentInput
+  }
+
+  export type CommentUncheckedCreateWithoutAuthorInput = {
+    id?: string
+    platform: $Enums.Platform
+    externalId: string
+    content: string
+    publishedAt: Date | string
+    isResolved?: boolean
+    isHidden?: boolean
+    platformConnectionId: string
+    postId?: string | null
+    externalPostId?: string | null
+    parentId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    replies?: CommentUncheckedCreateNestedManyWithoutParentInput
+  }
+
+  export type CommentCreateOrConnectWithoutAuthorInput = {
+    where: CommentWhereUniqueInput
+    create: XOR<CommentCreateWithoutAuthorInput, CommentUncheckedCreateWithoutAuthorInput>
+  }
+
+  export type CommentCreateManyAuthorInputEnvelope = {
+    data: CommentCreateManyAuthorInput | CommentCreateManyAuthorInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type CommentUpsertWithWhereUniqueWithoutAuthorInput = {
+    where: CommentWhereUniqueInput
+    update: XOR<CommentUpdateWithoutAuthorInput, CommentUncheckedUpdateWithoutAuthorInput>
+    create: XOR<CommentCreateWithoutAuthorInput, CommentUncheckedCreateWithoutAuthorInput>
+  }
+
+  export type CommentUpdateWithWhereUniqueWithoutAuthorInput = {
+    where: CommentWhereUniqueInput
+    data: XOR<CommentUpdateWithoutAuthorInput, CommentUncheckedUpdateWithoutAuthorInput>
+  }
+
+  export type CommentUpdateManyWithWhereWithoutAuthorInput = {
+    where: CommentScalarWhereInput
+    data: XOR<CommentUpdateManyMutationInput, CommentUncheckedUpdateManyWithoutAuthorInput>
   }
 
   export type AccountCreateManyUserInput = {
@@ -17803,6 +21884,7 @@ export namespace Prisma {
     thumbnailUrl?: NullableStringFieldUpdateOperationsInput | string | null
     privacy?: EnumVideoPrivacyFieldUpdateOperationsInput | $Enums.VideoPrivacy
     publishJobs?: PublishJobUpdateManyWithoutPostNestedInput
+    comments?: CommentUpdateManyWithoutPostNestedInput
   }
 
   export type PostUncheckedUpdateWithoutCreatedByInput = {
@@ -17824,6 +21906,7 @@ export namespace Prisma {
     thumbnailUrl?: NullableStringFieldUpdateOperationsInput | string | null
     privacy?: EnumVideoPrivacyFieldUpdateOperationsInput | $Enums.VideoPrivacy
     publishJobs?: PublishJobUncheckedUpdateManyWithoutPostNestedInput
+    comments?: CommentUncheckedUpdateManyWithoutPostNestedInput
   }
 
   export type PostUncheckedUpdateManyWithoutCreatedByInput = {
@@ -17860,6 +21943,7 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     publishJobs?: PublishJobUpdateManyWithoutPlatformConnectionNestedInput
     postingSchedule?: PostingScheduleUpdateOneWithoutPlatformConnectionNestedInput
+    comments?: CommentUpdateManyWithoutPlatformConnectionNestedInput
   }
 
   export type PlatformConnectionUncheckedUpdateWithoutUserInput = {
@@ -17876,6 +21960,7 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     publishJobs?: PublishJobUncheckedUpdateManyWithoutPlatformConnectionNestedInput
     postingSchedule?: PostingScheduleUncheckedUpdateOneWithoutPlatformConnectionNestedInput
+    comments?: CommentUncheckedUpdateManyWithoutPlatformConnectionNestedInput
   }
 
   export type PlatformConnectionUncheckedUpdateManyWithoutUserInput = {
@@ -17986,6 +22071,22 @@ export namespace Prisma {
     createdById: string
   }
 
+  export type CommentCreateManyPostInput = {
+    id?: string
+    platform: $Enums.Platform
+    externalId: string
+    content: string
+    publishedAt: Date | string
+    isResolved?: boolean
+    isHidden?: boolean
+    platformConnectionId: string
+    authorId: string
+    externalPostId?: string | null
+    parentId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type PublishJobUpdateWithoutPostInput = {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -18057,6 +22158,56 @@ export namespace Prisma {
     createdById?: StringFieldUpdateOperationsInput | string
   }
 
+  export type CommentUpdateWithoutPostInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    platform?: EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
+    externalId?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    publishedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isResolved?: BoolFieldUpdateOperationsInput | boolean
+    isHidden?: BoolFieldUpdateOperationsInput | boolean
+    externalPostId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    platformConnection?: PlatformConnectionUpdateOneRequiredWithoutCommentsNestedInput
+    author?: CommentAuthorUpdateOneRequiredWithoutCommentsNestedInput
+    parent?: CommentUpdateOneWithoutRepliesNestedInput
+    replies?: CommentUpdateManyWithoutParentNestedInput
+  }
+
+  export type CommentUncheckedUpdateWithoutPostInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    platform?: EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
+    externalId?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    publishedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isResolved?: BoolFieldUpdateOperationsInput | boolean
+    isHidden?: BoolFieldUpdateOperationsInput | boolean
+    platformConnectionId?: StringFieldUpdateOperationsInput | string
+    authorId?: StringFieldUpdateOperationsInput | string
+    externalPostId?: NullableStringFieldUpdateOperationsInput | string | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    replies?: CommentUncheckedUpdateManyWithoutParentNestedInput
+  }
+
+  export type CommentUncheckedUpdateManyWithoutPostInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    platform?: EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
+    externalId?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    publishedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isResolved?: BoolFieldUpdateOperationsInput | boolean
+    isHidden?: BoolFieldUpdateOperationsInput | boolean
+    platformConnectionId?: StringFieldUpdateOperationsInput | string
+    authorId?: StringFieldUpdateOperationsInput | string
+    externalPostId?: NullableStringFieldUpdateOperationsInput | string | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type PublishJobCreateManyPlatformConnectionInput = {
     id?: string
     createdAt?: Date | string
@@ -18078,6 +22229,22 @@ export namespace Prisma {
     updateTargetVideoId?: string | null
     postId: string
     createdById: string
+  }
+
+  export type CommentCreateManyPlatformConnectionInput = {
+    id?: string
+    platform: $Enums.Platform
+    externalId: string
+    content: string
+    publishedAt: Date | string
+    isResolved?: boolean
+    isHidden?: boolean
+    authorId: string
+    postId?: string | null
+    externalPostId?: string | null
+    parentId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type PublishJobUpdateWithoutPlatformConnectionInput = {
@@ -18151,6 +22318,56 @@ export namespace Prisma {
     createdById?: StringFieldUpdateOperationsInput | string
   }
 
+  export type CommentUpdateWithoutPlatformConnectionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    platform?: EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
+    externalId?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    publishedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isResolved?: BoolFieldUpdateOperationsInput | boolean
+    isHidden?: BoolFieldUpdateOperationsInput | boolean
+    externalPostId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    author?: CommentAuthorUpdateOneRequiredWithoutCommentsNestedInput
+    post?: PostUpdateOneWithoutCommentsNestedInput
+    parent?: CommentUpdateOneWithoutRepliesNestedInput
+    replies?: CommentUpdateManyWithoutParentNestedInput
+  }
+
+  export type CommentUncheckedUpdateWithoutPlatformConnectionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    platform?: EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
+    externalId?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    publishedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isResolved?: BoolFieldUpdateOperationsInput | boolean
+    isHidden?: BoolFieldUpdateOperationsInput | boolean
+    authorId?: StringFieldUpdateOperationsInput | string
+    postId?: NullableStringFieldUpdateOperationsInput | string | null
+    externalPostId?: NullableStringFieldUpdateOperationsInput | string | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    replies?: CommentUncheckedUpdateManyWithoutParentNestedInput
+  }
+
+  export type CommentUncheckedUpdateManyWithoutPlatformConnectionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    platform?: EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
+    externalId?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    publishedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isResolved?: BoolFieldUpdateOperationsInput | boolean
+    isHidden?: BoolFieldUpdateOperationsInput | boolean
+    authorId?: StringFieldUpdateOperationsInput | string
+    postId?: NullableStringFieldUpdateOperationsInput | string | null
+    externalPostId?: NullableStringFieldUpdateOperationsInput | string | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type MetricSnapshotCreateManyPublishJobInput = {
     id?: string
     createdAt?: Date | string
@@ -18185,6 +22402,138 @@ export namespace Prisma {
     likes?: IntFieldUpdateOperationsInput | number
     comments?: IntFieldUpdateOperationsInput | number
     shares?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type CommentCreateManyParentInput = {
+    id?: string
+    platform: $Enums.Platform
+    externalId: string
+    content: string
+    publishedAt: Date | string
+    isResolved?: boolean
+    isHidden?: boolean
+    platformConnectionId: string
+    authorId: string
+    postId?: string | null
+    externalPostId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CommentUpdateWithoutParentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    platform?: EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
+    externalId?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    publishedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isResolved?: BoolFieldUpdateOperationsInput | boolean
+    isHidden?: BoolFieldUpdateOperationsInput | boolean
+    externalPostId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    platformConnection?: PlatformConnectionUpdateOneRequiredWithoutCommentsNestedInput
+    author?: CommentAuthorUpdateOneRequiredWithoutCommentsNestedInput
+    post?: PostUpdateOneWithoutCommentsNestedInput
+    replies?: CommentUpdateManyWithoutParentNestedInput
+  }
+
+  export type CommentUncheckedUpdateWithoutParentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    platform?: EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
+    externalId?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    publishedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isResolved?: BoolFieldUpdateOperationsInput | boolean
+    isHidden?: BoolFieldUpdateOperationsInput | boolean
+    platformConnectionId?: StringFieldUpdateOperationsInput | string
+    authorId?: StringFieldUpdateOperationsInput | string
+    postId?: NullableStringFieldUpdateOperationsInput | string | null
+    externalPostId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    replies?: CommentUncheckedUpdateManyWithoutParentNestedInput
+  }
+
+  export type CommentUncheckedUpdateManyWithoutParentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    platform?: EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
+    externalId?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    publishedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isResolved?: BoolFieldUpdateOperationsInput | boolean
+    isHidden?: BoolFieldUpdateOperationsInput | boolean
+    platformConnectionId?: StringFieldUpdateOperationsInput | string
+    authorId?: StringFieldUpdateOperationsInput | string
+    postId?: NullableStringFieldUpdateOperationsInput | string | null
+    externalPostId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CommentCreateManyAuthorInput = {
+    id?: string
+    platform: $Enums.Platform
+    externalId: string
+    content: string
+    publishedAt: Date | string
+    isResolved?: boolean
+    isHidden?: boolean
+    platformConnectionId: string
+    postId?: string | null
+    externalPostId?: string | null
+    parentId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CommentUpdateWithoutAuthorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    platform?: EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
+    externalId?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    publishedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isResolved?: BoolFieldUpdateOperationsInput | boolean
+    isHidden?: BoolFieldUpdateOperationsInput | boolean
+    externalPostId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    platformConnection?: PlatformConnectionUpdateOneRequiredWithoutCommentsNestedInput
+    post?: PostUpdateOneWithoutCommentsNestedInput
+    parent?: CommentUpdateOneWithoutRepliesNestedInput
+    replies?: CommentUpdateManyWithoutParentNestedInput
+  }
+
+  export type CommentUncheckedUpdateWithoutAuthorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    platform?: EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
+    externalId?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    publishedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isResolved?: BoolFieldUpdateOperationsInput | boolean
+    isHidden?: BoolFieldUpdateOperationsInput | boolean
+    platformConnectionId?: StringFieldUpdateOperationsInput | string
+    postId?: NullableStringFieldUpdateOperationsInput | string | null
+    externalPostId?: NullableStringFieldUpdateOperationsInput | string | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    replies?: CommentUncheckedUpdateManyWithoutParentNestedInput
+  }
+
+  export type CommentUncheckedUpdateManyWithoutAuthorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    platform?: EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
+    externalId?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    publishedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isResolved?: BoolFieldUpdateOperationsInput | boolean
+    isHidden?: BoolFieldUpdateOperationsInput | boolean
+    platformConnectionId?: StringFieldUpdateOperationsInput | string
+    postId?: NullableStringFieldUpdateOperationsInput | string | null
+    externalPostId?: NullableStringFieldUpdateOperationsInput | string | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

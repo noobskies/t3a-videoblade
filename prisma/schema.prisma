@@ -139,6 +139,7 @@ model Post {
     createdById String
 
     publishJobs PublishJob[]
+    comments    Comment[]
 
     @@index([createdById])
     @@index([createdAt])
@@ -172,6 +173,7 @@ model PlatformConnection {
 
     publishJobs PublishJob[]
     postingSchedule PostingSchedule?
+    comments        Comment[]
 
     // One connection per platform per user
     @@unique([userId, platform])
@@ -262,4 +264,58 @@ model MetricSnapshot {
 
     @@index([publishJobId])
     @@index([createdAt])
+}
+
+// Unified Inbox Models
+model Comment {
+    id          String   @id @default(cuid())
+    platform    Platform
+    externalId  String   // ID on the platform
+    content     String   @db.Text
+    publishedAt DateTime
+
+    // Internal Status
+    isResolved Boolean @default(false)
+    isHidden   Boolean @default(false)
+
+    // Relationships
+    platformConnectionId String
+    platformConnection   PlatformConnection @relation(fields: [platformConnectionId], references: [id], onDelete: Cascade)
+
+    authorId String
+    author   CommentAuthor @relation(fields: [authorId], references: [id])
+
+    postId String? // Our internal Post ID if matched
+    post   Post?   @relation(fields: [postId], references: [id])
+
+    externalPostId String? // ID of the post on the platform (if we don't have it locally)
+
+    // Threading
+    parentId String?
+    parent   Comment?  @relation("CommentThread", fields: [parentId], references: [id])
+    replies  Comment[] @relation("CommentThread")
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@unique([platform, externalId])
+    @@index([platformConnectionId])
+    @@index([isResolved])
+    @@index([postId])
+}
+
+model CommentAuthor {
+    id         String   @id @default(cuid())
+    platform   Platform
+    externalId String
+    name       String
+    avatarUrl  String?
+    profileUrl String?
+
+    comments Comment[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@unique([platform, externalId])
 }

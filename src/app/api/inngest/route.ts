@@ -7,6 +7,7 @@ import { publishToVimeo } from "@/inngest/publish-to-vimeo";
 import { publishToLinkedInFunction } from "@/inngest/publish-to-linkedin";
 import { snapshotAnalyticsFunction } from "@/inngest/snapshot-analytics";
 import { checkScheduledJobsFunction } from "@/inngest/check-scheduled-jobs";
+import { syncComments } from "@/inngest/sync-comments";
 
 /**
  * Inngest API endpoint for handling background jobs
@@ -24,6 +25,7 @@ export const { GET, POST, PUT } = serve({
     publishToLinkedInFunction,
     snapshotAnalyticsFunction,
     checkScheduledJobsFunction,
+    syncComments,
     // Add more functions here as needed (e.g., Rumble publishing in Phase 2)
   ],
 });

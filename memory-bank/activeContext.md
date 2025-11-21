@@ -2,41 +2,33 @@
 
 ## Current Focus
 
-**Phase 5: Platform Expansion**
-We are currently implementing new social platforms to transform VideoBlade into a true multi-channel management tool.
+**Phase 6: Engagement (Unified Inbox)**
+With Phase 5 (Platform Expansion) on hold, we are shifting focus to the "Engagement" pillar of the project. We are building the **Unified Inbox** to aggregate and manage comments from connected platforms.
 
 ## Recent Changes
 
-- **LinkedIn Integration (Phase 5, Step 1)**:
-  - **Media Support**: Implemented full support for **Image** and **Video** uploads to LinkedIn using their modern Assets/Images/Videos APIs.
-  - **Backend**: Updated `src/lib/linkedin.ts` to handle upload initialization, binary transfer, and finalization.
-  - **Background Jobs**: Updated `publish-to-linkedin` Inngest function to fetch media from S3 and publish it seamlessly.
-  - **UI**: Added LinkedIn connection card and auth flow.
-
-- **Codebase Polish & Cleanup**:
-  - **Legacy Removal**: Completely removed Tailwind CSS, PostCSS, and shadcn/radix dependencies.
-  - **MUI Migration**: Finalized migration of UI components (`ErrorAlert`, `Skeletons`) to native MUI.
-  - **Ideas Polish**: Added proper loading skeletons and polished the UI.
-
-- **Ideas & Drafts Implementation**:
-  - **Schema**: Modified `Post` model to support optional titles and `isIdea` boolean.
-  - **Frontend**: Created `/ideas` page with Quick Entry and "Convert to Post" workflow.
+- **Phase 5 Paused**:
+  - **LinkedIn Integration**: Complete.
+  - **X (Twitter)**: On Hold (Cost).
+  - **Meta (Facebook/Instagram)**: On Hold (User request).
+- **Phase 6 Started**:
+  - Defined roadmap for Unified Inbox.
+  - Chose "Sync-First" architecture for reliable "Inbox Zero" workflow.
 
 ## Active Decisions
 
-- **LinkedIn Media Handling**: We chose to implement the full upload flow (Initialize -> Upload -> Finalize) within our backend service rather than relying on client-side uploads. This ensures consistent behavior across platforms and leverages our existing S3 infrastructure as the source of truth for media files.
-- **Ideas as Posts**: We decided to use the existing `Post` model for Ideas by adding an `isIdea` flag. This simplifies the "Convert to Post" workflow.
+- **Sync-First Architecture for Inbox**: We decided to sync comments to our database rather than fetching them in real-time on page load.
+  - **Why**: Enables internal state tracking (Read/Unread/Resolved), faster UI, and local search/filtering.
+  - **Trade-off**: Comments might be slightly delayed (cron-based sync), but user experience is better.
 
 ## Next Steps
 
-1.  **Phase 5: Platform Expansion (Continued)**
-    - **Step 2**: X (Twitter) Integration (On Hold due to API costs).
-    - **Step 3**: Instagram/Facebook Integration.
-
-2.  **Phase 6: Engagement**
-    - Unified Inbox implementation.
+1.  **Database Schema**: Add `Comment` and `CommentAuthor` models to Prisma schema.
+2.  **Service Layer**: Create `CommentService` interface and platform implementations.
+3.  **Sync Logic**: Implement Inngest job to poll platform APIs.
+4.  **UI**: Build the `/dashboard/inbox` interface.
 
 ## Current Project State
 
-- **Phase**: 5 (Platform Expansion)
-- **Status**: LinkedIn Integration Complete (Text, Image, Video). Twitter On Hold.
+- **Phase**: 6 (Engagement)
+- **Status**: Starting Unified Inbox Implementation.
