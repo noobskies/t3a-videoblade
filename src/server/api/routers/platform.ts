@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import { TRPCError } from "@trpc/server";
+import { getLinkedInProfile } from "@/lib/linkedin";
 
 export const platformRouter = createTRPCRouter({
   /**
@@ -256,6 +257,17 @@ export const platformRouter = createTRPCRouter({
       });
     }
 
+    // Fetch LinkedIn profile to get username
+    let platformUsername = "LinkedIn User";
+    try {
+      const profile = await getLinkedInProfile(linkedinAccount.accessToken);
+      platformUsername = profile.name;
+    } catch (error) {
+      console.error("Failed to fetch LinkedIn profile name:", error);
+      // Fallback to session user name if available, or keep default
+      if (ctx.session.user.name) platformUsername = ctx.session.user.name;
+    }
+
     // Check if already connected
     const existing = await ctx.db.platformConnection.findUnique({
       where: {
@@ -275,6 +287,7 @@ export const platformRouter = createTRPCRouter({
           refreshToken: linkedinAccount.refreshToken ?? null,
           tokenExpiry: linkedinAccount.accessTokenExpiresAt ?? null,
           isActive: true,
+          platformUsername, // Update username on reconnect
         },
       });
 
@@ -286,7 +299,7 @@ export const platformRouter = createTRPCRouter({
       data: {
         platform: "LINKEDIN",
         platformUserId: linkedinAccount.accountId, // LinkedIn user ID
-        platformUsername: "LinkedIn User", // Will be updated
+        platformUsername,
         accessToken: linkedinAccount.accessToken,
         refreshToken: linkedinAccount.refreshToken ?? null,
         tokenExpiry: linkedinAccount.accessTokenExpiresAt ?? null,

@@ -1,32 +1,31 @@
-# Active Context: t3a-videoblade
+# Active Context
 
-## Current Focus
+## Current Focus: Channel-Centric UI & Engagement Polish
 
-**Phase 6: Engagement (Unified Inbox)**
-We are building the **Unified Inbox** to aggregate and manage comments from connected platforms. The core foundation and reply functionality are now complete.
+We are restructuring the application to be more **Channel-Centric**, similar to Buffer. Instead of just a unified inbox/calendar, users can now navigate to specific channels (platform connections) from the sidebar and access features specific to that channel.
 
-## Recent Changes
+### Recent Changes (2025-11-21)
 
-- **Phase 6 (Engagement)**:
-  - **Unified Inbox Foundation**: Database schema, Sync Services, and Inngest jobs implemented.
-  - **Reply Functionality**: Users can now reply to YouTube and LinkedIn comments directly from the dashboard.
-  - **Optimistic Updates**: Replies are immediately added to the local database for instant feedback.
+1.  **Channel-Centric Architecture**
+    - **Sidebar**: Updated `AppShell` to dynamically list connected channels (YouTube, LinkedIn, etc.) under a "Channels" section.
+    - **Channel Routing**: Created `/platforms/[id]` structure for channel-specific views.
+    - **Channel Layout**: Added `PlatformLayout` with tabs for Overview, Inbox, Schedule, and Settings.
+    - **Channel Overview**: Added a dashboard page for individual channels.
+    - **Channel Inbox**: Added a filtered inbox view at `/platforms/[id]/inbox`.
+
+2.  **Unified Inbox Polish**
+    - **Pagination**: Refactored `CommentList` to use `useInfiniteQuery` with a "Load More" button.
+    - **Visuals**: Improved card styling (cleaner, elevation 0, better avatars).
+    - **Filtering**: Added support for filtering by `platformConnectionId` in backend and frontend.
 
 ## Active Decisions
 
-- **Sync-First Architecture for Inbox**: We decided to sync comments to our database rather than fetching them in real-time on page load.
-  - **Why**: Enables internal state tracking (Read/Unread/Resolved), faster UI, and local search/filtering.
-  - **Trade-off**: Comments might be slightly delayed (cron-based sync), but user experience is better.
+- **Navigation**: We are moving towards a hybrid model where "Unified" views (Dashboard, Inbox, Calendar) exist alongside "Channel-Specific" views. This gives users flexibility.
+- **MUI Grid**: We seem to be using MUI v6 or Grid v2 (`size` prop instead of `item xs`).
+- **Infinite Scroll**: Implemented via "Load More" button for better UX control, rather than auto-scroll.
 
 ## Next Steps
 
-1.  **Unified Inbox Polish**:
-    - Add filtering by platform.
-    - Add search functionality.
-    - Improve "My Reply" visualization (currently just shows as a comment).
-2.  **Phase 6 Wrap-up**: Verify all engagement features are stable.
-
-## Current Project State
-
-- **Phase**: 6 (Engagement)
-- **Status**: Unified Inbox Implemented (Sync + Reply).
+1.  **Finish Phase 6 (Engagement)**: The Inbox is now polished and integrated into the channel view.
+2.  **Resume Phase 5**: X (Twitter) integration is the next logical platform expansion step when ready.
+3.  **Phase 3 Features**: Team features and API access are on the horizon.

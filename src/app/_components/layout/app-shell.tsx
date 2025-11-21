@@ -35,9 +35,15 @@ import {
   CalendarMonth as CalendarMonthIcon,
   Lightbulb as IdeaIcon,
   Inbox as InboxIcon,
+  YouTube as YouTubeIcon,
+  LinkedIn as LinkedInIcon,
+  Add as AddIcon,
+  Movie as VideoIcon,
 } from "@mui/icons-material";
 import { useSession, signOut } from "@/lib/auth-client";
 import { AuthButton } from "@/app/_components/auth-button";
+import { api } from "@/trpc/react";
+import { Platform } from "../../../../generated/prisma";
 
 const drawerWidth = 240;
 
@@ -57,6 +63,13 @@ const NAV_ITEMS: NavItem[] = [
   { label: "Platforms", path: "/platforms", icon: <PlatformsIcon /> },
 ];
 
+const SUPPORTED_PLATFORMS = [
+  { id: Platform.YOUTUBE, label: "YouTube" },
+  { id: Platform.LINKEDIN, label: "LinkedIn" },
+  // { id: Platform.TIKTOK, label: "TikTok" },
+  // { id: Platform.VIMEO, label: "Vimeo" },
+];
+
 export function AppShell({ children }: { children: React.ReactNode }) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -66,6 +79,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
   const { data: session, isPending } = useSession();
+  const { data: platforms } = api.platform.list.useQuery(undefined, {
+    enabled: !!session,
+  });
 
   const handleDrawerClose = () => {
     setIsClosing(true);
@@ -99,6 +115,45 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         },
       },
     });
+  };
+
+  const getPlatformIcon = (platform: Platform, isConnected = true) => {
+    const colorProps = isConnected
+      ? {}
+      : { color: "disabled" as const, sx: { opacity: 0.7 } };
+
+    switch (platform) {
+      case Platform.YOUTUBE:
+        return (
+          <YouTubeIcon
+            sx={isConnected ? { color: "#FF0000" } : { opacity: 0.7 }}
+            color={isConnected ? undefined : "disabled"}
+          />
+        );
+      case Platform.LINKEDIN:
+        return (
+          <LinkedInIcon
+            sx={isConnected ? { color: "#0077B5" } : { opacity: 0.7 }}
+            color={isConnected ? undefined : "disabled"}
+          />
+        );
+      case Platform.TIKTOK:
+        return (
+          <VideoIcon
+            sx={isConnected ? { color: "#000000" } : { opacity: 0.7 }}
+            color={isConnected ? undefined : "disabled"}
+          />
+        );
+      case Platform.VIMEO:
+        return (
+          <VideoIcon
+            sx={isConnected ? { color: "#1AB7EA" } : { opacity: 0.7 }}
+            color={isConnected ? undefined : "disabled"}
+          />
+        );
+      default:
+        return <VideoIcon {...colorProps} />;
+    }
   };
 
   // Drawer content (Sidebar)
@@ -151,6 +206,89 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           );
         })}
       </List>
+
+      {session && (
+        <>
+          <Divider sx={{ my: 1 }} />
+          <Box px={2} py={1}>
+            <Typography
+              variant="caption"
+              color="text.secondary"
+              fontWeight="bold"
+              textTransform="uppercase"
+            >
+              Channels
+            </Typography>
+          </Box>
+          <List>
+            {platforms?.map((platform) => {
+              const isActive = pathname.startsWith(`/platforms/${platform.id}`);
+              return (
+                <ListItem key={platform.id} disablePadding>
+                  <ListItemButton
+                    component={Link}
+                    href={`/platforms/${platform.id}`}
+                    selected={isActive}
+                    onClick={() => isMobile && handleDrawerClose()}
+                    sx={{
+                      "&.Mui-selected": {
+                        backgroundColor: "primary.main",
+                        color: "primary.contrastText",
+                        "&:hover": {
+                          backgroundColor: "primary.dark",
+                        },
+                        "& .MuiListItemIcon-root": {
+                          color: "primary.contrastText",
+                        },
+                      },
+                    }}
+                  >
+                    <ListItemIcon
+                      sx={{
+                        color: isActive ? "inherit" : "text.secondary",
+                        minWidth: 40,
+                      }}
+                    >
+                      {getPlatformIcon(platform.platform)}
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={platform.platformUsername ?? platform.platform}
+                      primaryTypographyProps={{
+                        noWrap: true,
+                        fontSize: "0.9rem",
+                      }}
+                    />
+                  </ListItemButton>
+                </ListItem>
+              );
+            })}
+            {SUPPORTED_PLATFORMS.filter(
+              (sp) => !platforms?.some((p) => p.platform === sp.id),
+            ).map((sp) => (
+              <ListItem key={sp.id} disablePadding>
+                <ListItemButton
+                  component={Link}
+                  href="/platforms"
+                  onClick={() => isMobile && handleDrawerClose()}
+                  sx={{ opacity: 0.7 }}
+                >
+                  <ListItemIcon sx={{ minWidth: 40 }}>
+                    {getPlatformIcon(sp.id, false)}
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={`Connect ${sp.label}`}
+                    primaryTypographyProps={{
+                      fontSize: "0.9rem",
+                      color: "text.secondary",
+                    }}
+                  />
+                  <AddIcon fontSize="small" color="action" />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+        </>
+      )}
     </div>
   );
 

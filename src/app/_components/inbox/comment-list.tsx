@@ -31,7 +31,11 @@ import { ReplyInput } from "./reply-input";
 
 dayjs.extend(relativeTime);
 
-export function CommentList() {
+interface CommentListProps {
+  platformConnectionId?: string;
+}
+
+export function CommentList({ platformConnectionId }: CommentListProps) {
   const [filter, setFilter] = useState<{
     isResolved: boolean;
     platform?: Platform;
@@ -45,15 +49,22 @@ export function CommentList() {
 
   const utils = api.useUtils();
 
-  const { data, isLoading } = api.comment.list.useQuery(
-    {
-      isResolved: filter.isResolved,
-      platform: filter.platform,
-      search: debouncedSearch,
-      limit: 50,
-    },
-    { refetchOnWindowFocus: false },
-  );
+  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    api.comment.list.useInfiniteQuery(
+      {
+        isResolved: filter.isResolved,
+        platform: filter.platform,
+        platformConnectionId,
+        search: debouncedSearch,
+        limit: 20,
+      },
+      {
+        getNextPageParam: (lastPage) => lastPage.nextCursor,
+        refetchOnWindowFocus: false,
+      },
+    );
+
+  const comments = data?.pages.flatMap((page) => page.items) ?? [];
 
   const resolveMutation = api.comment.resolve.useMutation({
     onSuccess: () => {
@@ -112,26 +123,28 @@ export function CommentList() {
               },
             }}
           />
-          <TextField
-            select
-            size="small"
-            value={filter.platform ?? "ALL"}
-            onChange={(e) =>
-              setFilter({
-                ...filter,
-                platform:
-                  e.target.value === "ALL"
-                    ? undefined
-                    : (e.target.value as Platform),
-              })
-            }
-            sx={{ minWidth: 120 }}
-          >
-            <MenuItem value="ALL">All Platforms</MenuItem>
-            <MenuItem value={Platform.YOUTUBE}>YouTube</MenuItem>
-            <MenuItem value={Platform.LINKEDIN}>LinkedIn</MenuItem>
-            <MenuItem value={Platform.TIKTOK}>TikTok</MenuItem>
-          </TextField>
+          {!platformConnectionId && (
+            <TextField
+              select
+              size="small"
+              value={filter.platform ?? "ALL"}
+              onChange={(e) =>
+                setFilter({
+                  ...filter,
+                  platform:
+                    e.target.value === "ALL"
+                      ? undefined
+                      : (e.target.value as Platform),
+                })
+              }
+              sx={{ minWidth: 120 }}
+            >
+              <MenuItem value="ALL">All Platforms</MenuItem>
+              <MenuItem value={Platform.YOUTUBE}>YouTube</MenuItem>
+              <MenuItem value={Platform.LINKEDIN}>LinkedIn</MenuItem>
+              <MenuItem value={Platform.TIKTOK}>TikTok</MenuItem>
+            </TextField>
+          )}
 
           <Stack direction="row" spacing={1}>
             <Button
@@ -166,7 +179,7 @@ export function CommentList() {
         </Box>
       ) : (
         <Stack spacing={2}>
-          {data?.items.length === 0 && (
+          {comments.length === 0 && (
             <Box
               textAlign="center"
               p={4}
@@ -177,11 +190,27 @@ export function CommentList() {
             </Box>
           )}
 
-          {data?.items.map((comment) => (
-            <Card key={comment.id} variant="outlined">
-              <CardContent>
+          {comments.map((comment) => (
+            <Card
+              key={comment.id}
+              elevation={0}
+              sx={{
+                borderRadius: 2,
+                border: 1,
+                borderColor: "divider",
+                transition: "all 0.2s",
+                "&:hover": {
+                  borderColor: "primary.main",
+                  bgcolor: "action.hover",
+                },
+              }}
+            >
+              <CardContent sx={{ p: 2, "&:last-child": { pb: 2 } }}>
                 <Stack direction="row" spacing={2} alignItems="flex-start">
-                  <Avatar src={comment.author.avatarUrl ?? undefined}>
+                  <Avatar
+                    src={comment.author.avatarUrl ?? undefined}
+                    sx={{ width: 32, height: 32 }}
+                  >
                     {comment.author.name.charAt(0)}
                   </Avatar>
 
@@ -190,10 +219,10 @@ export function CommentList() {
                       direction="row"
                       justifyContent="space-between"
                       alignItems="center"
-                      mb={1}
+                      mb={0.5}
                     >
                       <Stack direction="row" spacing={1} alignItems="center">
-                        <Typography variant="subtitle2" fontWeight="bold">
+                        <Typography variant="subtitle2" fontWeight="600">
                           {comment.author.name}
                         </Typography>
                         {getPlatformIcon(comment.platform)}
@@ -209,8 +238,13 @@ export function CommentList() {
                             handleResolve(comment.id, !comment.isResolved)
                           }
                           color={comment.isResolved ? "success" : "default"}
+                          title={
+                            comment.isResolved
+                              ? "Mark as Unresolved"
+                              : "Mark as Resolved"
+                          }
                         >
-                          <CheckIcon />
+                          <CheckIcon fontSize="small" />
                         </IconButton>
                       </Stack>
                     </Stack>
@@ -265,6 +299,18 @@ export function CommentList() {
               </CardContent>
             </Card>
           ))}
+
+          {hasNextPage && (
+            <Button
+              onClick={() => fetchNextPage()}
+              disabled={isFetchingNextPage}
+              variant="outlined"
+              fullWidth
+              sx={{ mt: 2 }}
+            >
+              {isFetchingNextPage ? "Loading more..." : "Load More"}
+            </Button>
+          )}
         </Stack>
       )}
     </Box>

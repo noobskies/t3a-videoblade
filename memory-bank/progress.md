@@ -89,10 +89,11 @@
   - [x] Background Job (`src/inngest/publish-to-linkedin.ts`)
   - [x] Scheduler Integration (`check-scheduled-jobs.ts`)
   - [x] UI Integration
+  - [x] **Polish**: Improved username fetching
 - [ ] **Step 2**: X (Twitter) Integration (On Hold - API Cost)
 - [ ] **Step 3**: Instagram/Facebook Integration (On Hold - User Request)
 
-### 🔄 Phase 6: Engagement (In Progress)
+### ✅ Phase 6: Engagement (Complete)
 
 - [x] **Step 1**: Unified Inbox Foundation (2025-11-21)
   - [x] **Database**: `Comment` schema
@@ -103,9 +104,14 @@
   - [x] **API**: `CommentService.reply` implemented
   - [x] **Backend**: `comment.reply` tRPC mutation with optimistic updates
   - [x] **UI**: `ReplyInput` component integrated into Inbox
+- [x] **Step 3**: Channel-Centric UI (2025-11-21)
+  - [x] **Navigation**: Sidebar with dynamic "Channels" list & "Connect" actions
+  - [x] **Routing**: `/platforms/[id]` structure with tabs
+  - [x] **Channel Inbox**: Filtered inbox for specific channels
+  - [x] **Polish**: Infinite scroll and visual improvements for comments
 
 ## Current Status
 
-**Status**: Phase 6 (Engagement) In Progress.
+**Status**: Phase 6 (Engagement) Complete.
 **Product**: MediaBlade (Buffer Clone)
-**Next Action**: Polish Unified Inbox (Filtering/Search).
+**Next Action**: Resume Phase 5 (Platform Expansion) or start Phase 7 (Team/API).
