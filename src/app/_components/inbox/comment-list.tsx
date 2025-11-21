@@ -9,21 +9,24 @@ import {
   Typography,
   Avatar,
   Stack,
-  Chip,
   IconButton,
   Button,
   CircularProgress,
+  TextField,
+  MenuItem,
+  InputAdornment,
 } from "@mui/material";
 import {
   CheckCircle as CheckIcon,
   YouTube as YouTubeIcon,
   LinkedIn as LinkedInIcon,
-  OpenInNew as OpenIcon,
   Refresh as RefreshIcon,
+  Search as SearchIcon,
 } from "@mui/icons-material";
 import { Platform } from "../../../../generated/prisma";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { useDebounce } from "@/lib/hooks/use-debounce";
 import { ReplyInput } from "./reply-input";
 
 dayjs.extend(relativeTime);
@@ -32,14 +35,23 @@ export function CommentList() {
   const [filter, setFilter] = useState<{
     isResolved: boolean;
     platform?: Platform;
+    search: string;
   }>({
     isResolved: false,
+    search: "",
   });
+
+  const debouncedSearch = useDebounce(filter.search, 500);
 
   const utils = api.useUtils();
 
-  const { data, isLoading, isRefetching } = api.comment.list.useQuery(
-    { isResolved: filter.isResolved, platform: filter.platform, limit: 50 },
+  const { data, isLoading } = api.comment.list.useQuery(
+    {
+      isResolved: filter.isResolved,
+      platform: filter.platform,
+      search: debouncedSearch,
+      limit: 50,
+    },
     { refetchOnWindowFocus: false },
   );
 
@@ -77,32 +89,74 @@ export function CommentList() {
   return (
     <Box>
       <Stack
-        direction="row"
+        direction={{ xs: "column", md: "row" }}
         justifyContent="space-between"
-        alignItems="center"
+        alignItems={{ xs: "stretch", md: "center" }}
+        spacing={2}
         mb={3}
       >
         <Typography variant="h5">Unified Inbox</Typography>
-        <Stack direction="row" spacing={2}>
-          <Button
-            variant={!filter.isResolved ? "contained" : "outlined"}
-            onClick={() => setFilter({ ...filter, isResolved: false })}
+        <Stack direction="row" spacing={2} alignItems="center">
+          <TextField
+            size="small"
+            placeholder="Search comments..."
+            value={filter.search}
+            onChange={(e) => setFilter({ ...filter, search: e.target.value })}
+            slotProps={{
+              input: {
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon fontSize="small" />
+                  </InputAdornment>
+                ),
+              },
+            }}
+          />
+          <TextField
+            select
+            size="small"
+            value={filter.platform ?? "ALL"}
+            onChange={(e) =>
+              setFilter({
+                ...filter,
+                platform:
+                  e.target.value === "ALL"
+                    ? undefined
+                    : (e.target.value as Platform),
+              })
+            }
+            sx={{ minWidth: 120 }}
           >
-            Open
-          </Button>
-          <Button
-            variant={filter.isResolved ? "contained" : "outlined"}
-            onClick={() => setFilter({ ...filter, isResolved: true })}
-          >
-            Resolved
-          </Button>
-          <Button
-            startIcon={<RefreshIcon />}
+            <MenuItem value="ALL">All Platforms</MenuItem>
+            <MenuItem value={Platform.YOUTUBE}>YouTube</MenuItem>
+            <MenuItem value={Platform.LINKEDIN}>LinkedIn</MenuItem>
+            <MenuItem value={Platform.TIKTOK}>TikTok</MenuItem>
+          </TextField>
+
+          <Stack direction="row" spacing={1}>
+            <Button
+              variant={!filter.isResolved ? "contained" : "outlined"}
+              onClick={() => setFilter({ ...filter, isResolved: false })}
+              size="small"
+            >
+              Open
+            </Button>
+            <Button
+              variant={filter.isResolved ? "contained" : "outlined"}
+              onClick={() => setFilter({ ...filter, isResolved: true })}
+              size="small"
+            >
+              Resolved
+            </Button>
+          </Stack>
+
+          <IconButton
             onClick={handleSync}
             disabled={syncMutation.isPending}
+            color="primary"
           >
-            {syncMutation.isPending ? "Syncing..." : "Sync"}
-          </Button>
+            <RefreshIcon />
+          </IconButton>
         </Stack>
       </Stack>
 

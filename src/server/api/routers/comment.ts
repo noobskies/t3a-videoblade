@@ -12,10 +12,11 @@ export const commentRouter = createTRPCRouter({
         cursor: z.string().nullish(),
         platform: z.nativeEnum(Platform).optional(),
         isResolved: z.boolean().optional(),
+        search: z.string().optional(),
       }),
     )
     .query(async ({ ctx, input }) => {
-      const { limit, cursor, platform, isResolved } = input;
+      const { limit, cursor, platform, isResolved, search } = input;
 
       // Fetch user's platform connections to filter comments
       // We only show comments for connections owned by the user
@@ -30,6 +31,19 @@ export const commentRouter = createTRPCRouter({
           isResolved: isResolved,
           // Hide hidden comments
           isHidden: false,
+          // Search filter
+          AND: search
+            ? {
+                OR: [
+                  { content: { contains: search, mode: "insensitive" } },
+                  {
+                    author: {
+                      name: { contains: search, mode: "insensitive" },
+                    },
+                  },
+                ],
+              }
+            : undefined,
         },
         orderBy: {
           publishedAt: "desc",
